@@ -1,0 +1,86 @@
+﻿@model PortalAPI.Domain.ModelView.ProductViewModel
+
+@{
+    ViewData["Title"] = "_add";
+    Layout = "~/Views/Shared/_Layout_Admin.cshtml";
+}
+
+<div class="content-i">
+    <div class="content-box">
+
+        <!---- Dashboard Overview --->
+        <div class="row">
+            <div class=" col-md-12 ">
+                <div class=" ">
+                    <div class="">
+
+                        <div class="element-box">
+                            <div class="m-b">
+
+                                <div class="row">
+                                    <div class="col-md-2">
+                                    </div>
+
+                                    <div class="col-md-8">
+                                        <div class="element-box">
+                                            <form class="dropzone" asp-action="Add" method="post" enctype="multipart/form-data">
+                                                @Html.AntiForgeryToken()
+                                                <div class="form-group">
+                                                    <label for=""> Category Name</label>
+                                                    <select asp-for="ProductCategory" class="form-control">
+                                                        @foreach (var item in Model.AvailableCategories)
+                                                        {
+                                                            <option value="@item.Value">@item.Text</option>
+                                                        }
+                                                    </select>
+                                                    <span asp-validation-for="ProductCategory" class="text-danger"></span>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for=""> Action Type</label>
+                                                    <select asp-for="IsExpressionOfInterest" class="form-control">
+                                                        <option value="No">No</option>
+                                                        <option value="Yes">Yes</option>
+                                                    </select>
+                                                    <span asp-validation-for="ProductCategory" class="text-danger"></span>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label> Product Name</label>
+                                                    <textarea asp-for="Name" class="form-control" rows="3"></textarea>
+                                                    <span asp-validation-for="Name" class="text-danger"></span>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label> Start From</label>
+                                                    <input asp-for="StartFrom" class="form-control" type="text">
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label> Description</label>
+                                                    <textarea asp-for="Description" class="form-control" rows="5"></textarea>
+                                                    <span asp-validation-for="Description" class="text-danger"></span>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Product Image</label>
+                                                    <input asp-for="UploadProductImage" type="file" class="form-control" style="height: auto" />
+                                                    <span asp-validation-for="UploadProductImage" class="text-danger"></span>
+                                                </div>
+                                                <div class="form-buttons-w">
+                                                    <input type="submit" value="SaveT" class="btn btn-primary" />
+                                                    @*<button class="btn btn-primary" type="submit">Save</button>*@
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
