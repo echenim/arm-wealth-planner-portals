@@ -11,10 +11,7 @@ namespace PortalAPI.Domain.ModelView
 {
     public class ProductViewModel
     {
-        public ProductViewModel()
-        {
-            AvailableCategories = new List<SelectListItem>();
-        }
+        public ProductViewModel() => AvailableCategories = new List<SelectListItem>();
 
         public int Id { get; set; }
 

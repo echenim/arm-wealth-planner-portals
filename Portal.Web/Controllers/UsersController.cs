@@ -37,5 +37,31 @@ namespace Portal.Web.Controllers
 
             return View(list);
         }
+
+        public IActionResult Add()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Add(InternalUserViewModel models)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = new ApplicationUser();
+                var result = _userManager.CreateAsync(user: user).Result;
+                if (result.Succeeded)
+                {
+                    var resultFromAddingUserToRole = _userManager.AddToRoleAsync(user: user, role: models.Roles).Result;
+                    if (resultFromAddingUserToRole.Succeeded)
+                    {
+                        return RedirectToAction("Index");
+                    }
+                }
+            }
+
+            return View();
+        }
     }
 }
