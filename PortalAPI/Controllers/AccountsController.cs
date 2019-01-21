@@ -168,6 +168,25 @@ namespace PortalAPI.Controllers
             return Ok(item + " --- > working");
         }
 
+        [Route("roles")]
+        [Authorize]
+        [HttpGet]
+        public IActionResult AddRole([FromBody]string role)
+        {
+            if (!string.IsNullOrEmpty(role))
+            {
+                var rol = new ApplicationRole();
+                rol.Name = role;
+                var resuslt = _roleManager.CreateAsync(rol).Result;
+                if (resuslt.Succeeded)
+                {
+                    return Ok("done");
+                }
+                return BadRequest();
+            }
+            return BadRequest();
+        }
+
         [HttpPost]
         [Route("register")]
         public IActionResult RegisterUser([FromBody]UserViewModel model)
