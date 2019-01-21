@@ -1,0 +1,72 @@
+﻿@using Portal.Web.ViewModels
+@model InternalUserViewModel
+
+@{
+    ViewData["Title"] = "Add";
+    Layout = "~/Views/Shared/_Layout_Admin.cshtml";
+}
+
+<div class="element-wrapper">
+
+    <div class="element-box">
+        <h5 class="form-header">
+            Add New User
+        </h5>
+        <div class="form-desc">
+        </div>
+
+        <div>
+            <form asp-action="Add">
+                @Html.AntiForgeryToken()
+                <div class="form-group">
+                    <label for=""> First Name</label>
+                    <input asp-for="FirstName" class="form-control" placeholder="Enter First Name" type="text">
+                    <span asp-validation-for="FirstName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label for=""> Last Name</label>
+                    <input asp-for="LastName" class="form-control" placeholder="Enter Last Name" type="text">
+                    <span asp-validation-for="LastName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label for="">Email Address </label>
+                    <div class="input-group mb-3">
+                        <input asp-for="Email" type="text" class="form-control" aria-label="ARM email address">
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for=""> Password</label>
+                            <input asp-for="Password" class="form-control" placeholder="Password" type="password">
+                            <span asp-validation-for="Password" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="">Confirm Password</label>
+                            <input asp-for="ConfirmPassword" class="form-control" placeholder="Password" type="password">
+                            <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="">User Role</label>
+                    <select asp-for="Roles" class="form-control">
+                        @foreach (var item in Model.AvailableRoles)
+                        {
+                            <option value="@item.Value">@item.Text</option>
+                        }
+                    </select>
+                    <span asp-validation-for="Roles" class="text-danger"></span>
+                </div>
+
+                <div class="form-buttons-w">
+                    <button class="btn btn-primary" type="submit"> Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

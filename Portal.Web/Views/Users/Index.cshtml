@@ -1,5 +1,5 @@
 ﻿@using Portal.Web.ViewModels
-@model IEnumerable<InternalUserView>
+@model IQueryable<InternalUserView>
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout_Admin.cshtml";
@@ -27,7 +27,18 @@
                                 <th>
                                     Email
                                 </th>
-
+                                <th>
+                                    Role
+                                </th>
+                                <th>
+                                    Role
+                                </th>
+                                <th>
+                                    Status
+                                </th>
+                                <th>
+                                    LastLogin
+                                </th>
                                 <th class="text-center">
                                     Actions
                                 </th>
@@ -47,6 +58,15 @@
 
                                     <td>
                                         @item.Email
+                                    </td>
+                                    <td>
+                                        @item.Role
+                                    </td>
+                                    <td>
+                                        @item.IsActive
+                                    </td>
+                                    <td>
+                                        @item.LastLogin
                                     </td>
 
                                     <td class="row-actions">

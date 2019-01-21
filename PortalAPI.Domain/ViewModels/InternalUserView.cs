@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Portal.Web.ViewModels
+namespace PortalAPI.Domain.ViewModels
 {
     public class InternalUserView
     {

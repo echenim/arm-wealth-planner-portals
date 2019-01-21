@@ -70,6 +70,7 @@ namespace Portal.Web
             services.AddTransient<IProductKeyBenefitService, ProductKeyBenefitService>();
             services.AddTransient<IProductPerformanceService, ProductPerformanceService>();
             services.AddTransient<IOrdersAndSalesService, OrdersAndSalesService>();
+            services.AddTransient<IUserService, UserService>();
 
             #endregion service register
         }
