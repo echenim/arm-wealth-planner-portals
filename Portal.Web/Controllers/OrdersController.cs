@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Common;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -35,8 +36,13 @@ namespace Portal.Web.Controllers
                     Category = item.Product.ProductCategory.Name,
                     Customer = item.Customer.FullName,
                     CustNo = item.Customer.MembershipNumber,
-                    Amount = item.Amount,
-                    Date = item.OrderDate.ToLongDateString()
+                    Amount = item.Amount.ToString("N1", CultureInfo.InvariantCulture),
+                    TransactionDate = item.OrderDate.ToString(),
+                    CartNumber = item.CartNumber,
+                    TransactionNumber = item.PaymentTransactionNumber,
+                    TransactionStatus = item.TransactionStatus,
+                    AddToCartDate = $"{item.AddToCartDate:dd MMM yyyy  hh:mm tt}",
+                    Date = item.OrderDate.ToString()
                 });
             }
 
@@ -60,8 +66,9 @@ namespace Portal.Web.Controllers
                     Category = item.Product.ProductCategory.Name,
                     Customer = item.Customer.FullName,
                     CustNo = item.Customer.MembershipNumber,
-                    Amount = item.Amount,
-                    Date = item.OrderDate.ToLongDateString()
+                    Amount = item.Amount.ToString("N1", CultureInfo.InvariantCulture),
+                    AddToCartDate = $"{item.AddToCartDate}",
+                    Date = item.OrderDate.ToString()
                 });
             }
 

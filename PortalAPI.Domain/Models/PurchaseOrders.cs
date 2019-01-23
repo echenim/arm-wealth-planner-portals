@@ -29,7 +29,20 @@ namespace PortalAPI.Domain.Models
         public int Quantity { get; set; }
 
         [Required]
-        public DateTime OrderDate { get; set; }
+        [MaxLength(40)]
+        public string CartNumber { get; set; }
+
+        [Required]
+        public DateTime AddToCartDate { get; set; }
+
+        [MaxLength(150)]
+        public string PaymentTransactionNumber { get; set; }
+
+        [Required]
+        [MaxLength(15)]
+        public string TransactionStatus { get; set; }
+
+        public DateTime? OrderDate { get; set; }
 
         public virtual ApplicationUser Customer { get; set; }
         public virtual Products Product { get; set; }

@@ -48,7 +48,8 @@ namespace PortalAPI.Midleware.Implementations
                     Id = users.Id,
                     Name = users.FullName,
                     Role = roles.Name,
-                    Email = users.Email
+                    Email = users.Email,
+                    IsActive = users.LockoutEnabled ? "Yes" : "No"
                 });
     }
 }

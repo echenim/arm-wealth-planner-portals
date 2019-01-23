@@ -17,8 +17,12 @@
                     <table class="table table-padded">
                         <thead>
                             <tr>
+
                                 <th>
                                     Date
+                                </th>
+                                <th>
+                                    Status
                                 </th>
                                 <th>
                                     Customer
@@ -32,57 +36,47 @@
                                 <th>
                                     Category
                                 </th>
+
                                 <th>
-                                    Status
-                                </th>
-                                <th>
-                                    Actions
+                                    TransactionDate
                                 </th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach (var item in Model)
                             {
-                                <tr>
-                                    <td>
-                                        <span class="smaller lighter">@item.Date</span>
-                                    </td>
-                                    <td>
-                                        <div>
-                                            <span>@item.Customer</span>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div>
-                                            @item.Product
-                                        </div>
-                                    </td>
-                                    <td class="text-center">
-                                        <span>&#8358;@item.Amount</span>
-                                    </td>
-                                    <td>
-                                        @item.Category
-                                    </td>
-                                    <td class="nowrap">
-                                        <span class="status-pill smaller green"></span><span>Completed</span>
-                                    </td>
-                                    <td class="row-actions">
-                                        <div class="btn-group">
-                                            <button type="button" class="btn btn-primary  dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                                <span class="caret">Action</span>
-                                                <span class="sr-only"></span>
-                                            </button>
-                                            <ul class="dropdown-menu" role="menu">
-                                                <li>
-                                                    <a asp-controller="Settings" asp-action="Index">Edit</a>
-                                                </li>
-                                                <li>
-                                                    <a asp-controller="Settings" asp-action="Index">Delete</a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </td>
-                                </tr>
+                            <tr>
+                                <td>
+                                    <span class="smaller lighter">
+                                       
+                                        @string.Format("{0}",item.AddToCartDate,"MMMM dd, yyyy")
+                                    </span>
+                                </td>
+                                <td class="nowrap">
+                                    <span class="status-pill smaller green"></span><span>@item.TransactionStatus</span>
+                                </td>
+                                <td>
+                                    <div>
+                                        <span>@item.Customer</span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div>
+                                        @item.Product
+                                    </div>
+                                </td>
+                                <td class="text-center">
+                                    <span>&#8358;@item.Amount</span>
+                                </td>
+                                <td>
+                                    @item.Category
+                                </td>
+
+                                <td>
+                                    <span class="smaller lighter">@item.Date</span>
+                                </td>
+
+                            </tr>
                             }
                         </tbody>
                     </table>

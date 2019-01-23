@@ -92,9 +92,6 @@ namespace PortalAPI.Magration
 
             #region modify identity role to be group basepermission
 
-            builder.Entity<ApplicationUserGroup>().ToTable("ApplicationUserGroups")
-                .HasKey(s => new { s.ApplicationUserId, s.ApplicationGroupId });
-
             builder.Entity<ApplicationGroup>()
                 .HasMany<ApplicationGroupRole>((ApplicationGroup g) => g.ApplicationRoles)
                 .WithOne().IsRequired()
@@ -103,6 +100,17 @@ namespace PortalAPI.Magration
                 .HasKey((ApplicationGroupRole s) => new
                 {
                     ApplicationRoleId = s.ApplicationRoleId,
+                    ApplicationGroupId = s.ApplicationGroupId
+                });
+
+            builder.Entity<ApplicationGroup>()
+                .HasMany<ApplicationUserGroup>((ApplicationGroup g) => g.ApplicationUsers)
+                .WithOne().IsRequired()
+                .HasForeignKey((ApplicationUserGroup g) => g.ApplicationGroupId);
+            builder.Entity<ApplicationUserGroup>().ToTable("ApplicationUserGroups")
+                .HasKey((ApplicationUserGroup s) => new
+                {
+                    ApplicationUserId = s.ApplicationUserId,
                     ApplicationGroupId = s.ApplicationGroupId
                 });
 

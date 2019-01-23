@@ -50,11 +50,11 @@ namespace PortalAPI
 
             #region register database connectionstring
 
-            // services.AddDbContext<MigDbContext>(options =>
-            // options.UseSqlServer(Configuration.GetConnectionString("ArmInvestmentConnection")));
+            //services.AddDbContext<MigDbContext>(options =>
+            //options.UseSqlServer(Configuration.GetConnectionString("ArmInvestmentConnection")));
 
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("ArmInvestmentConnection")));
+            options.UseSqlServer(Configuration.GetConnectionString("ArmInvestmentConnection")));
 
             #endregion register database connectionstring
 
@@ -74,6 +74,7 @@ namespace PortalAPI
             services.AddTransient<IProductFeatureService, ProductFeatureService>();
             services.AddTransient<IProductKeyBenefitService, ProductKeyBenefitService>();
             services.AddTransient<IProductPerformanceService, ProductPerformanceService>();
+            services.AddTransient<IApplicationGroupService, ApplicationGroupService>();
 
             #endregion service register
 

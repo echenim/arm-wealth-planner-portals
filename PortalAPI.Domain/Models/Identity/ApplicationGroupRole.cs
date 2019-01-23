@@ -1,8 +1,10 @@
-﻿namespace PortalAPI.Domain.Models.Identity
+﻿using System.Collections.Generic;
+
+namespace PortalAPI.Domain.Models.Identity
 {
     public class ApplicationGroupRole
     {
-        public string ApplicationGroupId { get; set; }
-        public string ApplicationRoleId { get; set; }
+        public long ApplicationGroupId { get; set; }
+        public long ApplicationRoleId { get; set; }
     }
 }

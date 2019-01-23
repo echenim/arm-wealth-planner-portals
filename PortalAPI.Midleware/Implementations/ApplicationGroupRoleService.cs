@@ -1,49 +1,35 @@
-﻿//using System;
-//using System.Collections.Generic;
-//using System.Linq;
-//using System.Text;
-//using Microsoft.EntityFrameworkCore;
-//using PortalAPI.Domain;
-//using PortalAPI.Domain.Models;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using PortalAPI.Domain;
+using PortalAPI.Domain.Models;
+using PortalAPI.Domain.Models.Identity;
 
-//namespace PortalAPI.Midleware.Implementations
-//{
-//    public class ApplicationGroupRoleService
-//    {
-//        private readonly ApplicationDbContext _context;
+namespace PortalAPI.Midleware.Implementations
+{
+    public class ApplicationGroupRoleService
+    {
+        private readonly ApplicationGroupRoleService _applicationRoleStore;
+        private readonly ApplicationDbContext _context;
 
-//        public ProductCategoryService(ApplicationDbContext context)
-//        {
-//            _context = context;
-//        }
+        public ApplicationGroupRoleService(ApplicationDbContext context)
+        {
+            _context = context;
+            _applicationRoleStore = new ApplicationGroupRoleService(_context);
+        }
 
-//        public ProductCategory Save(ProductCategory model)
-//        {
-//            _context.ProductCategory.Add(model);
-//            model.Id = _context.SaveChanges();
-//            return model;
-//        }
+        public IQueryable<ApplicationRole> Roles => _applicationRoleStore.Roles;
 
-//        public ProductCategory Edit(ProductCategory model)
-//        {
-//            _context.Entry(model).State = EntityState.Modified;
-//            _context.SaveChanges();
-//            return model;
-//        }
+        public Task<ApplicationRole> FindByIdAsync(string id)
+            => _applicationRoleStore.FindByIdAsync(id);
 
-//        public ProductCategory FindById(Func<ProductCategory, bool> predicate)
-//            => _context.ProductCategory.Find(predicate);
+        public ApplicationRole FindById(string id)
+            => _applicationRoleStore.FindById(id);
 
-//        public IQueryable<ProductCategory> Get(Func<ProductCategory, bool> predicate = null)
-//            => predicate != null
-//                ? _context.ProductCategory.Where(predicate: predicate).AsQueryable()
-//                : _context.ProductCategory.AsQueryable();
-
-//        public ProductCategory Delete(ProductCategory model)
-//        {
-//            _context.Entry(model).State = EntityState.Deleted;
-//            _context.SaveChanges();
-//            return model;
-//        }
-//    }
-//}
+        public Task<ApplicationRole> FindByNameAsync(string groupName)
+            => _applicationRoleStore.FindByNameAsync(groupName);
+    }
+}
