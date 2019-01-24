@@ -74,7 +74,7 @@ namespace PortalAPI
             services.AddTransient<IProductFeatureService, ProductFeatureService>();
             services.AddTransient<IProductKeyBenefitService, ProductKeyBenefitService>();
             services.AddTransient<IProductPerformanceService, ProductPerformanceService>();
-            services.AddTransient<IApplicationGroupService, ApplicationGroupService>();
+            services.AddTransient<IApplicationGroupManager, ApplicationGroupManager>();
 
             #endregion service register
 

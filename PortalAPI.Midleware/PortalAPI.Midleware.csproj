@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="BaseStore\FunctionAndCorrespondingUserRoleCountStoreBase.cs" />
+    <Compile Remove="StoreBase\FunctionAndCorrespondingUserRoleCountStoreBase.cs" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,17 +1,37 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
-
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Extensions.Internal;
 using PortalAPI.Domain.Models.Identity;
-using PortalAPI.Midleware.BaseStore;
+using PortalAPI.Midleware.StoreBase;
 
 namespace PortalAPI.Midleware.Stores
 {
-    internal class ApplicationGroupStore
+    internal class ApplicationGroupStore : IDisposable
     {
         private bool _disposed;
         private GroupStoreBase _groupStore;
+
+        public ApplicationGroupStore(DbContext context)
+        {
+            if (context == null)
+            {
+                throw new ArgumentNullException("context");
+            }
+            this.Context = context;
+            this._groupStore = new GroupStoreBase(context);
+        }
+
+        public IQueryable<ApplicationGroup> Groups
+        {
+            get
+            {
+                return this._groupStore.EntitySet;
+            }
+        }
 
         public DbContext Context
         {
@@ -19,50 +39,88 @@ namespace PortalAPI.Midleware.Stores
             private set;
         }
 
-        public ApplicationGroupStore(DbContext context)
-        {
-            Context = context ?? throw new ArgumentNullException("context");
-            _groupStore = new GroupStoreBase(context);
-        }
-
-        public IQueryable<ApplicationGroup> Group => this._groupStore.EntitySet;
-
-        public void Create(ApplicationGroup entity)
+        public virtual void Create(ApplicationGroup group)
         {
             this.ThrowIfDisposed();
-            if (entity == null)
-            {
-                throw new ArgumentNullException("role");
-            }
-            this._groupStore.Create(entity);
-            this.Context.SaveChanges();
-        }
-
-        public void Update(ApplicationGroup entity)
-        {
-            this.ThrowIfDisposed();
-            if (entity == null)
+            if (group == null)
             {
                 throw new ArgumentNullException("group");
             }
-            this._groupStore.Update(entity);
+            this._groupStore.Create(group);
             this.Context.SaveChanges();
         }
 
-        public void Delete(ApplicationGroup entity)
+        public virtual async Task CreateAsync(ApplicationGroup group)
         {
             this.ThrowIfDisposed();
-            if (entity == null)
+            if (group == null)
             {
                 throw new ArgumentNullException("group");
             }
-            this._groupStore.Delete(entity);
+            this._groupStore.Create(group);
+            await this.Context.SaveChangesAsync();
+        }
+
+        public virtual async Task DeleteAsync(ApplicationGroup group)
+        {
+            this.ThrowIfDisposed();
+            if (group == null)
+            {
+                throw new ArgumentNullException("group");
+            }
+            this._groupStore.Delete(group);
+            await this.Context.SaveChangesAsync();
+        }
+
+        public virtual void Delete(ApplicationGroup group)
+        {
+            this.ThrowIfDisposed();
+            if (group == null)
+            {
+                throw new ArgumentNullException("group");
+            }
+            this._groupStore.Delete(group);
             this.Context.SaveChanges();
         }
 
-        public ApplicationGroup FindById(string id) => this._groupStore.GetById(id);
+        public Task<ApplicationGroup> FindByIdAsync(long roleId)
+        {
+            this.ThrowIfDisposed();
+            return this._groupStore.GetByIdAsync(roleId);
+        }
 
-        public Task<ApplicationGroup> FindByIdAsync(string id) => this._groupStore.GetByIdAsync(id);
+        public ApplicationGroup FindById(long roleId)
+        {
+            this.ThrowIfDisposed();
+            return this._groupStore.GetById(roleId);
+        }
+
+        public ApplicationGroup FindByName(string groupName)
+        {
+            return _groupStore.EntitySet.SingleOrDefault(s => s.Name.Equals(groupName));
+        }
+
+        public virtual async Task UpdateAsync(ApplicationGroup group)
+        {
+            this.ThrowIfDisposed();
+            if (group == null)
+            {
+                throw new ArgumentNullException("group");
+            }
+            this._groupStore.Update(group);
+            await this.Context.SaveChangesAsync();
+        }
+
+        public virtual void Update(ApplicationGroup group)
+        {
+            this.ThrowIfDisposed();
+            if (group == null)
+            {
+                throw new ArgumentNullException("group");
+            }
+            this._groupStore.Update(group);
+            this.Context.SaveChanges();
+        }
 
         // DISPOSE STUFF: ===============================================
 

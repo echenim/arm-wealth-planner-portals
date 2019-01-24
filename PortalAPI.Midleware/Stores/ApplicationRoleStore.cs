@@ -1,48 +1,124 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
-using PortalAPI.Domain;
+using Microsoft.EntityFrameworkCore;
 using PortalAPI.Domain.Models.Identity;
-using PortalAPI.Midleware.BaseStore;
+using PortalAPI.Midleware.StoreBase;
 
-namespace PensionManager.Business.Stores
+namespace PortalAPI.Midleware.Stores
 {
     internal class ApplicationRoleStore : IDisposable
     {
         private bool _disposed;
         private RoleStoreBase _roleStore;
-        private ApplicationDbContext _applicationDbContext;
 
-        public ApplicationRoleStore(ApplicationDbContext context)
+        public ApplicationRoleStore(DbContext context)
         {
-            _applicationDbContext = context ?? throw new ArgumentNullException(nameof(context));
-            _roleStore = new RoleStoreBase(context);
+            if (context == null)
+            {
+                throw new ArgumentNullException("context");
+            }
+            this.Context = context;
+            this._roleStore = new RoleStoreBase(context);
         }
 
-        public IQueryable<ApplicationRole> Roles => _roleStore.EntitySet;
-
-        public Task<ApplicationRole> FindByIdAsync(string id)
+        public IQueryable<ApplicationRole> Roles
         {
-            ThrowIfDisposed();
-            return _roleStore.GetByIdAsync(id);
+            get
+            {
+                return this._roleStore.EntitySet;
+            }
         }
 
-        public ApplicationRole FindById(string id)
+        public DbContext Context
         {
-            ThrowIfDisposed();
-            return _roleStore.GetById(id);
+            get;
+            private set;
         }
 
-        public Task<ApplicationRole> FindByNameAsync(string name)
+        public virtual void Create(ApplicationRole role)
         {
-            ThrowIfDisposed();
-
-            return _roleStore.FindByNameAsync(name);
+            this.ThrowIfDisposed();
+            if (role == null)
+            {
+                throw new ArgumentNullException("role");
+            }
+            this._roleStore.Create(role);
+            this.Context.SaveChanges();
         }
 
-        public ApplicationRole FindByName(string name)
+        public virtual async Task CreateAsync(ApplicationRole role)
         {
-            return _roleStore.FindByName(name);
+            this.ThrowIfDisposed();
+            if (role == null)
+            {
+                throw new ArgumentNullException("role");
+            }
+            this._roleStore.Create(role);
+            await this.Context.SaveChangesAsync();
+        }
+
+        public virtual async Task DeleteAsync(ApplicationRole riole)
+        {
+            this.ThrowIfDisposed();
+            if (riole == null)
+            {
+                throw new ArgumentNullException("riole");
+            }
+            this._roleStore.Delete(riole);
+            await this.Context.SaveChangesAsync();
+        }
+
+        public virtual void Delete(ApplicationRole riole)
+        {
+            this.ThrowIfDisposed();
+            if (riole == null)
+            {
+                throw new ArgumentNullException("riole");
+            }
+            this._roleStore.Delete(riole);
+            this.Context.SaveChanges();
+        }
+
+        public Task<ApplicationRole> FindByIdAsync(long roleId)
+        {
+            this.ThrowIfDisposed();
+            return this._roleStore.GetByIdAsync(roleId);
+        }
+
+        public ApplicationRole FindById(long roleId)
+        {
+            this.ThrowIfDisposed();
+            return this._roleStore.GetById(roleId);
+        }
+
+        public ApplicationRole FindByName(string roleName)
+        {
+            return _roleStore.EntitySet.SingleOrDefault(s => s.Name.Equals(roleName));
+        }
+
+        public virtual async Task UpdateAsync(ApplicationRole role)
+        {
+            this.ThrowIfDisposed();
+            if (role == null)
+            {
+                throw new ArgumentNullException("role");
+            }
+            this._roleStore.Update(role);
+            await this.Context.SaveChangesAsync();
+        }
+
+        public virtual void Update(ApplicationRole role)
+        {
+            this.ThrowIfDisposed();
+            if (role == null)
+            {
+                throw new ArgumentNullException("role");
+            }
+            this._roleStore.Update(role);
+            this.Context.SaveChanges();
         }
 
         // DISPOSE STUFF: ===============================================
@@ -55,27 +131,27 @@ namespace PensionManager.Business.Stores
 
         private void ThrowIfDisposed()
         {
-            if (_disposed)
+            if (this._disposed)
             {
-                throw new ObjectDisposedException(GetType().Name);
+                throw new ObjectDisposedException(this.GetType().Name);
             }
         }
 
         public void Dispose()
         {
-            Dispose(true);
+            this.Dispose(true);
             GC.SuppressFinalize(this);
         }
 
         protected virtual void Dispose(bool disposing)
         {
-            if (DisposeContext && disposing)
+            if (this.DisposeContext && disposing && this.Context != null)
             {
-                _applicationDbContext?.Dispose();
+                this.Context.Dispose();
             }
-            _disposed = true;
-            _applicationDbContext = null;
-            _roleStore = null;
+            this._disposed = true;
+            this.Context = null;
+            this._roleStore = null;
         }
     }
 }

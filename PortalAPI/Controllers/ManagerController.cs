@@ -25,7 +25,7 @@ namespace PortalAPI.Controllers
         private readonly AppSettings _appSettings;
         private readonly IPasswordHasher<ApplicationUser> _passwordHasher;
         private readonly IHostingEnvironment _hostingEnvironment;
-        private readonly IApplicationGroupService _application;
+        private readonly IApplicationGroupManager _application;
 
         public ManagerController(
             UserManager<ApplicationUser> userManager,
@@ -35,7 +35,7 @@ namespace PortalAPI.Controllers
             IOptions<AppSettings> appSettings,
             IPasswordHasher<ApplicationUser> passwordHasher,
             IHostingEnvironment hostingEnvironment,
-            IApplicationGroupService application
+            IApplicationGroupManager application
         )
         {
             _userManager = userManager;
@@ -73,7 +73,7 @@ namespace PortalAPI.Controllers
         [Route("groups")]
         public IActionResult FetchGroup()
         {
-            var roles = _application.UserGroup();
+            var roles = _application.Groups();
             return Ok(roles);
         }
 
@@ -83,7 +83,7 @@ namespace PortalAPI.Controllers
         {
             if (model != null)
             {
-                var roles = _application.CreateUserGroup(model);
+                var roles = _application.CreateGroup(model);
                 return Ok(roles);
             }
 
@@ -96,7 +96,20 @@ namespace PortalAPI.Controllers
         {
             if (model != null)
             {
-                var roles = _application.SetAssignRoleToUserGroup(model.GroupId, model.RoleId);
+                var roles = _application.SetGroupRoles(model.GroupId, model.RoleId);
+                return Ok(roles);
+            }
+
+            return BadRequest();
+        }
+
+        [HttpPost]
+        [Route("assignusertogroup")]
+        public IActionResult AddUserGroup([FromBody] AssignUserToGroupView model)
+        {
+            if (model != null)
+            {
+                var roles = _application.SetUserGroups(model.UserId, model.groupname);
                 return Ok(roles);
             }
 
