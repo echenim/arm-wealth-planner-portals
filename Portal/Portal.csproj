@@ -6,6 +6,13 @@
     <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="Areas\Client\Models\**" />
+    <Content Remove="Areas\Client\Models\**" />
+    <EmbeddedResource Remove="Areas\Client\Models\**" />
+    <None Remove="Areas\Client\Models\**" />
+  </ItemGroup>
+
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore" Version="2.2.0" />
@@ -19,6 +26,79 @@
     <Folder Include="Areas\Admin\Data\" />
     <Folder Include="Areas\Admin\Models\" />
     <Folder Include="Areas\Admin\Uploads\" />
+    <Folder Include="Areas\Client\Controllers\" />
+    <Folder Include="Areas\Client\Data\" />
+    <Folder Include="Areas\Client\Views\" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <None Include="wwwroot\custom-client\css\index.scss" />
+    <None Include="wwwroot\custom-client\fonts\Gotham-Medium.svg" />
+    <None Include="wwwroot\custom-client\fonts\Gotham-Medium.woff2" />
+    <None Include="wwwroot\custom-client\fonts\gothamlight_regular-webfont.woff2" />
+    <None Include="wwwroot\custom-client\fonts\gotham_bold-webfont.woff2" />
+    <None Include="wwwroot\custom-client\fonts\gotham_book-webfont.woff2" />
+    <None Include="wwwroot\custom-client\fonts\gotham_regular-webfont.woff2" />
+    <None Include="wwwroot\custom-client\images\banner1.svg" />
+    <None Include="wwwroot\custom-client\images\banner2.svg" />
+    <None Include="wwwroot\custom-client\images\banner3.svg" />
+    <None Include="wwwroot\custom-client\images\banner4.svg" />
+    <None Include="wwwroot\custom-client\js\amChartsDirective.js" />
+    <None Include="wwwroot\custom-client\js\angular.min.js" />
+    <None Include="wwwroot\custom-client\js\bootstrap-datepicker.js" />
+    <None Include="wwwroot\custom-client\js\bootstrap-datepicker.min.js" />
+    <None Include="wwwroot\custom-client\js\bootstrap-select.min.js" />
+    <None Include="wwwroot\custom-client\js\bootstrap-slider.js" />
+    <None Include="wwwroot\custom-client\js\bootstrap-slider.min.js" />
+    <None Include="wwwroot\custom-client\js\bootstrap.min.js" />
+    <None Include="wwwroot\custom-client\js\daterangepicker.js" />
+    <None Include="wwwroot\custom-client\js\download.js" />
+    <None Include="wwwroot\custom-client\js\idangerous.swiper.min.js" />
+    <None Include="wwwroot\custom-client\js\index.js" />
+    <None Include="wwwroot\custom-client\js\jquery-2.2.4.min.js" />
+    <None Include="wwwroot\custom-client\js\jquery-3.0.0.min.js" />
+    <None Include="wwwroot\custom-client\js\jquery.animsition.min.js" />
+    <None Include="wwwroot\custom-client\js\jquery.countTo.js" />
+    <None Include="wwwroot\custom-client\js\jquery.datetimepicker.full.min.js" />
+    <None Include="wwwroot\custom-client\js\jquery.magnific-popup.min.js" />
+    <None Include="wwwroot\custom-client\js\moment.min.js" />
+    <None Include="wwwroot\custom-client\js\nouislider.min.js" />
+    <None Include="wwwroot\custom-client\js\pizza.js" />
+    <None Include="wwwroot\custom-client\js\pizza\bar.js" />
+    <None Include="wwwroot\custom-client\js\pizza\line.js" />
+    <None Include="wwwroot\custom-client\js\pizza\pie.js" />
+    <None Include="wwwroot\custom-client\js\site.js" />
+    <None Include="wwwroot\custom-client\js\site.min.js" />
+    <None Include="wwwroot\custom-client\js\slider.js" />
+    <None Include="wwwroot\custom-client\lib\bootstrap\dist\css\bootstrap-theme.css.map" />
+    <None Include="wwwroot\custom-client\lib\bootstrap\dist\css\bootstrap-theme.min.css.map" />
+    <None Include="wwwroot\custom-client\lib\bootstrap\dist\css\bootstrap.css.map" />
+    <None Include="wwwroot\custom-client\lib\bootstrap\dist\css\bootstrap.min.css.map" />
+    <None Include="wwwroot\custom-client\lib\bootstrap\dist\fonts\glyphicons-halflings-regular.svg" />
+    <None Include="wwwroot\custom-client\lib\bootstrap\dist\fonts\glyphicons-halflings-regular.woff2" />
+    <None Include="wwwroot\custom-client\lib\bootstrap\dist\js\bootstrap.js" />
+    <None Include="wwwroot\custom-client\lib\bootstrap\dist\js\bootstrap.min.js" />
+    <None Include="wwwroot\custom-client\lib\bootstrap\dist\js\npm.js" />
+    <None Include="wwwroot\custom-client\lib\bootstrap\LICENSE" />
+    <None Include="wwwroot\custom-client\lib\jquery-validation-unobtrusive\jquery.validate.unobtrusive.js" />
+    <None Include="wwwroot\custom-client\lib\jquery-validation-unobtrusive\jquery.validate.unobtrusive.min.js" />
+    <None Include="wwwroot\custom-client\lib\jquery-validation\dist\additional-methods.js" />
+    <None Include="wwwroot\custom-client\lib\jquery-validation\dist\additional-methods.min.js" />
+    <None Include="wwwroot\custom-client\lib\jquery-validation\dist\jquery.validate.js" />
+    <None Include="wwwroot\custom-client\lib\jquery-validation\dist\jquery.validate.min.js" />
+    <None Include="wwwroot\custom-client\lib\jquery-validation\LICENSE.md" />
+    <None Include="wwwroot\custom-client\lib\jquery\dist\jquery.js" />
+    <None Include="wwwroot\custom-client\lib\jquery\dist\jquery.min.js" />
+    <None Include="wwwroot\custom-client\lib\jquery\dist\jquery.min.map" />
+    <None Include="wwwroot\custom-client\lib\piechat\js\pizza.js" />
+    <None Include="wwwroot\custom-client\lib\piechat\js\pizza.min.js" />
+    <None Include="wwwroot\custom-client\lib\piechat\js\vendor\dependencies.js" />
+    <None Include="wwwroot\custom-client\lib\piechat\js\vendor\modernizr.js" />
+    <None Include="wwwroot\custom-client\sass\index.scss" />
+    <None Include="wwwroot\custom-client\sass\_init.scss" />
+    <None Include="wwwroot\custom-client\sass\_media.scss" />
+    <None Include="wwwroot\custom-client\sass\_paddMarg.scss" />
   </ItemGroup>
 
 

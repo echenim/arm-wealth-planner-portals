@@ -1,0 +1,12 @@
+2018-12-07 1:56:PM System.FormatException: Invalid length for a Base-64 char array or string.
+   at System.Convert.FromBase64_Decode(Char* startInputPtr, Int32 inputLength, Byte* startDestPtr, Int32 destLength)
+   at System.Convert.FromBase64CharPtr(Char* inputPtr, Int32 inputLength)
+   at System.Convert.FromBase64String(String s)
+   at ARMClientPortal.Services.SecureCredentials.DecryptCredentials(String credentials) in C:\Users\gbadeboa\source\repos\ARMClientPortal\ARMClientPortal\Services\Utilities.cs:line 48
+   at ARMClientPortal.Controllers.BuyController.ProcessPayment(Investment modelview) in C:\Users\gbadeboa\source\repos\ARMClientPortal\ARMClientPortal\Controllers\BuyController.cs:line 253
+2018-12-07 1:57:PM System.FormatException: Invalid length for a Base-64 char array or string.
+   at System.Convert.FromBase64_Decode(Char* startInputPtr, Int32 inputLength, Byte* startDestPtr, Int32 destLength)
+   at System.Convert.FromBase64CharPtr(Char* inputPtr, Int32 inputLength)
+   at System.Convert.FromBase64String(String s)
+   at ARMClientPortal.Services.SecureCredentials.DecryptCredentials(String credentials) in C:\Users\gbadeboa\source\repos\ARMClientPortal\ARMClientPortal\Services\Utilities.cs:line 48
+   at ARMClientPortal.Controllers.BuyController.ProcessPayment(Investment modelview) in C:\Users\gbadeboa\source\repos\ARMClientPortal\ARMClientPortal\Controllers\BuyController.cs:line 253
