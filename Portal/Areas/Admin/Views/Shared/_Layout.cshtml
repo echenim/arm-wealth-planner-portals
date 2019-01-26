@@ -1,0 +1,444 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>ARM Investment Center</title>
+    <meta charset="utf-8">
+    <meta content="ie=edge" http-equiv="x-ua-compatible">
+    <meta content="template language" name="keywords">
+    <meta content="ARM Investment Center" name="description">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <environment include="Development">
+        <link href="~/custom/img/arm-favicon.jpg" rel="shortcut icon">
+        <link href="apple-touch-icon.png" rel="apple-touch-icon">
+        <link href="https://fonts.googleapis.com/css?family=Varela+Round:300,400,500" rel="stylesheet" type="text/css">
+        <link href="~/custom/components/select2/dist/css/select2.min.css" rel="stylesheet">
+        <link href="~/custom/components/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
+        <link href="~/custom/components/dropzone/dist/dropzone.css" rel="stylesheet">
+        <link href="~/custom/components/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
+        <link href="~/custom/components/fullcalendar/dist/fullcalendar.min.css" rel="stylesheet">
+        <link href="~/custom/components/perfect-scrollbar/css/perfect-scrollbar.min.css" rel="stylesheet">
+        <link href="~/custom/components/slick-carousel/slick/slick.css" rel="stylesheet">
+    </environment>
+    <environment exclude="Development">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css"
+              asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
+              asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute"
+              crossorigin="anonymous"
+              integrity="sha256-eSi1q2PG6J7g7ib17yAaWMcrr5GrtohYChqibrV7PBE=" />
+    </environment>
+    <link href="~/custom/css/main.css?version=4.4.0" rel="stylesheet" />
+</head>
+<body class="menu-position-side menu-side-left full-screen">
+
+    <div class="all-wrapper with-side-panel solid-bg-all">
+
+        <div class="layout-w">
+            <!--------------------
+            START - Mobile Menu
+            -------------------->
+            <div class="menu-mobile menu-activated-on-click color-scheme-dark">
+                <div class="mm-logo-buttons-w">
+                    <a asp-area="Admin" asp-controller="Dashboard" asp-action="Index">img src="~/custom/img/arm-logo.png"></a>
+                    <div class="mm-buttons">
+                        <div class="mobile-menu-trigger">
+                            <div class="os-icon os-icon-hamburger-menu-1"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-and-user">
+
+                    <!--------------------
+                    START - Mobile Menu List
+                    -------------------->
+                    <ul class="main-menu">
+                        <li>
+                            <a asp-area="Admin" asp-controller="Dashboard" asp-action="Index">
+                                <div class="icon-w">
+                                    <div class="os-icon os-icon-layout"></div>
+                                </div>
+                                <span>Dashboard</span>
+                            </a>
+                        </li>
+
+                        <li>
+
+                            <a asp-area="Admin" asp-controller="Sales" asp-action="Index">
+                                <div class="icon-w">
+                                    <div class="os-icon os-icon os-icon-coins-4"></div>
+                                </div>
+                                <span>Sales</span>
+                            </a>
+                        </li>
+
+                        <li class="has-sub-menu">
+                            <a asp-area="Admin" asp-controller="Orders" asp-action="Index">
+                                <div class="icon-w">
+                                    <div class="os-icon os-icon-documents-03"></div>
+                                </div>
+                                <span>Orders</span>
+                            </a>
+                            <ul class="sub-menu">
+                                <li>
+                                    <a asp-area="Admin" asp-controller="Orders" asp-action="Index"> View Orders</a>
+                                </li>
+                                <li>
+                                    <a asp-area="Admin" asp-controller="Orders" asp-action="Add"> Create Orders </a>
+                                </li>
+                                <li>
+                                    <a asp-area="Admin" asp-controller="Orders" asp-action="Interest"> Expressions of Interest</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="has-sub-menu">
+                            <a asp-area="Admin" asp-controller="Products" asp-action="Index">
+                                <div class="icon-w">
+                                    <div class="os-icon os-icon os-icon-shopping-bag"></div>
+                                </div>
+                                <span>Products</span>
+                            </a>
+                            <ul class="sub-menu">
+                                <li>
+                                    <a asp-area="Admin" asp-controller="Products" asp-action="Index"> View Products</a>
+                                </li>
+                                <li>
+                                    <a asp-area="Admin" asp-controller="Products" asp-action="Add"> Add Products </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a asp-area="Admin" asp-controller="Customers" asp-action="Index">
+                                <div class="icon-w">
+                                    <div class="os-icon os-icon os-icon-users"></div>
+                                </div>
+                                <span>Customers</span>
+                            </a>
+                        </li>
+
+                        <li class="has-sub-menu">
+                            <a href="javascript:void(0)">
+                                <div class="icon-w">
+                                    <div class="os-icon os-icon-bar-chart-stats-up"></div>
+                                </div>
+                                <span>Analytics</span>
+                            </a>
+                            <ul class="sub-menu">
+                                <li>
+                                    <a href="#">Google Analytics</a>
+                                </li>
+                                <li>
+                                    <a href="#">Business Intelligence</a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li>
+                            <a asp-area="Admin" asp-controller="Users" asp-action="Index">
+                                <div class="icon-w">
+                                    <div class="os-icon os-icon os-icon-hierarchy-structure-2"></div>
+                                </div>
+                                <span>Users</span>
+                            </a>
+                        </li>
+                    </ul>
+                    <!--------------------
+                    END - Mobile Menu List
+                    -------------------->
+                </div>
+            </div>
+            <!--------------------
+            END - Mobile Menu
+            -------------------->
+            <!--------------------
+            START - Main Menu
+            -------------------->
+            <div class="menu-w color-scheme-dark color-style-bright menu-position-side menu-side-left menu-layout-full sub-menu-style-over sub-menu-color-bright selected-menu-color-light menu-activated-on-hover menu-has-selected-link">
+                <div class="logo-w">
+                    <a asp-area="Admin" asp-controller="Dashboard" asp-action="Index">
+                        <img src="~/custom/img/arm-logo.png">
+                    </a>
+                </div>
+                <!---- Menu starts here ----->
+
+                <ul class="main-menu">
+                    <li class="">
+                        <a asp-area="Admin" asp-controller="Dashboard" asp-action="Index">
+                            <div class="icon-w">
+                                <div class="os-icon os-icon-layout"></div>
+                            </div>
+                            <span>Dashboard</span>
+                        </a>
+                    </li>
+
+                    <li class="">
+                        <a asp-area="Admin" asp-controller="Sales" asp-action="Index">
+                            <div class="icon-w">
+                                <div class="os-icon os-icon-coins-4"></div>
+                            </div>
+                            <span>Sales</span>
+                        </a>
+                    </li>
+
+                    <li class="has-sub-menu ">
+                        <a asp-area="Admin" asp-controller="Orders" asp-action="Index">
+                            <div class="icon-w">
+                                <div class="os-icon os-icon-documents-03"></div>
+                            </div>
+                            <span>Orders</span>
+                        </a>
+                        <div class="sub-menu-w">
+                            <div class="sub-menu-header">
+                                Orders
+                            </div>
+                            <div class="sub-menu-icon">
+                                <i class="os-icon os-icon-documents-03"></i>
+                            </div>
+                            <div class="sub-menu-i">
+                                <ul class="sub-menu">
+                                    <li>
+                                        <a asp-area="Admin" asp-controller="Orders" asp-action="Index">View Orders</a>
+                                    </li>
+                                    <li>
+                                        <a asp-area="Admin" asp-controller="Orders" asp-action="Interest">Expressions of Interest</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </li>
+
+                    <li class="has-sub-menu">
+                        <a asp-area="Admin" asp-controller="Products" asp-action="Index">
+                            <div class="icon-w">
+                                <div class="os-icon os-icon-shopping-bag"></div>
+                            </div>
+                            <span>Products</span>
+                        </a>
+                        <div class="sub-menu-w">
+                            <div class="sub-menu-header">
+                                Products
+                            </div>
+                            <div class="sub-menu-icon">
+                                <i class="os-icon os-icon-shopping-bag"></i>
+                            </div>
+                            <div class="sub-menu-i">
+                                <ul class="sub-menu">
+                                    <li>
+                                        <a asp-area="Admin" asp-controller="Products" asp-action="Index">View Products</a>
+                                    </li>
+                                    <li>
+                                        <a asp-area="Admin" asp-controller="Products" asp-action="Add">Add Product</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </li>
+
+                    <li class="">
+                        <a asp-area="Admin" asp-controller="Customers" asp-action="Index">
+                            <div class="icon-w">
+                                <div class="os-icon os-icon-users"></div>
+                            </div>
+                            <span>Customers</span>
+                        </a>
+                    </li>
+
+                    <li class="">
+                        <a asp-area="Admin" asp-controller="Users" asp-action="Index">
+                            <div class="icon-w">
+                                <div class="os-icon os-icon-users"></div>
+                            </div>
+                            <span>Users</span>
+                        </a>
+                    </li>
+                    <li class="has-sub-menu">
+                        <a asp-area="Admin" asp-controller="Settings" asp-action="Index">
+                            <div class="icon-w">
+                                <div class="os-icon os-icon-settings"></div>
+                            </div>
+                            <span>Settings</span>
+                        </a>
+                        <div class="sub-menu-w">
+
+                            <div class="sub-menu-i">
+                                <ul class="sub-menu">
+                                    <li>
+                                        <a asp-area="Admin" asp-controller="Settings" asp-action="ViewRoles">View Role</a>
+                                    </li>
+                                    <li>
+                                        <a asp-area="Admin" asp-controller="Settings" asp-action="ViewPermission">View Permission</a>
+                                    </li>
+                                    <li>
+                                        <a asp-area="Admin" asp-controller="Settings" asp-action="ViewProductCategory">View Categories</a>
+                                    </li>
+                                    <li>
+                                        <a asp-area="" asp-controller="Manage" asp-action="Index">Go to Manage Products Home Page</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+
+                <!---- Menu ends here ----->
+            </div>
+            <!--------------------
+            END - Main Menu
+            -------------------->
+            <div class="content-w">
+                <!--------------------
+                START - Top Bar
+                -------------------->
+                <div class="top-bar color-scheme-transparent ">
+                    <!--------------------
+                    START - Top Menu Controls
+                    -------------------->
+                    <div class="top-menu-controls row">
+
+                        <div class="element-search autosuggest-search-activator">
+                            <input placeholder="Start typing to search..." type="text">
+                        </div>
+
+                        <!--------------------
+                        START - User avatar and menu in secondary top menu
+                        -------------------->
+                        <div class="logged-user-w ">
+
+                            <div class="logged-user-i">
+                                <div class="avatar-w">
+                                    <img alt="" src="~/custom/img/default-profile.svg">
+                                </div>
+                                <div class="logged-user-menu color-style-bright">
+                                    <div class="logged-user-avatar-info">
+                                        <div class="avatar-w">
+                                            <img alt="" src="~/custom/img/default-profile.svg">
+                                        </div>
+                                        <div class="logged-user-info-w">
+                                            <div class="logged-user-name">
+                                                Firstname Lastname
+                                            </div>
+                                            <div class="logged-user-role">
+                                                firstname.lastname@email.com
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="bg-icon">
+                                        <i class="os-icon os-icon-user-male-circle2"></i>
+                                    </div>
+                                    <ul>
+
+                                        <li>
+                                            <a href="profile.html"><i class="os-icon os-icon-user-male-circle2"></i><span>My Account</span></a>
+                                        </li>
+                                        <li>
+                                            <a href="#"><i class="os-icon os-icon-signs-11"></i><span>Logout</span></a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <!--------------------
+                        END - User avatar and menu in secondary top menu
+                        -------------------->
+                    </div>
+                    <!--------------------
+                    END - Top Menu Controls
+                    -------------------->
+                </div>
+                <!--------------------
+                END - Top Bar
+                -------------------->
+                <!--------------------
+                START - Breadcrumbs
+                -------------------->
+                <div class="breadcrumb">
+                    <div class="row">
+                        <div class="col-md-6 breadcrumb-page-title ">
+                            <h5 class="mb-0">
+                                @ViewData["ControllerName"]
+                            </h5>
+                        </div>
+                        <div class="col-md-6 text-right d-none d-sm-block">Firstname Lastname</div>
+                    </div>
+                </div>
+
+                <!--------------------
+                END - Breadcrumbs
+                -------------------->
+                @RenderBody()
+
+                <div class="footer-w">
+                    <div class="deep-footer">
+                        &copy; 2018  <a href="http://arminvestmentmanagers.com/">ARM Investment Managers.</a> All rights reserved.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="display-type"></div>
+    </div>
+    <environment include="Development">
+        <script src="~/custom/components/jquery/dist/jquery.min.js"></script>
+        <script src="~/custom/components/popper.js/dist/umd/popper.min.js"></script>
+        <script src="~/custom/components/moment/moment.js"></script>
+        <script src="~/custom/components/chart.js/dist/Chart.min.js"></script>
+        <script src="~/custom/components/select2/dist/js/select2.full.min.js"></script>
+        <script src="~/custom/components/jquery-bar-rating/dist/jquery.barrating.min.js"></script>
+        <script src="~/custom/components/ckeditor/ckeditor.js"></script>
+        <script src="~/custom/components/bootstrap-validator/dist/validator.min.js"></script>
+        <script src="~/custom/components/bootstrap-daterangepicker/daterangepicker.js"></script>
+        <script src="~/custom/components/ion.rangeSlider/js/ion.rangeSlider.min.js"></script>
+        <script src="~/custom/components/dropzone/dist/dropzone.js"></script>
+        <script src="~/custom/components/editable-table/mindmup-editabletable.js"></script>
+        <script src="~/custom/components/datatables.net/js/jquery.dataTables.min.js"></script>
+        <script src="~/custom/components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+        <script src="~/custom/components/fullcalendar/dist/fullcalendar.min.js"></script>
+        <script src="~/custom/components/perfect-scrollbar/js/perfect-scrollbar.jquery.min.js"></script>
+        <script src="~/custom/components/tether/dist/js/tether.min.js"></script>
+        <script src="~/custom/components/slick-carousel/slick/slick.min.js"></script>
+        <script src="~/custom/components/bootstrap/js/dist/util.js"></script>
+        <script src="~/custom/components/bootstrap/js/dist/alert.js"></script>
+        <script src="~/custom/components/bootstrap/js/dist/button.js"></script>
+        <script src="~/custom/components/bootstrap/js/dist/carousel.js"></script>
+        <script src="~/custom/components/bootstrap/js/dist/collapse.js"></script>
+        <script src="~/custom/components/bootstrap/js/dist/dropdown.js"></script>
+        <script src="~/custom/components/bootstrap/js/dist/modal.js"></script>
+        <script src="~/custom/components/bootstrap/js/dist/tab.js"></script>
+        <script src="~/custom/components/bootstrap/js/dist/tooltip.js"></script>
+        <script src="~/custom/components/bootstrap/js/dist/popover.js"></script>
+        <script src="~/custom/js/demo_customizer.js?version=4.4.0"></script>
+        <script src="~/custom/js/main.js?version=4.4.0"></script>
+    </environment>
+    <environment exclude="Development">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"
+                asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
+                asp-fallback-test="window.jQuery"
+                crossorigin="anonymous"
+                integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=">
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/js/bootstrap.bundle.min.js"
+                asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"
+                asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
+                crossorigin="anonymous"
+                integrity="sha256-E/V4cWE4qvAeO5MOhjtGtqDzPndRO1LBk8lJ/PR7CA4=">
+        </script>
+    </environment>
+    @*<script src="~/js/site.js" asp-append-version="true"></script>*@
+    <script src="~/custom/js/main.js?version=4.4.0" asp-append-version="true"></script>
+    <script>
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r;
+            i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date();
+            a = s.createElement(o),
+                m = s.getElementsByTagName(o)[0];
+            a.async = 1;
+            a.src = g;
+            m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+
+        ga('create', 'UA-XXXXXXX-9', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

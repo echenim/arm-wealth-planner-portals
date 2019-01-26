@@ -1,0 +1,150 @@
+﻿@model Portal.Domain.ModelView.ProductViewModel
+
+@{
+    ViewData["Title"] = "_add";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout_Admin.cshtml";
+}
+
+<!---- Dashboard Overview --->
+<div class="row">
+    <div class=" col-md-12 ">
+        <div class=" ">
+            <div class="">
+
+                <div class="element-box">
+                    <div class="m-b">
+                        <form asp-action="Add" method="post" enctype="multipart/form-data">
+                            <div class="row">
+
+                                <div class="col-md-4">
+                                    <div class="element-wrapper">
+
+                                        <div class="element-box">
+                                            <h5 class="form-header">
+                                                Product Image(s)
+                                            </h5>
+                                            <div class="form-desc">
+                                            </div>
+                                            <div class="dz-message">
+                                                <div>
+                                                    <h5>
+                                                        Drop files here or click to upload.
+                                                    </h5>
+                                                    <input asp-for="UploadProductImage" type="file"
+                                                           class="inputfile inputfile-4" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-8">
+                                    <div class="element-box">
+
+                                        <h5 class="form-header">
+                                            Add New Product
+                                        </h5>
+
+                                        <div class="form-group">
+                                            <label for=""> Product Name</label><input class="form-control" placeholder="Enter product name" type="text">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for=""> Select Category</label>
+                                            <select class="form-control">
+                                                <option>
+                                                    Select Category
+                                                </option>
+                                                <option>
+                                                    Mutual Funds
+                                                </option>
+                                                <option>
+                                                    Pensions
+                                                </option>
+                                                <option>
+                                                    Real Estate
+                                                </option>
+                                                <option>
+                                                    Insurance
+                                                </option>
+                                                <option>
+                                                    Trustees
+                                                </option>
+                                                <option>
+                                                    Securities
+                                                </option>
+                                            </select>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for=""> Product Type</label>
+                                            <select class="form-control">
+                                                <option>
+                                                    Select Product Type
+                                                </option>
+                                                <option>
+                                                    Enter Amount
+                                                </option>
+                                                <option>
+                                                    Fixed Amount
+                                                </option>
+                                                <option>
+                                                    Expression of Interest
+                                                </option>
+                                            </select>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="">Enter Price </label>
+                                            <div class="input-group mb-3">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">&#8358;</span>
+                                                </div>
+                                                <input type="text" class="form-control" aria-label="Amount (to the nearest Naira)">
+                                                <div class="input-group-append">
+                                                    <span class="input-group-text">.00</span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label>Key Benefits</label><textarea class="form-control" rows="3"></textarea>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label> Key Features</label><textarea class="form-control" rows="3"></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label> Product Description</label><textarea class="form-control" rows="5"></textarea>
+                                        </div>
+
+                                        <div class="form-group">
+                                            Active
+                                            <label class="switch">
+                                                <input type="checkbox" class="success">
+                                                <span class="slider round"></span>
+                                            </label>
+                                        </div>
+                                        <div class="form-buttons-w">
+                                            <button class="btn btn-primary" type="submit">Add Product</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

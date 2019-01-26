@@ -1,0 +1,295 @@
+﻿@{
+    ViewData["Title"] = "Index";
+    //// Layout = "~/Areas/Admin/Views/Shared/_Layout_Admin.cshtml";
+}
+
+<div class="content-i">
+    <div class="content-box">
+
+        <!---- Dashboard Overview --->
+        <div class="row">
+            <div class=" col-md-12 ">
+                <div class=" ">
+                    <div class="element-box">
+                        <div class="m-b">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <h5>
+                                        Overview
+                                    </h5>
+                                </div>
+                                <div class="col-md-6">
+                                    <form class="form-inline float-right">
+                                        <select class="form-control form-control-sm rounded bright">
+                                            <option selected="selected" value="This Month">
+                                                This Month
+                                            </option>
+                                            <option value="Last Month">
+                                                Last Month
+                                            </option>
+                                            <option value="This Year">
+                                                This year
+                                            </option>
+                                            <option value="All Time">
+                                                All Time
+                                            </option>
+                                        </select>
+                                    </form>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-sm-6 col-lg-3 col-12 b-r b-b no-br">
+                                    <a class="el-tablo centered padded-v-big highlight smaller" href="Sales.html">
+                                        <img class="dash-icon-img" alt="" src="img/sales-icon.svg">
+                                        <div class="label">
+                                            Sales
+                                        </div>
+                                        <div class="value font-one-four">
+                                            &#8358;411,093,342
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="col-sm-6 col-lg-3 col-12 b-b b-r no-br">
+                                    <a class="el-tablo centered padded-v-big highlight smaller" href="Orders.html">
+                                        <img class="dash-icon-img" alt="" src="img/orders-icon.svg">
+                                        <div class="label">
+                                            Orders
+                                        </div>
+                                        <div class="value font-one-four">
+                                            4,500
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="col-sm-6 col-lg-3 col-12 b-r b-b no-br">
+                                    <a class="el-tablo centered padded-v-big highlight smaller" href="Customers.html">
+                                        <img class="dash-icon-img" alt="" src="img/customers-icon.svg">
+                                        <div class="label">
+                                            Customers
+                                        </div>
+                                        <div class="value font-one-four">
+                                            2,300
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="col-sm-6 col-lg-3 col-12 b-b no-br">
+                                    <a class="el-tablo centered padded-v-big highlight smaller" href="Expressions of Interest.html">
+                                        <img class="dash-icon-img" alt="" src="img/eoi-icon.svg">
+                                        <div class="label">
+                                            Expressions of Interest
+                                        </div>
+                                        <div class="value font-one-four">
+                                            45,200
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!---- Latest Orders --->
+        <div class="row">
+            <div class="col-md-12 ">
+                <div class="element-box element-wrapper">
+                    <h5 class="element-header">
+                        LATEST ORDERS
+                        <button class="mr-2 mb-2 btn btn-primary float-right" type="button"> View Orders</button>
+                    </h5>
+                    <div class="element-box-tp">
+                        <div class="table-responsive">
+                            <table class="table table-padded">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            Date
+                                        </th>
+                                        <th>
+                                            Customer
+                                        </th>
+                                        <th>
+                                            Item Purchased
+                                        </th>
+                                        <th class="text-center">
+                                            Amount
+                                        </th>
+                                        <th>
+                                            Category
+                                        </th>
+                                        <th>
+                                            Status
+                                        </th>
+                                        <th>
+                                            Actions
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <span>Today</span><span class="smaller lighter">1:52am</span>
+                                        </td>
+                                        <td>
+                                            <div>
+                                                <span>John Bloomberg</span>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div>
+                                                Money Market Fund
+                                            </div>
+                                        </td>
+                                        <td class="text-center">
+                                            <span>&#8358;200,000.00</span>
+                                        </td>
+                                        <td>
+                                            Mutual Funds
+                                        </td>
+                                        <td class="nowrap">
+                                            <span class="status-pill smaller green"></span><span>Completed</span>
+                                        </td>
+                                        <td class="row-actions">
+                                            <a href="#" title="View"><i class="os-icon os-icon-eye"></i></a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <span>Yesterday</span><span class="smaller lighter">3:22pm</span>
+                                        </td>
+                                        <td>
+                                            <div>
+                                                <span>Anthony Joshua</span>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div>
+                                                Discovery Fund
+                                            </div>
+                                        </td>
+                                        <td class="text-center">
+                                            <span>&#8358;1,200,000.00</span>
+                                        </td>
+
+                                        <td>
+                                            Mutual Funds
+                                        </td>
+                                        <td class="nowrap">
+                                            <span class="status-pill smaller red"></span><span>Cancelled</span>
+                                        </td>
+                                        <td class="row-actions">
+                                            <a href="#"> <i title="View" class="os-icon os-icon-eye"></i></a><a href="#" class="text-success"><i title="Approve" class="os-icon os-icon-checkmark"></i></a><a href="#"><i title="Processing" class="os-icon os-icon-more-horizontal"></i></a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <span>Jan 19th</span><span class="smaller lighter">3:22pm</span>
+                                        </td>
+                                        <td>
+                                            <div>
+                                                <img alt="" src="img/avatar3.jpg"><span>Babajide John Traore</span>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div>
+                                                ARM Life Savings Plan
+                                            </div>
+                                        </td>
+                                        <td class="text-center">
+                                            <span>&#8358;1,200,000.00</span>
+                                        </td>
+                                        <td>
+                                            Insurance
+                                        </td>
+                                        <td class="nowrap">
+                                            <span class="status-pill smaller yellow"></span><span>Processing</span>
+                                        </td>
+                                        <td class="row-actions">
+                                            <a href="#"> <i title="View" class="os-icon os-icon-eye"></i></a><a href="#" class="text-success"><i title="Approve" class="os-icon os-icon-checkmark"></i></a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <span>Jan 23rd</span><span class="smaller lighter">2:12pm</span>
+                                        </td>
+                                        <td>
+                                            <div>
+                                                <img alt="" src="img/avatar1.jpg"><span>Mary Opeyemi Johnson</span>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div>
+                                                ARM Pension’s Retirement Savings Account
+                                            </div>
+                                        </td>
+                                        <td class="text-center">
+                                            <span>&#8358;1,200,000.00</span>
+                                        </td>
+                                        <td>
+                                            Pensions
+                                        </td>
+                                        <td class="nowrap">
+                                            <span class="status-pill smaller yellow"></span><span>Pending Payment</span>
+                                        </td>
+                                        <td class="row-actions">
+                                            <a href="#"> <i title="View" class="os-icon os-icon-eye"></i></a><a href="#" class="text-success"><i title="Approve" class="os-icon os-icon-checkmark"></i></a><a href="#"><i title="Processing" class="os-icon os-icon-more-horizontal"></i></a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <span>Jan 12th</span><span class="smaller lighter">9:51am</span>
+                                        </td>
+                                        <td>
+                                            <div>
+                                                <span>Jon Snow Taegeryan</span>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div>
+                                                The Cove at Lakowe Hills
+                                            </div>
+                                        </td>
+                                        <td class="text-center">
+                                            -
+                                        </td>
+                                        <td>
+                                            Real Estate
+                                        </td>
+                                        <td class="nowrap">
+                                            <span class="status-pill smaller green"></span><span>EOI</span>
+                                        </td>
+                                        <td class="row-actions">
+                                            <a href="#" title="View"><i class="os-icon os-icon-eye"></i></a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!---- Report Summary --->
+
+        <div class="row">
+            <!---- Analytics Summary --->
+            <div class="col-md-6 ">
+                <div class="element-box element-wrapper element-card-bg">
+                    <h5 class="element-header">
+                        ANALYTICS
+                    </h5>
+                </div>
+            </div>
+            <!---- BI Tools Summary --->
+            <div class="col-md-6 ">
+                <div class="element-box element-wrapper element-card-bg">
+                    <h5 class="element-header">
+                        BI TOOLS
+                    </h5>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
