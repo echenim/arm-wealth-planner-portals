@@ -1,4 +1,6 @@
 ﻿using System.Linq;
+using System.Net;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Portal.Areas.Admin.ViewModels;
@@ -7,6 +9,7 @@ using Portal.Domain.Models.Identity;
 namespace Portal.Areas.Admin.Controllers
 {
     [Area("Admin")]
+   // [Authorize("admin:can:view")]
     public class CustomersController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;

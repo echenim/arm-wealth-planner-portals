@@ -13,9 +13,12 @@ namespace Portal.Areas.Admin.Controllers
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly RoleManager<ApplicationRole> _roleManager;
+        private readonly IApplicationGroupManager _groupManager;
         private readonly IUserService _service;
 
-        public UsersController(UserManager<ApplicationUser> userManager, RoleManager<ApplicationRole> roleManager,
+        public UsersController(UserManager<ApplicationUser> userManager,
+            RoleManager<ApplicationRole> roleManager, 
+            IApplicationGroupManager groupManager,
             IUserService service)
         {
             _userManager = userManager;
@@ -52,7 +55,7 @@ namespace Portal.Areas.Admin.Controllers
                 Value = string.Empty
             });
 
-            var roleCollection = _roleManager.Roles.OrderBy(s => s.Name);
+            var roleCollection = _groupManager.Groups().OrderBy(s => s.Name);
             foreach (var item in roleCollection)
             {
                 internalUser.AvailableRoles.Add(new SelectListItem
