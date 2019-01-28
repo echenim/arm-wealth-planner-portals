@@ -4,7 +4,7 @@ using Portal.Domain;
 using Portal.Domain.Models.Identity;
 using Portal.Business.Stores;
 
-namespace Portal.Business.Implementations
+namespace Portal.Business.StoreManagers
 {
     internal class ApplicationRoleManager
     {

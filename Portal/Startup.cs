@@ -7,6 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Portal.Business.Contracts;
 using Portal.Business.Implementations;
+using Portal.Business.StoreManagers;
 using Portal.Domain;
 using Portal.Domain.Models.Identity;
 
@@ -63,6 +64,8 @@ namespace Portal
             services.AddTransient<IProductPerformanceService, ProductPerformanceService>();
             services.AddTransient<IOrdersAndSalesService, OrdersAndSalesService>();
             services.AddTransient<IUserService, UserService>();
+            services.AddTransient<IDashBoardManager, DashBoardManager>();
+            services.AddTransient<IApplicationGroupManager, ApplicationGroupManager>();
 
             #endregion service register
         }
@@ -92,7 +95,7 @@ namespace Portal
             {
                 routes.MapRoute(
                     name: "areas",
-                    template: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
+                    template: "{area:exists}/{controller=Dashboard}/{action=Index}/{id?}"
                 );
 
                 routes.MapRoute(

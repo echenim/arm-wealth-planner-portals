@@ -21,7 +21,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Portal.Business\Portal.Business.csproj" />
     <ProjectReference Include="..\Portal.Domain\Portal.Domain.csproj" />
-    <ProjectReference Include="..\Portal.Migration\Portal.Migration.csproj" />
+    <ProjectReference Include="..\Portal.Migration\Portal.AddMigration.csproj" />
   </ItemGroup>
 
   <ItemGroup>

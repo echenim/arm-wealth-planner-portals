@@ -5,7 +5,7 @@ using Portal.Domain;
 using Portal.Domain.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace Portal.Business.Implementations
+namespace Portal.Business.StoreManagers
 {
     public class ProductService : IProductService
     {
@@ -18,9 +18,9 @@ namespace Portal.Business.Implementations
 
         public Products Save(Products model)
         {
-            _context.Products.Add(model);
-            model.Id = _context.SaveChanges();
-            return model;
+            var r = _context.Products.Add(model).Entity;
+            _context.SaveChanges();
+            return r;
         }
 
         public Products Edit(Products model)

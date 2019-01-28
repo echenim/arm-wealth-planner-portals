@@ -8,12 +8,15 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using Portal.AddMigration;
 using Portal.API.Extensions;
 using Portal.API.Utilities;
 using Portal.Business.Contracts;
 using Portal.Business.Implementations;
+using Portal.Business.StoreManagers;
 using Portal.Domain;
 using Portal.Domain.Models.Identity;
+
 using Swashbuckle.AspNetCore.Swagger;
 
 namespace Portal.API

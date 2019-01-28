@@ -1,0 +1,64 @@
+﻿@model Portal.Domain.Models.Identity.ApplicationGroup
+
+@{
+    ViewData["Title"] = "_add";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout_Admin.cshtml";
+}
+
+<!---- Dashboard Overview --->
+<div class="row">
+    <div class=" col-md-12 ">
+        <div class=" ">
+            <div class="">
+
+                <div class="element-box">
+                    <div class="m-b">
+                        <form asp-action="CreatePermission" method="post">
+                            @Html.AntiForgeryToken()
+                            <div class="row">
+
+                                <div class="col-md-8">
+                                    <div class="element-box">
+
+                                        <h5 class="form-header">
+                                            Add New Permission
+                                        </h5>
+
+                                        <div class="form-group">
+                                            <label for="">Name</label>
+                                            <input name="Name" asp-for="Name" class="form-control" placeholder="Enter permission name" type="text">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for=""> Description</label>
+                                            <textarea name="Description" asp-for="Description" class="form-control" placeholder="Enter description" type="text">
+                                           </textarea>
+                                        </div>
+
+                                        <div class="form-group">
+
+                                            @foreach (var item in (SelectList)ViewBag.RolesList)
+                                            {
+                                                <div>
+                                                    <input type="checkbox" name="SelectedRoles" value="@item.Text" class="checkbox-inline" />
+                                                    <label for="@item.Text"> @item.Text</label>
+                                                </div>
+                                            }
+                                        </div>
+
+                                        <div class="form-buttons-w">
+                                            <button class="btn btn-primary" type="submit">Add Product</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

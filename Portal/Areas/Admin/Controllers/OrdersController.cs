@@ -22,8 +22,9 @@ namespace Portal.Areas.Admin.Controllers
             ViewData["ControllerName"] = "Admin/Orders";
 
             var list = new List<OrdersView>();
-            var orders = _ordersAndSalesService.Get(s => s.Product.IsExpressionOfInterest.Equals("No"))
-                .OrderByDescending(s => s.OrderDate).ThenBy(s => s.Id);
+            var orders = _ordersAndSalesService.Get(s => s.Product.ProductTypes.Equals("Enter Amount")
+                        || s.Product.ProductTypes.Equals("Fixed Amount"))
+                .OrderByDescending(s => s.AddToCartDate).ThenBy(s => s.Customer);
 
             foreach (var item in orders)
             {
@@ -52,8 +53,8 @@ namespace Portal.Areas.Admin.Controllers
             ViewData["ControllerName"] = "Admin/Expression Of Interest";
 
             var list = new List<OrdersView>();
-            var orders = _ordersAndSalesService.Get(s => s.Product.IsExpressionOfInterest.Equals("Yes"))
-                .OrderByDescending(s => s.OrderDate).ThenBy(s => s.Id);
+            var orders = _ordersAndSalesService.Get(s => s.Product.ProductTypes.Equals("Expression of Interest"))
+                .OrderByDescending(s => s.OrderDate).ThenBy(s => s.Customer);
 
             foreach (var item in orders)
             {

@@ -5,7 +5,7 @@ using Portal.Domain;
 using Portal.Domain.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace Portal.Business.Implementations
+namespace Portal.Business.StoreManagers
 {
     public class ProductPerformanceService : IProductPerformanceService
     {

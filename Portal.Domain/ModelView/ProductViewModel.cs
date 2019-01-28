@@ -19,14 +19,16 @@ namespace Portal.Domain.ModelView
 
         public decimal StartFrom { get; set; }
 
-        [Required]
         public string Description { get; set; }
 
         [Required]
         public IFormFile UploadProductImage { get; set; }
 
         [Required]
-        public string IsExpressionOfInterest { get; set; }
+        public string ProductTypes { get; set; }
+
+        public string Benefit { get; set; }
+        public string Feature { get; set; }
 
         public List<SelectListItem> AvailableCategories { get; set; }
     }

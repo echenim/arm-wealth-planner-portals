@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Portal.Domain.Models;
 using Portal.Domain.Models.Identity;
 
-namespace Portal.Migration
+namespace Portal.AddMigration
 {
     public partial class MigDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, long>
 

@@ -16,13 +16,20 @@ namespace Portal.Areas.Admin.Controllers
     public class ProductsController : Controller
     {
         private readonly IProductService _product;
+        private readonly IProductFeatureService _productFeature;
+        private readonly IProductKeyBenefitService _benefitService;
         private readonly IProductCategoryService _categoryService;
         private readonly IHostingEnvironment _hostingEnvironment;
 
-        public ProductsController(IProductService product, IProductCategoryService categoryService,
-            IHostingEnvironment hostingEnvironment)
+        public ProductsController(IProductService product,
+            IProductCategoryService categoryService,
+            IProductFeatureService productFeature,
+            IProductKeyBenefitService benefitService,
+        IHostingEnvironment hostingEnvironment)
         {
             _product = product;
+            _benefitService = benefitService;
+            _productFeature = productFeature;
             _categoryService = categoryService;
             _hostingEnvironment = hostingEnvironment;
         }
@@ -76,6 +83,8 @@ namespace Portal.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
+                #region product | benefit | feature
+
                 var product = new Products
                 {
                     Id = models.Id,
@@ -83,8 +92,14 @@ namespace Portal.Areas.Admin.Controllers
                     ProductCategoryId = models.ProductCategory,
                     Description = models.Description,
                     StartFrom = models.StartFrom,
-                    IsExpressionOfInterest = models.IsExpressionOfInterest
+                    ProductTypes = models.ProductTypes
                 };
+
+                var benefit = new ProductKeyBenefit { Description = models.Benefit };
+
+                var feature = new ProductFeatures { Description = models.Feature };
+
+                #endregion product | benefit | feature
 
                 if (models.UploadProductImage.Length > 0)
                 {
@@ -93,7 +108,15 @@ namespace Portal.Areas.Admin.Controllers
                     var filename = $"{Guid.NewGuid().ToString().Replace("-", "")}{extension}";
 
                     product.Image = filename;
-                    var result = _product.Save(product);
+                    var products = _product.Save(product);
+                    benefit.ProductId = products.Id;
+                    benefit.Products = products;
+                    feature.ProductId = products.Id;
+                    feature.Products = products;
+
+                    var prodBenefit = _benefitService.Save(benefit);
+                    var prodFeature = _productFeature.Save(feature);
+
                     var upload = Path.Combine(Directory.GetCurrentDirectory(), "Uploads");
 
                     var filelocation = Path.Combine(upload, filename);

@@ -21,13 +21,12 @@ namespace Portal.Domain.Models
         [Column(TypeName = "decimal(18, 2)")]
         public decimal StartFrom { get; set; }
 
-        [MaxLength(300)]
         public string Description { get; set; }
 
         [Required]
         public string Image { get; set; }
 
-        public string IsExpressionOfInterest { get; set; }
+        public string ProductTypes { get; set; }
 
         public ProductCategory ProductCategory { get; set; }
     }

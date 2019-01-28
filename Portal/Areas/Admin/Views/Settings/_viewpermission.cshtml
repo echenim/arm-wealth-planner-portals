@@ -1,7 +1,7 @@
-﻿@using Portal.Domain.ViewModels
-@model IQueryable<ViewModelInternalUser>
+﻿@using Portal.Domain.Models.Identity
+@model IEnumerable<ApplicationGroup>
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "ViewProductCategory";
     Layout = "~/Areas/Admin/Views/Shared/_Layout_Admin.cshtml";
 }
 
@@ -9,34 +9,26 @@
     <div class="col-md-12 ">
         <div class="element-box element-wrapper">
             <h5 class="form-header">
-                Users List
+                Manage permission on the portal
             </h5>
 
             <div class="form-desc">
-                Manage users on the portal
-                <a asp-action="Add" class="btn btn-sm btn-primary float-left"> <i class="os-icon os-icon-plus-circle"></i> Add Users</a>
+
+                <a asp-action="CreatePermission" class="btn btn-sm btn-primary float-left"> <i class="os-icon os-icon-plus-circle"></i> Add Permission</a>
             </div>
             <div class="element-box-tp">
                 <div class="table-responsive">
                     <table class="table table-striped b-b">
                         <thead>
                             <tr>
-
-                                <th>
+                                <th class="text-center">
                                     Name
                                 </th>
-                                <th>
-                                    Email
+                                <th class="text-center">
+                                    Number Of Assigned Roles
                                 </th>
-                                <th>
-                                    Role
-                                </th>
-
-                                <th>
-                                    ACTIVE
-                                </th>
-                                <th>
-                                    LastLogin
+                                <th class="text-center">
+                                    Number Of Assigned Users
                                 </th>
                                 <th class="text-center">
                                     Actions
@@ -48,30 +40,32 @@
                             {
 
                                 <tr>
-
-                                    <td>
-                                        <div class="user-with-avatar">
-                                            <img alt="" src="~/custom/img/default-profile.svg"><span>@item.Name</span>
-                                        </div>
+                                    <td class="text-center">
+                                        <span>@item.Name</span>
                                     </td>
-
-                                    <td>
-                                        @item.Email
+                                    <td class="text-center">
+                                        <span>@item.ApplicationRoles.Count</span>
                                     </td>
-                                    <td>
-                                        @item.Role
-                                    </td>
-                                    <td>
-                                        @item.IsActive
-                                    </td>
-                                    <td>
-                                        @item.LastLogin
+                                    <td class="text-center">
+                                        <span>@item.ApplicationUsers.Count</span>
                                     </td>
 
                                     <td class="row-actions">
-                                        <a href="#" title="View"><i class="os-icon os-icon-eye"></i></a>
-                                        <a href="#" title="Edit"><i class="os-icon os-icon-edit"></i></a>
-                                        <a href="#" title="Suspend"><i class="os-icon os-icon-x-square"></i></a>
+                                        <div class="btn-group">
+
+                                            <button type="button" class="btn btn-primary  dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                                <span class="caret">Action</span>
+                                                <span class="sr-only"></span>
+                                            </button>
+                                            <ul class="dropdown-menu" role="menu">
+                                                <li>
+                                                    <a asp-controller="Settings" asp-action="Index">Edit</a>
+                                                </li>
+                                                <li>
+                                                    <a asp-controller="Settings" asp-action="Index">Delete</a>
+                                                </li>
+                                            </ul>
+                                        </div>
                                     </td>
                                 </tr>
                             }

@@ -13,7 +13,6 @@ namespace Portal.Domain.Models
         public int ProductId { get; set; }
 
         [Required]
-        [MaxLength(250)]
         public string Description { get; set; }
 
         public virtual Products Products { get; set; }

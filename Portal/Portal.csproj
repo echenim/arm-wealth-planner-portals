@@ -29,6 +29,7 @@
     <Folder Include="Areas\Client\Controllers\" />
     <Folder Include="Areas\Client\Data\" />
     <Folder Include="Areas\Client\Views\" />
+    <Folder Include="Uploads\" />
   </ItemGroup>
 
 

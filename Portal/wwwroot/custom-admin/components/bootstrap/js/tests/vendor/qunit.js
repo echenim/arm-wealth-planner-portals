@@ -412,7 +412,7 @@
 
   				// Short-circuit if the result is already known. (Using for...of
   				// with a break clause would be cleaner here, but it would cause
-  				// a syntax error on older Javascript implementations even if
+  				// a syntax error on older Javascript StoreManagers even if
   				// Set is unused)
   				if (!outerEq) {
   					return;
@@ -470,7 +470,7 @@
 
   				// Short-circuit if the result is already known. (Using for...of
   				// with a break clause would be cleaner here, but it would cause
-  				// a syntax error on older Javascript implementations even if
+  				// a syntax error on older Javascript StoreManagers even if
   				// Map is unused)
   				if (!outerEq) {
   					return;

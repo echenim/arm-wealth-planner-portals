@@ -70,7 +70,7 @@ To work with Chart.js, custom scale types must implement the following interface
     determineDataLimits: function() {},
 
     // Generate tick marks. this.chart is the chart instance. The data object can be accessed as this.chart.data
-    // buildTicks() should create a ticks array on the axis instance, if you intend to use any of the implementations from the base class
+    // buildTicks() should create a ticks array on the axis instance, if you intend to use any of the StoreManagers from the base class
     buildTicks: function() {},
 
     // Get the value to show for the data at the given index of the the given dataset, ie this.chart.data.datasets[datasetIndex].data[index]

@@ -1,0 +1,63 @@
+﻿@using Portal.Domain.Models.Identity
+@model IEnumerable<ApplicationRole>
+@{
+    ViewData["Title"] = "ViewRoles";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout_Admin.cshtml";
+}
+
+<div class="content-i">
+    <div class="content-box">
+
+        <div class="row">
+            <div class="col-md-12 ">
+                <div class="element-box element-wrapper">
+                    <h5 class="element-header">
+                        ROLES
+                    </h5>
+                    <div class="element-box-tp">
+                        <div class="table-responsive">
+                            <table class="table table-padded">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            Name
+                                        </th>
+                                        <th>
+                                            Normalized Name
+                                        </th>
+                                        <th>
+                                            Marker
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td>
+                                                <span class="smaller lighter">@item.Name</span>
+                                            </td>
+                                            <td>
+                                                <div>
+                                                    <span>
+                                                        @item.NormalizedName
+                                                    </span>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div>
+                                                    @item.ConcurrencyStamp
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

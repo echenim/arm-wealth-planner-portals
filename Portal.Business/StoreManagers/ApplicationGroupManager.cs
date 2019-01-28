@@ -7,7 +7,7 @@ using Portal.Domain.Models.Identity;
 using Portal.Business.Contracts;
 using Portal.Business.Stores;
 
-namespace Portal.Business.Implementations
+namespace Portal.Business.StoreManagers
 {
     public class ApplicationGroupManager : IApplicationGroupManager
     {

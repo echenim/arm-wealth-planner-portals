@@ -7077,7 +7077,7 @@ module.exports = function(Chart) {
 
 			me.beforeBuildTicks();
 
-			// New implementations should return an array of objects but for BACKWARD COMPAT,
+			// New StoreManagers should return an array of objects but for BACKWARD COMPAT,
 			// we still support no return (`this.ticks` internally set by calling this method).
 			ticks = me.buildTicks() || [];
 
@@ -7085,7 +7085,7 @@ module.exports = function(Chart) {
 
 			me.beforeTickToLabelConversion();
 
-			// New implementations should return the formatted tick labels but for BACKWARD
+			// New StoreManagers should return the formatted tick labels but for BACKWARD
 			// COMPAT, we still support no return (`this.ticks` internally changed by calling
 			// this method and supposed to contain only string values).
 			labels = me.convertTicksToLabels(ticks) || me.ticks;

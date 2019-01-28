@@ -14,6 +14,7 @@
                 <div class="element-box">
                     <div class="m-b">
                         <form asp-action="Add" method="post" enctype="multipart/form-data">
+                            @Html.AntiForgeryToken()
                             <div class="row">
 
                                 <div class="col-md-4">
@@ -30,8 +31,7 @@
                                                     <h5>
                                                         Drop files here or click to upload.
                                                     </h5>
-                                                    <input asp-for="UploadProductImage" type="file"
-                                                           class="inputfile inputfile-4" />
+                                                    <input class="os-icon os-icon-upload" name="UploadProductImage" asp-for="UploadProductImage" type="file" />
                                                 </div>
                                             </div>
                                         </div>
@@ -46,61 +46,45 @@
                                         </h5>
 
                                         <div class="form-group">
-                                            <label for=""> Product Name</label><input class="form-control" placeholder="Enter product name" type="text">
+                                            <label for=""> Product Name</label>
+                                            <input name="Name" asp-for="Name" class="form-control" placeholder="Enter product name" type="text">
                                         </div>
 
                                         <div class="form-group">
                                             <label for=""> Select Category</label>
-                                            <select class="form-control">
-                                                <option>
-                                                    Select Category
-                                                </option>
-                                                <option>
-                                                    Mutual Funds
-                                                </option>
-                                                <option>
-                                                    Pensions
-                                                </option>
-                                                <option>
-                                                    Real Estate
-                                                </option>
-                                                <option>
-                                                    Insurance
-                                                </option>
-                                                <option>
-                                                    Trustees
-                                                </option>
-                                                <option>
-                                                    Securities
-                                                </option>
+                                            <select name="ProductCategory" asp-for="ProductCategory" class="form-control">
+                                                @foreach (var item in Model.AvailableCategories)
+                                                {
+                                                    <option value="@item.Value">@item.Text</option>
+                                                }
                                             </select>
                                         </div>
 
                                         <div class="form-group">
                                             <label for=""> Product Type</label>
-                                            <select class="form-control">
+                                            <select asp-for="ProductTypes" class="form-control">
                                                 <option>
                                                     Select Product Type
                                                 </option>
-                                                <option>
+                                                <option value="Enter Amount">
                                                     Enter Amount
                                                 </option>
-                                                <option>
+                                                <option value="Fixed Amount">
                                                     Fixed Amount
                                                 </option>
-                                                <option>
+                                                <option value="Expression of Interest">
                                                     Expression of Interest
                                                 </option>
                                             </select>
                                         </div>
 
                                         <div class="form-group">
-                                            <label for="">Enter Price </label>
+                                            <label for="">Enter Start Price </label>
                                             <div class="input-group mb-3">
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text">&#8358;</span>
                                                 </div>
-                                                <input type="text" class="form-control" aria-label="Amount (to the nearest Naira)">
+                                                <input name="StartFrom" asp-for="StartFrom" type="text" class="form-control" aria-label="Amount (to the nearest Naira)">
                                                 <div class="input-group-append">
                                                     <span class="input-group-text">.00</span>
                                                 </div>
@@ -110,27 +94,30 @@
                                         <div class="row">
                                             <div class="col-sm-6">
                                                 <div class="form-group">
-                                                    <label>Key Benefits</label><textarea class="form-control" rows="3"></textarea>
+                                                    <label>Key Benefits</label>
+                                                    <textarea name="Benefit" asp-for="Benefit" class="form-control" rows="3"></textarea>
                                                 </div>
                                             </div>
                                             <div class="col-sm-6">
                                                 <div class="form-group">
-                                                    <label> Key Features</label><textarea class="form-control" rows="3"></textarea>
+                                                    <label> Key Features</label>
+                                                    <textarea name="Feature" asp-for="Feature" class="form-control" rows="3"></textarea>
                                                 </div>
                                             </div>
                                         </div>
 
                                         <div class="form-group">
-                                            <label> Product Description</label><textarea class="form-control" rows="5"></textarea>
+                                            <label> Product Description</label>
+                                            <textarea name="Description" asp-for="Description" class="form-control" rows="5"></textarea>
                                         </div>
 
-                                        <div class="form-group">
-                                            Active
-                                            <label class="switch">
-                                                <input type="checkbox" class="success">
-                                                <span class="slider round"></span>
-                                            </label>
-                                        </div>
+                                        @*<div class="form-group">
+                                                Active
+                                                <label class="switch">
+                                                    <input type="checkbox" class="success">
+                                                    <span class="slider round"></span>
+                                                </label>
+                                            </div>*@
                                         <div class="form-buttons-w">
                                             <button class="btn btn-primary" type="submit">Add Product</button>
                                         </div>

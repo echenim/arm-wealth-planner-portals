@@ -1,4 +1,6 @@
-﻿@{
+﻿@using Portal.Areas.Admin.ViewModels
+@model DashBoardView;
+@{
     ViewData["Title"] = "Index";
     Layout = "~/Areas/Admin/Views/Shared/_Layout_Admin.cshtml";
 }
@@ -46,7 +48,7 @@
                                             Sales
                                         </div>
                                         <div class="value font-one-four">
-                                            &#8358;411,093,342
+                                            &#8358;@Model.Sales
                                         </div>
                                     </a>
                                 </div>
@@ -57,7 +59,7 @@
                                             Orders
                                         </div>
                                         <div class="value font-one-four">
-                                            4,500
+                                            @Model.Orders
                                         </div>
                                     </a>
                                 </div>
@@ -68,7 +70,7 @@
                                             Customers
                                         </div>
                                         <div class="value font-one-four">
-                                            2,300
+                                            @Model.Customers
                                         </div>
                                     </a>
                                 </div>
@@ -79,7 +81,7 @@
                                             Expressions of Interest
                                         </div>
                                         <div class="value font-one-four">
-                                            45,200
+                                            @Model.ExpressionOfINterest
                                         </div>
                                     </a>
                                 </div>
@@ -127,142 +129,39 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>
-                                            <span>Today</span><span class="smaller lighter">1:52am</span>
-                                        </td>
-                                        <td>
-                                            <div>
-                                                <span>John Bloomberg</span>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div>
-                                                Money Market Fund
-                                            </div>
-                                        </td>
-                                        <td class="text-center">
-                                            <span>&#8358;200,000.00</span>
-                                        </td>
-                                        <td>
-                                            Mutual Funds
-                                        </td>
-                                        <td class="nowrap">
-                                            <span class="status-pill smaller green"></span><span>Completed</span>
-                                        </td>
-                                        <td class="row-actions">
-                                            <a href="#" title="View"><i class="os-icon os-icon-eye"></i></a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <span>Yesterday</span><span class="smaller lighter">3:22pm</span>
-                                        </td>
-                                        <td>
-                                            <div>
-                                                <span>Anthony Joshua</span>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div>
-                                                Discovery Fund
-                                            </div>
-                                        </td>
-                                        <td class="text-center">
-                                            <span>&#8358;1,200,000.00</span>
-                                        </td>
 
-                                        <td>
-                                            Mutual Funds
-                                        </td>
-                                        <td class="nowrap">
-                                            <span class="status-pill smaller red"></span><span>Cancelled</span>
-                                        </td>
-                                        <td class="row-actions">
-                                            <a href="#"> <i title="View" class="os-icon os-icon-eye"></i></a><a href="#" class="text-success"><i title="Approve" class="os-icon os-icon-checkmark"></i></a><a href="#"><i title="Processing" class="os-icon os-icon-more-horizontal"></i></a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <span>Jan 19th</span><span class="smaller lighter">3:22pm</span>
-                                        </td>
-                                        <td>
-                                            <div>
-                                                <img alt="" src="img/avatar3.jpg"><span>Babajide John Traore</span>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div>
-                                                ARM Life Savings Plan
-                                            </div>
-                                        </td>
-                                        <td class="text-center">
-                                            <span>&#8358;1,200,000.00</span>
-                                        </td>
-                                        <td>
-                                            Insurance
-                                        </td>
-                                        <td class="nowrap">
-                                            <span class="status-pill smaller yellow"></span><span>Processing</span>
-                                        </td>
-                                        <td class="row-actions">
-                                            <a href="#"> <i title="View" class="os-icon os-icon-eye"></i></a><a href="#" class="text-success"><i title="Approve" class="os-icon os-icon-checkmark"></i></a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <span>Jan 23rd</span><span class="smaller lighter">2:12pm</span>
-                                        </td>
-                                        <td>
-                                            <div>
-                                                <img alt="" src="img/avatar1.jpg"><span>Mary Opeyemi Johnson</span>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div>
-                                                ARM Pension’s Retirement Savings Account
-                                            </div>
-                                        </td>
-                                        <td class="text-center">
-                                            <span>&#8358;1,200,000.00</span>
-                                        </td>
-                                        <td>
-                                            Pensions
-                                        </td>
-                                        <td class="nowrap">
-                                            <span class="status-pill smaller yellow"></span><span>Pending Payment</span>
-                                        </td>
-                                        <td class="row-actions">
-                                            <a href="#"> <i title="View" class="os-icon os-icon-eye"></i></a><a href="#" class="text-success"><i title="Approve" class="os-icon os-icon-checkmark"></i></a><a href="#"><i title="Processing" class="os-icon os-icon-more-horizontal"></i></a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <span>Jan 12th</span><span class="smaller lighter">9:51am</span>
-                                        </td>
-                                        <td>
-                                            <div>
-                                                <span>Jon Snow Taegeryan</span>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div>
-                                                The Cove at Lakowe Hills
-                                            </div>
-                                        </td>
-                                        <td class="text-center">
-                                            -
-                                        </td>
-                                        <td>
-                                            Real Estate
-                                        </td>
-                                        <td class="nowrap">
-                                            <span class="status-pill smaller green"></span><span>EOI</span>
-                                        </td>
-                                        <td class="row-actions">
-                                            <a href="#" title="View"><i class="os-icon os-icon-eye"></i></a>
-                                        </td>
-                                    </tr>
+                                    @foreach (var item in Model.RecentOrders)
+                                    {
+                                        <tr>
+                                            <td>
+                                                <span>Today</span><span class="smaller lighter">@item.AddToCartDate</span>
+                                            </td>
+                                            <td>
+                                                <div>
+                                                    <span>
+                                                        @item.Customer.FullName
+                                                    </span>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div>
+                                                    @item.Product.Name
+                                                </div>
+                                            </td>
+                                            <td class="text-center">
+                                                <span>&#8358;@item.Amount</span>
+                                            </td>
+                                            <td>
+                                                @item.Product.ProductCategory.Name
+                                            </td>
+                                            <td class="nowrap">
+                                                <span class="status-pill smaller green"></span><span>Completed</span>
+                                            </td>
+                                            <td class="row-actions">
+                                                <a href="#" title="View"><i class="os-icon os-icon-eye"></i></a>
+                                            </td>
+                                        </tr>
+                                    }
                                 </tbody>
                             </table>
                         </div>

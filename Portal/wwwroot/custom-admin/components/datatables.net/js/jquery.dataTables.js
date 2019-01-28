@@ -1339,7 +1339,7 @@
 	var _re_html = /<.*?>/g;
 	
 	// This is not strict ISO8601 - Date.parse() is quite lax, although
-	// implementations differ between browsers.
+	// StoreManagers differ between browsers.
 	var _re_date = /^\d{2,4}[\.\/\-]\d{1,2}[\.\/\-]\d{1,2}([T ]{1}\d{1,2}[:\.]\d{2}([\.:]\d{2})?)?$/;
 	
 	// Escape regular expression special characters

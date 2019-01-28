@@ -10218,7 +10218,7 @@ module.exports = Array.isArray || function (arr) {
     "object": true
   };
 
-  // Detect the `exports` object exposed by CommonJS implementations.
+  // Detect the `exports` object exposed by CommonJS StoreManagers.
   var freeExports = objectTypes[typeof exports] && exports && !exports.nodeType && exports;
 
   // Use the `global` object exposed by Node (including Browserify via
@@ -10248,7 +10248,7 @@ module.exports = Array.isArray || function (arr) {
         Math = context["Math"] || root["Math"],
         nativeJSON = context["JSON"] || root["JSON"];
 
-    // Delegate to the native `stringify` and `parse` implementations.
+    // Delegate to the native `stringify` and `parse` StoreManagers.
     if (typeof nativeJSON == "object" && nativeJSON) {
       exports.stringify = nativeJSON.stringify;
       exports.parse = nativeJSON.parse;
@@ -10272,7 +10272,7 @@ module.exports = Array.isArray || function (arr) {
     } catch (exception) {}
 
     // Internal: Determines whether the native `JSON.stringify` and `parse`
-    // implementations are spec-compliant. Based on work by Ken Snyder.
+    // StoreManagers are spec-compliant. Based on work by Ken Snyder.
     function has(name) {
       if (has[name] !== undef) {
         // Return cached feature test result.
@@ -10363,7 +10363,7 @@ module.exports = Array.isArray || function (arr) {
           if (typeof parse == "function") {
             try {
               // FF 3.1b1, b2 will throw an exception if a bare literal is provided.
-              // Conforming implementations should also coerce the initial argument to
+              // Conforming StoreManagers should also coerce the initial argument to
               // a string prior to parsing.
               if (parse("0") === 0 && !parse(false)) {
                 // Simple parsing test.
