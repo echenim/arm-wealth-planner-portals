@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using Portal.Areas.Admin.ViewModels;
 using Portal.Domain.Models.Identity;
 using Portal.Business.Contracts;
@@ -24,6 +25,7 @@ namespace Portal.Areas.Admin.Controllers
             _userManager = userManager;
             _roleManager = roleManager;
             _service = service;
+            _groupManager = groupManager;
         }
 
         public IActionResult Index()
@@ -55,13 +57,13 @@ namespace Portal.Areas.Admin.Controllers
                 Value = string.Empty
             });
 
-            var roleCollection = _groupManager.Groups().OrderBy(s => s.Name);
-            foreach (var item in roleCollection)
+            var permissionCollection = _groupManager.Groups().OrderBy(s=>s.Name);
+            foreach (var item in permissionCollection)
             {
                 internalUser.AvailableRoles.Add(new SelectListItem
                 {
                     Text = item.Name,
-                    Value = item.Name
+                    Value = item.Id.ToString()
                 });
             }
 
@@ -86,8 +88,9 @@ namespace Portal.Areas.Admin.Controllers
                 var result = _userManager.CreateAsync(user: user, password: models.Password).Result;
                 if (result.Succeeded)
                 {
-                    var resultFromAddingUserToRole = _userManager.AddToRoleAsync(user: user, role: models.Roles).Result;
-                    if (resultFromAddingUserToRole.Succeeded)
+                  
+                    var resultFromAssigningPermission = _groupManager.SetUserGroups(user.Id, models.Roles);
+                    if (resultFromAssigningPermission.Succeeded)
                     {
                         return RedirectToAction("Index");
                     }

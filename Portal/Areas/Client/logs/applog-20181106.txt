@@ -1,6 +1,0 @@
-2018-11-06 4:48:PM System.ArgumentNullException: Value cannot be null.
-   at ARMClientPortal.Controllers.AccountController.<Login>d__14.MoveNext() in C:\Users\gbadeboa\source\repos\ARMClientPortal\ARMClientPortal\Controllers\AccountController.cs:line 143
-2018-11-06 5:06:PM System.ArgumentNullException: Value cannot be null.
-   at ARMClientPortal.Controllers.AccountController.<Login>d__14.MoveNext() in C:\Users\gbadeboa\source\repos\ARMClientPortal\ARMClientPortal\Controllers\AccountController.cs:line 143
-2018-11-06 5:13:PM System.ArgumentNullException: Value cannot be null.
-   at ARMClientPortal.Controllers.AccountController.<Login>d__14.MoveNext() in C:\Users\gbadeboa\source\repos\ARMClientPortal\ARMClientPortal\Controllers\AccountController.cs:line 143

@@ -1,0 +1,386 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Client/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Index</h1>
+<!---- Investment Overview --->
+
+<div class="row">
+    <div class="col-md-12">
+
+        <div class="element-box element-wrapper row">
+            <!---- Investment Position --->
+            <div class="col-sm-12 col-lg-8  col-md-7 col-xxl-8">
+                <div class="element-balances justify-content-between mobile-full-width">
+                    <div class="balance balance-v2">
+                        <div class="balance-title">
+                            Your Investment Position
+                        </div>
+                        <div class="balance-value">
+                            <span>&#8358;72,246,000</span></span>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="element-wrapper pb-4 mb-4 border-bottom">
+                    <div class="element-box-tp">
+                        <a class="btn btn-primary" href="#"><i class="os-icon os-icon-plus-circle"></i><span>New Investment</span></a><a class="btn btn-grey" href="#"><i class="os-icon os-icon-agenda-1"></i><span>Manage Portfolio </span></a>
+
+                    </div>
+                </div>
+                <!---- Balance History --->
+                <div class="element-wrapper compact">
+                    <div class="element-box-tp">
+                        <div class="element-actions d-none d-sm-block">
+                            <form class="form-inline justify-content-sm-end">
+                                <label class="smaller" for="">Show Period:</label><select class="form-control form-control-sm form-control-faded">
+                                    <option selected="true">
+                                        Last 30 days
+                                    </option>
+                                    <option>
+                                        This Week
+                                    </option>
+                                    <option>
+                                        This Month
+                                    </option>
+                                    <option>
+                                        Today
+                                    </option>
+                                </select>
+                            </form>
+                        </div>
+                        <h6 class="element-box-header">
+                            Balance History
+                        </h6>
+                        <div class="el-chart-w mt-5">
+                            <!---  <canvas data-chart-data="13,28,19,24,43,49,40,35,42,46,38,32,45" height="70" id="liteLineChartV3" width="300"></canvas> ---->
+                            <canvas id="liteLineChartFPH"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!---- Investment Distribution  --->
+            <div class="col-sm-12 col-lg-4 col-md-5 col-xxl-4">
+                <div class="element-box less-padding">
+                    <h5 class=" pb-2 b-b">
+                        Investment Distribution
+                    </h5>
+                    <div class="el-chart-w">
+                        <canvas height="120" id="donutChart1" width="120"></canvas>
+                        <div class="inside-donut-chart-label">
+                            <strong>&#8358;26.3m</strong><span>Spread</span>
+                        </div>
+                    </div>
+                    <div class="el-legend condensed">
+                        <div class="row">
+                            <div class=" col-xxxxl-6 ml-sm-auto mr-sm-auto">
+                                <div class="legend-value-w">
+                                    <div class="legend-pin legend-pin-squared" style="background-color: #6896f9;"></div>
+                                    <div class="legend-value">
+                                        <span>Money Market Fund</span>
+                                        <div class="legend-sub-value">
+                                            17%, &#8358;12,200,420
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="legend-value-w">
+                                    <div class="legend-pin legend-pin-squared" style="background-color: #85c751;"></div>
+                                    <div class="legend-value">
+                                        <span>Ethical Fund</span>
+                                        <div class="legend-sub-value">
+                                            22%, &#8358;2,200,4200
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="legend-value-w">
+                                    <div class="legend-pin legend-pin-squared" style="background-color: #6896f9;"></div>
+                                    <div class="legend-value">
+                                        <span>Money Market Fund</span>
+                                        <div class="legend-sub-value">
+                                            17%, &#8358;12,200,420
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="legend-value-w">
+                                    <div class="legend-pin legend-pin-squared" style="background-color: #85c751;"></div>
+                                    <div class="legend-value">
+                                        <span>Ethical Fund</span>
+                                        <div class="legend-sub-value">
+                                            22%, &#8358;2,200,4200
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<!---- Latest Transactions --->
+<div class="row">
+    <div class="col-md-12 ">
+        <div class=" element-wrapper mt-5">
+            <h5 class="element-header">
+                Latest Transactions
+                <button class="mr-2 mb-2 btn btn-primary float-right" type="button"> Transaction History</button>
+            </h5>
+            <div class="">
+                <div class="table-responsive">
+                    <table class="table table-padded">
+                        <thead>
+                            <tr>
+                                <th>
+                                    DATE
+                                </th>
+                                <th>
+                                    TYPE
+                                </th>
+                                <th>
+                                    FUND
+                                </th>
+                                <th class="text-center">
+                                    AMOUNT
+                                </th>
+                                <th>
+                                    UNIT
+                                </th>
+                                <th class="text-center">
+                                    UNIT PRICE
+                                </th>
+                                <th class="text-center">
+                                    MARKET VALUE
+                                </th>
+                                <th>
+                                    DESCRIPTION
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <span>Today</span><span class="smaller lighter">1:52am</span>
+                                </td>
+                                <td>
+                                    <div>
+                                        Subscription
+                                    </div>
+                                </td>
+                                <td>
+                                    <div>
+                                        ARMMMF
+                                    </div>
+                                </td>
+                                <td class="text-center">
+                                    <span class="text-success">+&#8358;200,000.00</span>
+                                </td>
+                                <td>
+                                    1.00
+                                </td>
+                                <td class="text-center">
+                                    <span>&#8358;200,000.00</span>
+                                </td>
+                                <td class="text-center">
+                                    <span>&#8358;200,000.00</span>
+                                </td>
+                                <td>
+                                    Processed Subscription
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span>Today</span><span class="smaller lighter">1:52am</span>
+                                </td>
+                                <td>
+                                    <div>
+                                        Subscription
+                                    </div>
+                                </td>
+                                <td>
+                                    <div>
+                                        ARMMMF
+                                    </div>
+                                </td>
+                                <td class="text-center">
+                                    <span class="text-success">+&#8358;200,000.00</span>
+                                </td>
+                                <td>
+                                    1.00
+                                </td>
+                                <td class="text-center">
+                                    <span>&#8358;200,000.00</span>
+                                </td>
+                                <td class="text-center">
+                                    <span>&#8358;200,000.00</span>
+                                </td>
+                                <td>
+                                    Processed Subscription
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span>Today</span><span class="smaller lighter">1:52am</span>
+                                </td>
+                                <td>
+                                    <div>
+                                        Redemption
+                                    </div>
+                                </td>
+                                <td>
+                                    <div>
+                                        ARMMMF
+                                    </div>
+                                </td>
+                                <td class="text-center">
+                                    <span class="text-danger">-&#8358;200,000.00</span>
+                                </td>
+                                <td>
+                                    1.00
+                                </td>
+                                <td class="text-center">
+                                    <span>&#8358;200,000.00</span>
+                                </td>
+                                <td class="text-center">
+                                    <span>&#8358;200,000.00</span>
+                                </td>
+                                <td>
+                                    Processed Redemption
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span>Today</span><span class="smaller lighter">1:52am</span>
+                                </td>
+                                <td>
+                                    <div>
+                                        Subscription
+                                    </div>
+                                </td>
+                                <td>
+                                    <div>
+                                        ARMMMF
+                                    </div>
+                                </td>
+                                <td class="text-center">
+                                    <span class="text-success">+&#8358;200,000.00</span>
+                                </td>
+                                <td>
+                                    1.00
+                                </td>
+                                <td class="text-center">
+                                    <span>&#8358;200,000.00</span>
+                                </td>
+                                <td class="text-center">
+                                    <span>&#8358;200,000.00</span>
+                                </td>
+                                <td>
+                                    Processed Subscription
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span>Today</span><span class="smaller lighter">1:52am</span>
+                                </td>
+                                <td>
+                                    <div>
+                                        Redemption
+                                    </div>
+                                </td>
+                                <td>
+                                    <div>
+                                        ARMMMF
+                                    </div>
+                                </td>
+                                <td class="text-center">
+                                    <span class="text-danger">-&#8358;200,000.00</span>
+                                </td>
+                                <td>
+                                    1.00
+                                </td>
+                                <td class="text-center">
+                                    <span>&#8358;200,000.00</span>
+                                </td>
+                                <td class="text-center">
+                                    <span>&#8358;200,000.00</span>
+                                </td>
+                                <td>
+                                    Processed Redemption
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!---- Fund Performance --->
+<div class=" element-wrapper">
+    <h5 class="element-header">
+        Fund Performance
+    </h5>
+    <div class="row">
+        <div class="col-md-12 ">
+            <div class="element-box element-wrapper">
+                <div class="content-box">
+                    <div class="os-tabs-w">
+                        <div class="os-tabs-controls os-tabs-complex ">
+                            <ul class="nav nav-tabs ali-center">
+                                <li class="nav-item">
+                                    <a aria-expanded="true" class="nav-link active" data-toggle="tab" href="#tab_mmf"><span class="tab-label">Money Market Fund</span></a>
+                                </li>
+                                <li class="nav-item">
+                                    <a aria-expanded="false" class="nav-link" data-toggle="tab" href="#tab_df"><span class="tab-label">Discovery Fund</span></a>
+                                </li>
+                                <li class="nav-item">
+                                    <a aria-expanded="false" class="nav-link" data-toggle="tab" href="#tab_agf"><span class="tab-label">Aggressive Growth Fund</span></a>
+                                </li>
+                                <li class="nav-item">
+                                    <a aria-expanded="false" class="nav-link" data-toggle="tab" href="#tab_ef"><span class="tab-label">Ethical Fund</span></a>
+                                </li>
+
+                            </ul>
+                        </div>
+
+
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="tab_mmf">
+
+                                MMF PERFORMANCE
+                            </div>
+
+                            <div class="tab-pane" id="tab_df">
+
+                                Discovery Fund PERFORMANCE
+                            </div>
+
+                            <div class="tab-pane" id="tab_agf">
+
+                                Aggressive Fund PERFORMANCE
+                            </div>
+
+                            <div class="tab-pane" id="tab_ef">
+
+                                Ethical Fund PERFORMANCE
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

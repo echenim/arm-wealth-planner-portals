@@ -6,13 +6,6 @@
     <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Compile Remove="Areas\Client\Models\**" />
-    <Content Remove="Areas\Client\Models\**" />
-    <EmbeddedResource Remove="Areas\Client\Models\**" />
-    <None Remove="Areas\Client\Models\**" />
-  </ItemGroup>
-
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore" Version="2.2.0" />
@@ -26,9 +19,9 @@
     <Folder Include="Areas\Admin\Data\" />
     <Folder Include="Areas\Admin\Models\" />
     <Folder Include="Areas\Admin\Uploads\" />
-    <Folder Include="Areas\Client\Controllers\" />
     <Folder Include="Areas\Client\Data\" />
-    <Folder Include="Areas\Client\Views\" />
+    <Folder Include="Areas\Client\Models\" />
+    <Folder Include="Services\" />
     <Folder Include="Uploads\" />
   </ItemGroup>
 

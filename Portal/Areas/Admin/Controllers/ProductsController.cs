@@ -92,7 +92,10 @@ namespace Portal.Areas.Admin.Controllers
                     ProductCategoryId = models.ProductCategory,
                     Description = models.Description,
                     StartFrom = models.StartFrom,
-                    ProductTypes = models.ProductTypes
+                    ProductTypes = models.ProductTypes,
+                    Features = models.Feature,
+                    Benefits = models.Benefit,
+                    IsActive = models.IsActive == true ?"Yes":"No"
                 };
 
                 var benefit = new ProductKeyBenefit { Description = models.Benefit };
@@ -109,13 +112,10 @@ namespace Portal.Areas.Admin.Controllers
 
                     product.Image = filename;
                     var products = _product.Save(product);
-                    benefit.ProductId = products.Id;
-                    benefit.Products = products;
-                    feature.ProductId = products.Id;
-                    feature.Products = products;
-
-                    var prodBenefit = _benefitService.Save(benefit);
-                    var prodFeature = _productFeature.Save(feature);
+                    //benefit.ProductId = products.Id;
+                    //feature.ProductId = products.Id;
+                    //var prodBenefit = _benefitService.Save(benefit);
+                    //var prodFeature = _productFeature.Save(feature);
 
                     var upload = Path.Combine(Directory.GetCurrentDirectory(), "Uploads");
 

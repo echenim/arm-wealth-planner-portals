@@ -26,7 +26,15 @@ namespace Portal.Domain.Models
         [Required]
         public string Image { get; set; }
 
+        [Required]
         public string ProductTypes { get; set; }
+
+        public  string Features { get; set; }
+        public  string Benefits { get; set; }
+
+        [Required]
+        [MaxLength(10)]
+        public  string IsActive { get; set; }
 
         public ProductCategory ProductCategory { get; set; }
     }

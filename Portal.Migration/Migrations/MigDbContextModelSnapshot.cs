@@ -15,7 +15,7 @@ namespace Portal.AddMigration.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.2.0-rtm-35687")
+                .HasAnnotation("ProductVersion", "2.2.1-servicing-10028")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -363,10 +363,18 @@ namespace Portal.AddMigration.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("Benefits");
+
                     b.Property<string>("Description");
+
+                    b.Property<string>("Features");
 
                     b.Property<string>("Image")
                         .IsRequired();
+
+                    b.Property<string>("IsActive")
+                        .IsRequired()
+                        .HasMaxLength(10);
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -374,7 +382,8 @@ namespace Portal.AddMigration.Migrations
 
                     b.Property<int>("ProductCategoryId");
 
-                    b.Property<string>("ProductTypes");
+                    b.Property<string>("ProductTypes")
+                        .IsRequired();
 
                     b.Property<decimal>("StartFrom")
                         .HasColumnType("decimal(18, 2)");

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Portal.Domain;
 using Portal.Domain.ViewModels;
@@ -17,14 +18,34 @@ namespace Portal.Business.StoreManagers
 
         public IQueryable<ViewModelInternalUser> Get(Func<ViewModelInternalUser, bool> predicate = null)
         {
-            if (predicate != null)
+            var users = from usrgr in _context.ApplicationUserGroup
+                join gr in _context.ApplicationGroup on usrgr.ApplicationGroupId equals gr.Id
+                join usr in _context.Users on usrgr.ApplicationUserId equals usr.Id
+                select new
+                {
+                    id = usr.Id,
+                    Name = usr.FullName,
+                    Email = usr.Email,
+                    
+                    Role = gr.Name
+
+                };
+
+            var result = new List<ViewModelInternalUser>();
+            foreach (var item in users)
             {
-                var list = UserRoleView.AsEnumerable().Where(predicate: predicate).AsQueryable();
-                return list;
+                result.Add(new ViewModelInternalUser
+                {
+                    Id = item.id,
+                    Name = item.Name,
+                    Role = item.Role,
+                    Email = item.Email
+                });
             }
 
-            var llist = UserRoleView.AsQueryable();
-            return llist;
+            var list = predicate != null ? result.Where(predicate) : result;
+
+            return list.AsQueryable();
         }
 
         public ViewModelInternalUser FindById(Func<ViewModelInternalUser, bool> predicate)

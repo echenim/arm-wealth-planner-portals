@@ -52,11 +52,11 @@ namespace Portal.API
 
             #region register database connectionstring
 
-            //services.AddDbContext<MigDbContext>(options =>
-            //options.UseSqlServer(Configuration.GetConnectionString("ArmInvestmentConnection")));
-
-            services.AddDbContext<ApplicationDbContext>(options =>
+            services.AddDbContext<MigDbContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("ArmInvestmentConnection")));
+
+            //services.AddDbContext<ApplicationDbContext>(options =>
+            //options.UseSqlServer(Configuration.GetConnectionString("ArmInvestmentConnection")));
 
             #endregion register database connectionstring
 

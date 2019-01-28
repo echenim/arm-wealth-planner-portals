@@ -54,7 +54,7 @@ namespace Portal.Areas.Admin.Controllers
 
             var list = new List<OrdersView>();
             var orders = _ordersAndSalesService.Get(s => s.Product.ProductTypes.Equals("Expression of Interest"))
-                .OrderByDescending(s => s.OrderDate).ThenBy(s => s.Customer);
+                .OrderByDescending(s => s.AddToCartDate).ThenBy(s => s.Customer);
 
             foreach (var item in orders)
             {
@@ -66,7 +66,7 @@ namespace Portal.Areas.Admin.Controllers
                     Customer = item.Customer.FullName,
                     CustNo = item.Customer.MembershipNumber,
                     Amount = item.Amount.ToString("N1", CultureInfo.InvariantCulture),
-                    AddToCartDate = $"{item.AddToCartDate}",
+                    AddToCartDate = $"{item.AddToCartDate:dd MMM yyyy  hh:mm tt}",
                     Date = item.OrderDate.ToString()
                 });
             }
