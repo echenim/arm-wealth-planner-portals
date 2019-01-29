@@ -20,10 +20,10 @@ namespace Portal.Areas.Admin.Controllers
             ViewData["ControllerName"] = "Admin/Dashboard";
 
             var dashboard = new DashBoardView();
-            dashboard.RecentOrders = _manager.GetRecentOrders(s=>s.Id==2).Take(20).ToList();
-            dashboard.Customers = _manager.GetCustomers();
-            dashboard.Sales = _manager.GetSales();
-            dashboard.Orders = _manager.GetOrders();
+            dashboard.RecentOrders = _manager.GetRecentOrders().OrderByDescending(s => s.AddToCartDate).Take(20).ToList();
+            dashboard.Customers = _manager.GetCustomers(s => s.IsCustomerOrStaff.Equals("External"));
+            dashboard.Sales = _manager.GetSales(s => !s.Product.ProductTypes.Equals("Expression of Interest"));
+            dashboard.Orders = _manager.GetOrders(s => !s.Product.ProductTypes.Equals("Expression of Interest"));
             dashboard.ExpressionOfINterest = _manager.GetExpressionOfInterest();
 
             return View(dashboard);

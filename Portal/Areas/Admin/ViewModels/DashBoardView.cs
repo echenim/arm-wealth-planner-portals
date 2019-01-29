@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Portal.Domain.Models;
+using Portal.Domain.ViewModels;
 
 namespace Portal.Areas.Admin.ViewModels
 {
@@ -12,6 +13,6 @@ namespace Portal.Areas.Admin.ViewModels
         public long Orders { get; set; }
         public long Customers { get; set; }
         public long ExpressionOfINterest { get; set; }
-        public List<PurchaseOrders> RecentOrders { get; set; }
+        public List<PurchaseOrderViewModel> RecentOrders { get; set; }
     }
 }

@@ -12,7 +12,6 @@ using Portal.AddMigration;
 using Portal.API.Extensions;
 using Portal.API.Utilities;
 using Portal.Business.Contracts;
-using Portal.Business.Implementations;
 using Portal.Business.StoreManagers;
 using Portal.Domain;
 using Portal.Domain.Models.Identity;

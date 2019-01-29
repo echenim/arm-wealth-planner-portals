@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Portal.Business.Contracts.Base;
-using Portal.Business.Implementations;
+
 using Portal.Domain.Models;
 using Portal.Domain.Models.Identity;
+using Portal.Domain.ViewModels;
 
 namespace Portal.Business.Contracts
 {
@@ -19,6 +20,6 @@ namespace Portal.Business.Contracts
 
         int GetCustomers(Func<ApplicationUser, bool> predicate = null);
 
-        IQueryable<PurchaseOrders> GetRecentOrders(Func<PurchaseOrders, bool> predicate = null);
+        IQueryable<PurchaseOrderViewModel> GetRecentOrders(Func<PurchaseOrders, bool> predicate = null);
     }
 }

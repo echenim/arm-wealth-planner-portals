@@ -108,11 +108,15 @@
                                         <th>
                                             Date
                                         </th>
+
                                         <th>
                                             Customer
                                         </th>
                                         <th>
                                             Item Purchased
+                                        </th>
+                                        <th>
+                                            Product Type
                                         </th>
                                         <th class="text-center">
                                             Amount
@@ -134,28 +138,33 @@
                                     {
                                         <tr>
                                             <td>
-                                                <span>Today</span><span class="smaller lighter">@item.AddToCartDate</span>
+                                                <span class="smaller lighter">@item.AddToCartDateInHuman</span>
                                             </td>
                                             <td>
                                                 <div>
                                                     <span>
-                                                        @item.Customer.FullName
+                                                        @item.Customer
                                                     </span>
                                                 </div>
                                             </td>
                                             <td>
                                                 <div>
-                                                    @item.Product.Name
+                                                    @item.ProductName
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div>
+                                                    @item.ProductType
                                                 </div>
                                             </td>
                                             <td class="text-center">
                                                 <span>&#8358;@item.Amount</span>
                                             </td>
                                             <td>
-                                                @item.Product.ProductCategory.Name
+                                                @item.ProductCateogry
                                             </td>
                                             <td class="nowrap">
-                                                <span class="status-pill smaller green"></span><span>Completed</span>
+                                                <span class="status-pill smaller green"></span><span>@item.TransactionStatus</span>
                                             </td>
                                             <td class="row-actions">
                                                 <a href="#" title="View"><i class="os-icon os-icon-eye"></i></a>

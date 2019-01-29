@@ -5,7 +5,7 @@ using Portal.Domain;
 using Portal.Domain.Models;
 using Portal.Business.Contracts;
 
-namespace Portal.Business.Implementations
+namespace Portal.Business.StoreManagers
 {
     public class OrdersAndSalesService : IOrdersAndSalesService
     {
