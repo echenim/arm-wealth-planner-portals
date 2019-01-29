@@ -1,15 +1,17 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Net;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Portal.Areas.Admin.ViewModels;
+using Portal.Business.Utilities;
 using Portal.Domain.Models.Identity;
 
 namespace Portal.Areas.Admin.Controllers
 {
     [Area("Admin")]
-   // [Authorize("admin:can:view")]
+    // [Authorize("admin:can:view")]
     public class CustomersController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;
@@ -21,12 +23,37 @@ namespace Portal.Areas.Admin.Controllers
             _roleManager = roleManager;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(
+            string sortOrder,
+            string currentFilter,
+            string searchString,
+            int? page
+            )
         {
-            ViewData["ControllerName"] = "Admin/Customers";
+            ViewData["ControllerName"] = "ADMIN/CUSTOMERS";
 
-            var data = _userManager.Users.Where(s => s.IsCustomerOrStaff.Equals("external"))
-                .OrderBy(s => s.FirstName).ThenBy(s => s.MembershipNumber);
+            ViewBag.AreaName = "Roles & Permission";
+            ViewData["CurrentSort"] = sortOrder;
+            ViewData["NameSortParm"] = string.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewData["NumberOfUserSortParm"] = sortOrder == "NumberOfUser" ? "numberOfUser" : "NumberOfUser";
+
+            if (searchString != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            ViewData["CurrentFilter"] = searchString;
+
+            var data = !String.IsNullOrEmpty(searchString) ?
+                    _userManager.Users.Where(s => s.IsCustomerOrStaff.Equals("external"))
+                        .Where(s => s.FullName.Contains(searchString))
+                        .OrderBy(s => s.FirstName).ThenBy(s => s.MembershipNumber)
+                : _userManager.Users.Where(s => s.IsCustomerOrStaff.Equals("external"))
+                    .OrderBy(s => s.FirstName).ThenBy(s => s.MembershipNumber);
 
             var list = data.Select(item => new ExternalUserView
             {
@@ -39,13 +66,9 @@ namespace Portal.Areas.Admin.Controllers
             })
                 .ToList();
 
-            return View(list);
-        }
+            int pageSize = 20;
 
-        public IActionResult Test()
-        {
-            ViewData["ControllerName"] = "Admin/Customers";
-            return View();
+            return View(PaginatedList<ExternalUserView>.Create(list.AsQueryable(), page ?? 1, pageSize));
         }
     }
 }

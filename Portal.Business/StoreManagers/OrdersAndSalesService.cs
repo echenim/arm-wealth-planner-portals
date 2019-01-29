@@ -28,6 +28,20 @@ namespace Portal.Business.StoreManagers
                     .Include(s => s.Product).Include(s => s.Product.ProductCategory)
                     .AsQueryable();
 
+        public IQueryable<PurchaseOrders> Sales(Func<PurchaseOrders, bool> predicate = null)
+            => (predicate != null
+                ? _context.PurchaseOrders
+                    .Include(s => s.Customer)
+                    .Include(s => s.Product).Include(s => s.Product.ProductCategory)
+                    .Where(predicate: predicate)
+                    .AsQueryable()
+                : _context.PurchaseOrders
+                    .Include(s => s.Customer)
+                    .Include(s => s.Product).Include(s => s.Product.ProductCategory)
+                    .AsQueryable()).Where(s => !s.Product.ProductTypes.Equals("Expression of Interest")
+                                               && s.OrderDate.HasValue
+                                               && s.TransactionStatus.Equals("Succeed"));
+
         public PurchaseOrders FindById(Func<PurchaseOrders, bool> predicate)
             => _context.PurchaseOrders.Find(predicate);
 

@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -6,6 +7,8 @@ using Microsoft.EntityFrameworkCore;
 using Portal.Areas.Admin.ViewModels;
 using Portal.Domain.Models.Identity;
 using Portal.Business.Contracts;
+using Portal.Business.Utilities;
+using Portal.Domain.ViewModels;
 
 namespace Portal.Areas.Admin.Controllers
 {
@@ -18,7 +21,7 @@ namespace Portal.Areas.Admin.Controllers
         private readonly IUserService _service;
 
         public UsersController(UserManager<ApplicationUser> userManager,
-            RoleManager<ApplicationRole> roleManager, 
+            RoleManager<ApplicationRole> roleManager,
             IApplicationGroupManager groupManager,
             IUserService service)
         {
@@ -28,24 +31,39 @@ namespace Portal.Areas.Admin.Controllers
             _groupManager = groupManager;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(
+            string sortOrder,
+            string currentFilter,
+            string searchString,
+            int? page
+        )
         {
-            ViewData["ControllerName"] = "Admin/User";
+            ViewData["ControllerName"] = "ADMIN/CUSTOMERS";
 
-            //var data = _userManager.Users.Where(s => s.IsCustomerOrStaff.Equals("internal"))
-            //    .OrderBy(s => s.FirstName).ThenBy(s => s.MembershipNumber);
+            ViewBag.AreaName = "Roles & Permission";
+            ViewData["CurrentSort"] = sortOrder;
+            ViewData["NameSortParm"] = string.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewData["NumberOfUserSortParm"] = sortOrder == "NumberOfUser" ? "numberOfUser" : "NumberOfUser";
 
-            //var list = data.Select(item => new InternalUserView
-            //{
-            //    Id = item.Id,
-            //    Name = item.FullName,
-            //    Email = item.Email,
-            //})
-            //    .ToList();
+            if (searchString != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
 
-            var list = _service.Get();
+            ViewData["CurrentFilter"] = searchString;
 
-            return View(list);
+            var data = !String.IsNullOrEmpty(searchString) ?
+                _service.Get(s => s.Name.Contains(searchString))
+                    .OrderBy(s => s.Name)
+                : _service.Get().OrderBy(s => s.Name);
+
+            int pageSize = 20;
+
+            return View(PaginatedList<ViewModelInternalUser>.Create(data.AsQueryable(), page ?? 1, pageSize));
         }
 
         public IActionResult Add()
@@ -57,7 +75,7 @@ namespace Portal.Areas.Admin.Controllers
                 Value = string.Empty
             });
 
-            var permissionCollection = _groupManager.Groups().OrderBy(s=>s.Name);
+            var permissionCollection = _groupManager.Groups().OrderBy(s => s.Name);
             foreach (var item in permissionCollection)
             {
                 internalUser.AvailableRoles.Add(new SelectListItem
@@ -88,7 +106,6 @@ namespace Portal.Areas.Admin.Controllers
                 var result = _userManager.CreateAsync(user: user, password: models.Password).Result;
                 if (result.Succeeded)
                 {
-                  
                     var resultFromAssigningPermission = _groupManager.SetUserGroups(user.Id, models.Roles);
                     if (resultFromAssigningPermission.Succeeded)
                     {

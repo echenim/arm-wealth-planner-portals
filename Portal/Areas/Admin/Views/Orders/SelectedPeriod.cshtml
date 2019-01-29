@@ -1,0 +1,176 @@
+﻿@using Portal.Areas.Admin.ViewModels
+@using Portal.Business.Utilities
+@model PaginatedList<OrdersView>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout_Admin.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-12 ">
+        <div class="element-box element-wrapper">
+            <h5 class="element-header">
+                ORDERS
+            </h5>
+            <div class="element-box-tp">
+                <div class="os-tabs-w">
+                    <div class="os-tabs-controls">
+                        <ul class="nav nav-tabs upper">
+                            <li class="nav-item">
+                                <a asp-area="Admin" asp-controller="Sales" asp-action="AllTime" class="nav-link">ALL TIME</a>
+                            </li>
+                            <li class="nav-item">
+                                <a asp-area="Admin" asp-controller="Sales" asp-action="LastYear" class="nav-link">LAST YEAR </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="Admin" asp-controller="Sales" asp-action="LastMonth">LAST MONTH </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="Admin" asp-controller="Sales" asp-action="LastSevenDays">LAST 7 DAYS </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="Admin" asp-controller="Sales" asp-action="SelectedPeriod">
+                                    <div class="form-inline">
+                                        <label for="" class=""><p>SELECT PERIOD </p></label><input class="multi-daterange form-control m-t-neg-1" type="text" value="">
+                                    </div>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="tab-pane active" id="all_time">
+                        <div class="row b-b">
+                            <div class="col-md-6">
+                                <div class="form-group row">
+                                    <label class="col-form-label col-sm-4" for=""> <h5>Select Product</h5></label>
+                                    <div class="col-sm-8">
+                                        <select class="form-control">
+                                            <option>
+                                                All Products
+                                            </option>
+                                            <option>
+                                                Money Market Fund
+                                            </option>
+                                            <option>
+                                                Ethical Fund
+                                            </option>
+                                            <option>
+                                                Aggressive Fund
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <h5 class=" form-group mt-2"> Total Sales: &#8358; @ViewData["Totals"]</h5>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="btn-group float-right">
+                                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <i class="os-icon os-icon-download"></i>  Export Report
+                                    </button>
+                                    <div class="dropdown-menu">
+                                        <a class="dropdown-item" href="#">Export CSV</a>
+                                        <a class="dropdown-item" href="#">Export PDF</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-striped b-b">
+                                <thead>
+                                    <tr>
+
+                                        <th>
+                                            Date
+                                        </th>
+                                        <th>
+                                            CartID
+                                        </th>
+                                        <th>
+                                            Status
+                                        </th>
+                                        <th>
+                                            Customer
+                                        </th>
+                                        <th>
+                                            Item Purchased
+                                        </th>
+                                        <th class="text-center">
+                                            Amount
+                                        </th>
+                                        <th>
+                                            Category
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td>
+                                                <span class="smaller lighter">
+
+                                                    @string.Format("{0}", item.AddToCartDate, "MMMM dd, yyyy")
+                                                </span>
+                                            </td>
+                                            <td>
+                                                <div>
+                                                    @item.CartNumber
+                                                </div>
+                                            </td>
+                                            <td class="nowrap">
+                                                <span class="status-pill smaller green"></span><span>@item.TransactionStatus</span>
+                                            </td>
+                                            <td>
+                                                <div>
+                                                    <span>@item.Customer</span>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div>
+                                                    @item.Product
+                                                </div>
+                                            </td>
+                                            <td class="text-center">
+                                                <span>&#8358;@item.Amount</span>
+                                            </td>
+                                            <td>
+                                                @item.Category
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="controls-below-table">
+                            <div class="table-records-info">
+                                Showing records @Model.PageIndex - @Model.TotalPages
+                            </div>
+                            <div class="table-records-pages">
+                                @{
+                                    var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+                                    var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+                                }
+
+                                <a asp-action="Index"
+                                   asp-route-sortOrder="@ViewData["CurrentSort"]"
+                                   asp-route-page="@(Model.PageIndex - 1)"
+                                   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+                                   class="btn btn-lg btn-primary @prevDisabled">
+                                    Previous
+                                </a>
+                                <a asp-action="Index"
+                                   asp-route-sortOrder="@ViewData["CurrentSort"]"
+                                   asp-route-page="@(Model.PageIndex + 1)"
+                                   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+                                   class="btn btn-lg btn-primary @nextDisabled">
+                                    Next
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

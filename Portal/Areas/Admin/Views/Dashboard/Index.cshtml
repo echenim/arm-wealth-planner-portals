@@ -21,8 +21,8 @@
                                     </h5>
                                 </div>
                                 <div class="col-md-6">
-                                    <form class="form-inline float-right">
-                                        <select class="form-control form-control-sm rounded bright">
+                                    <form asp-action="Index" method="get" class="form-inline float-right">
+                                        <select name="SearchString" class="form-control form-control-sm rounded bright">
                                             <option selected="selected" value="This Month">
                                                 This Month
                                             </option>
@@ -36,6 +36,8 @@
                                                 All Time
                                             </option>
                                         </select>
+                                        <input type="submit" value="Search" class="btn btn-sm btn-primary" /> |
+                                        <a asp-action="Index">Back to Full List</a>
                                     </form>
                                 </div>
                             </div>
