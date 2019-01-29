@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Text;
 
 namespace Portal.Business.Utilities
@@ -32,5 +33,29 @@ namespace Portal.Business.Utilities
         /// <returns>#,##0.##</returns>
         public static string DecimalHuamanized(decimal decimalToHumanized)
         => $"{decimalToHumanized:#,##0.##}";
+
+        /// <summary>
+        /// format integer to #,##0.##
+        /// 12314 =>  12,314
+        /// 12314.23123  => 12,314.23
+        /// 12314.2  => 12,314.2
+        /// 1231412314.2  => 1,231,412,314.2
+        /// </summary>
+        /// <param name="decimalToHumanized">decimalToHumanized</param>
+        /// <returns>#,##0.##</returns>
+        public static string IntegerHuamanized(int intToHumanized)
+            => $"{intToHumanized:#,##0}";
+
+        /// <summary>
+        /// format decimals to #,##0.##
+        /// 12314 =>  12,314
+        /// 12314.23123  => 12,314.23
+        /// 12314.2  => 12,314.2
+        /// 1231412314.2  => 1,231,412,314.2
+        /// </summary>
+        /// <param name="decimalToHumanized">decimalToHumanized</param>
+        /// <returns>#,##0.##</returns>
+        public static string DecimalHumanizedX(decimal decimalToHumanized)
+            => decimalToHumanized.ToString("N1", CultureInfo.InvariantCulture);
     }
 }

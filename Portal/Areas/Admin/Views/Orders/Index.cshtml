@@ -1,4 +1,6 @@
-﻿@model IEnumerable<OrdersView>
+﻿@using Portal.Areas.Admin.ViewModels
+@using Portal.Business.Utilities
+@model PaginatedList<OrdersView>
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Areas/Admin/Views/Shared/_Layout_Admin.cshtml";
@@ -9,16 +11,27 @@
         <div class="element-box element-wrapper">
             <h5 class="element-header">
                 LATEST ORDERS
-                <button class="mr-2 mb-2 btn btn-primary float-right" type="button"> View Orders</button>
             </h5>
             <div class="element-box-tp">
+                <form asp-action="Index" method="get">
+                    <div class="form-actions no-color">
+                        <p>
+                            Find by name: <input type="text" name="SearchString" value="@ViewData["currentFilter"]" />
+                            <input type="submit" value="Search" class="btn btn-default" /> |
+                            <a asp-action="Index">Back to Full List</a>
+                        </p>
+                    </div>
+                </form>
                 <div class="table-responsive">
-                    <table class="table table-padded">
+                    <table class="table table-striped b-b">
                         <thead>
                             <tr>
 
                                 <th>
                                     Date
+                                </th>
+                                <th>
+                                    CartID
                                 </th>
                                 <th>
                                     Status
@@ -35,10 +48,6 @@
                                 <th>
                                     Category
                                 </th>
-
-                                <th>
-                                    TransactionDate
-                                </th>
                             </tr>
                         </thead>
                         <tbody>
@@ -50,6 +59,11 @@
 
                                             @string.Format("{0}", item.AddToCartDate, "MMMM dd, yyyy")
                                         </span>
+                                    </td>
+                                    <td>
+                                        <div>
+                                            @item.CartNumber
+                                        </div>
                                     </td>
                                     <td class="nowrap">
                                         <span class="status-pill smaller green"></span><span>@item.TransactionStatus</span>
@@ -70,40 +84,35 @@
                                     <td>
                                         @item.Category
                                     </td>
-
-                                    <td>
-                                        <span class="smaller lighter">@item.Date</span>
-                                    </td>
                                 </tr>
                             }
                         </tbody>
                     </table>
-                    <div class="controls-below-table">
-                        <div class="table-records-info">
-                            Showing records 1 - 5
-                        </div>
-                        <div class="table-records-pages">
-                            <ul>
-                                <li>
-                                    <a href="#">Previous</a>
-                                </li>
-                                <li>
-                                    <a class="current" href="#">1</a>
-                                </li>
-                                <li>
-                                    <a href="#">2</a>
-                                </li>
-                                <li>
-                                    <a href="#">3</a>
-                                </li>
-                                <li>
-                                    <a href="#">4</a>
-                                </li>
-                                <li>
-                                    <a href="#">Next</a>
-                                </li>
-                            </ul>
-                        </div>
+                </div>
+                <div class="controls-below-table">
+                    <div class="table-records-info">
+                        Showing records @Model.PageIndex - @Model.TotalPages
+                    </div>
+                    <div class="table-records-pages">
+                        @{
+                            var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+                            var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+                        }
+
+                        <a asp-action="Index"
+                           asp-route-sortOrder="@ViewData["CurrentSort"]"
+                           asp-route-page="@(Model.PageIndex - 1)"
+                           asp-route-currentFilter="@ViewData["CurrentFilter"]"
+                           class="btn btn-lg btn-primary @prevDisabled">
+                            Previous
+                        </a>
+                        <a asp-action="Index"
+                           asp-route-sortOrder="@ViewData["CurrentSort"]"
+                           asp-route-page="@(Model.PageIndex + 1)"
+                           asp-route-currentFilter="@ViewData["CurrentFilter"]"
+                           class="btn btn-lg btn-primary @nextDisabled">
+                            Next
+                        </a>
                     </div>
                 </div>
             </div>

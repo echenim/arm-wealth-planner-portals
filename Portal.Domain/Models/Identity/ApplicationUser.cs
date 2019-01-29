@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Identity;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -27,6 +28,8 @@ namespace Portal.Domain.Models.Identity
 
         [MaxLength(20)]
         public string MembershipNumber { get; set; }
+
+        public DateTime CustomerOnboardingDate { get; set; }
 
         [NotMapped]
         public string FullName => $"{FirstName} {LastName}";

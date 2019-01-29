@@ -9,10 +9,10 @@ namespace Portal.Areas.Admin.ViewModels
 {
     public class DashBoardView
     {
-        public decimal Sales { get; set; }
-        public long Orders { get; set; }
-        public long Customers { get; set; }
-        public long ExpressionOfINterest { get; set; }
+        public string Sales { get; set; }
+        public string Orders { get; set; }
+        public string Customers { get; set; }
+        public string ExpressionOfINterest { get; set; }
         public List<PurchaseOrderViewModel> RecentOrders { get; set; }
     }
 }

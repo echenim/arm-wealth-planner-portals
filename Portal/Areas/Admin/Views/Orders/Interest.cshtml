@@ -1,4 +1,6 @@
-﻿@model IEnumerable<OrdersView>
+﻿@using Portal.Areas.Admin.ViewModels
+@using Portal.Business.Utilities
+@model PaginatedList<OrdersView>
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Areas/Admin/Views/Shared/_Layout_Admin.cshtml";
@@ -7,117 +9,98 @@
 <div class="row">
     <div class="col-md-12 ">
         <div class="element-box element-wrapper">
-            <h5 class="form-header">
-                Expression Of Interest List
+            <h5 class="element-header">
+                LATEST EXPRESSION OF INTEREST ORDERS
             </h5>
-            <div class="form-desc">
-                @*<a asp-action="Add" class="btn btn-sm btn-primary float-left"> <i class="os-icon os-icon-plus-circle"></i> Add Product</a>*@
-            </div>
             <div class="element-box-tp">
+                <form asp-action="Index" method="get">
+                    <div class="form-actions no-color">
+                        <p>
+                            Find by name: <input type="text" name="SearchString" value="@ViewData["currentFilter"]" />
+                            <input type="submit" value="Search" class="btn btn-default" /> |
+                            <a asp-action="Index">Back to Full List</a>
+                        </p>
+                    </div>
+                </form>
                 <div class="table-responsive">
                     <table class="table table-striped b-b">
                         <thead>
                             <tr>
+
                                 <th>
                                     Date
                                 </th>
-                                <th class="text-center">
-                                    Customer Name
+
+                                <th>
+                                    Customer
                                 </th>
                                 <th>
-                                    Phone Number
+                                    Item Purchased
+                                </th>
+                                <th class="text-center">
+                                    Amount
                                 </th>
                                 <th>
                                     Category
-                                </th>
-                                <th>
-                                    Product
-                                </th>
-                                <th>
-                                    Amount
-                                </th>
-
-                                <th class="text-center">
-                                    Actions
                                 </th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach (var item in Model)
                             {
-
                                 <tr>
                                     <td>
-                                        @item.AddToCartDate
+                                        <span class="smaller lighter">
+
+                                            @string.Format("{0}", item.AddToCartDate, "MMMM dd, yyyy")
+                                        </span>
+                                    </td>
+
+                                    <td>
+                                        <div>
+                                            <span>@item.Customer</span>
+                                        </div>
                                     </td>
                                     <td>
-                                        <div class="user-with-avatar">
-                                            <img alt="" src="~/custom/img/default-profile.svg"><span>@item.Customer</span>
+                                        <div>
+                                            @item.Product
                                         </div>
                                     </td>
                                     <td class="text-center">
-                                        <span>@item.CustNo</span>
+                                        <span>&#8358;@item.Amount</span>
                                     </td>
                                     <td>
-                                        @item.CustNo
-                                    </td>
-                                    <td>
-
-                                        <div class="user-with-avatar">
-                                            <img alt="" src="~/custom/img/ethical-fund-image.jpg"><span>@item.Product</span>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        @item.Amount
-                                    </td>
-
-                                    <td class="row-actions">
-                                        <div class="btn-group">
-
-                                            <button type="button" class="btn btn-primary  dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                                <span class="caret">Action</span>
-                                                <span class="sr-only"></span>
-                                            </button>
-                                            <ul class="dropdown-menu" role="menu">
-                                                <li>
-                                                    <a asp-controller="Settings" asp-action="Index">Edit</a>
-                                                </li>
-                                                <li>
-                                                    <a asp-controller="Settings" asp-action="Index">Delete</a>
-                                                </li>
-                                            </ul>
-                                        </div>
+                                        @item.Category
                                     </td>
                                 </tr>
                             }
                         </tbody>
                     </table>
-                    <div class="controls-below-table">
-                        <div class="table-records-info">
-                            Showing records 1 - 5
-                        </div>
-                        <div class="table-records-pages">
-                            <ul>
-                                <li>
-                                    <a href="#">Previous</a>
-                                </li>
-                                <li>
-                                    <a class="current" href="#">1</a>
-                                </li>
-                                <li>
-                                    <a href="#">2</a>
-                                </li>
-                                <li>
-                                    <a href="#">3</a>
-                                </li>
-                                <li>
-                                    <a href="#">4</a>
-                                </li>
-                                <li>
-                                    <a href="#">Next</a>
-                                </li>
-                            </ul>
-                        </div>
+                </div>
+                <div class="controls-below-table">
+                    <div class="table-records-info">
+                        Showing records @Model.PageIndex - @Model.TotalPages
+                    </div>
+                    <div class="table-records-pages">
+                        @{
+                            var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+                            var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+                        }
+
+                        <a asp-action="Interest"
+                           asp-route-sortOrder="@ViewData["CurrentSort"]"
+                           asp-route-page="@(Model.PageIndex - 1)"
+                           asp-route-currentFilter="@ViewData["CurrentFilter"]"
+                           class="btn btn-lg btn-primary @prevDisabled">
+                            Previous
+                        </a>
+                        <a asp-action="Interest"
+                           asp-route-sortOrder="@ViewData["CurrentSort"]"
+                           asp-route-page="@(Model.PageIndex + 1)"
+                           asp-route-currentFilter="@ViewData["CurrentFilter"]"
+                           class="btn btn-lg btn-primary @nextDisabled">
+                            Next
+                        </a>
                     </div>
                 </div>
             </div>

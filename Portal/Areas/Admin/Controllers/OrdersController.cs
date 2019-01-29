@@ -1,9 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Portal.Areas.Admin.ViewModels;
 using Portal.Business.Contracts;
+using Portal.Business.Utilities;
 
 namespace Portal.Areas.Admin.Controllers
 {
@@ -17,61 +19,108 @@ namespace Portal.Areas.Admin.Controllers
             _ordersAndSalesService = ordersAndSalesService;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(
+            string sortOrder,
+            string currentFilter,
+            string searchString,
+            int? page
+            )
         {
             ViewData["ControllerName"] = "Admin/Orders";
 
-            var list = new List<OrdersView>();
-            var orders = _ordersAndSalesService.Get(s => s.Product.ProductTypes.Equals("Enter Amount")
-                        || s.Product.ProductTypes.Equals("Fixed Amount"))
-                .OrderByDescending(s => s.AddToCartDate).ThenBy(s => s.Customer);
+            ViewBag.AreaName = "Roles & Permission";
+            ViewData["CurrentSort"] = sortOrder;
+            ViewData["NameSortParm"] = string.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewData["NumberOfUserSortParm"] = sortOrder == "NumberOfUser" ? "numberOfUser" : "NumberOfUser";
 
-            foreach (var item in orders)
+            if (searchString != null)
             {
-                list.Add(new OrdersView
-                {
-                    Id = (int)item.Id,
-                    Product = item.Product.Name,
-                    Category = item.Product.ProductCategory.Name,
-                    Customer = item.Customer.FullName,
-                    CustNo = item.Customer.MembershipNumber,
-                    Amount = item.Amount.ToString("N1", CultureInfo.InvariantCulture),
-                    TransactionDate = item.OrderDate.ToString(),
-                    CartNumber = item.CartNumber,
-                    TransactionNumber = item.PaymentTransactionNumber,
-                    TransactionStatus = item.TransactionStatus,
-                    AddToCartDate = $"{item.AddToCartDate:dd MMM yyyy  hh:mm tt}",
-                    Date = item.OrderDate.ToString()
-                });
+                page = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
             }
 
-            return View(list);
+            ViewData["CurrentFilter"] = searchString;
+
+            var orders = !String.IsNullOrEmpty(searchString) ?
+                _ordersAndSalesService.Get(s => !s.Product.ProductTypes.Equals("Expression of Interest")
+                                                && s.CartNumber.Equals(searchString))
+                .OrderByDescending(s => s.AddToCartDate).ThenBy(s => s.Customer)
+                : _ordersAndSalesService.Get(s => !s.Product.ProductTypes.Equals("Expression of Interest"))
+                    .OrderByDescending(s => s.AddToCartDate).ThenBy(s => s.Customer);
+
+            var list = orders.Select(item => new OrdersView
+            {
+                Id = (int)item.Id,
+                Product = item.Product.Name,
+                Category = item.Product.ProductCategory.Name,
+                Customer = item.Customer.FullName,
+                CustNo = item.Customer.MembershipNumber,
+                Amount = TransfromerManager.DecimalHumanizedX(item.Amount),
+                TransactionDate = item.OrderDate.ToString(),
+                CartNumber = item.CartNumber,
+                TransactionNumber = item.PaymentTransactionNumber,
+                TransactionStatus = item.TransactionStatus,
+                AddToCartDate = TransfromerManager.DateHumanized(item.AddToCartDate),
+                Date = item.OrderDate.ToString()
+            })
+                .ToList();
+
+            int pageSize = 20;
+
+            return View(PaginatedList<OrdersView>.Create(list.AsQueryable(), page ?? 1, pageSize));
         }
 
-        public IActionResult Interest()
+        public IActionResult Interest(
+            string sortOrder,
+            string currentFilter,
+            string searchString,
+            int? page
+            )
         {
             ViewData["ControllerName"] = "Admin/Expression Of Interest";
 
-            var list = new List<OrdersView>();
-            var orders = _ordersAndSalesService.Get(s => s.Product.ProductTypes.Equals("Expression of Interest"))
-                .OrderByDescending(s => s.AddToCartDate).ThenBy(s => s.Customer);
+            ViewBag.AreaName = "Roles & Permission";
+            ViewData["CurrentSort"] = sortOrder;
+            ViewData["NameSortParm"] = string.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewData["NumberOfUserSortParm"] = sortOrder == "NumberOfUser" ? "numberOfUser" : "NumberOfUser";
 
-            foreach (var item in orders)
+            if (searchString != null)
             {
-                list.Add(new OrdersView
-                {
-                    Id = (int)item.Id,
-                    Product = item.Product.Name,
-                    Category = item.Product.ProductCategory.Name,
-                    Customer = item.Customer.FullName,
-                    CustNo = item.Customer.MembershipNumber,
-                    Amount = item.Amount.ToString("N1", CultureInfo.InvariantCulture),
-                    AddToCartDate = $"{item.AddToCartDate:dd MMM yyyy  hh:mm tt}",
-                    Date = item.OrderDate.ToString()
-                });
+                page = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
             }
 
-            return View(list);
+            ViewData["CurrentFilter"] = searchString;
+
+            var orders = !String.IsNullOrEmpty(searchString) ?
+                _ordersAndSalesService.Get(s => s.Product.ProductTypes.Equals("Expression of Interest")
+                                                && s.CartNumber.Equals(searchString))
+                .OrderByDescending(s => s.AddToCartDate).ThenBy(s => s.Customer)
+                : _ordersAndSalesService.Get(s => s.Product.ProductTypes.Equals("Expression of Interest"))
+                    .OrderByDescending(s => s.AddToCartDate).ThenBy(s => s.Customer);
+
+            var list = orders.Select(item => new OrdersView
+            {
+                Id = (int)item.Id,
+                Product = item.Product.Name,
+                Category = item.Product.ProductCategory.Name,
+                Customer = item.Customer.FullName,
+                CustNo = item.Customer.MembershipNumber,
+                Amount = TransfromerManager.DecimalHumanizedX(item.Amount),
+                AddToCartDate = TransfromerManager.DateHumanized(item.AddToCartDate),
+                Date = item.OrderDate.ToString()
+            })
+                .ToList();
+
+            int pageSize = 20;
+
+            return View(PaginatedList<OrdersView>.Create(list.AsQueryable(), page ?? 1, pageSize));
         }
     }
 }
