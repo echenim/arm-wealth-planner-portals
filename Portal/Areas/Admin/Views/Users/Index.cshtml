@@ -77,9 +77,9 @@
                                     </td>
 
                                     <td class="row-actions">
-                                        <a href="#" title="View"><i class="os-icon os-icon-eye"></i></a>
-                                        <a href="#" title="Edit"><i class="os-icon os-icon-edit"></i></a>
-                                        <a href="#" title="Suspend"><i class="os-icon os-icon-x-square"></i></a>
+                                        <a asp-area="Admin" asp-controller="Users" asp-action="Edit" asp-route-id="@item.Id">
+                                            <i class="os-icon os-icon-edit"></i>
+                                        </a>
                                     </td>
                                 </tr>
                             }

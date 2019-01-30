@@ -37,4 +37,27 @@ namespace Portal.Areas.Admin.ViewModels
 
         public List<SelectListItem> AvailableRoles { get; set; }
     }
+
+    public class EditInternalUserViewModel
+    {
+        public EditInternalUserViewModel()
+            => AvailableRoles = new List<SelectListItem>();
+
+        public long Id { get; set; }
+
+        [Required(ErrorMessage = "FirstName is required, please provide ")]
+        public string FirstName { get; set; }
+
+        [Required(ErrorMessage = "LastName is required, please provide ")]
+        public string LastName { get; set; }
+
+        [Required(ErrorMessage = "Email is required, please provide ")]
+        [DataType(DataType.EmailAddress)]
+        public string Email { get; set; }
+
+        [Required(ErrorMessage = "Role is required, please select one ")]
+        public string Roles { get; set; }
+
+        public List<SelectListItem> AvailableRoles { get; set; }
+    }
 }

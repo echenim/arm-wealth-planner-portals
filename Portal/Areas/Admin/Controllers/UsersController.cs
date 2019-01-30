@@ -116,5 +116,61 @@ namespace Portal.Areas.Admin.Controllers
 
             return View(models);
         }
+
+        public IActionResult Edit(string id)
+        {
+            if (string.IsNullOrEmpty(id)) return RedirectToAction("Index");
+
+            var user = _userManager.FindByIdAsync(id).Result;
+            var internalUser = new EditInternalUserViewModel
+            {
+                Email = user.Email,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+            };
+            internalUser.AvailableRoles.Add(new SelectListItem
+            {
+                Text = "--select--",
+                Value = string.Empty
+            });
+
+            var permissionCollection = _groupManager.Groups().OrderBy(s => s.Name);
+            foreach (var item in permissionCollection)
+            {
+                internalUser.AvailableRoles.Add(new SelectListItem
+                {
+                    Text = item.Name,
+                    Value = item.Id.ToString()
+                });
+            }
+
+            return View(internalUser);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Edit(EditInternalUserViewModel models)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = _userManager.FindByIdAsync(models.Id.ToString()).Result;
+                user.FirstName = models.FirstName;
+                user.LastName = models.LastName;
+                user.Email = models.Email;
+
+                var result = _userManager.UpdateAsync(user).Result;
+
+                if (result.Succeeded)
+                {
+                    var resultFromAssigningPermission = _groupManager.SetUserGroups(user.Id, models.Roles);
+                    if (resultFromAssigningPermission.Succeeded)
+                    {
+                        return RedirectToAction("Index");
+                    }
+                }
+            }
+
+            return View(models);
+        }
     }
 }

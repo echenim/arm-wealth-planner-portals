@@ -1,5 +1,5 @@
 ﻿@using Portal.Areas.Admin.ViewModels
-@model Portal.Areas.Admin.ViewModels.InternalUserViewModel
+@model Portal.Areas.Admin.ViewModels.EditInternalUserViewModel
 
 @{
     ViewData["Title"] = "Add";
@@ -10,15 +10,15 @@
 
     <div class="element-box">
         <h5 class="form-header">
-            Add New User
+            Edit User
         </h5>
         <div class="form-desc">
         </div>
 
         <div>
-            <form asp-action="Add">
+            <form asp-action="Edit">
                 @Html.AntiForgeryToken()
-
+                <input asp-for="Id" class="form-control" type="hidden">
                 <div class="form-group">
                     <label for=""> First Name</label>
                     <input asp-for="FirstName" class="form-control" placeholder="Enter First Name" type="text">
@@ -37,22 +37,6 @@
                     </div>
                 </div>
 
-                <div class="row">
-                    <div class="col-sm-6">
-                        <div class="form-group">
-                            <label for=""> Password</label>
-                            <input asp-for="Password" class="form-control" placeholder="Password" type="password">
-                            <span asp-validation-for="Password" class="text-danger"></span>
-                        </div>
-                    </div>
-                    <div class="col-sm-6">
-                        <div class="form-group">
-                            <label for="">Confirm Password</label>
-                            <input asp-for="ConfirmPassword" class="form-control" placeholder="Password" type="password">
-                            <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
-                        </div>
-                    </div>
-                </div>
                 <div class="form-group">
                     <label for="">User Role</label>
                     <select asp-for="Roles" class="form-control">

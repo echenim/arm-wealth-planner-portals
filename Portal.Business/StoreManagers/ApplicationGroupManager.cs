@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Portal.Domain;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Portal.Domain.Models.Identity;
 using Portal.Business.Contracts;
 using Portal.Business.Stores;
@@ -62,8 +63,12 @@ namespace Portal.Business.StoreManagers
             var currentGroups = this.GetUserGroups(userId);
             foreach (var group in currentGroups)
             {
-                group.ApplicationUsers
-                    .Remove(group.ApplicationUsers.FirstOrDefault(gr => gr.ApplicationUserId == userId));
+                var usergroup = new ApplicationUserGroup
+                {
+                    ApplicationUserId = userId,
+                    ApplicationGroupId = group.Id
+                };
+                _db.ApplicationUserGroup.Remove(usergroup);
             }
             _db.SaveChanges();
 
@@ -97,13 +102,13 @@ namespace Portal.Business.StoreManagers
             // Find teh roles this user is entitled to from group membership:
             var newGroupRoles = this.GetUserGroupRoles(userId);
 
-            // Get the damn role names:
+            // Get the  role names:
             var allRoles = _roleManager.Role().ToList();
             var addTheseRoles = allRoles.Where(r => newGroupRoles.Any(gr => gr.ApplicationRoleId == r.Id));
-            var roleNames = addTheseRoles.Select(n => n.Name).ToArray();
+            var roleIds = addTheseRoles.Select(n => n.Id.ToString()).ToArray();
 
             // Add the user to the proper roles
-            _userManager.AddToRoles(userId, roleNames);
+            _userManager.AddToRolesById(userId, roleIds);
 
             return IdentityResult.Success;
         }
@@ -155,6 +160,7 @@ namespace Portal.Business.StoreManagers
         {
             var result = new List<ApplicationGroup>();
             var userGroups = (from g in this.Groups()
+                    .Include(s => s.ApplicationRoles)
                               where g.ApplicationUsers.Any(u => u.ApplicationUserId == userId)
                               select g).ToList();
             return userGroups;
@@ -184,7 +190,7 @@ namespace Portal.Business.StoreManagers
 
         public IEnumerable<ApplicationGroupRole> GetUserGroupRoles(long userId)
         {
-            var userGroups = this.GetUserGroups(userId);
+            var userGroups = GetUserGroups(userId);
             var userGroupRoles = new List<ApplicationGroupRole>();
             foreach (var group in userGroups)
             {

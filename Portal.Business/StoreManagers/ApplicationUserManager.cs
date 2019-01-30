@@ -43,5 +43,20 @@ namespace Portal.Business.StoreManagers
 
             this._userStore.AddToRoles(roleArray.ToArray());
         }
+
+        public void AddToRolesById(long userId, string[] roleIds)
+        {
+            var roleArray = new List<ApplicationUserRole>();
+
+            if (!roleIds.Any()) return;
+            roleArray.AddRange(roleIds.Select(role => long.Parse(role))
+                .Select(roleId => new ApplicationUserRole
+                {
+                    UserId = userId,
+                    RoleId = roleId
+                }));
+
+            this._userStore.AddToRoles(roleArray.ToArray());
+        }
     }
 }
