@@ -1,0 +1,42 @@
+2019-01-30 11:18:AM System.ArgumentNullException: Value cannot be null.
+Parameter name: s
+   at System.Convert.FromBase64String(String s)
+   at Portal.Services.SecureCredentials.DecryptCredentials(String credentials) in C:\Users\gbadeboa\source\repos\arm-wealth-planner-portals\Portal\Services\Utilities.cs:line 48
+   at Portal.Services.ArmClientServices.ClientValidate(ClientValidateRequest payload) in C:\Users\gbadeboa\source\repos\arm-wealth-planner-portals\Portal\Services\ArmClientServices.cs:line 271
+   at Portal.Services.ClientRepository.GetUserProfile(Int32 membershipKey) in C:\Users\gbadeboa\source\repos\arm-wealth-planner-portals\Portal\Services\ClientRepository.cs:line 31
+   at Portal.Areas.Client.Controllers.DashboardController.IndexTest() in C:\Users\gbadeboa\source\repos\arm-wealth-planner-portals\Portal\Areas\Client\Controllers\DashBoardController.cs:line 76
+2019-01-30 11:22:AM System.ArgumentNullException: Value cannot be null.
+Parameter name: s
+   at System.Convert.FromBase64String(String s)
+   at Portal.Services.SecureCredentials.DecryptCredentials(String credentials) in C:\Users\gbadeboa\source\repos\arm-wealth-planner-portals\Portal\Services\Utilities.cs:line 48
+   at Portal.Services.ArmClientServices.ClientValidate(ClientValidateRequest payload) in C:\Users\gbadeboa\source\repos\arm-wealth-planner-portals\Portal\Services\ArmClientServices.cs:line 271
+   at Portal.Services.ClientRepository.GetUserProfile(Int32 membershipKey) in C:\Users\gbadeboa\source\repos\arm-wealth-planner-portals\Portal\Services\ClientRepository.cs:line 31
+   at Portal.Areas.Client.Controllers.DashboardController.IndexTest() in C:\Users\gbadeboa\source\repos\arm-wealth-planner-portals\Portal\Areas\Client\Controllers\DashBoardController.cs:line 76
+2019-01-30 11:23:AM System.ArgumentNullException: Value cannot be null.
+Parameter name: s
+   at System.Convert.FromBase64String(String s)
+   at Portal.Services.SecureCredentials.DecryptCredentials(String credentials) in C:\Users\gbadeboa\source\repos\arm-wealth-planner-portals\Portal\Services\Utilities.cs:line 48
+   at Portal.Services.ArmClientServices.ClientValidate(ClientValidateRequest payload) in C:\Users\gbadeboa\source\repos\arm-wealth-planner-portals\Portal\Services\ArmClientServices.cs:line 271
+   at Portal.Services.ClientRepository.GetUserProfile(Int32 membershipKey) in C:\Users\gbadeboa\source\repos\arm-wealth-planner-portals\Portal\Services\ClientRepository.cs:line 31
+   at Portal.Areas.Client.Controllers.DashboardController.IndexTest() in C:\Users\gbadeboa\source\repos\arm-wealth-planner-portals\Portal\Areas\Client\Controllers\DashBoardController.cs:line 76
+2019-01-30 11:28:AM System.ArgumentNullException: Value cannot be null.
+Parameter name: s
+   at System.Convert.FromBase64String(String s)
+   at Portal.Services.SecureCredentials.DecryptCredentials(String credentials) in C:\Users\gbadeboa\source\repos\arm-wealth-planner-portals\Portal\Services\Utilities.cs:line 48
+   at Portal.Services.ArmClientServices.ClientValidate(ClientValidateRequest payload) in C:\Users\gbadeboa\source\repos\arm-wealth-planner-portals\Portal\Services\ArmClientServices.cs:line 271
+   at Portal.Services.ClientRepository.GetUserProfile(Int32 membershipKey) in C:\Users\gbadeboa\source\repos\arm-wealth-planner-portals\Portal\Services\ClientRepository.cs:line 31
+   at Portal.Areas.Client.Controllers.DashboardController.IndexTest() in C:\Users\gbadeboa\source\repos\arm-wealth-planner-portals\Portal\Areas\Client\Controllers\DashBoardController.cs:line 76
+2019-01-30 12:16:PM System.ArgumentNullException: Value cannot be null.
+Parameter name: s
+   at System.Convert.FromBase64String(String s)
+   at Portal.Services.SecureCredentials.DecryptCredentials(String credentials) in C:\Users\gbadeboa\source\repos\arm-wealth-planner-portals\Portal\Services\Utilities.cs:line 48
+   at Portal.Services.ArmClientServices.ClientValidate(ClientValidateRequest payload) in C:\Users\gbadeboa\source\repos\arm-wealth-planner-portals\Portal\Services\ArmClientServices.cs:line 271
+   at Portal.Services.ClientRepository.GetUserProfile(Int32 membershipKey) in C:\Users\gbadeboa\source\repos\arm-wealth-planner-portals\Portal\Services\ClientRepository.cs:line 31
+   at Portal.Areas.Client.Controllers.DashboardController.IndexTest() in C:\Users\gbadeboa\source\repos\arm-wealth-planner-portals\Portal\Areas\Client\Controllers\DashBoardController.cs:line 76
+2019-01-30 12:17:PM System.ArgumentNullException: Value cannot be null.
+Parameter name: s
+   at System.Convert.FromBase64String(String s)
+   at Portal.Services.SecureCredentials.DecryptCredentials(String credentials) in C:\Users\gbadeboa\source\repos\arm-wealth-planner-portals\Portal\Services\Utilities.cs:line 48
+   at Portal.Services.ArmClientServices.ClientValidate(ClientValidateRequest payload) in C:\Users\gbadeboa\source\repos\arm-wealth-planner-portals\Portal\Services\ArmClientServices.cs:line 271
+   at Portal.Services.ClientRepository.GetUserProfile(Int32 membershipKey) in C:\Users\gbadeboa\source\repos\arm-wealth-planner-portals\Portal\Services\ClientRepository.cs:line 31
+   at Portal.Areas.Client.Controllers.DashboardController.IndexTest() in C:\Users\gbadeboa\source\repos\arm-wealth-planner-portals\Portal\Areas\Client\Controllers\DashBoardController.cs:line 76
