@@ -5,11 +5,16 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Portal.Areas.Client.Filter;
 using Portal.Business.Contracts;
 using Portal.Business.Implementations;
 using Portal.Business.StoreManagers;
+using Microsoft.Extensions.Logging;
 using Portal.Domain;
 using Portal.Domain.Models.Identity;
+using System.Collections.Generic;
+using System.Globalization;
+using Portal.Areas.Client.Models;
 
 namespace Portal
 {
@@ -32,6 +37,12 @@ namespace Portal
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+            services.Configure<RequestLocalizationOptions>(options =>
+            {
+                options.DefaultRequestCulture = new Microsoft.AspNetCore.Localization.RequestCulture("en-NZ");
+                options.SupportedCultures = new List<CultureInfo> { new CultureInfo("en-US"), new CultureInfo("en-NZ") };
+                options.RequestCultureProviders.Clear();
+            });
             //services.AddDbContext<ApplicationDbContext>(options =>
             //    options.UseSqlServer(
             //        Configuration.GetConnectionString("ArmInvestmentConnection")));
@@ -45,6 +56,16 @@ namespace Portal
 
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("ArmInvestmentConnection")));
+
+            services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
+            services.AddAntiforgery(options => options.HeaderName = "X-XSRF-TOKEN");
+
+            services.AddMvc(options =>
+            {
+                options.Filters.AddService(typeof(AngularAntiforgeryCookieResultFilter));
+            });
+            services.AddTransient<AngularAntiforgeryCookieResultFilter>();
+
 
             #endregion register database connectionstring
 
@@ -71,7 +92,7 @@ namespace Portal
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
             if (env.IsDevelopment())
             {
@@ -85,11 +106,15 @@ namespace Portal
                 app.UseHsts();
             }
 
+            loggerFactory.AddFile("logs/armclientportal-{Date}.txt");
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
 
             app.UseAuthentication();
+
+            app.UseRequestLocalization();
 
             app.UseMvc(routes =>
             {
@@ -99,8 +124,18 @@ namespace Portal
                 );
 
                 routes.MapRoute(
+                    name: "PaymentStatus",
+                    template: "{area:exists}/PaymentStatus/{au?}",
+                    defaults: new { controller = "Buy", action = "PaymentStatus" });
+
+                routes.MapRoute(
+                    name: "DebitStatus",
+                    template: "{area:exists}/DebitStatus/{au?}",
+                    defaults: new { controller = "Buy", action = "DebitStatus" });
+
+                routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    template: "{controller=Home}/{action=Index}/{id?}");                
             });
         }
     }

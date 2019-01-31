@@ -1,0 +1,525 @@
+﻿@model Portal.Areas.Client.ViewModels.AccountStatementViewModel
+@using Portal.Areas.Client.ViewModels;
+@{ 
+    var _user = new AuthenticateResponse();
+    _user.MembershipKey = 1007435;
+    _user.FullName = "Funmilayo Ruth Adeyemi";
+
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ARM Investment Center</title>
+    <meta charset="utf-8">
+    <meta content="ie=edge" http-equiv="x-ua-compatible">
+    <meta content="template language" name="keywords">
+    <meta content="ARM Investment Center" name="description">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <environment include="Development">
+        <link href="~/custom-client/img/arm-favicon.jpg" rel="shortcut icon">
+        <link href="apple-touch-icon.png" rel="apple-touch-icon">
+        <link href="https://fonts.googleapis.com/css?family=Varela+Round:300,400,500" rel="stylesheet" type="text/css">
+
+        <link href="~/custom-client/components/select2/dist/css/select2.min.css" rel="stylesheet">
+        <link href="~/custom-client/components/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
+        <link href="~/custom-client/components/dropzone/dist/dropzone.css" rel="stylesheet">
+        <link href="~/custom-client/components/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
+        <link href="~/custom-client/components/fullcalendar/dist/fullcalendar.min.css" rel="stylesheet">
+        <link href="~/custom-client/components/perfect-scrollbar/css/perfect-scrollbar.min.css" rel="stylesheet">
+        <link href="~/custom-client/components/slick-carousel/slick/slick.css" rel="stylesheet">
+        <link href="~/custom-client/css/main.css?version=4.4.0" rel="stylesheet">
+
+
+    </environment>
+    <environment exclude="Development">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css"
+              asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
+              asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute"
+              crossorigin="anonymous"
+              integrity="sha256-eSi1q2PG6J7g7ib17yAaWMcrr5GrtohYChqibrV7PBE=" />
+    </environment>
+</head>
+<body class="menu-position-side menu-side-left full-screen">
+    <div class="all-wrapper solid-bg-all">
+
+        <div class="layout-w">
+            <!--------------------
+            START - Mobile Menu
+            -------------------->
+            <div class="menu-mobile menu-activated-on-click color-scheme-dark">
+                <div class="mm-logo-buttons-w">
+                    <a class="mm-logo" href="Dashboard.html"><img src="img/arm-logo.png"></a>
+                    <div class="mm-buttons">
+                        <div class="mobile-menu-trigger">
+                            <div class="os-icon os-icon-hamburger-menu-1"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-and-user">
+
+                    <!--------------------
+                    START - Mobile Menu List
+                    -------------------->
+                    <ul class="main-menu">
+                        <li>
+                            <a href="Dashboard.html">
+                                <div class="icon-w">
+                                    <div class="os-icon os-icon-layout"></div>
+                                </div>
+                                <span>Dashboard</span>
+                            </a>
+
+                        </li>
+
+                        <li class="has-sub-menu">
+                            <a href="javascript:void(0)">
+                                <div class="icon-w">
+                                    <div class="os-icon os-icon os-icon-agenda-1"></div>
+                                </div>
+                                <span>My Portfolio</span>
+                            </a>
+                            <ul class="sub-menu">
+                                <li>
+                                    <a href="my-investments.html">My Investments</a>
+                                </li>
+                                <li>
+                                    <a href="transaction-history.html">Transaction History</a>
+                                </li>
+                            </ul>
+
+                        </li>
+                        <li class="has-sub-menu">
+                            <a href="javascript:void(0)">
+                                <div class="icon-w">
+                                    <div class="os-icon os-icon os-icon-coins-4"></div>
+                                </div>
+                                <span>Redemption</span>
+                            </a>
+                            <ul class="sub-menu">
+                                <li>
+                                    <a href="initiate-redemption.html">Initiate a Redemption</a>
+                                </li>
+
+                            </ul>
+                        </li>
+                        <li class="has-sub-menu">
+                            <a href="javascript:void(0)">
+                                <div class="icon-w">
+                                    <div class="os-icon os-icon-credit-card"></div>
+                                </div>
+                                <span>Direct Debit</span>
+                            </a>
+                            <ul class="sub-menu">
+                                <li>
+                                    <a asp-area="Client" asp-controller="Dashboard" asp-action="Index">Setup Mandate</a>
+                                </li>
+                                <li>
+                                    <a href="manage-mandate.html">Manage Mandates</a>
+                                </li>
+
+                            </ul>
+                        </li>
+
+                        <li class="has-sub-menu">
+                            <a href="javascript:void(0)">
+                                <div class="icon-w">
+                                    <div class="os-icon os-icon-user-check"></div>
+                                </div>
+                                <span>Self Service</span>
+                            </a>
+                            <ul class="sub-menu">
+                                <li>
+                                    <a href="account-information.html">Account Information</a>
+                                </li>
+                                <li>
+                                    <a href="account-validation.html">Account Validation</a>
+                                </li>
+                                <li>
+                                    <a href="embassy-letter.html">Embassy Letter</a>
+                                </li>
+                                <li>
+                                    <a href="track-service-request.html">Track Service Request</a>
+                                </li>
+
+                            </ul>
+                        </li>
+                        <li class="has-sub-menu">
+                            <a href="javascript:void(0)">
+                                <div class="icon-w">
+                                    <div class="os-icon os-icon-help-circle"></div>
+                                </div>
+                                <span>Help Center</span>
+                            </a>
+                            <ul class="sub-menu">
+                                <li>
+                                    <a href="find-investment-centers.html">Find an Investment Center</a>
+                                </li>
+                                <li>
+                                    <a href="contact-us.html">Contact Us</a>
+                                </li>
+
+                            </ul>
+                        </li>
+
+                    </ul>
+                    <!--------------------
+                    END - Mobile Menu List
+                    -------------------->
+                </div>
+            </div>
+            <!--------------------
+            END - Mobile Menu
+            -------------------->
+            <!--------------------
+            START - Main Menu
+            -------------------->
+            <div class="menu-w color-scheme-dark menu-position-side menu-side-left menu-layout-full sub-menu-style-over sub-menu-color-bright selected-menu-color-light menu-activated-on-hover menu-has-selected-link">
+                <div class="logo-w">
+                    <a class="logo" href="Dashboard.html">
+                        <img src="~/custom-client/img/arm-logo.png">
+
+                    </a>
+                </div>
+                <!---- Menu starts here ----->
+
+                <ul class="main-menu">
+                    <li class="">
+                        <a href="Dashboard.html">
+                            <div class="icon-w">
+                                <div class="os-icon os-icon-layout"></div>
+                            </div>
+                            <span>Dashboard</span>
+                        </a>
+
+                    </li>
+
+                    <li class="has-sub-menu ">
+                        <a href="javascript:void(0)">
+                            <div class="icon-w">
+                                <div class="os-icon os-icon-agenda-1"></div>
+                            </div>
+                            <span>My Portfolio</span>
+                        </a>
+                        <div class="sub-menu-w">
+                            <div class="sub-menu-header">
+                                My Portfolio
+                            </div>
+                            <div class="sub-menu-icon">
+                                <i class="os-icon os-icon os-icon-agenda-1"></i>
+                            </div>
+                            <div class="sub-menu-i">
+                                <ul class="sub-menu">
+                                    <li>
+                                        <a href="my-investments.html">My Investments</a>
+                                    </li>
+                                    <li>
+                                        <a href="transaction-history.html">Transaction History</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </li>
+
+                    <li class="has-sub-menu">
+                        <a href="javascript:void(0)">
+                            <div class="icon-w">
+                                <div class="os-icon os-icon-coins-4"></div>
+                            </div>
+                            <span>Redemption</span>
+                        </a>
+                        <div class="sub-menu-w">
+                            <div class="sub-menu-header">
+                                Redemption
+                            </div>
+                            <div class="sub-menu-icon">
+                                <i class="os-icon os-icon os-icon-coins-4"></i>
+                            </div>
+                            <div class="sub-menu-i">
+                                <ul class="sub-menu">
+                                    <li>
+                                        <a href="initiate-redemption.html">Initiate a Redemption</a>
+                                    </li>
+
+                                </ul>
+                            </div>
+                        </div>
+                    </li>
+
+
+                    <li class="has-sub-menu">
+                        <a href="javascript:void(0)">
+                            <div class="icon-w">
+                                <div class="os-icon os-icon-credit-card"></div>
+                            </div>
+                            <span>Direct Debit</span>
+                        </a>
+                        <div class="sub-menu-w">
+                            <div class="sub-menu-header">
+                                Direct Debit
+                            </div>
+                            <div class="sub-menu-icon">
+                                <i class="os-icon os-icon-credit-card"></i>
+                            </div>
+                            <div class="sub-menu-i">
+                                <ul class="sub-menu">
+                                    <li>
+                                        <a asp-area="Client" asp-controller="Dashboard" asp-action="Index">Setup Mandate</a>
+                                    </li>
+                                    <li>
+                                        <a href="manage-mandate.html">Manage Mandates</a>
+                                    </li>
+
+                                </ul>
+                            </div>
+                        </div>
+                    </li>
+
+
+                    <li class="has-sub-menu">
+                        <a href="javascript:void(0)">
+                            <div class="icon-w">
+                                <div class="os-icon os-icon-user-check"></div>
+                            </div>
+                            <span>Self Service</span>
+                        </a>
+                        <div class="sub-menu-w">
+                            <div class="sub-menu-header">
+                                Self Service
+                            </div>
+                            <div class="sub-menu-icon">
+                                <i class="os-icon os-icon-user-check"></i>
+                            </div>
+                            <div class="sub-menu-i">
+                                <ul class="sub-menu">
+                                    <li>
+                                        <a href="account-information.html">Account Information</a>
+                                    </li>
+                                    <li>
+                                        <a href="account-validation.html">Account Validation</a>
+                                    </li>
+                                    <li>
+                                        <a href="embassy-letter.html">Embassy Letter</a>
+                                    </li>
+                                    <li>
+                                        <a href="track-service-request.html">Track Service Request</a>
+                                    </li>
+
+                                </ul>
+                            </div>
+                        </div>
+                    </li>
+
+                    <li class="has-sub-menu">
+                        <a href="javascript:void(0)">
+                            <div class="icon-w">
+                                <div class="os-icon os-icon-help-circle"></div>
+                            </div>
+                            <span>Help Center</span>
+                        </a>
+                        <div class="sub-menu-w">
+                            <div class="sub-menu-header">
+                                Help Center
+                            </div>
+                            <div class="sub-menu-icon">
+                                <i class="os-icon os-icon-help-circle"></i>
+                            </div>
+                            <div class="sub-menu-i">
+                                <ul class="sub-menu">
+                                    <li>
+                                        <a href="find-investment-centers.html">Find an Investment Center</a>
+                                    </li>
+                                    <li>
+                                        <a href="contact-us.html">Contact Us</a>
+                                    </li>
+
+                                </ul>
+                            </div>
+                        </div>
+                    </li>
+
+                </ul>
+
+                <!---- Menu ends here ----->
+
+            </div>
+            <!--------------------
+            END - Main Menu
+            -------------------->
+            <div class="content-w">
+                <!--------------------
+                START - Top Bar
+                -------------------->
+                <div class="top-bar color-scheme-bright">
+
+
+                    <!--------------------
+                    START - Top Menu Controls
+                    -------------------->
+                    <div class="top-menu-controls">
+
+                        <!--------------------
+                        START - User avatar and menu in secondary top menu
+                        -------------------->
+                        <div class="logged-user-w ">
+
+                            <div class="logged-user-i">
+                                <div class="logged-user-info-w top-personal-info">
+                                    <div class="logged-user-name">
+                                        @_user.FullName
+                                    </div>
+                                    <div class="logged-user-role">
+                                        Member ID: @_user.MembershipKey
+                                    </div>
+                                </div>
+                                <div class="avatar-w">
+                                    <img alt="" src="~/custom-client/img/default-profile.svg">
+                                </div>
+
+                                <div class="logged-user-menu color-style-bright">
+                                    <div class="logged-user-avatar-info">
+                                        <div class="avatar-w">
+                                            <img alt="" src="~/custom-client/img/default-profile.svg">
+                                        </div>
+                                        <div class="logged-user-info-w">
+                                            <div class="logged-user-name">
+                                                @_user.FullName
+                                            </div>
+                                            <div class="logged-user-role">
+                                                @_user.MembershipKey
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="bg-icon">
+                                        <i class="os-icon os-icon-user-male-circle2"></i>
+                                    </div>
+                                    <ul>
+
+                                        <li>
+                                            <a href="profile.html"><i class="os-icon os-icon-user-male-circle2"></i><span>My Account</span></a>
+                                        </li>
+                                        <li>
+                                            <a href="#"><i class="os-icon os-icon-signs-11"></i><span>Logout</span></a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <!--------------------
+                        END - User avatar and menu in secondary top menu
+                        -------------------->
+                    </div>
+                    <!--------------------
+                    END - Top Menu Controls
+                    -------------------->
+                </div>
+                <!--------------------
+                END - Top Bar
+                -------------------->
+                <!--------------------
+                START - Breadcrumbs
+                -------------------->
+                <!--------------------
+                END - Breadcrumbs
+                -------------------->
+
+                <div class="content-i">
+                    <div class="content-box">
+
+                        @RenderBody()
+
+                    </div>
+
+                </div>
+                <div class="footer-w">
+                    <div class="deep-footer">
+                        <div class=" pt-2"> &copy; 2019 <a href="http://arminvestmentmanagers.com/">ARM Investment Managers.</a> All rights reserved.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="display-type"></div>
+    </div>
+    <environment include="Development">
+        <script src="~/custom-client/components/jquery/dist/jquery.min.js"></script>
+        <script src="~/custom-client/components/popper.js/dist/umd/popper.min.js"></script>
+        <script src="~/custom-client/components/moment/moment.js"></script>
+        <script src="~/custom-client/components/chart.js/dist/Chart.min.js"></script>
+        <script src="~/custom-client/components/select2/dist/js/select2.full.min.js"></script>
+        <script src="~/custom-client/components/jquery-bar-rating/dist/jquery.barrating.min.js"></script>
+        <script src="~/custom-client/components/ckeditor/ckeditor.js"></script>
+        <script src="~/custom-client/components/bootstrap-validator/dist/validator.min.js"></script>
+        <script src="~/custom-client/components/bootstrap-daterangepicker/daterangepicker.js"></script>
+        <script src="~/custom-client/components/ion.rangeSlider/js/ion.rangeSlider.min.js"></script>
+        <script src="~/custom-client/components/dropzone/dist/dropzone.js"></script>
+        <script src="~/custom-client/components/editable-table/mindmup-editabletable.js"></script>
+        <script src="~/custom-client/components/datatables.net/js/jquery.dataTables.min.js"></script>
+        <script src="~/custom-client/components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+        <script src="~/custom-client/components/fullcalendar/dist/fullcalendar.min.js"></script>
+        <script src="~/custom-client/components/perfect-scrollbar/js/perfect-scrollbar.jquery.min.js"></script>
+        <script src="~/custom-client/components/tether/dist/js/tether.min.js"></script>
+        <script src="~/custom-client/components/slick-carousel/slick/slick.min.js"></script>
+        <script src="~/custom-client/components/bootstrap/js/dist/util.js"></script>
+        <script src="~/custom-client/components/bootstrap/js/dist/alert.js"></script>
+        <script src="~/custom-client/components/bootstrap/js/dist/button.js"></script>
+        <script src="~/custom-client/components/bootstrap/js/dist/carousel.js"></script>
+        <script src="~/custom-client/components/bootstrap/js/dist/collapse.js"></script>
+        <script src="~/custom-client/components/bootstrap/js/dist/dropdown.js"></script>
+        <script src="~/custom-client/components/bootstrap/js/dist/modal.js"></script>
+        <script src="~/custom-client/components/bootstrap/js/dist/tab.js"></script>
+        <script src="~/custom-client/components/bootstrap/js/dist/tooltip.js"></script>
+        <script src="~/custom-client/components/bootstrap/js/dist/popover.js"></script>
+        <script src="~/custom-client/js/demo_customizer.js?version=4.4.0"></script>
+        <script src="~/custom-client/js/main.js?version=4.4.0"></script>
+        <script>
+            (function (i, s, o, g, r, a, m) {
+                i['GoogleAnalyticsObject'] = r;
+                i[r] = i[r] || function () {
+                    (i[r].q = i[r].q || []).push(arguments)
+                }, i[r].l = 1 * new Date();
+                a = s.createElement(o),
+                    m = s.getElementsByTagName(o)[0];
+                a.async = 1;
+                a.src = g;
+                m.parentNode.insertBefore(a, m)
+            })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+
+            ga('create', 'UA-XXXXXXX-9', 'auto');
+            ga('send', 'pageview');
+        </script>
+    </environment>
+    <environment exclude="Development">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"
+                asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
+                asp-fallback-test="window.jQuery"
+                crossorigin="anonymous"
+                integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=">
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/js/bootstrap.bundle.min.js"
+                asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"
+                asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
+                crossorigin="anonymous"
+                integrity="sha256-E/V4cWE4qvAeO5MOhjtGtqDzPndRO1LBk8lJ/PR7CA4=">
+        </script>
+    </environment>
+    @*<script src="~/js/site.js" asp-append-version="true"></script>*@
+
+    <script>
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r;
+            i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date();
+            a = s.createElement(o),
+                m = s.getElementsByTagName(o)[0];
+            a.async = 1;
+            a.src = g;
+            m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+
+        ga('create', 'UA-XXXXXXX-9', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

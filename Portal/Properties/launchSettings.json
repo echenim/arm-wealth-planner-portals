@@ -8,16 +8,17 @@
     },
     "iisExpress": {
       "applicationUrl": "http://localhost:59024",
-      "sslPort": 44398
+      "sslPort": 0
     }
   },
   "profiles": {
     "IIS Express": {
-      "commandName": "IISExpress",
+      "commandName": "Project",
       "launchBrowser": true,
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
-      }
+      },
+      "ancmHostingModel": "OutOfProcess"
     },
     "Portal": {
       "commandName": "Project",
