@@ -1,10 +1,11 @@
-﻿
+﻿@model Portal.Areas.Client.ViewModels.AccountStatementViewModel
+@using Portal.Areas.Client.Extensions;
+
 @{
     ViewData["Title"] = "Index";
-    Layout = "~/Areas/Client/Views/Shared/_Layout.cshtml";
+    Layout = "~/Areas/Client/Views/Shared/_Layout-Client.cshtml";
 }
 
-<h1>Index</h1>
 <!---- Investment Overview --->
 
 <div class="row">
@@ -19,7 +20,7 @@
                             Your Investment Position
                         </div>
                         <div class="balance-value">
-                            <span>&#8358;72,246,000</span></span>
+                            <span>&#8358;@String.Format("{0:#,##0.##}", Model.TotalBalance)</span>
                         </div>
                     </div>
 
@@ -35,7 +36,8 @@
                     <div class="element-box-tp">
                         <div class="element-actions d-none d-sm-block">
                             <form class="form-inline justify-content-sm-end">
-                                <label class="smaller" for="">Show Period:</label><select class="form-control form-control-sm form-control-faded">
+                                <label class="smaller" for="">Show Period:</label>
+                                <select class="form-control form-control-sm form-control-faded">
                                     <option selected="true">
                                         Last 30 days
                                     </option>
@@ -70,49 +72,114 @@
                     <div class="el-chart-w">
                         <canvas height="120" id="donutChart1" width="120"></canvas>
                         <div class="inside-donut-chart-label">
-                            <strong>&#8358;26.3m</strong><span>Spread</span>
+                            <strong>&#8358;@String.Format("{0:#,##0.##}", @ViewBag.SumAccruedInterest)</strong><span>Spread</span>
                         </div>
                     </div>
                     <div class="el-legend condensed">
                         <div class="row">
                             <div class=" col-xxxxl-6 ml-sm-auto mr-sm-auto">
-                                <div class="legend-value-w">
-                                    <div class="legend-pin legend-pin-squared" style="background-color: #6896f9;"></div>
-                                    <div class="legend-value">
-                                        <span>Money Market Fund</span>
-                                        <div class="legend-sub-value">
-                                            17%, &#8358;12,200,420
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="legend-value-w">
-                                    <div class="legend-pin legend-pin-squared" style="background-color: #85c751;"></div>
-                                    <div class="legend-value">
-                                        <span>Ethical Fund</span>
-                                        <div class="legend-sub-value">
-                                            22%, &#8358;2,200,4200
-                                        </div>
-                                    </div>
-                                </div>
+                                @if (Model.Summaries != null && Model.Summaries.Count > 0)
+                                {
+                                    var mmf = String.Empty;
+                                    var ef = String.Empty;
+                                    var df = String.Empty;
+                                    var agf = String.Empty;
 
-                                <div class="legend-value-w">
-                                    <div class="legend-pin legend-pin-squared" style="background-color: #6896f9;"></div>
-                                    <div class="legend-value">
-                                        <span>Money Market Fund</span>
-                                        <div class="legend-sub-value">
-                                            17%, &#8358;12,200,420
+                                    foreach (var data in Model.Summaries)
+                                    {
+                                        var productcode = data.ProductCode;
+                                        var balance = (Model.TotalBalance == 0) ? 0 : (((data.CurrentBalance) / (Model.TotalBalance)) * 100);
+
+                                        <div class="legend-value-w">
+                                            @if (data.ProductName.Equals("ARM Money Market Fund"))
+                                            {
+                                                mmf = (Math.Round(balance, 2)).ToString();
+                                                <div class="legend-pin legend-pin-squared" style="background-color: #6896f9;"></div>
+                                                <div class="legend-value">
+                                                    <span>@data.ProductName</span>
+                                                    <div class="legend-sub-value">
+                                                        @Math.Round(balance, 2)%, &#8358;@String.Format("{0:#,##0.##}", data.AccruedInterest)
+                                                    </div>
+                                                </div>
+                                            }
+                                            else if (data.ProductName.Equals("ARM Ethical Fund"))
+                                            {
+                                                ef = (Math.Round(balance, 2)).ToString();
+                                                <div class="legend-pin legend-pin-squared" style="background-color: #85c751;"></div>
+                                                <div class="legend-value">
+                                                    <span>@data.ProductName</span>
+                                                    <div class="legend-sub-value">
+                                                        @Math.Round(balance, 2)%, &#8358;@String.Format("{0:#,##0.##}", data.AccruedInterest)
+                                                    </div>
+                                                </div>
+                                            }
+                                            else if (data.ProductName.Equals("ARM Discovery Fund"))
+                                            {
+                                                df = (Math.Round(balance, 2)).ToString();
+                                                <div class="legend-pin legend-pin-squared" style="background-color: #ffcc29;"></div>
+                                                <div class="legend-value">
+                                                    <span>@data.ProductName</span>
+                                                    <div class="legend-sub-value">
+                                                        @Math.Round(balance, 2)%, &#8358;@String.Format("{0:#,##0.##}", data.AccruedInterest)
+                                                    </div>
+                                                </div>
+                                            }
+                                            else if (data.ProductName.Equals("ARM Aggressive Growth Fund"))
+                                            {
+                                                agf = (Math.Round(balance, 2)).ToString();
+                                                <div class="legend-pin legend-pin-squared" style="background-color: #f37070;"></div>
+                                                <div class="legend-value">
+                                                    <span>@data.ProductName</span>
+                                                    <div class="legend-sub-value">
+                                                        @Math.Round(balance, 2)%, &#8358;@String.Format("{0:#,##0.##}", data.AccruedInterest)
+                                                    </div>
+                                                </div>
+                                            }
                                         </div>
-                                    </div>
-                                </div>
-                                <div class="legend-value-w">
-                                    <div class="legend-pin legend-pin-squared" style="background-color: #85c751;"></div>
-                                    <div class="legend-value">
-                                        <span>Ethical Fund</span>
-                                        <div class="legend-sub-value">
-                                            22%, &#8358;2,200,4200
-                                        </div>
-                                    </div>
-                                </div>
+                                    }
+
+                                    <input type="text" value="@mmf" id="mmf" hidden />
+                                    <input type="text" value="@ef" id="ef" hidden />
+                                    <input type="text" value="@df" id="df" hidden />
+                                    <input type="text" value="@agf" id="agf" hidden />
+                                }
+                                @*<div class="legend-value-w">
+            <div class="legend-pin legend-pin-squared" style="background-color: #6896f9;"></div>
+            <div class="legend-value">
+                <span>Money Market Fund</span>
+                <div class="legend-sub-value">
+                    17%, &#8358;12,200,420
+                </div>
+            </div>
+        </div>
+        <div class="legend-value-w">
+            <div class="legend-pin legend-pin-squared" style="background-color: #85c751;"></div>
+            <div class="legend-value">
+                <span>Ethical Fund</span>
+                <div class="legend-sub-value">
+                    22%, &#8358;2,200,4200
+                </div>
+            </div>
+        </div>
+
+        <div class="legend-value-w">
+            <div class="legend-pin legend-pin-squared" style="background-color: #6896f9;"></div>
+            <div class="legend-value">
+                <span>Money Market Fund</span>
+                <div class="legend-sub-value">
+                    17%, &#8358;12,200,420
+                </div>
+            </div>
+        </div>
+        <div class="legend-value-w">
+            <div class="legend-pin legend-pin-squared" style="background-color: #85c751;"></div>
+            <div class="legend-value">
+                <span>Ethical Fund</span>
+                <div class="legend-sub-value">
+                    22%, &#8358;2,200,4200
+                </div>
+            </div>
+        </div>*@
 
                             </div>
 
@@ -139,183 +206,214 @@
                     <table class="table table-padded">
                         <thead>
                             <tr>
-                                <th>
-                                    DATE
-                                </th>
-                                <th>
-                                    TYPE
-                                </th>
-                                <th>
-                                    FUND
-                                </th>
-                                <th class="text-center">
-                                    AMOUNT
-                                </th>
-                                <th>
-                                    UNIT
-                                </th>
-                                <th class="text-center">
-                                    UNIT PRICE
-                                </th>
-                                <th class="text-center">
-                                    MARKET VALUE
-                                </th>
-                                <th>
-                                    DESCRIPTION
-                                </th>
+                                <th>DATE</th>
+                                <th>TYPE</th>
+                                <th>FUND</th>
+                                <th class="text-center">AMOUNT</th>
+                                <th>UNIT</th>
+                                <th class="text-center">UNIT PRICE</th>
+                                <th class="text-center">MARKET VALUE</th>
+                                <th>DESCRIPTION</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>
-                                    <span>Today</span><span class="smaller lighter">1:52am</span>
-                                </td>
-                                <td>
-                                    <div>
-                                        Subscription
-                                    </div>
-                                </td>
-                                <td>
-                                    <div>
-                                        ARMMMF
-                                    </div>
-                                </td>
-                                <td class="text-center">
-                                    <span class="text-success">+&#8358;200,000.00</span>
-                                </td>
-                                <td>
-                                    1.00
-                                </td>
-                                <td class="text-center">
-                                    <span>&#8358;200,000.00</span>
-                                </td>
-                                <td class="text-center">
-                                    <span>&#8358;200,000.00</span>
-                                </td>
-                                <td>
-                                    Processed Subscription
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <span>Today</span><span class="smaller lighter">1:52am</span>
-                                </td>
-                                <td>
-                                    <div>
-                                        Subscription
-                                    </div>
-                                </td>
-                                <td>
-                                    <div>
-                                        ARMMMF
-                                    </div>
-                                </td>
-                                <td class="text-center">
-                                    <span class="text-success">+&#8358;200,000.00</span>
-                                </td>
-                                <td>
-                                    1.00
-                                </td>
-                                <td class="text-center">
-                                    <span>&#8358;200,000.00</span>
-                                </td>
-                                <td class="text-center">
-                                    <span>&#8358;200,000.00</span>
-                                </td>
-                                <td>
-                                    Processed Subscription
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <span>Today</span><span class="smaller lighter">1:52am</span>
-                                </td>
-                                <td>
-                                    <div>
-                                        Redemption
-                                    </div>
-                                </td>
-                                <td>
-                                    <div>
-                                        ARMMMF
-                                    </div>
-                                </td>
-                                <td class="text-center">
-                                    <span class="text-danger">-&#8358;200,000.00</span>
-                                </td>
-                                <td>
-                                    1.00
-                                </td>
-                                <td class="text-center">
-                                    <span>&#8358;200,000.00</span>
-                                </td>
-                                <td class="text-center">
-                                    <span>&#8358;200,000.00</span>
-                                </td>
-                                <td>
-                                    Processed Redemption
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <span>Today</span><span class="smaller lighter">1:52am</span>
-                                </td>
-                                <td>
-                                    <div>
-                                        Subscription
-                                    </div>
-                                </td>
-                                <td>
-                                    <div>
-                                        ARMMMF
-                                    </div>
-                                </td>
-                                <td class="text-center">
-                                    <span class="text-success">+&#8358;200,000.00</span>
-                                </td>
-                                <td>
-                                    1.00
-                                </td>
-                                <td class="text-center">
-                                    <span>&#8358;200,000.00</span>
-                                </td>
-                                <td class="text-center">
-                                    <span>&#8358;200,000.00</span>
-                                </td>
-                                <td>
-                                    Processed Subscription
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <span>Today</span><span class="smaller lighter">1:52am</span>
-                                </td>
-                                <td>
-                                    <div>
-                                        Redemption
-                                    </div>
-                                </td>
-                                <td>
-                                    <div>
-                                        ARMMMF
-                                    </div>
-                                </td>
-                                <td class="text-center">
-                                    <span class="text-danger">-&#8358;200,000.00</span>
-                                </td>
-                                <td>
-                                    1.00
-                                </td>
-                                <td class="text-center">
-                                    <span>&#8358;200,000.00</span>
-                                </td>
-                                <td class="text-center">
-                                    <span>&#8358;200,000.00</span>
-                                </td>
-                                <td>
-                                    Processed Redemption
-                                </td>
-                            </tr>
+                            @if (Model.Transactions != null && Model.Transactions.Count > 0)
+                            {
+                                @foreach (var data in Model.Transactions.AsEnumerable().Reverse())
+                                {
+                                    <tr>
+                                        <td>@data.TransactionDate.ToString("dd MMM yyyy")</td>
+                                        <td>@data.TransactionType</td>
+                                        <td>@data.FundCode</td>
+
+                                        @if (data.Amount >= 0)
+                                        {
+                                            <td class="text-center"><span class="text-success">+₦@String.Format("{0:#,##0.##}", data.Amount)</span></td>
+                                        }
+                                        else
+                                        {
+                                            <td class="text-center"><span class="text-danger">-₦@String.Format("{0:#,##0.##}", (data.Amount * -1))</span></td>
+                                        }
+
+                                        @if (data.Units >= 0)
+                                        {
+                                            <td class=""><span class="text-success">@String.Format("{0:#,##0.##}", data.Units)</span></td>
+                                        }
+                                        else
+                                        {
+                                            <td><span class="text-danger">@String.Format("{0:#,##0.##}", (data.Units * -1))</span></td>
+                                        }
+
+                                        <td class="text-center">@data.UnitPrice.ToString("F2")</td>
+
+                                        @if (data.MarketValue >= 0)
+                                        {
+                                            <td class="text-center"><span class="text-success">+₦@String.Format("{0:#,##0.##}", data.MarketValue)</span></td>
+                                        }
+                                        else
+                                        {
+                                            <td class="text-center"><span class="text-danger">-₦@String.Format("{0:#,##0.##}", (data.MarketValue * -1))</span></td>
+                                        }
+
+                                        <td>@data.Description</td>
+                                    </tr>
+                                }
+                            }
+                            else
+                            {
+                                <h4> No record available for this month </h4>
+                            }
+
+                            @*<tr>
+            <td>
+                <span>Today</span><span class="smaller lighter">1:52am</span>
+            </td>
+            <td>
+                <div>
+                    Subscription
+                </div>
+            </td>
+            <td>
+                <div>
+                    ARMMMF
+                </div>
+            </td>
+            <td class="text-center">
+                <span class="text-success">+&#8358;200,000.00</span>
+            </td>
+            <td>
+                1.00
+            </td>
+            <td class="text-center">
+                <span>&#8358;200,000.00</span>
+            </td>
+            <td class="text-center">
+                <span>&#8358;200,000.00</span>
+            </td>
+            <td>
+                Processed Subscription
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span>Today</span><span class="smaller lighter">1:52am</span>
+            </td>
+            <td>
+                <div>
+                    Subscription
+                </div>
+            </td>
+            <td>
+                <div>
+                    ARMMMF
+                </div>
+            </td>
+            <td class="text-center">
+                <span class="text-success">+&#8358;200,000.00</span>
+            </td>
+            <td>
+                1.00
+            </td>
+            <td class="text-center">
+                <span>&#8358;200,000.00</span>
+            </td>
+            <td class="text-center">
+                <span>&#8358;200,000.00</span>
+            </td>
+            <td>
+                Processed Subscription
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span>Today</span><span class="smaller lighter">1:52am</span>
+            </td>
+            <td>
+                <div>
+                    Redemption
+                </div>
+            </td>
+            <td>
+                <div>
+                    ARMMMF
+                </div>
+            </td>
+            <td class="text-center">
+                <span class="text-danger">-&#8358;200,000.00</span>
+            </td>
+            <td>
+                1.00
+            </td>
+            <td class="text-center">
+                <span>&#8358;200,000.00</span>
+            </td>
+            <td class="text-center">
+                <span>&#8358;200,000.00</span>
+            </td>
+            <td>
+                Processed Redemption
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span>Today</span><span class="smaller lighter">1:52am</span>
+            </td>
+            <td>
+                <div>
+                    Subscription
+                </div>
+            </td>
+            <td>
+                <div>
+                    ARMMMF
+                </div>
+            </td>
+            <td class="text-center">
+                <span class="text-success">+&#8358;200,000.00</span>
+            </td>
+            <td>
+                1.00
+            </td>
+            <td class="text-center">
+                <span>&#8358;200,000.00</span>
+            </td>
+            <td class="text-center">
+                <span>&#8358;200,000.00</span>
+            </td>
+            <td>
+                Processed Subscription
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span>Today</span><span class="smaller lighter">1:52am</span>
+            </td>
+            <td>
+                <div>
+                    Redemption
+                </div>
+            </td>
+            <td>
+                <div>
+                    ARMMMF
+                </div>
+            </td>
+            <td class="text-center">
+                <span class="text-danger">-&#8358;200,000.00</span>
+            </td>
+            <td>
+                1.00
+            </td>
+            <td class="text-center">
+                <span>&#8358;200,000.00</span>
+            </td>
+            <td class="text-center">
+                <span>&#8358;200,000.00</span>
+            </td>
+            <td>
+                Processed Redemption
+            </td>
+        </tr>*@
 
                         </tbody>
                     </table>

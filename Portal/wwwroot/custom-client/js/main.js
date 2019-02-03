@@ -701,6 +701,11 @@ $(function() {
 
 
 
+        //get data from backend
+        var mmf = document.getElementById("mmf").value;
+        var ef = document.getElementById("ef").value;
+        var df = document.getElementById("df").value;
+        var agf = document.getElementById("agf").value;
 
 
         // -----------------
@@ -711,11 +716,13 @@ $(function() {
 
             // donut chart data
             var data = {
-                labels: ["Red", "Blue", "Yellow", "Green", "Purple"],
+                labels: ["Aggressive Growth Fund", "Money Market Fund", "Discovery Fund", "Ethical Fund"],
                 datasets: [{
-                    data: [300, 50, 100, 30, 70],
-                    backgroundColor: ["#5797fc", "#7e6fff", "#4ecc48", "#ffcc29", "#f37070"],
-                    hoverBackgroundColor: ["#5797fc", "#7e6fff", "#4ecc48", "#ffcc29", "#f37070"],
+                    data: [agf, mmf, df, ef],
+                    //backgroundColor: ["#5797fc", "#7e6fff", "#4ecc48", "#ffcc29", "#f37070"],
+                    //hoverBackgroundColor: ["#5797fc", "#7e6fff", "#4ecc48", "#ffcc29", "#f37070"],
+                    backgroundColor: ["#f37070", "#6896f9", "#ffcc29", "#4ecc48"],
+                    hoverBackgroundColor: ["#f37070", "#6896f9", "#ffcc29", "#4ecc48"],
                     borderWidth: 0
                 }]
             };
@@ -746,13 +753,22 @@ $(function() {
 
             // donut chart data
             var data1 = {
-                labels: ["Red", "Blue", "Yellow", "Green", "Purple"],
+                //labels: ["Red", "Blue", "Yellow", "Green", "Purple"],
+                //datasets: [{
+                //    data: [300, 50, 100, 30, 70],
+                //    backgroundColor: ["#5797fc", "#7e6fff", "#4ecc48", "#ffcc29", "#f37070"],
+                //    hoverBackgroundColor: ["#5797fc", "#7e6fff", "#4ecc48", "#ffcc29", "#f37070"],
+                //    borderWidth: 6,
+                //    hoverBorderColor: 'transparent'
+                //}]
+                labels: ["Aggressive Growth Fund", "Money Market Fund", "Discovery Fund", "Ethical Fund"],
                 datasets: [{
-                    data: [300, 50, 100, 30, 70],
-                    backgroundColor: ["#5797fc", "#7e6fff", "#4ecc48", "#ffcc29", "#f37070"],
-                    hoverBackgroundColor: ["#5797fc", "#7e6fff", "#4ecc48", "#ffcc29", "#f37070"],
-                    borderWidth: 6,
-                    hoverBorderColor: 'transparent'
+                    data: [agf, mmf, df, ef],
+                    //backgroundColor: ["#5797fc", "#7e6fff", "#4ecc48", "#ffcc29", "#f37070"],
+                    //hoverBackgroundColor: ["#5797fc", "#7e6fff", "#4ecc48", "#ffcc29", "#f37070"],
+                    backgroundColor: ["#f37070", "#6896f9", "#ffcc29", "#4ecc48"],
+                    hoverBackgroundColor: ["#f37070", "#6896f9", "#ffcc29", "#4ecc48"],
+                    borderWidth: 0
                 }]
             };
 
