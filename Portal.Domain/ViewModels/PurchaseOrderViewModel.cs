@@ -18,6 +18,6 @@ namespace Portal.Domain.ViewModels
         public DateTime AddToCartDate { get; set; }
         public string PaymentTransactionNumber { get; set; }
         public string TransactionStatus { get; set; }
-        public DateTime? OrderDateInHuman { get; set; }
+        public string OrderDateInHuman { get; set; }
     }
 }

@@ -15,12 +15,23 @@ namespace Portal.Business.Utilities
         /// </summary>
         /// <param name="dateToHumanize">DateTime</param>
         /// <returns>date in human format</returns>
+        public static string DateHumanized(string dateToHumanize)
+        {
+            var dates = DateTime.Parse(dateToHumanize);
+
+            return (DateTime.Now.Date - dates.Date).Days == 0
+                ? $"Today {dates:MMM yyyy hh:mm tt}"
+                : (DateTime.Now.Date - dates.Date).Days == 1
+                    ? $"Yesterday {dates:MMM yyyy hh:mm tt}"
+                    : $"{dates:dd MMM yyyy hh:mm tt}";
+        }
+
         public static string DateHumanized(DateTime dateToHumanize)
-        => (DateTime.Now.Date - dateToHumanize.Date).Days == 0
-                 ? $"Today {dateToHumanize:MMM yyyy hh:mm tt}"
-                   : (DateTime.Now.Date - dateToHumanize.Date).Days == 1
-                     ? $"Yesterday {dateToHumanize:MMM yyyy hh:mm tt}"
-                         : $"{dateToHumanize:dd MMM yyyy hh:mm tt}";
+            => (DateTime.Now.Date - dateToHumanize.Date).Days == 0
+                ? $"Today {dateToHumanize:MMM yyyy hh:mm tt}"
+                : (DateTime.Now.Date - dateToHumanize.Date).Days == 1
+                    ? $"Yesterday {dateToHumanize:MMM yyyy hh:mm tt}"
+                    : $"{dateToHumanize:dd MMM yyyy hh:mm tt}";
 
         /// <summary>
         /// format decimals to #,##0.##

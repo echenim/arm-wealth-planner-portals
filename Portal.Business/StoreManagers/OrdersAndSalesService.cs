@@ -38,8 +38,7 @@ namespace Portal.Business.StoreManagers
                 : _context.PurchaseOrders
                     .Include(s => s.Customer)
                     .Include(s => s.Product).Include(s => s.Product.ProductCategory)
-                    .AsQueryable()).Where(s => !s.Product.ProductTypes.Equals("Expression of Interest")
-                                               && s.OrderDate.HasValue
+                    .AsQueryable()).Where(s => s.OrderDate != null
                                                && s.TransactionStatus.Equals("Succeed"));
 
         public PurchaseOrders FindById(Func<PurchaseOrders, bool> predicate)

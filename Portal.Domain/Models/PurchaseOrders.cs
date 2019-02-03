@@ -40,7 +40,7 @@ namespace Portal.Domain.Models
         [MaxLength(15)]
         public string TransactionStatus { get; set; }
 
-        public DateTime? OrderDate { get; set; }
+        public string OrderDate { get; set; }
 
         public virtual ApplicationUser Customer { get; set; }
         public virtual Products Product { get; set; }

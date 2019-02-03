@@ -1,4 +1,8 @@
-﻿namespace Portal.Areas.Admin.ViewModels
+﻿using System.Collections.Generic;
+using Portal.Domain.Models;
+using Portal.Domain.ViewModels;
+
+namespace Portal.Areas.Admin.ViewModels
 {
     public class OrdersView
     {
@@ -14,5 +18,16 @@
         public string Amount { get; set; }
         public string Date { get; set; }
         public string AddToCartDate { get; set; }
+    }
+
+    public class OrdersGroupView
+    {
+        public string CartNumber { get; set; }
+        public string TransactionStatus { get; set; }
+        public string TransactionDate { get; set; }
+        public string Customer { get; set; }
+        public string CustNo { get; set; }
+        public string TotalAmount { get; set; }
+        public List<PurchaseOrders> SoldItems { get; set; }
     }
 }

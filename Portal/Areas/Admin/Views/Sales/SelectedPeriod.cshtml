@@ -1,6 +1,6 @@
 ﻿@using Portal.Areas.Admin.ViewModels
 @using Portal.Business.Utilities
-@model PaginatedList<OrdersView>
+@model PaginatedList<OrdersGroupView>
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Areas/Admin/Views/Shared/_Layout_Admin.cshtml";
@@ -17,19 +17,19 @@
                     <div class="os-tabs-controls">
                         <ul class="nav nav-tabs upper">
                             <li class="nav-item">
-                                <a asp-area="Admin" asp-controller="Sales" asp-action="AllTime" class="nav-link" >ALL TIME</a>
+                                <a asp-area="Admin" asp-controller="Sales" asp-action="AllTime" class="nav-link">ALL TIME</a>
                             </li>
                             <li class="nav-item">
-                                <a asp-area="Admin" asp-controller="Sales" asp-action="LastYear"  class="nav-link">LAST YEAR </a>
+                                <a asp-area="Admin" asp-controller="Sales" asp-action="LastYear" class="nav-link">LAST YEAR </a>
                             </li>
                             <li class="nav-item">
-                                <a  class="nav-link"  asp-area="Admin" asp-controller="Sales" asp-action="LastMonth">LAST MONTH </a>
+                                <a class="nav-link" asp-area="Admin" asp-controller="Sales" asp-action="LastMonth">LAST MONTH </a>
                             </li>
                             <li class="nav-item">
-                                <a  class="nav-link"  asp-area="Admin" asp-controller="Sales" asp-action="LastSevenDays">LAST 7 DAYS </a>
+                                <a class="nav-link" asp-area="Admin" asp-controller="Sales" asp-action="LastSevenDays">LAST 7 DAYS </a>
                             </li>
                             <li class="nav-item">
-                                <a  class="nav-link"  asp-area="Admin" asp-controller="Sales" asp-action="SelectedPeriod">
+                                <a class="nav-link" asp-area="Admin" asp-controller="Sales" asp-action="SelectedPeriod">
                                     <div class="form-inline">
                                         <label for="" class=""><p>SELECT PERIOD </p></label><input class="multi-daterange form-control m-t-neg-1" type="text" value="">
                                     </div>
@@ -84,61 +84,64 @@
                                         <th>
                                             Date
                                         </th>
-                                        <th>
-                                            CartID
-                                        </th>
-                                        <th>
-                                            Status
-                                        </th>
+
                                         <th>
                                             Customer
                                         </th>
                                         <th>
-                                            Item Purchased
-                                        </th>
-                                        <th class="text-center">
-                                            Amount
+                                            Category
                                         </th>
                                         <th>
-                                            Category
+                                            Item Purchased
+                                        </th>
+
+                                        <th class="text-center">
+                                            Amount
                                         </th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach (var item in Model)
                                     {
-                                        <tr>
-                                            <td>
-                                                <span class="smaller lighter">
 
-                                                    @string.Format("{0}", item.AddToCartDate, "MMMM dd, yyyy")
-                                                </span>
+                                        foreach (var items in item.SoldItems)
+                                        {
+                                            <tr>
+                                                <td>
+                                                    @TransfromerManager.DateHumanized(item.TransactionDate)
+                                                </td>
+                                                <td>@item.Customer</td>
+                                                <td>
+                                                    <div>
+                                                        <span>@items.Product.ProductCategory.Name</span>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div>
+                                                        <span>@items.Product.Name</span>
+                                                    </div>
+                                                </td>
+
+                                                <td class="text-center">
+                                                    <span>&#8358;@items.Amount</span>
+                                                </td>
+                                            </tr>
+                                        }
+                                        <tr>
+
+                                            <td colspan="4" class="icon-text-align-left text-primary">
+                                                Total
                                             </td>
-                                            <td>
-                                                <div>
-                                                    @item.CartNumber
-                                                </div>
-                                            </td>
-                                            <td class="nowrap">
-                                                <span class="status-pill smaller green"></span><span>@item.TransactionStatus</span>
-                                            </td>
-                                            <td>
-                                                <div>
-                                                    <span>@item.Customer</span>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div>
-                                                    @item.Product
-                                                </div>
-                                            </td>
+
                                             <td class="text-center">
-                                                <span>&#8358;@item.Amount</span>
-                                            </td>
-                                            <td>
-                                                @item.Category
+                                                <h4 class="display-type">
+                                                    <strong>
+                                                        <span class="text-lg-center text-primary">&#8358;@item.TotalAmount</span>
+                                                    </strong>
+                                                </h4>
                                             </td>
                                         </tr>
+
                                     }
                                 </tbody>
                             </table>

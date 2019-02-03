@@ -83,18 +83,18 @@ namespace Portal.Areas.Admin.Controllers
         private decimal ReturnSales(string searchString)
             => !String.IsNullOrEmpty(searchString) && searchString.Equals("This Month") ?
             _manager.GetSales(s => !s.Product.ProductTypes.Equals("Expression of Interest")
-                                   && s.OrderDate.HasValue && s.AddToCartDate.Date.ToString("MM/yyyy")
+                                   && s.OrderDate != null && s.AddToCartDate.Date.ToString("MM/yyyy")
                                        .Equals(DateTime.Now.Date.ToString("MM/yyyy")))
             : !String.IsNullOrEmpty(searchString) && searchString.Equals("Last Month") ?
                 _manager.GetSales(s => !s.Product.ProductTypes.Equals("Expression of Interest")
-                                       && s.OrderDate.HasValue && s.AddToCartDate.Date.ToString("MM/yyyy")
+                                       && s.OrderDate != null && s.AddToCartDate.Date.ToString("MM/yyyy")
                                            .Equals(DateTime.Now.Date.AddMonths(-1).ToString("MM/yyyy")))
                 : !String.IsNullOrEmpty(searchString) && searchString.Equals("This year") ?
                     _manager.GetSales(s => !s.Product.ProductTypes.Equals("Expression of Interest")
-                                           && s.OrderDate.HasValue && s.AddToCartDate.Date.ToString("yyyy")
+                                           && s.OrderDate != null && s.AddToCartDate.Date.ToString("yyyy")
                                                .Equals(DateTime.Now.Date.ToString("yyyy")))
                     : _manager.GetSales(s => !s.Product.ProductTypes.Equals("Expression of Interest")
-                                             && s.OrderDate.HasValue);
+                                             && s.OrderDate != null);
 
         /// <summary>
         /// return orders by using an inline if-else to filter data
