@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using ARMClientPortal.Models;
+
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using Portal.ViewModel;
 using Portal.Business.Contracts;
+using Portal.Business.Utilities;
 using Portal.Domain.Models.Identity;
 
 namespace Portal.Controllers
@@ -42,6 +44,37 @@ namespace Portal.Controllers
         public IActionResult Login()
         {
             return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Login(LoginViewModels model)
+        {
+            if (!ModelState.IsValid) return View(model);
+            var findIfUserAlreadyExist = _userManager.Users.SingleOrDefault(s => s.UserName.Equals(model.Username)
+                                                                     || s.MembershipNumber.Equals(model.Username));
+            if (findIfUserAlreadyExist != null)
+            {
+            }
+            else
+            {
+            }
+            return View();
+        }
+
+        private ApplicationUser IfMemberShipNumberIsEmptyUpdateRecord(ApplicationUser user, string membershipnumber)
+        {
+            var userObj = _userManager.FindByEmailAsync(user.Email).Result;
+            userObj.MembershipNumber = membershipnumber;
+            var result = _userManager.UpdateAsync(userObj).Result;
+            return result.Succeeded ? userObj : user;
+        }
+
+        private ApplicationUser IfUserDoesNotExitCreateTheUser(ApplicationUser user)
+        {
+            var password = TransfromerManager.DefaultPassword();
+            var result = _userManager.CreateAsync(user, password).Result;
+            return result.Succeeded ? _userManager.FindByEmailAsync(user.Email).Result : user;
         }
     }
 }

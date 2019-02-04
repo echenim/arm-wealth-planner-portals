@@ -15,5 +15,7 @@ namespace Portal.Domain.Models.Identity
         public ApplicationRole(string rolename, string description, string creationDate) : base(rolename)
         {
         }
+
+        public string RoleGroupName { get; set; }
     }
 }

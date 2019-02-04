@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using NPOI.SS.UserModel;
 using NPOI.XSSF.UserModel;
 using Portal.Areas.Admin.ViewModels;
+
 using Portal.Business.Contracts;
 using Portal.Business.Utilities;
 using Portal.Domain.Models;
@@ -157,6 +158,8 @@ namespace Portal.Areas.Admin.Controllers
             });
 
             ViewData["Totals"] = TransfromerManager.DecimalHumanizedX(totalIn);
+            ViewData["Product"] = sales.Select(s => s.Product.Name).Distinct();
+            ViewData["ProductCategory"] = sales.Select(s => s.Product.ProductCategory.Name).Distinct();
 
             int pageSize = 20;
 
@@ -300,9 +303,8 @@ namespace Portal.Areas.Admin.Controllers
             });
 
             ViewData["Totals"] = TransfromerManager.DecimalHumanizedX(totalIn);
-            var product = sales.Select(s => s.Product.Name).Distinct();
-            ViewData["Product"] = product;
-            //    ViewData["ProductCategory"] = sales.Select(s => s.Product.ProductCategory.Name).Distinct();
+            ViewData["Product"] = sales.Select(s => s.Product.Name).Distinct();
+            ViewData["ProductCategory"] = sales.Select(s => s.Product.ProductCategory.Name).Distinct();
 
             int pageSize = 20;
 
@@ -373,6 +375,8 @@ namespace Portal.Areas.Admin.Controllers
             });
 
             ViewData["Totals"] = TransfromerManager.DecimalHumanizedX(totalIn);
+            ViewData["Product"] = sales.Select(s => s.Product.Name).Distinct();
+            ViewData["ProductCategory"] = sales.Select(s => s.Product.ProductCategory.Name).Distinct();
 
             int pageSize = 20;
 
@@ -441,6 +445,8 @@ namespace Portal.Areas.Admin.Controllers
             });
 
             ViewData["Totals"] = TransfromerManager.DecimalHumanizedX(totalIn);
+            ViewData["Product"] = sales.Select(s => s.Product.Name).Distinct();
+            ViewData["ProductCategory"] = sales.Select(s => s.Product.ProductCategory.Name).Distinct();
 
             int pageSize = 20;
 
@@ -468,7 +474,7 @@ namespace Portal.Areas.Admin.Controllers
             {
                 IWorkbook workbook;
                 workbook = new XSSFWorkbook();
-                var excelSheet = workbook.CreateSheet("Demo");
+                var excelSheet = workbook.CreateSheet(searchPeriod);
                 var row = excelSheet.CreateRow(0);
                 row.CreateCell(0).SetCellValue("Date");
                 row.CreateCell(1).SetCellValue("TransactionNumber");
@@ -506,86 +512,78 @@ namespace Portal.Areas.Admin.Controllers
         /// <param name="searchPeriod"></param>
         /// <returns></returns>
         private IQueryable<PurchaseOrders> ReturnFilteredSales(string productCategoryName, string searchPeriod)
-            => searchPeriod.Equals("lastServenDays") ? LastSevenDays(productCategoryName)
-            : searchPeriod.Equals("lastMonth") ? LastMonth(productCategoryName)
-            : searchPeriod.Equals("lastYear") ? LastYear(productCategoryName)
-            : AllTime(productCategoryName);
+            => !string.IsNullOrEmpty(productCategoryName) && searchPeriod.Equals("lastServenDays") ?
+                LastSevenDays(s => s.TransactionStatus.Equals("Succeed") && s.Product.ProductCategory.Name.Equals(productCategoryName)
+                                   && s.AddToCartDate.Date > DateTime.Now.Date.AddDays(-8)) :
+                string.IsNullOrEmpty(productCategoryName) && searchPeriod.Equals("lastServenDays") ? LastSevenDays()
+                    :
+                !string.IsNullOrEmpty(productCategoryName) && searchPeriod.Equals("lastMonth") ?
+                    LastMonth(s => s.TransactionStatus.Equals("Succeed") && s.Product.ProductCategory.Name.Equals(productCategoryName)
+                                         && s.AddToCartDate.Date.ToString("MM/yyyy").Equals(DateTime.Now.Date.AddMonths(-1).ToString("MM/yyyy"))) :
+                    string.IsNullOrEmpty(productCategoryName) && searchPeriod.Equals("lastMonth") ? LastMonth()
+                        :
+                        !string.IsNullOrEmpty(productCategoryName) && searchPeriod.Equals("lastYear") ?
+                            LastYear(s => s.TransactionStatus.Equals("Succeed") && s.Product.ProductCategory.Name.Equals(productCategoryName)
+                                     && s.AddToCartDate.Date.ToString("yyyy").Equals(DateTime.Now.Date.AddYears(-1).ToString("yyyy"))) :
+                            string.IsNullOrEmpty(productCategoryName) && searchPeriod.Equals("lastYear") ? LastYear()
+                               :
+                !string.IsNullOrEmpty(productCategoryName)
+                ? AllTime(s => s.TransactionStatus.Equals("Succeed") && s.Product.ProductCategory.Name.Equals(productCategoryName))
+                : AllTime();
 
         #region sales filtered report
 
-        /// <summary>
-        /// if productCategoryName is not null or empty
-        /// filter will the product category for all time else return unfiltered records for all tmes
-        /// </summary>
-        /// <param name="productCategoryName">productCategoryName</param>
-        /// <returns>querable collecgtion</returns>
-        private IQueryable<PurchaseOrders> AllTime(string productCategoryName)
+        private IQueryable<PurchaseOrders> AllTime(Func<PurchaseOrders, bool> predicate)
         {
-            return !String.IsNullOrEmpty(productCategoryName) ? _ordersAndSalesService.Sales(s => s.OrderDate != null
-                     && s.Product.ProductCategory.Name.Equals(productCategoryName))
-                    .OrderByDescending(s => s.AddToCartDate).ThenBy(s => s.Customer)
-                : _ordersAndSalesService.Sales(s => s.OrderDate != null)
+            return _ordersAndSalesService.Sales(predicate)
                     .OrderByDescending(s => s.AddToCartDate).ThenBy(s => s.Customer);
         }
 
-        /// <summary>
-        /// if productCategoryName is not null or empty
-        /// filter will the product category for last year else return unfiltered records for last year
-        /// </summary>
-        /// <param name="productCategoryName">productCategoryName</param>
-        /// <returns>querable collecgtion</returns>
-        private IQueryable<PurchaseOrders> LastYear(string productCategoryName)
+        private IQueryable<PurchaseOrders> AllTime()
         {
-            return !String.IsNullOrEmpty(productCategoryName)
-                ? _ordersAndSalesService.Sales(s =>
-                        s.OrderDate != null && s.Product.ProductCategory.Name.Equals(
-                                                productCategoryName)
-                                            && s.AddToCartDate.Date.ToString("yyyy")
-                                                .Equals(DateTime.Now.Date.AddYears(-1)
-                                                    .ToString("yyyy")))
-                    .OrderByDescending(s => s.AddToCartDate).ThenBy(s => s.Customer)
-                : _ordersAndSalesService.Sales(s =>
-                           s.OrderDate != null && s.AddToCartDate.Date.ToString("yyyy")
-                               .Equals(DateTime.Now.Date.AddYears(-1).ToString("yyyy")))
-                        .OrderByDescending(s => s.AddToCartDate).ThenBy(s => s.Customer);
+            return _ordersAndSalesService.Sales(s => s.TransactionStatus.Equals("Succeed"))
+                    .OrderByDescending(s => s.AddToCartDate).ThenBy(s => s.Customer);
         }
 
-        /// <summary>
-        /// if productCategoryName is not null or empty
-        /// filter will the product category for last month else return unfiltered records for last month
-        /// </summary>
-        /// <param name="productCategoryName">productCategoryName</param>
-        /// <returns>querable collecgtion</returns>
-        private IQueryable<PurchaseOrders> LastMonth(string productCategoryName)
+        private IQueryable<PurchaseOrders> LastYear(Func<PurchaseOrders, bool> predicate)
         {
-            return !String.IsNullOrEmpty(productCategoryName)
-                ? _ordersAndSalesService.Sales(s =>
-                        s.OrderDate != null && s.Product.ProductCategory.Name.Equals(productCategoryName)
-                                            && s.AddToCartDate.Date.ToString("MM/yyyy")
-                                                .Equals(DateTime.Now.Date.AddMonths(-1).ToString("MM/yyyy")))
-                    .OrderByDescending(s => s.AddToCartDate).ThenBy(s => s.Customer)
-                : _ordersAndSalesService.Sales(s =>
-                           s.OrderDate != null && s.AddToCartDate.Date.ToString("MM/yyyy")
-                               .Equals(DateTime.Now.Date.AddMonths(-1).ToString("MM/yyyy")))
-                        .OrderByDescending(s => s.AddToCartDate).ThenBy(s => s.Customer);
+            return _ordersAndSalesService.Sales(predicate)
+                    .OrderByDescending(s => s.AddToCartDate).ThenBy(s => s.Customer);
         }
 
-        /// <summary>
-        /// if productCategoryName is not null or empty
-        /// filter will the product category for last seven days else return unfiltered records for seven days
-        /// </summary>
-        /// <param name="productCategoryName">productCategoryName</param>
-        /// <returns>querable collecgtion</returns>
-        private IQueryable<PurchaseOrders> LastSevenDays(string productCategoryName)
+        private IQueryable<PurchaseOrders> LastYear()
         {
-            return !String.IsNullOrEmpty(productCategoryName)
-                ? _ordersAndSalesService
-                    .Sales(s =>
-                        !string.IsNullOrEmpty(s.OrderDate) && s.Product.ProductCategory.Name.Equals(productCategoryName)
-                                                           && s.AddToCartDate.Date > DateTime.Now.Date.AddDays(-8))
-                    .OrderByDescending(s => s.AddToCartDate).ThenBy(s => s.Customer)
-                : _ordersAndSalesService
-                    .Sales(s => !string.IsNullOrEmpty(s.OrderDate) &&
+            return _ordersAndSalesService.Sales(s =>
+                   s.TransactionStatus.Equals("Succeed") && s.AddToCartDate.Date.ToString("yyyy")
+                           .Equals(DateTime.Now.Date.AddYears(-1).ToString("yyyy")))
+                    .OrderByDescending(s => s.AddToCartDate).ThenBy(s => s.Customer);
+        }
+
+        private IQueryable<PurchaseOrders> LastMonth(Func<PurchaseOrders, bool> predicate)
+        {
+            return _ordersAndSalesService.Sales(predicate)
+                .OrderByDescending(s => s.AddToCartDate).ThenBy(s => s.Customer);
+        }
+
+        private IQueryable<PurchaseOrders> LastMonth()
+        {
+            return _ordersAndSalesService.Sales(s =>
+                    s.TransactionStatus.Equals("Succeed") && s.AddToCartDate.Date.ToString("MM/yyyy")
+                            .Equals(DateTime.Now.Date.AddMonths(-1).ToString("MM/yyyy")))
+                    .OrderByDescending(s => s.AddToCartDate).ThenBy(s => s.Customer);
+        }
+
+        private IQueryable<PurchaseOrders> LastSevenDays(Func<PurchaseOrders, bool> predicate)
+        {
+            return _ordersAndSalesService
+                    .Sales(predicate)
+                    .OrderByDescending(s => s.AddToCartDate).ThenBy(s => s.Customer);
+        }
+
+        private IQueryable<PurchaseOrders> LastSevenDays()
+        {
+            return _ordersAndSalesService
+                    .Sales(s => s.TransactionStatus.Equals("Succeed") &&
                                 s.AddToCartDate.Date > DateTime.Now.Date.AddDays(-8))
                     .OrderByDescending(s => s.AddToCartDate).ThenBy(s => s.Customer);
         }

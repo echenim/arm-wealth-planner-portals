@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
 
 namespace Portal.Domain.Models.Identity
 {
@@ -43,5 +44,11 @@ namespace Portal.Domain.Models.Identity
 
         public ICollection<ApplicationGroupRole> ApplicationRoles { get; set; }
         public ICollection<ApplicationUserGroup> ApplicationUsers { get; set; }
+
+        [NotMapped]
+        public List<string> AvailableRoleMaker { get; set; }
+
+        [NotMapped]
+        public IQueryable<ApplicationRole> AvailableRole { get; set; }
     }
 }

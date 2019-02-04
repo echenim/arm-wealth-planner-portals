@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Net.NetworkInformation;
 using System.Text;
 
 namespace Portal.Business.Utilities
@@ -68,5 +69,8 @@ namespace Portal.Business.Utilities
         /// <returns>#,##0.##</returns>
         public static string DecimalHumanizedX(decimal decimalToHumanized)
             => decimalToHumanized.ToString("N1", CultureInfo.InvariantCulture);
+
+        public static string DefaultPassword()
+            => "103Solutionx$#@";
     }
 }

@@ -13,7 +13,7 @@
 
                 <div class="element-box">
                     <div class="m-b">
-                        <form asp-action="Add" method="post" enctype="multipart/form-data">
+                        <form asp-controller="Products" asp-action="Add" method="post" enctype="multipart/form-data">
                             @Html.AntiForgeryToken()
                             <div class="row">
 
@@ -112,12 +112,12 @@
                                         </div>
 
                                         <div class="form-group">
-                                                Active
-                                                <label class="switch">
-                                                    <input name="IsActive" asp-for="IsActive" type="checkbox" class="success">
-                                                    <span class="slider round"></span>
-                                                </label>
-                                            </div>
+                                            Active
+                                            <label class="switch">
+                                                <input name="IsActive" asp-for="IsActive" type="checkbox" class="success">
+                                                <span class="slider round"></span>
+                                            </label>
+                                        </div>
                                         <div class="form-buttons-w">
                                             <button class="btn btn-primary" type="submit">Add Product</button>
                                         </div>

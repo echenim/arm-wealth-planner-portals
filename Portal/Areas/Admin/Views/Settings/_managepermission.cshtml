@@ -1,4 +1,5 @@
-﻿@model Portal.Domain.Models.Identity.ApplicationGroup
+﻿@using Portal.Domain.Models.Identity
+@model Portal.Domain.Models.Identity.ApplicationGroup
 
 @{
     ViewData["Title"] = "_add";
@@ -17,7 +18,7 @@
                             @Html.AntiForgeryToken()
                             <div class="row">
 
-                                <div class="col-md-8">
+                                <div class="col-md-12">
                                     <div class="element-box">
 
                                         <h5 class="form-header">
@@ -34,20 +35,61 @@
                                            </textarea>
                                         </div>
 
-                                        <div class="form-group">
+                                        <table class="table table-borderless table-lightborder table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>
+                                                        Module
+                                                    </th>
 
-                                            @foreach (var item in (SelectList)ViewBag.RolesList)
+                                                    <th colspan="4">
+                                                        Actions
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach (var item in Model.AvailableRoleMaker)
+                                                {
+                                                    <tr>
+                                                        <td>
+
+                                                            <span>@item</span>
+                                                        </td>
+                                                        <td>
+                                                            <table class="table table-borderless">
+                                                                <tr>
+                                                                    @foreach (var role in Model.AvailableRole.Where(s => s.RoleGroupName.Equals(item)))
+                                                                    {
+                                                                        <td class="align-content-center">
+                                                                            <div>
+                                                                                <label class="switch swaller">
+                                                                                    <input type="checkbox" class="success">
+                                                                                    <span class="slider round smallder"></span>
+                                                                                </label>
+                                                                            </div>
+                                                                            @role.Name
+                                                                        </td>
+
+                                                                    }
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+
+                                        @*@foreach (var item in (List<ApplicationRole>)ViewBag.RolesList)
                                             {
                                                 <div>
-                                                    <input type="checkbox" name="SelectedRoles" value="@item.Text" class="checkbox-inline" />
-                                                    <label for="@item.Text"> @item.Text</label>
+                                                    <input type="checkbox" name="SelectedRoles" value="@item.Name" class="checkbox-inline" />
+                                                    <label for="@item.Name"> @item.Name</label>
                                                 </div>
-                                            }
-                                        </div>
+                                            }*@
+                                    </div>
 
-                                        <div class="form-buttons-w">
-                                            <button class="btn btn-primary" type="submit">Add Product</button>
-                                        </div>
+                                    <div class="form-buttons-w">
+                                        <button class="btn btn-primary" type="submit">Add Product</button>
                                     </div>
                                 </div>
                             </div>

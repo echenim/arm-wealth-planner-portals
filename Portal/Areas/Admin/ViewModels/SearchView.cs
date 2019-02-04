@@ -7,6 +7,6 @@ namespace Portal.Areas.Admin.ViewModels
 {
     public class SearchView
     {
-        public string Product { get; set; }
+        public string SearchString { get; set; }
     }
 }

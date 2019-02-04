@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -46,8 +47,12 @@ namespace Portal.Areas.Admin.Controllers
 
         public IActionResult CreatePermission()
         {
-            ViewBag.RolesList = new SelectList(_rolemanager.Roles.ToList(), "Id", "Name");
-            return View("_managepermission");
+            ViewData["RoleGroup"] = _rolemanager.Roles.Select(s => s.RoleGroupName).Distinct();
+            ViewBag.RolesList = _rolemanager.Roles;
+            var groupObj = new ApplicationGroup();
+            groupObj.AvailableRoleMaker = _rolemanager.Roles.Select(s => s.RoleGroupName).Distinct().ToList();
+            groupObj.AvailableRole = _rolemanager.Roles;
+            return View("_managepermission", groupObj);
         }
 
         [HttpPost]

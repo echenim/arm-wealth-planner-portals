@@ -29,25 +29,19 @@ namespace Portal
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.Configure<CookiePolicyOptions>(options =>
-            {
-                // This lambda determines whether user consent for non-essential cookies is needed for a given request.
-                options.CheckConsentNeeded = context => true;
-                options.MinimumSameSitePolicy = SameSiteMode.None;
-            });
+            //services.Configure<CookiePolicyOptions>(options =>
+            //{
+            //    // This lambda determines whether user consent for non-essential cookies is needed for a given request.
+            //    options.CheckConsentNeeded = context => true;
+            //    options.MinimumSameSitePolicy = SameSiteMode.None;
+            //});
 
-            services.Configure<RequestLocalizationOptions>(options =>
-            {
-                options.DefaultRequestCulture = new Microsoft.AspNetCore.Localization.RequestCulture("en-NZ");
-                options.SupportedCultures = new List<CultureInfo> { new CultureInfo("en-US"), new CultureInfo("en-NZ") };
-                options.RequestCultureProviders.Clear();
-            });
-            //services.AddDbContext<ApplicationDbContext>(options =>
-            //    options.UseSqlServer(
-            //        Configuration.GetConnectionString("ArmInvestmentConnection")));
-            //services.AddDefaultIdentity<IdentityUser>()
-            //    .AddDefaultUI(UIFramework.Bootstrap4)
-            //    .AddEntityFrameworkStores<ApplicationDbContext>();
+            //services.Configure<RequestLocalizationOptions>(options =>
+            //{
+            //    options.DefaultRequestCulture = new Microsoft.AspNetCore.Localization.RequestCulture("en-NZ");
+            //    options.SupportedCultures = new List<CultureInfo> { new CultureInfo("en-US"), new CultureInfo("en-NZ") };
+            //    options.RequestCultureProviders.Clear();
+            //});
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
@@ -56,15 +50,14 @@ namespace Portal
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("ArmInvestmentConnection")));
 
-            services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
-            services.AddAntiforgery(options => options.HeaderName = "X-XSRF-TOKEN");
+            //services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
+            //services.AddAntiforgery(options => options.HeaderName = "X-XSRF-TOKEN");
 
-            services.AddMvc(options =>
-            {
-                options.Filters.AddService(typeof(AngularAntiforgeryCookieResultFilter));
-            });
-            services.AddTransient<AngularAntiforgeryCookieResultFilter>();
-
+            //services.AddMvc(options =>
+            //{
+            //    options.Filters.AddService(typeof(AngularAntiforgeryCookieResultFilter));
+            //});
+            //services.AddTransient<AngularAntiforgeryCookieResultFilter>();
 
             #endregion register database connectionstring
 
@@ -134,7 +127,7 @@ namespace Portal
 
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");                
+                    template: "{controller=Home}/{action=Index}/{id?}");
             });
         }
     }

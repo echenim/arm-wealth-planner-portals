@@ -21,7 +21,7 @@
                                 <a asp-area="Admin" asp-controller="Sales" asp-action="AllTime" class="nav-link">ALL TIME</a>
                             </li>
                             <li class="nav-item">
-                                <a asp-area="Admin" asp-controller="Sales" asp-action="LastYear" class="nav-link">LAST YEAR </a>
+                                <a asp-area="Admin" asp-controller="Sales" asp-action="LastYear" class="nav-link   active">LAST YEAR </a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" asp-area="Admin" asp-controller="Sales" asp-action="LastMonth">LAST MONTH </a>
@@ -89,7 +89,7 @@
                                             <p>
                                                 <input type="hidden" id="productCategoryName" name="productCategoryName" />
                                                 <input type="hidden" id="productName" name="productName" />
-                                                <input type="hidden" id="searchPeriod" name="searchPeriod" />
+                                                <input type="hidden" id="searchPeriod" name="searchPeriod" value="lastYear" />
                                                 <input type="submit" value="Export To Excel" class="btn btn-primary" />
                                             </p>
                                         </div>

@@ -30,6 +30,7 @@ namespace Portal.Domain.Models.Identity
         public string MembershipNumber { get; set; }
 
         public DateTime CustomerOnboardingDate { get; set; }
+        public string NewOrOld { get; set; }
 
         [NotMapped]
         public string FullName => $"{FirstName} {LastName}";

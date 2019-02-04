@@ -24,6 +24,10 @@
     <Folder Include="Areas\Admin\Data\" />
     <Folder Include="Areas\Admin\Models\" />
     <Folder Include="Areas\Admin\Uploads\" />
+    <Folder Include="Areas\API\Controllers\" />
+    <Folder Include="Areas\API\Data\" />
+    <Folder Include="Areas\API\Models\" />
+    <Folder Include="Areas\API\Views\" />
     <Folder Include="Areas\Client\Data\" />
     <Folder Include="Areas\Client\Models\" />
     <Folder Include="Services\" />
@@ -102,6 +106,7 @@
 
 
   <ItemGroup>
+    <ProjectReference Include="..\Portal.API\Portal.API.csproj" />
     <ProjectReference Include="..\Portal.Business\Portal.Business.csproj" />
     <ProjectReference Include="..\Portal.Domain\Portal.Domain.csproj" />
   </ItemGroup>

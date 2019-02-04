@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Portal.AddMigration;
 
 namespace Portal.AddMigration.Migrations
 {
     [DbContext(typeof(MigDbContext))]
-    partial class MigDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190204104426_arm7")]
+    partial class arm7
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
