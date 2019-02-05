@@ -335,5 +335,11 @@ namespace Portal.Services
             string url = _appSettings.ArmAggregatorBaseUrl + "/Aggregator/DirectDebit";
             return CallRestAction<DirectDebitTransactionResponse, DirectDebitTransactionModel>(payload, url);
         }
+
+        //public ArmOneCustomerDetailsResponse GetCustomerDetails(ArmOneCustomerDetailsRequest payload)
+        //{
+        //    string Channel = "";
+        //    return GetArmOneDetails<>();
+        //}
     }
 }

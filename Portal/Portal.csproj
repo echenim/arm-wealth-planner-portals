@@ -30,7 +30,6 @@
     <Folder Include="Areas\API\Views\" />
     <Folder Include="Areas\Client\Data\" />
     <Folder Include="Areas\Client\Models\" />
-    <Folder Include="Services\" />
     <Folder Include="Uploads\" />
   </ItemGroup>
 
