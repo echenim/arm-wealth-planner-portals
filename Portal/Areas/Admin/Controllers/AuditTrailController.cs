@@ -8,12 +8,13 @@ namespace Portal.Areas.Admin.Controllers
         public IActionResult Index()
         {
             ViewData["ControllerName"] = "ADMIN/AUDIT TRAIL by DEBO";
+            ViewBag.Alexia = "test on alexia";
             return View();
         }
 
         public IActionResult Edit()
         {
-            ViewData["ControllerName"] = "ADMIN/AUDIT/EDIT";
+            ViewData["ControllerName"] = "ADMIN/AUDIT-ALEXIA/EDIT";
             return View();
         }
     }
