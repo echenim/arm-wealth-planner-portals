@@ -7,7 +7,7 @@ namespace Portal.Areas.Admin.Controllers
     {
         public IActionResult Index()
         {
-            ViewData["ControllerName"] = "Admin/Audit Trail";
+            ViewData["ControllerName"] = "ADMIN/AUDIT TRAIL by DEBO";
             return View();
         }
     }
