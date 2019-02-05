@@ -14,6 +14,7 @@ using Portal.Domain.Models.Identity;
 using System.Collections.Generic;
 using System.Globalization;
 using Portal.Areas.Client.Models;
+using Portal.Business.Utilities;
 
 namespace Portal
 {
@@ -82,11 +83,26 @@ namespace Portal
             services.AddTransient<IErmOneManager, ErmOneManager>();
 
             #endregion service register
+
+            #region register configuration_settings & ErmOneAPI
+
+            services.AddSingleton<IErmOneServiceConfigManager>(Configuration
+                .GetSection("ErmOneServiceConfigManager")
+                .Get<ErmOneServiceConfigManager>());
+
+            services.AddTransient<IErmOneManager, ErmOneManager>();
+
+            #endregion register configuration_settings & ErmOneAPI
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
+            var build = new ConfigurationBuilder()
+                .SetBasePath(env.ContentRootPath)
+                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+                .Build();
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
