@@ -51,10 +51,21 @@ namespace Portal.Controllers
         public IActionResult Login(LoginViewModels model)
         {
             if (!ModelState.IsValid) return View(model);
-            var findIfUserAlreadyExist = _userManager.Users.SingleOrDefault(s => s.UserName.Equals(model.Username)
+            var isValiedUser = _userManager.Users.SingleOrDefault(s => s.UserName.Equals(model.Username)
                                                                      || s.MembershipNumber.Equals(model.Username));
-            if (findIfUserAlreadyExist != null)
+            if (isValiedUser != null)
             {
+                if (isValiedUser.IsCustomerOrStaff.Equals("External"))
+                {
+                }
+
+                if (isValiedUser.IsCustomerOrStaff.Equals("Internal"))
+                {
+                    var result = _signInManager.PasswordSignInAsync(isValiedUser, model.Password, true, true).Result;
+                    if (result.Succeeded)
+                    {
+                    }
+                }
             }
             else
             {
