@@ -7,6 +7,7 @@ using System.Net.Http;
 using Newtonsoft.Json;
 using Portal.Areas.Client.Models;
 using Portal.Areas.Client.ViewModels;
+
 //using ARMClientPortal.ViewModels;
 
 namespace Portal.Services
@@ -40,7 +41,6 @@ namespace Portal.Services
             catch (Exception ex)
             {
                 Utilities.ProcessError(ex, _contentRootPath);
-
             }
 
             return response;
@@ -247,6 +247,7 @@ namespace Portal.Services
             payload.ServicePassword = encryptedValue.DecryptCredentials(_appSettings.ArmServicePassword);
             return CallRestAction<EmbassyLetterResponse, EmbassyLetterRequest>(payload, url);
         }
+
         public FeedbackResponse SendFeedback(FeedbackRequest payload)
         {
             string url = _appSettings.ArmBaseUrl + "/SelfService/Feedback";
@@ -300,6 +301,7 @@ namespace Portal.Services
             payload.ServicePassword = encryptedValue.DecryptCredentials(_appSettings.ArmServicePassword);
             return CallRestAction<ClientValidateResponse, ClientValidateRequest>(payload, url);
         }
+
         public RedemptionResponse SendRedemption(RedemptionRequest payload)
         {
             string url = _appSettings.ArmBaseUrl + "/SelfService/Redemption";

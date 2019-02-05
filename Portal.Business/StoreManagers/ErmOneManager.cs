@@ -8,13 +8,20 @@ namespace Portal.Business.StoreManagers
 {
     public class ErmOneManager : IErmOneManager
     {
+        private readonly IErmOneServiceConfigManager _configSettingManager;
+
+        public ErmOneManager(IErmOneServiceConfigManager configManager)
+        {
+            _configSettingManager = configManager;
+        }
+
         public CustomerInformationView GetCustomerInformation(string username, string membershipnumber)
         {
             var result = new CustomerInformationView();
 
             #region service calling for customer information
 
-            var customer = "";
+            var configSetting = _configSettingManager;
 
             #endregion service calling for customer information
 
@@ -27,7 +34,7 @@ namespace Portal.Business.StoreManagers
 
             #region service calling for customer information
 
-            var customer = "";
+            var configSetting = _configSettingManager;
 
             #endregion service calling for customer information
 
@@ -40,7 +47,7 @@ namespace Portal.Business.StoreManagers
 
             #region service callingfor security question
 
-            var result = "";
+            var configSetting = _configSettingManager;
 
             #endregion service callingfor security question
 
