@@ -38,7 +38,7 @@ namespace Portal.Areas.Admin.Controllers
             int? page
         )
         {
-            ViewData["ControllerName"] = "ADMIN/CUSTOMERS";
+            ViewData["ControllerName"] = "ADMIN/CUSTOMERS/LIST";
 
             ViewBag.AreaName = "Roles & Permission";
             ViewData["CurrentSort"] = sortOrder;
