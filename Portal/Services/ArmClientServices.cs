@@ -109,6 +109,27 @@ namespace Portal.Services
             return response;
         }
 
+        public R GetArmOneDetails<R>(string url)
+        {
+            if (url == null) return default(R);
+            var response = default(R);
+
+            try
+            {
+                var restResponse = JsonHelper.GetArmOneRequest(_contentRootPath, url);
+                if (!string.IsNullOrEmpty(restResponse))
+                {
+                    response = JsonConvert.DeserializeObject<R>(restResponse);
+                }
+            }
+            catch (Exception ex)
+            {
+                Utilities.ProcessError(ex, _contentRootPath);
+            }
+
+            return response;
+        }
+
         public ChangePasswordResponse ChangePassword(ChangePasswordRequest payload)
         {
             string url = _appSettings.ArmBaseUrl + "/Client/ChangePassword";
@@ -150,6 +171,12 @@ namespace Portal.Services
             var token = UH.ARMOneToken();
             string url = _appSettings.ArmOne + "/ARMONE/Login";
             return CallArmOneRestAction<ArmOneAuthResponse, ArmOneAuthRequest>(payload, url, token);
+        }
+
+        public ArmOneCustomerDetailsResponse GetCustomerDetails(ArmOneCustomerDetailsRequest payload)
+        {
+            string url = _appSettings.ArmOne + $@"/ARMONE/GetCustomerDetails/?Id={payload.Id}&Channel={payload.Channel}";
+            return GetArmOneDetails<ArmOneCustomerDetailsResponse>(url);
         }
 
         public ArmOneChangePasswordResponse ArmOneChangePassword(ArmOneChangePasswordRequest payload)
@@ -335,11 +362,5 @@ namespace Portal.Services
             string url = _appSettings.ArmAggregatorBaseUrl + "/Aggregator/DirectDebit";
             return CallRestAction<DirectDebitTransactionResponse, DirectDebitTransactionModel>(payload, url);
         }
-
-        //public ArmOneCustomerDetailsResponse GetCustomerDetails(ArmOneCustomerDetailsRequest payload)
-        //{
-        //    string Channel = "";
-        //    return GetArmOneDetails<>();
-        //}
     }
 }
