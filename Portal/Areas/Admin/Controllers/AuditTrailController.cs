@@ -14,7 +14,7 @@ namespace Portal.Areas.Admin.Controllers
 
         public IActionResult Edit()
         {
-            ViewData["ControllerName"] = "ADMIN/AUDIT/EDIT";
+            ViewData["ControllerName"] = "ADMIN/AUDIT/DEBO";
             return View();
         }
         
