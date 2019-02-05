@@ -79,6 +79,7 @@ namespace Portal
             services.AddTransient<IUserService, UserManagers>();
             services.AddTransient<IDashBoardManager, DashBoardManager>();
             services.AddTransient<IApplicationGroupManager, ApplicationGroupManager>();
+            services.AddTransient<IErmOneManager, ErmOneManager>();
 
             #endregion service register
         }

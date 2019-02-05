@@ -33,8 +33,8 @@ namespace Portal.Areas.Client.Controllers
         public ApplicationDbContext db;
         public ClientRepository _client;
 
-        public DashboardController(IOptions<AppSettings> appSettings, IHostingEnvironment hostingEnvironment, 
-                                    ILogger<DashboardController> logger, IConfiguration configuration, 
+        public DashboardController(IOptions<AppSettings> appSettings, IHostingEnvironment hostingEnvironment,
+                                    ILogger<DashboardController> logger, IConfiguration configuration,
                                     IDistributedCache cache, ApplicationDbContext _db)
         {
             _hostingEnvironment = hostingEnvironment;
@@ -64,7 +64,6 @@ namespace Portal.Areas.Client.Controllers
                 FirstName = "Funmilayo",
                 LastName = "Adeyemi",
                 FullName = "Funmilayo Ruth Adeyemi",
-                
             };
 
             try
@@ -98,7 +97,6 @@ namespace Portal.Areas.Client.Controllers
                     }
 
                     model.Summaries = getSummaries;
-
                 }
 
                 //get last transactions
