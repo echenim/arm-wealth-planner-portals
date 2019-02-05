@@ -25,7 +25,7 @@ namespace Portal.Areas.Admin.Controllers
             int? page
             )
         {
-            ViewData["ControllerName"] = "Admin/Dashboard";
+            ViewData["ControllerName"] = "ADMIN/DASHBOARD";
 
             ViewBag.AreaName = "Roles & Permission";
             ViewData["CurrentSort"] = sortOrder;
