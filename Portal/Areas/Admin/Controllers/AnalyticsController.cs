@@ -13,7 +13,7 @@ namespace Portal.Areas.Admin.Controllers
 
         public IActionResult add()
         {
-            ViewData["ControllerName"] = "Admin/Analytics";
+            ViewData["ControllerName"] = "ADMIN/Analytics";
             return View();
         }
     }
