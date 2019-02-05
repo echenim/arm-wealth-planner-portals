@@ -9,9 +9,9 @@ namespace Portal.API.Controllers
     [ApiController]
     public class ProductKeyBenefitController : ControllerBase
     {
-        private readonly IProductKeyBenefitService _service;
+        private readonly IProductKeyBenefitManager _service;
 
-        public ProductKeyBenefitController(IProductKeyBenefitService service)
+        public ProductKeyBenefitController(IProductKeyBenefitManager service)
         {
             _service = service;
         }

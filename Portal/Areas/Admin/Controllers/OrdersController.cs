@@ -19,10 +19,10 @@ namespace Portal.Areas.Admin.Controllers
     [Area("Admin")]
     public class OrdersController : Controller
     {
-        private readonly IOrdersAndSalesService _ordersAndSalesService;
+        private readonly IOrdersAndSalesManager _ordersAndSalesService;
         private readonly IHostingEnvironment _hostingEnvironment;
 
-        public OrdersController(IOrdersAndSalesService ordersAndSalesService, IHostingEnvironment hostingEnvironment)
+        public OrdersController(IOrdersAndSalesManager ordersAndSalesService, IHostingEnvironment hostingEnvironment)
         {
             _ordersAndSalesService = ordersAndSalesService;
             _hostingEnvironment = hostingEnvironment;

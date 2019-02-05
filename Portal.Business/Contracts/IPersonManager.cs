@@ -3,7 +3,7 @@ using Portal.Domain.Models;
 
 namespace Portal.Business.Contracts
 {
-    public interface IPersonService : ICreate<Person>, IEdit<Person>, IFind<Person>, IFetch<Person>, IDelete<Person>
+    public interface IPersonManager : ICreate<Person>, IEdit<Person>, IFind<Person>, IFetch<Person>, IDelete<Person>
     {
     }
 }

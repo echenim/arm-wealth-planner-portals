@@ -7,11 +7,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Portal.Business.StoreManagers
 {
-    public class ProductFeatureService : IProductFeatureService
+    public class ProductFeatureManager : IProductFeatureManager
     {
         private readonly ApplicationDbContext _context;
 
-        public ProductFeatureService(ApplicationDbContext context)
+        public ProductFeatureManager(ApplicationDbContext context)
         {
             _context = context;
         }

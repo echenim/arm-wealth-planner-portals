@@ -15,16 +15,16 @@ namespace Portal.Areas.Admin.Controllers
     [Area("Admin")]
     public class ProductsController : Controller
     {
-        private readonly IProductService _product;
-        private readonly IProductFeatureService _productFeature;
-        private readonly IProductKeyBenefitService _benefitService;
-        private readonly IProductCategoryService _categoryService;
+        private readonly IProductManager _product;
+        private readonly IProductFeatureManager _productFeature;
+        private readonly IProductKeyBenefitManager _benefitService;
+        private readonly IProductCategoryManager _categoryService;
         private readonly IHostingEnvironment _hostingEnvironment;
 
-        public ProductsController(IProductService product,
-            IProductCategoryService categoryService,
-            IProductFeatureService productFeature,
-            IProductKeyBenefitService benefitService,
+        public ProductsController(IProductManager product,
+            IProductCategoryManager categoryService,
+            IProductFeatureManager productFeature,
+            IProductKeyBenefitManager benefitService,
         IHostingEnvironment hostingEnvironment)
         {
             _product = product;
@@ -95,7 +95,7 @@ namespace Portal.Areas.Admin.Controllers
                     ProductTypes = models.ProductTypes,
                     Features = models.Feature,
                     Benefits = models.Benefit,
-                    IsActive = models.IsActive == true ?"Yes":"No"
+                    IsActive = models.IsActive == true ? "Yes" : "No"
                 };
 
                 var benefit = new ProductKeyBenefit { Description = models.Benefit };

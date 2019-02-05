@@ -7,11 +7,11 @@ using Portal.Business.Contracts;
 
 namespace Portal.Business.StoreManagers
 {
-    public class OrdersAndSalesService : IOrdersAndSalesService
+    public class OrdersAndSalesManager : IOrdersAndSalesManager
     {
         private readonly ApplicationDbContext _context;
 
-        public OrdersAndSalesService(ApplicationDbContext context)
+        public OrdersAndSalesManager(ApplicationDbContext context)
         {
             _context = context;
         }

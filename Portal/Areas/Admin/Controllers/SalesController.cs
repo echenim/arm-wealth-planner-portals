@@ -17,11 +17,11 @@ namespace Portal.Areas.Admin.Controllers
     [Area("Admin")]
     public class SalesController : Controller
     {
-        private readonly IOrdersAndSalesService _ordersAndSalesService;
+        private readonly IOrdersAndSalesManager _ordersAndSalesService;
 
         private readonly IHostingEnvironment _hostingEnvironment;
 
-        public SalesController(IOrdersAndSalesService ordersAndSalesService,
+        public SalesController(IOrdersAndSalesManager ordersAndSalesService,
             IHostingEnvironment hostingEnvironment)
         {
             _ordersAndSalesService = ordersAndSalesService;

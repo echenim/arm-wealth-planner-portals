@@ -7,11 +7,11 @@ using Portal.Business.Contracts;
 
 namespace Portal.Business.StoreManagers
 {
-    public class UserService : IUserService
+    public class UserManagers : IUserService
     {
         private readonly ApplicationDbContext _context;
 
-        public UserService(ApplicationDbContext context)
+        public UserManagers(ApplicationDbContext context)
         {
             _context = context;
         }
@@ -19,17 +19,16 @@ namespace Portal.Business.StoreManagers
         public IQueryable<ViewModelInternalUser> Get(Func<ViewModelInternalUser, bool> predicate = null)
         {
             var users = from usrgr in _context.ApplicationUserGroup
-                join gr in _context.ApplicationGroup on usrgr.ApplicationGroupId equals gr.Id
-                join usr in _context.Users on usrgr.ApplicationUserId equals usr.Id
-                select new
-                {
-                    id = usr.Id,
-                    Name = usr.FullName,
-                    Email = usr.Email,
-                    
-                    Role = gr.Name
+                        join gr in _context.ApplicationGroup on usrgr.ApplicationGroupId equals gr.Id
+                        join usr in _context.Users on usrgr.ApplicationUserId equals usr.Id
+                        select new
+                        {
+                            id = usr.Id,
+                            Name = usr.FullName,
+                            Email = usr.Email,
 
-                };
+                            Role = gr.Name
+                        };
 
             var result = new List<ViewModelInternalUser>();
             foreach (var item in users)

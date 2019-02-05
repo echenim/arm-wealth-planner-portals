@@ -3,7 +3,7 @@ using Portal.Domain.Models;
 
 namespace Portal.Business.Contracts
 {
-    public interface IProductKeyBenefitService : ICreate<ProductKeyBenefit>, IEdit<ProductKeyBenefit>,
+    public interface IProductKeyBenefitManager : ICreate<ProductKeyBenefit>, IEdit<ProductKeyBenefit>,
         IFind<ProductKeyBenefit>, IFetch<ProductKeyBenefit>, IDelete<ProductKeyBenefit>
     {
     }

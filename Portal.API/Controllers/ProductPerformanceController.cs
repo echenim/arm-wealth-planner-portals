@@ -9,9 +9,9 @@ namespace Portal.API.Controllers
     [ApiController]
     public class ProductPerformanceController : ControllerBase
     {
-        private readonly IProductPerformanceService _service;
+        private readonly IProductPerformanceManager _service;
 
-        public ProductPerformanceController(IProductPerformanceService service)
+        public ProductPerformanceController(IProductPerformanceManager service)
         {
             _service = service;
         }

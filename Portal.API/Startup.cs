@@ -69,12 +69,12 @@ namespace Portal.API
 
             #region service register
 
-            services.AddTransient<IPersonService, PersonService>();
-            services.AddTransient<IProductCategoryService, ProductCategoryService>();
-            services.AddTransient<IProductService, ProductService>();
-            services.AddTransient<IProductFeatureService, ProductFeatureService>();
-            services.AddTransient<IProductKeyBenefitService, ProductKeyBenefitService>();
-            services.AddTransient<IProductPerformanceService, ProductPerformanceService>();
+            services.AddTransient<IPersonManager, PersonManager>();
+            services.AddTransient<IProductCategoryManager, ProductCategoryManager>();
+            services.AddTransient<IProductManager, ProductManager>();
+            services.AddTransient<IProductFeatureManager, ProductFeatureManager>();
+            services.AddTransient<IProductKeyBenefitManager, ProductKeyBenefitManager>();
+            services.AddTransient<IProductPerformanceManager, ProductPerformanceManager>();
             services.AddTransient<IApplicationGroupManager, ApplicationGroupManager>();
 
             #endregion service register

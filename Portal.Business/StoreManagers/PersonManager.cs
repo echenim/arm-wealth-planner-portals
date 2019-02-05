@@ -7,11 +7,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Portal.Business.StoreManagers
 {
-    public class PersonService : IPersonService
+    public class PersonManager : IPersonManager
     {
         private readonly ApplicationDbContext _context;
 
-        public PersonService(ApplicationDbContext context)
+        public PersonManager(ApplicationDbContext context)
         {
             _context = context;
         }

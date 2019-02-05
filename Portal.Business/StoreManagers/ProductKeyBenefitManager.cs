@@ -7,11 +7,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Portal.Business.StoreManagers
 {
-    public class ProductKeyBenefitService : IProductKeyBenefitService
+    public class ProductKeyBenefitManager : IProductKeyBenefitManager
     {
         private readonly ApplicationDbContext _context;
 
-        public ProductKeyBenefitService(ApplicationDbContext context)
+        public ProductKeyBenefitManager(ApplicationDbContext context)
         {
             _context = context;
         }

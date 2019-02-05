@@ -9,9 +9,9 @@ namespace Portal.API.Controllers
     [ApiController]
     public class ProductFeatureController : ControllerBase
     {
-        private readonly IProductFeatureService _service;
+        private readonly IProductFeatureManager _service;
 
-        public ProductFeatureController(IProductFeatureService service)
+        public ProductFeatureController(IProductFeatureManager service)
         {
             _service = service;
         }

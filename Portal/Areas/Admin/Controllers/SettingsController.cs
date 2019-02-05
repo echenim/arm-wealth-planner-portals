@@ -12,11 +12,11 @@ namespace Portal.Areas.Admin.Controllers
     [Area("Admin")]
     public class SettingsController : Controller
     {
-        private readonly IProductCategoryService _categoryService;
+        private readonly IProductCategoryManager _categoryService;
         private readonly RoleManager<ApplicationRole> _rolemanager;
         private readonly IApplicationGroupManager _groupManager;
 
-        public SettingsController(IProductCategoryService categoryService,
+        public SettingsController(IProductCategoryManager categoryService,
             RoleManager<ApplicationRole> rolemanager,
             IApplicationGroupManager groupManager
         )

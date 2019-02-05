@@ -70,13 +70,13 @@ namespace Portal
 
             #region service register
 
-            services.AddTransient<IProductCategoryService, ProductCategoryService>();
-            services.AddTransient<IProductService, ProductService>();
-            services.AddTransient<IProductFeatureService, ProductFeatureService>();
-            services.AddTransient<IProductKeyBenefitService, ProductKeyBenefitService>();
-            services.AddTransient<IProductPerformanceService, ProductPerformanceService>();
-            services.AddTransient<IOrdersAndSalesService, OrdersAndSalesService>();
-            services.AddTransient<IUserService, UserService>();
+            services.AddTransient<IProductCategoryManager, ProductCategoryManager>();
+            services.AddTransient<IProductManager, ProductManager>();
+            services.AddTransient<IProductFeatureManager, ProductFeatureManager>();
+            services.AddTransient<IProductKeyBenefitManager, ProductKeyBenefitManager>();
+            services.AddTransient<IProductPerformanceManager, ProductPerformanceManager>();
+            services.AddTransient<IOrdersAndSalesManager, OrdersAndSalesManager>();
+            services.AddTransient<IUserService, UserManagers>();
             services.AddTransient<IDashBoardManager, DashBoardManager>();
             services.AddTransient<IApplicationGroupManager, ApplicationGroupManager>();
 

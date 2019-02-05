@@ -11,9 +11,9 @@ namespace Portal.API.Controllers
     [ApiController]
     public class ProductController : ControllerBase
     {
-        private readonly IProductService _service;
+        private readonly IProductManager _service;
 
-        public ProductController(IProductService service)
+        public ProductController(IProductManager service)
         {
             _service = service;
         }
