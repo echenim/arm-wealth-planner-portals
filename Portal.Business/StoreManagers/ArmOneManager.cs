@@ -24,15 +24,27 @@ namespace Portal.Business.StoreManagers
             _clientService = new TestArmClientServices(_configSettingManager, _contentRootPath);
         }
 
-        public CustomerInformationView GetCustomerInformation(string username, string membershipnumber)
+        public CustomerInformationView GetCustomerInformation(string emailaddress, string membershipnumber)
         {
-            var result = new CustomerInformationView();          
-
+            var result = new CustomerInformationView();       
+            
             #region service calling for customer information
 
             var configSetting = _configSettingManager;
 
             #endregion service calling for customer information
+            var customerInfoRequest = new ArmOneCustomerDetailsRequest { Id = emailaddress };
+            var customerInfoResponse = _clientService.GetArmOneCustomerDetails(customerInfoRequest);
+
+            if (customerInfoResponse != null)
+            {
+                result.FirstName = customerInfoResponse.FirstName;
+                result.LastName = customerInfoResponse.LastName;
+                result.ResponseCode = customerInfoResponse.ResponseCode;
+                result.ResponseDescription = customerInfoResponse.ResponseDescription;
+                result.Email = customerInfoResponse.EmailAddress;
+                result.IsAccountActivated = customerInfoResponse.IsAccountActivated;
+            }
 
             return result;
         }
@@ -40,7 +52,12 @@ namespace Portal.Business.StoreManagers
         public CustomerInformationView GetCustomerInformation(string membershipnumber)
         {
             var result = new CustomerInformationView();
+            
+            #region service calling for customer information
 
+            var configSetting = _configSettingManager;
+
+            #endregion service calling for customer information
             var customerInfoRequest = new ArmOneCustomerDetailsRequest { Id = membershipnumber };
             var customerInfoResponse = _clientService.GetArmOneCustomerDetails(customerInfoRequest);
 
@@ -53,11 +70,6 @@ namespace Portal.Business.StoreManagers
                 result.Email = customerInfoResponse.EmailAddress;
                 result.IsAccountActivated = customerInfoResponse.IsAccountActivated;
             }
-            #region service calling for customer information
-
-            var configSetting = _configSettingManager;
-
-            #endregion service calling for customer information
 
             return result;
         }

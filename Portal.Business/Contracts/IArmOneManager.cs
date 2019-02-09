@@ -7,7 +7,7 @@ namespace Portal.Business.Contracts
 {
     public interface IArmOneManager
     {
-        CustomerInformationView GetCustomerInformation(string username, string membershipnumber);
+        CustomerInformationView GetCustomerInformation(string emailaddress, string membershipnumber);
 
         CustomerInformationView GetCustomerInformation(string membershipnumber);
 
