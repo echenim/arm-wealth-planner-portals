@@ -2,7 +2,7 @@
 using ARMClientPortal.ViewModels.DB.Mapping;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
-
+using Portal.Domain.ViewModels.Client.DB;
 
 namespace ARMClientPortal.ViewModels.DB
 {

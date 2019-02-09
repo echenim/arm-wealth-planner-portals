@@ -701,13 +701,34 @@ $(function() {
 
 
 
-        //get data from backend
-        var mmf = document.getElementById("mmf").value;
-        var ef = document.getElementById("ef").value;
-        var df = document.getElementById("df").value;
-        var agf = document.getElementById("agf").value;
+        //get data from backend        
+        var mmf;
+        if (document.getElementById("mmf") != null) {
+            mmf = document.getElementById("mmf").value;
+        } else {
+            mmf = 0;
+        }
 
+        var ef;
+        if (document.getElementById("ef") != null) {
+            ef = document.getElementById("ef").value;
+        } else {
+            ef = 0;
+        }
 
+        var df;
+        if (document.getElementById("df") != null) {
+            df = document.getElementById("df").value;
+        } else {
+            df = 0;
+        }
+
+        var agf;
+        if (document.getElementById("agf") != null) {
+            agf = document.getElementById("agf").value;
+        } else {
+            agf = 0;
+        }       
         // -----------------
         // init donut chart if element exists
         // -----------------

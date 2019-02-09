@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Portal.Business.StoreManagers
 {
-    public class ErmOneServiceConfigManager : IErmOneServiceConfigManager
+    public class ArmOneServiceConfigManager : IArmOneServiceConfigManager
     {
         public string ArmBaseUrl { get; set; }
         public string ArmOne { get; set; }

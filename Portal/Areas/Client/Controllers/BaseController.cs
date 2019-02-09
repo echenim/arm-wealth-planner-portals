@@ -12,6 +12,8 @@ using Portal.Domain;
 using Microsoft.Extensions.Options;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using Portal.Business.Contracts;
+using Portal.Business.TestServices;
 
 namespace Portal.Areas.Client.Controllers
 {
@@ -20,9 +22,8 @@ namespace Portal.Areas.Client.Controllers
         public string _webRootPath;
         public string _contentRootPath;
         public readonly IHostingEnvironment _hostingEnvironment;
-        public readonly AppSettings _appSettings;
         public JsonSerializerSettings _jsonSetting = new JsonSerializerSettings() { NullValueHandling = NullValueHandling.Ignore };
-        public ArmClientServices _clientService;
+        //public ArmClientServices _clientService;
 
         public readonly ILogger<BaseController> _logger;
         public readonly IConfiguration _configuration;
@@ -32,9 +33,12 @@ namespace Portal.Areas.Client.Controllers
 
         public ApplicationDbContext db;
 
-        public BaseController(IOptions<AppSettings> appSettings, IHostingEnvironment hostingEnvironment, 
-                              ILogger<BaseController> logger, IConfiguration configuration, 
-                              IDistributedCache cache, ApplicationDbContext _db)
+        //test
+        private readonly IArmOneServiceConfigManager _configSettingManager;
+        public TestArmClientServices _clientService;
+
+        public BaseController(IHostingEnvironment hostingEnvironment, ILogger<BaseController> logger, IConfiguration configuration, 
+                              IDistributedCache cache, ApplicationDbContext _db, IArmOneServiceConfigManager configManager)
         {
             _hostingEnvironment = hostingEnvironment;
             _webRootPath = _hostingEnvironment.WebRootPath;
@@ -48,8 +52,11 @@ namespace Portal.Areas.Client.Controllers
                 .SetSlidingExpiration(TimeSpan.FromMinutes(30))
                 .SetAbsoluteExpiration(TimeSpan.FromMinutes(30));
 
-            _appSettings = appSettings.Value;
-            _clientService = new ArmClientServices(_appSettings, _contentRootPath, _configuration);
+            _configSettingManager = configManager;
+
+            //_clientService = new ArmClientServices(_appSettings, _contentRootPath, _configuration);
+            _clientService = new TestArmClientServices(_configSettingManager, _contentRootPath);
+
             db = _db;
         }
     }

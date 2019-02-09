@@ -1,9 +1,9 @@
-﻿@model Portal.Areas.Client.ViewModels.AccountStatementViewModel
+﻿@*@model Portal.Areas.Client.ViewModels.AccountStatementViewModel*@
 @using Portal.Areas.Client.ViewModels;
-@{ 
-    var _user = new AuthenticateResponse();
-    _user.MembershipKey = 1007435;
-    _user.FullName = "Funmilayo Ruth Adeyemi";
+@{
+    //var _user = new AuthenticateResponse();
+    var _userMembershipKey = 1007435;
+    var _userFullName = "Funmilayo Ruth Adeyemi";
 
 }
 <!DOCTYPE html>
@@ -21,7 +21,8 @@
         <link href="https://fonts.googleapis.com/css?family=Varela+Round:300,400,500" rel="stylesheet" type="text/css">
 
         <link href="~/custom-client/components/select2/dist/css/select2.min.css" rel="stylesheet">
-        <link href="~/custom-client/components/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
+        @*<link href="~/custom-client/components/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">*@
+        <link href="~/custom-client/components/datepicker/daterangepicker.css" rel="stylesheet">
         <link href="~/custom-client/components/dropzone/dist/dropzone.css" rel="stylesheet">
         <link href="~/custom-client/components/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
         <link href="~/custom-client/components/fullcalendar/dist/fullcalendar.min.css" rel="stylesheet">
@@ -48,7 +49,7 @@
             -------------------->
             <div class="menu-mobile menu-activated-on-click color-scheme-dark">
                 <div class="mm-logo-buttons-w">
-                    <a class="mm-logo" href="Dashboard.html"><img src="img/arm-logo.png"></a>
+                    <a class="mm-logo" href="Dashboard.html"><img src="~/custom-client/img/arm-logo.png"></a>
                     <div class="mm-buttons">
                         <div class="mobile-menu-trigger">
                             <div class="os-icon os-icon-hamburger-menu-1"></div>
@@ -62,7 +63,7 @@
                     -------------------->
                     <ul class="main-menu">
                         <li>
-                            <a href="Dashboard.html">
+                            <a asp-area="Client" asp-controller="Dashboard" asp-action="Index">
                                 <div class="icon-w">
                                     <div class="os-icon os-icon-layout"></div>
                                 </div>
@@ -111,7 +112,7 @@
                             </a>
                             <ul class="sub-menu">
                                 <li>
-                                    <a asp-area="Client" asp-controller="Dashboard" asp-action="Index">Setup Mandate</a>
+                                    <a asp-area="Client" asp-controller="Mandate" asp-action="Setup">Setup Mandate</a>
                                 </li>
                                 <li>
                                     <a href="manage-mandate.html">Manage Mandates</a>
@@ -184,7 +185,7 @@
 
                 <ul class="main-menu">
                     <li class="">
-                        <a href="Dashboard.html">
+                        <a asp-area="Client" asp-controller="Dashboard" asp-action="Index">
                             <div class="icon-w">
                                 <div class="os-icon os-icon-layout"></div>
                             </div>
@@ -263,7 +264,7 @@
                             <div class="sub-menu-i">
                                 <ul class="sub-menu">
                                     <li>
-                                        <a asp-area="Client" asp-controller="Dashboard" asp-action="Index">Setup Mandate</a>
+                                        <a asp-area="Client" asp-controller="Mandate" asp-action="Setup">Setup Mandate</a>
                                     </li>
                                     <li>
                                         <a href="manage-mandate.html">Manage Mandates</a>
@@ -365,10 +366,10 @@
                             <div class="logged-user-i">
                                 <div class="logged-user-info-w top-personal-info">
                                     <div class="logged-user-name">
-                                        @_user.FullName
+                                        @_userFullName
                                     </div>
                                     <div class="logged-user-role">
-                                        Member ID: @_user.MembershipKey
+                                        Member ID: @_userMembershipKey
                                     </div>
                                 </div>
                                 <div class="avatar-w">
@@ -382,10 +383,10 @@
                                         </div>
                                         <div class="logged-user-info-w">
                                             <div class="logged-user-name">
-                                                @_user.FullName
+                                                @_userFullName
                                             </div>
                                             <div class="logged-user-role">
-                                                @_user.MembershipKey
+                                                @_userMembershipKey
                                             </div>
                                         </div>
                                     </div>
@@ -448,7 +449,8 @@
         <script src="~/custom-client/components/jquery-bar-rating/dist/jquery.barrating.min.js"></script>
         <script src="~/custom-client/components/ckeditor/ckeditor.js"></script>
         <script src="~/custom-client/components/bootstrap-validator/dist/validator.min.js"></script>
-        <script src="~/custom-client/components/bootstrap-daterangepicker/daterangepicker.js"></script>
+        @*<script src="~/custom-client/components/bootstrap-daterangepicker/daterangepicker.js"></script>*@
+        <script src="~/custom-client/components/datepicker/daterangepicker.js"></script>
         <script src="~/custom-client/components/ion.rangeSlider/js/ion.rangeSlider.min.js"></script>
         <script src="~/custom-client/components/dropzone/dist/dropzone.js"></script>
         <script src="~/custom-client/components/editable-table/mindmup-editabletable.js"></script>
@@ -470,6 +472,7 @@
         <script src="~/custom-client/components/bootstrap/js/dist/popover.js"></script>
         <script src="~/custom-client/js/demo_customizer.js?version=4.4.0"></script>
         <script src="~/custom-client/js/main.js?version=4.4.0"></script>
+
         <script>
             (function (i, s, o, g, r, a, m) {
                 i['GoogleAnalyticsObject'] = r;

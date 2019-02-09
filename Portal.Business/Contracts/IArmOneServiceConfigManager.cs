@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Portal.Business.Contracts
 {
-    public interface IErmOneServiceConfigManager
+    public interface IArmOneServiceConfigManager
     {
         string ArmBaseUrl { get; set; }
         string ArmOne { get; set; }

@@ -10,9 +10,9 @@ namespace Portal.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly IErmOneManager _ermOneManager;
+        private readonly IArmOneManager _ermOneManager;
 
-        public HomeController(IErmOneManager ermOneManager)
+        public HomeController(IArmOneManager ermOneManager)
         {
             _ermOneManager = ermOneManager;
         }

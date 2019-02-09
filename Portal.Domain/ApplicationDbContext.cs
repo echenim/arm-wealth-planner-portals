@@ -2,6 +2,7 @@
 using Portal.Domain.Models.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Portal.Domain.ViewModels.Client.DB;
 
 namespace Portal.Domain
 {
@@ -36,6 +37,10 @@ namespace Portal.Domain
         public DbSet<ApplicationGroup> ApplicationGroup { get; set; }
         public DbSet<ApplicationUserGroup> ApplicationUserGroup { get; set; }
         public DbSet<ApplicationGroupRole> ApplicationGroupRoles { get; set; }
+
+        //client portal
+        public virtual DbSet<DDebit> DDebit { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

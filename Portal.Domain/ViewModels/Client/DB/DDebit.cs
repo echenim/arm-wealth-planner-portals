@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ARMClientPortal.ViewModels.DB
+namespace Portal.Domain.ViewModels.Client.DB
 {
     public class DDebit
     {
