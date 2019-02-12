@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-
+using Portal.Domain.ViewModels.Client.DB;
 
 namespace ARMClientPortal.ViewModels.DB.Mapping
 {

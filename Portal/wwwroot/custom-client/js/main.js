@@ -36,11 +36,11 @@ Main javascript functions to init most of the elements
 // ------------------------------------
 
 function is_display_type(display_type) {
-    return $('.display-type').css('content') == display_type || $('.display-type').css('content') == '"' + display_type + '"';
+    return $('.display-type').css('content') === display_type || $('.display-type').css('content') === '"' + display_type + '"';
 }
 
 function not_display_type(display_type) {
-    return $('.display-type').css('content') != display_type && $('.display-type').css('content') != '"' + display_type + '"';
+    return $('.display-type').css('content') !== display_type && $('.display-type').css('content') !== '"' + display_type + '"';
 }
 
 // Initiate on click and on hover sub menu activation logic
@@ -85,7 +85,7 @@ $(function() {
     });
 
     $('.message-input').on('keypress', function(e) {
-        if (e.which == 13) {
+        if (e.which === 13) {
             $('.chat-messages').append('<div class="message self"><div class="message-content">' + $(this).val() + '</div></div>');
             $(this).val('');
             var $messages_w = $('.floated-chat-w .chat-messages');
@@ -671,7 +671,7 @@ $(function() {
             var pieData2 = {
                 labels: ["Completed", "Pending Payment", "Processing", "Cancelled"],
                 datasets: [{
-                    data: [7500, 150, 450, 230, ],
+                    data: [7500, 150, 450, 230],
                     backgroundColor: ["#4ecc48", "#ffcc29", "#FF9801", "#e65252"],
                     hoverBackgroundColor: ["#4ecc48", "#ffcc29", "#FF9801", "#e65252"],
                     borderWidth: 0
@@ -701,13 +701,34 @@ $(function() {
 
 
 
-        //get data from backend
-        var mmf = document.getElementById("mmf").value;
-        var ef = document.getElementById("ef").value;
-        var df = document.getElementById("df").value;
-        var agf = document.getElementById("agf").value;
+        //get data from backend        
+        var mmf;
+        if (document.getElementById("mmf") !== null) {
+            mmf = document.getElementById("mmf").value;
+        } else {
+            mmf = 0;
+        }
 
+        var ef;
+        if (document.getElementById("ef") !== null) {
+            ef = document.getElementById("ef").value;
+        } else {
+            ef = 0;
+        }
 
+        var df;
+        if (document.getElementById("df") !== null) {
+            df = document.getElementById("df").value;
+        } else {
+            df = 0;
+        }
+
+        var agf;
+        if (document.getElementById("agf") !== null) {
+            agf = document.getElementById("agf").value;
+        } else {
+            agf = 0;
+        }       
         // -----------------
         // init donut chart if element exists
         // -----------------
@@ -866,7 +887,7 @@ $(function() {
         return false;
     });
     $('.chat-input input').on('keypress', function(e) {
-        if (e.which == 13) {
+        if (e.which === 13) {
             add_full_chat_message($(this));
             return false;
         }
@@ -1057,12 +1078,12 @@ $(function() {
     $('.search-suggest-input').on('keydown', function(e) {
 
         // Close if ESC was pressed
-        if (e.which == 27) {
+        if (e.which === 27) {
             $('.search-with-suggestions-w').fadeOut();
         }
 
         // Backspace/Delete pressed
-        if (e.which == 46 || e.which == 8) {
+        if (e.which === 46 || e.which === 8) {
             // This is a test code, remove when in real life usage
             $('.search-with-suggestions-w .ssg-item:last-child').show();
             $('.search-with-suggestions-w .ssg-items.ssg-items-blocks').show();
@@ -1070,7 +1091,7 @@ $(function() {
         }
 
         // Imitate item removal on search, test code
-        if (e.which != 27 && e.which != 8 && e.which != 46) {
+        if (e.which !== 27 && e.which !== 8 && e.which !== 46) {
             // This is a test code, remove when in real life usage
             $('.search-with-suggestions-w .ssg-item:last-child').hide();
             $('.search-with-suggestions-w .ssg-items.ssg-items-blocks').hide();

@@ -30,6 +30,16 @@ namespace Portal.AddMigration
         public DbSet<ProductPerformance> ProductPerformance { get; set; }
         public DbSet<PurchaseOrders> PurchaseOrders { get; set; }
 
+        //client portal
+        public DbSet<DDebit> DDebit { get; set; }
+        public DbSet<ClientUpdate> ClientUpdate { get; set; }
+        public DbSet<ClientUpdateTemp> ClientUpdateTemps { get; set; }
+        public DbSet<DirectDebit> DirectDebit { get; set; }
+        public DbSet<DirectDebitTransactions> DirectDebitTransactions { get; set; }
+        public DbSet<PaymentTransactionStatus> PaymentTransactionStatuses { get; set; }
+        public DbSet<ProcessPayments> ProcessPayments { get; set; }
+        public DbSet<Redemption> Redemptions { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);

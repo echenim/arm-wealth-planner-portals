@@ -1,0 +1,120 @@
+﻿@model Portal.Business.ViewModels.AccountStatementViewModel
+@using Portal.Areas.Client.Extensions;
+
+@{
+    ViewData["Title"] = "Initiate";
+    Layout = "~/Areas/Client/Views/Shared/_Layout-Client.cshtml";
+}
+
+<div class="row row-eq-height" ng-app="armApp" ng-controller='AppController' ng-init="init()">
+    <div class="col-lg-8">
+        <div class="element-box">
+            <h5 class="element-box-header">
+                Initiate a Redemption
+            </h5>
+            <div class="form-desc">
+                Select the Fund to withdraw from and enter an amount to redeem from at least 1 product.
+            </div>
+        </div>
+        @if (Model.Summaries != null && Model.Summaries.Count > 0)
+        {
+            foreach (var record in Model.Summaries)
+            {
+                <div class="element-wrapper pb-0">
+                    <div class="element-box">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="col-sm-5">
+                                    <div class="form-group">
+                                        <label class="" for="">Enter Amount</label>
+                                        <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                                            <input type="number" class="form-control" placeholder="Enter Amount..." value="0" min="0" max="@record.CurrentBalance" ng-disabled='loading||otpGenerated' ng-model='@record.ProductCode' data-rel='@record.ProductName' ng-focus="focusCallback($event)" ng-change='addToCart()'>
+                                            <div class="input-group-append">
+                                                <div class="input-group-text">
+                                                    NGN
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <input type="hidden" class="accruedInterest" value="@record.AccruedInterest" />
+                                    </div>
+                                </div>
+                                <div class="col-sm-7">
+                                    <div class="form-group">
+                                        <label class="" for="">Reason for Redemption</label>
+                                        <select class="form-control" name='source' ng-model="record.Source">
+                                            <option value=""> Select an Option</option>
+                                            <option value="">Urgent Fund Requirement</option>
+                                            <option value="">Investment Goal Realised</option>
+                                            <option value="">To Reallocate my Investment</option>
+                                            <option value="">Others</option>
+                                        </select>
+                                        <p ng-show="redForm.source.$invalid" class="help-block">Reason for redemption is required.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <input type="text" name="sourceothers" class="form-control" placeholder="If others, please specify" ng-model="record.SourceOther" ng-required="record.Source == 'Others'" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <h2>No transaction records available for the selected date.</h2>
+        }
+    </div>
+
+    <div class="col-sm-6 col-lg-4 col-12 pb-4">
+        <div class="">
+            <a class="el-tablo highlight smaller cta-w cta-with-media redemp-white" href="#">
+                <div class="cta-content">
+                    <div class="highlight-header highlight-header-mutual">
+                        Mutual Funds
+                    </div>
+                    <h5 class="cta-header">
+                        Available balance
+                    </h5>
+                    @*<div class="label">
+                        Money Market Fund
+                    </div>*@
+                    <div class="value font-one-four">
+                        &#8358;@Model.TotalBalance
+                    </div>
+                    <img class="portfolio-sideicon" alt="" src="img/orders-icon.svg">
+
+                    <table>
+                        <tbody>
+                            <tr ng-repeat="(key, value) in myCart">
+                                <td class="label">{[{value.productName}]}</td>
+                                <td class="col2 value font-one-four">+₦{[{value.amount}]}</td>
+                            </tr>
+                            <tr>
+                                <td class="label">Total</td>
+                                <td class="col1">{[{cartTotal |currency : '₦' : 2}]}</td>
+                            </tr>
+                            <tr class="tcent" ng-show='expectedNetWorth>0'>
+                                <td colspan="2"><div class="label">Your total networth after this withdrawal would be <span>{[{expectedNetWorth |currency : '₦' : 2}]}</span></div></td>
+                            </tr>
+                            <tr class="tcent" ng-if='expectedNetWorth'>
+                                <td colspan="2" ng-hide="otpGenerated">
+                                    <div class="def-button nomg" ng-hide="otpGenerated||loading">
+                                        <div class="form-buttons-w text-right compact">
+                                            <button class="btn btn-primary" ng-click="confirmRedemption()" ng-disabled="loading||redForm.$invalid"><span>Confirm Redemption</span><i class="os-icon os-icon-coins-4"></i></button>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>                       
+                    </table>
+
+                </div>
+            </a>
+        </div>
+    </div>
+</div>

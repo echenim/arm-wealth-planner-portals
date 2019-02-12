@@ -15,7 +15,7 @@ namespace Portal.AddMigration.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.2.0-rtm-35687")
+                .HasAnnotation("ProductVersion", "2.2.1-servicing-10028")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -125,6 +125,181 @@ namespace Portal.AddMigration.Migrations
                     b.ToTable("AspNetUserTokens");
 
                     b.HasDiscriminator<string>("Discriminator").HasValue("IdentityUserToken<long>");
+                });
+
+            modelBuilder.Entity("Portal.Domain.Models.ClientUpdate", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("DateUpdated");
+
+                    b.Property<string>("EvaluationStatus");
+
+                    b.Property<bool?>("IsKYCApproved");
+
+                    b.Property<bool?>("IsPassportApproved");
+
+                    b.Property<bool?>("IsSignatureApproved");
+
+                    b.Property<bool?>("IsThumbprintApproved");
+
+                    b.Property<bool?>("IsValidIdApproved");
+
+                    b.Property<string>("Jurisdiction");
+
+                    b.Property<int>("MembershipNumber");
+
+                    b.Property<byte[]>("Passport");
+
+                    b.Property<string>("ProgressStatus");
+
+                    b.Property<byte[]>("Signature");
+
+                    b.Property<string>("TaxNumber");
+
+                    b.Property<byte[]>("Thumbprint");
+
+                    b.Property<byte[]>("ValidID");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ClientUpdate");
+                });
+
+            modelBuilder.Entity("Portal.Domain.Models.ClientUpdateTemp", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("DateUpdated");
+
+                    b.Property<string>("EvaluationStatus");
+
+                    b.Property<bool?>("IsKYCApproved");
+
+                    b.Property<bool?>("IsPassportApproved");
+
+                    b.Property<bool?>("IsSignatureApproved");
+
+                    b.Property<bool?>("IsThumbprintApproved");
+
+                    b.Property<bool?>("IsValidIdApproved");
+
+                    b.Property<string>("Jurisdiction");
+
+                    b.Property<int>("MembershipNumber");
+
+                    b.Property<byte[]>("Passport");
+
+                    b.Property<string>("ProgressStatus");
+
+                    b.Property<byte[]>("Signature");
+
+                    b.Property<string>("TaxNumber");
+
+                    b.Property<byte[]>("Thumbprint");
+
+                    b.Property<byte[]>("ValidID");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ClientUpdateTemps");
+                });
+
+            modelBuilder.Entity("Portal.Domain.Models.DDebit", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<decimal>("AmountApproved");
+
+                    b.Property<string>("CardMask");
+
+                    b.Property<string>("CardType");
+
+                    b.Property<DateTime>("CreatedOn");
+
+                    b.Property<string>("CustomerId");
+
+                    b.Property<decimal>("DebitAmount");
+
+                    b.Property<string>("DirectDebitReference");
+
+                    b.Property<string>("StatusCode");
+
+                    b.Property<string>("StatusMessage");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("DDebit");
+                });
+
+            modelBuilder.Entity("Portal.Domain.Models.DirectDebit", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Action");
+
+                    b.Property<int>("ArmCustomerId");
+
+                    b.Property<string>("ArmCustomerName");
+
+                    b.Property<int>("ArmDdAmt");
+
+                    b.Property<string>("ArmFrequency");
+
+                    b.Property<string>("ArmHash");
+
+                    b.Property<string>("ArmPaymentParams");
+
+                    b.Property<DateTime>("ArmStartDate");
+
+                    b.Property<string>("ArmTranxNotiUrl");
+
+                    b.Property<string>("ArmVendorUserName");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("DirectDebit");
+                });
+
+            modelBuilder.Entity("Portal.Domain.Models.DirectDebitTransactions", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Action");
+
+                    b.Property<string>("ArmCustomerId");
+
+                    b.Property<string>("ArmCustomerName");
+
+                    b.Property<decimal>("ArmDdAmt");
+
+                    b.Property<string>("ArmDdNotiUrl");
+
+                    b.Property<string>("ArmFrequency");
+
+                    b.Property<string>("ArmHash");
+
+                    b.Property<string>("ArmPaymentParams");
+
+                    b.Property<DateTime>("ArmStartDate");
+
+                    b.Property<string>("ArmVendorUsername");
+
+                    b.Property<string>("ArmXmlData");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("DirectDebitTransactions");
                 });
 
             modelBuilder.Entity("Portal.Domain.Models.Identity.ApplicationGroup", b =>
@@ -271,6 +446,35 @@ namespace Portal.AddMigration.Migrations
                     b.ToTable("ApplicationUserGroups");
                 });
 
+            modelBuilder.Entity("Portal.Domain.Models.PaymentTransactionStatus", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("CustomerId");
+
+                    b.Property<DateTime>("DateSubmitted");
+
+                    b.Property<string>("PaymentParameters");
+
+                    b.Property<string>("PaymentReference");
+
+                    b.Property<decimal>("TransactionAmount");
+
+                    b.Property<string>("TransactionCurrency");
+
+                    b.Property<string>("TransactionReference");
+
+                    b.Property<string>("TransactionStatusCode");
+
+                    b.Property<string>("TransactionStatusMessage");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("PaymentTransactionStatuses");
+                });
+
             modelBuilder.Entity("Portal.Domain.Models.Person", b =>
                 {
                     b.Property<int>("Id")
@@ -292,6 +496,41 @@ namespace Portal.AddMigration.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Person");
+                });
+
+            modelBuilder.Entity("Portal.Domain.Models.ProcessPayments", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Action");
+
+                    b.Property<string>("ArmCustomerId");
+
+                    b.Property<string>("ArmCustomerName");
+
+                    b.Property<string>("ArmHash");
+
+                    b.Property<string>("ArmPaymentParams");
+
+                    b.Property<string>("ArmTranxAmount");
+
+                    b.Property<string>("ArmTranxCurr");
+
+                    b.Property<string>("ArmTranxId");
+
+                    b.Property<string>("ArmTranxNotiUrl");
+
+                    b.Property<string>("ArmVendorUserName");
+
+                    b.Property<string>("ArmXmlData");
+
+                    b.Property<string>("PaymentRequest");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ProcessPayments");
                 });
 
             modelBuilder.Entity("Portal.Domain.Models.ProductCategory", b =>
@@ -440,6 +679,27 @@ namespace Portal.AddMigration.Migrations
                     b.HasIndex("ProductId");
 
                     b.ToTable("PurchaseOrders");
+                });
+
+            modelBuilder.Entity("Portal.Domain.Models.Redemption", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<decimal>("Amount");
+
+                    b.Property<string>("CustomerReference");
+
+                    b.Property<string>("Reason");
+
+                    b.Property<string>("ReasonOther");
+
+                    b.Property<string>("RedeemedProducts");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Redemptions");
                 });
 
             modelBuilder.Entity("Portal.Domain.Models.Identity.ApplicationRoleClaim", b =>

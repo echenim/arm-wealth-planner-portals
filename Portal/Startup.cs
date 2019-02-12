@@ -80,17 +80,17 @@ namespace Portal
             services.AddTransient<IUserService, UserManagers>();
             services.AddTransient<IDashBoardManager, DashBoardManager>();
             services.AddTransient<IApplicationGroupManager, ApplicationGroupManager>();
-            services.AddTransient<IErmOneManager, ErmOneManager>();
+            services.AddTransient<IArmOneManager, ArmOneManager>();
 
             #endregion service register
 
-            #region register configuration_settings & ErmOneAPI
+            #region register configuration_settings & ArmOneAPI
 
-            services.AddSingleton<IErmOneServiceConfigManager>(Configuration
+            services.AddSingleton<IArmOneServiceConfigManager>(Configuration
                 .GetSection("ErmOneServiceConfigManager")
-                .Get<ErmOneServiceConfigManager>());
+                .Get<ArmOneServiceConfigManager>());
 
-            services.AddTransient<IErmOneManager, ErmOneManager>();
+            services.AddTransient<IArmOneManager, ArmOneManager>();
 
             #endregion register configuration_settings & ErmOneAPI
         }
