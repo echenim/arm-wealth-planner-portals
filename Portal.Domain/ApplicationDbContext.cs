@@ -2,6 +2,7 @@
 using Portal.Domain.Models.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Portal.Domain.ViewModels.Client.DB;
 
 
 namespace Portal.Domain
