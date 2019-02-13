@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Portal.Business.Contracts;
-using Portal.Domain.ViewModels;
+﻿using Portal.Business.Contracts;
 using Portal.Business.ViewModels;
 using Portal.Business.Utilities;
 

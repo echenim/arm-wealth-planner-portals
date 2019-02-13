@@ -1,9 +1,6 @@
 ﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Options;
 using Portal.Business.Contracts;
-using Portal.Business.Utilities;
 using Portal.Domain.Models;
 
 namespace Portal.Controllers
@@ -19,8 +16,8 @@ namespace Portal.Controllers
 
         public IActionResult Index()
         {
-            var i = _ermOneManager.GetCustomerInformation("myron.echenim@gmail.com", "103Solution123445");
-            var k = i;
+            //var i = _ermOneManager.GetCustomerInformation("myron.echenim@gmail.com", "103Solution123445");
+            //var k = i;
             return View();
         }
 

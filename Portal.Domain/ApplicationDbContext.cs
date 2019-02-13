@@ -2,8 +2,6 @@
 using Portal.Domain.Models.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Portal.Domain.ViewModels.Client.DB;
-
 
 namespace Portal.Domain
 {
@@ -41,6 +39,7 @@ namespace Portal.Domain
 
         //client portal
         public DbSet<DDebit> DDebit { get; set; }
+
         public DbSet<ClientUpdate> ClientUpdate { get; set; }
         public DbSet<ClientUpdateTemp> ClientUpdateTemps { get; set; }
         public DbSet<DirectDebit> DirectDebit { get; set; }
@@ -48,7 +47,6 @@ namespace Portal.Domain
         public DbSet<PaymentTransactionStatus> PaymentTransactionStatus { get; set; }
         public DbSet<ProcessPayments> ProcessPayments { get; set; }
         public DbSet<Redemption> Redemptions { get; set; }
-
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

@@ -3,7 +3,7 @@
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iis": {
-      "applicationUrl": "http://localhost/Portal",
+      "applicationUrl": "http://localhost/armwealth",
       "sslPort": 0
     },
     "iisExpress": {

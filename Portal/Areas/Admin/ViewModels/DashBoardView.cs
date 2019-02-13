@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Portal.Domain.Models;
+﻿using System.Collections.Generic;
 using Portal.Domain.ViewModels;
 
 namespace Portal.Areas.Admin.ViewModels
