@@ -61,6 +61,7 @@ namespace Portal.Areas.Admin.Controllers
                     .OrderByDescending(s => s.AddToCartDate).ThenBy(s => s.Customer);
 
             var totalIn = sales.Sum(s => s.Amount);
+            var countIn = sales.LongCount();
 
             var groupByCartNumber = sales.GroupBy(s =>
                     new
@@ -90,6 +91,7 @@ namespace Portal.Areas.Admin.Controllers
             });
 
             ViewData["Totals"] = TransfromerManager.DecimalHumanizedX(totalIn);
+            ViewData["Counts"] = TransfromerManager.IntegerHuamanized(countIn);
 
             int pageSize = 20;
 
@@ -129,6 +131,9 @@ namespace Portal.Areas.Admin.Controllers
                     .OrderByDescending(s => s.AddToCartDate).ThenBy(s => s.Customer);
 
             var totalIn = sales.Sum(s => s.Amount);
+            var countIn = sales.LongCount();
+            ViewData["Totals"] = TransfromerManager.DecimalHumanizedX(totalIn);
+            ViewData["Counts"] = TransfromerManager.IntegerHuamanized(countIn);
 
             var groupByCartNumber = sales.GroupBy(s =>
                     new
@@ -157,7 +162,6 @@ namespace Portal.Areas.Admin.Controllers
                 SoldItems = sales.Where(s => s.CartNumber.Equals(item.Id)).ToList()
             });
 
-            ViewData["Totals"] = TransfromerManager.DecimalHumanizedX(totalIn);
             ViewData["Product"] = sales.Select(s => s.Product.Name).Distinct();
             ViewData["ProductCategory"] = sales.Select(s => s.Product.ProductCategory.Name).Distinct();
 
@@ -201,6 +205,9 @@ namespace Portal.Areas.Admin.Controllers
                     .OrderByDescending(s => s.AddToCartDate).ThenBy(s => s.Customer);
 
             var totalIn = sales.Sum(s => s.Amount);
+            var countIn = sales.LongCount();
+            ViewData["Totals"] = TransfromerManager.DecimalHumanizedX(totalIn);
+            ViewData["Counts"] = TransfromerManager.IntegerHuamanized(countIn);
 
             var groupByCartNumber = sales.GroupBy(s =>
                     new
@@ -228,8 +235,6 @@ namespace Portal.Areas.Admin.Controllers
                 TotalAmount = TransfromerManager.DecimalHumanizedX(item.TotalAmount),
                 SoldItems = sales.Where(s => s.CartNumber.Equals(item.Id)).ToList()
             });
-
-            ViewData["Totals"] = TransfromerManager.DecimalHumanizedX(totalIn);
 
             ViewData["Product"] = sales.Select(s => s.Product.Name).Distinct();
             ViewData["ProductCategory"] = sales.Select(s => s.Product.ProductCategory.Name).Distinct();
@@ -274,6 +279,9 @@ namespace Portal.Areas.Admin.Controllers
                     .OrderByDescending(s => s.AddToCartDate).ThenBy(s => s.Customer);
 
             var totalIn = sales.Sum(s => s.Amount);
+            var countIn = sales.LongCount();
+            ViewData["Totals"] = TransfromerManager.DecimalHumanizedX(totalIn);
+            ViewData["Counts"] = TransfromerManager.IntegerHuamanized(countIn);
 
             var groupByCartNumber = sales.GroupBy(s =>
                     new
@@ -302,7 +310,6 @@ namespace Portal.Areas.Admin.Controllers
                 SoldItems = sales.Where(s => s.CartNumber.Equals(item.Id)).ToList()
             });
 
-            ViewData["Totals"] = TransfromerManager.DecimalHumanizedX(totalIn);
             ViewData["Product"] = sales.Select(s => s.Product.Name).Distinct();
             ViewData["ProductCategory"] = sales.Select(s => s.Product.ProductCategory.Name).Distinct();
 
@@ -346,6 +353,9 @@ namespace Portal.Areas.Admin.Controllers
                     .OrderByDescending(s => s.AddToCartDate).ThenBy(s => s.Customer);
 
             var totalIn = sales.Sum(s => s.Amount);
+            var countIn = sales.LongCount();
+            ViewData["Totals"] = TransfromerManager.DecimalHumanizedX(totalIn);
+            ViewData["Counts"] = TransfromerManager.IntegerHuamanized(countIn);
 
             var groupByCartNumber = sales.GroupBy(s =>
                     new
@@ -374,7 +384,6 @@ namespace Portal.Areas.Admin.Controllers
                 SoldItems = sales.Where(s => s.CartNumber.Equals(item.Id)).ToList()
             });
 
-            ViewData["Totals"] = TransfromerManager.DecimalHumanizedX(totalIn);
             ViewData["Product"] = sales.Select(s => s.Product.Name).Distinct();
             ViewData["ProductCategory"] = sales.Select(s => s.Product.ProductCategory.Name).Distinct();
 
@@ -416,6 +425,9 @@ namespace Portal.Areas.Admin.Controllers
                     .OrderByDescending(s => s.AddToCartDate).ThenBy(s => s.Customer);
 
             var totalIn = sales.Sum(s => s.Amount);
+            var countIn = sales.LongCount();
+            ViewData["Totals"] = TransfromerManager.DecimalHumanizedX(totalIn);
+            ViewData["Counts"] = TransfromerManager.IntegerHuamanized(countIn);
 
             var groupByCartNumber = sales.GroupBy(s =>
                     new
@@ -444,7 +456,6 @@ namespace Portal.Areas.Admin.Controllers
                 SoldItems = sales.Where(s => s.CartNumber.Equals(item.Id)).ToList()
             });
 
-            ViewData["Totals"] = TransfromerManager.DecimalHumanizedX(totalIn);
             ViewData["Product"] = sales.Select(s => s.Product.Name).Distinct();
             ViewData["ProductCategory"] = sales.Select(s => s.Product.ProductCategory.Name).Distinct();
 

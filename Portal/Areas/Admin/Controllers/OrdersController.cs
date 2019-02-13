@@ -181,6 +181,9 @@ namespace Portal.Areas.Admin.Controllers
             var totalIn = orders.Count();
             ViewData["Totals"] = TransfromerManager.IntegerHuamanized(totalIn);
 
+            ViewData["Product"] = orders.Select(s => s.Product.Name).Distinct();
+            ViewData["ProductCategory"] = orders.Select(s => s.Product.ProductCategory.Name).Distinct();
+
             var list = orders.Select(item => new OrdersView
             {
                 Id = (int)item.Id,
@@ -189,7 +192,7 @@ namespace Portal.Areas.Admin.Controllers
                 Customer = item.Customer.FullName,
                 CustNo = item.Customer.MembershipNumber,
                 Amount = TransfromerManager.DecimalHumanizedX(item.Amount),
-                TransactionDate = item.OrderDate.ToString(),
+                TransactionDate = item.AddToCartDate.ToString(),
                 CartNumber = item.CartNumber,
                 TransactionNumber = item.PaymentTransactionNumber,
                 TransactionStatus = item.TransactionStatus,
@@ -236,6 +239,8 @@ namespace Portal.Areas.Admin.Controllers
 
             var totalIn = orders.Count();
             ViewData["Totals"] = TransfromerManager.IntegerHuamanized(totalIn);
+            ViewData["Product"] = orders.Select(s => s.Product.Name).Distinct();
+            ViewData["ProductCategory"] = orders.Select(s => s.Product.ProductCategory.Name).Distinct();
 
             var list = orders.Select(item => new OrdersView
             {
@@ -245,7 +250,7 @@ namespace Portal.Areas.Admin.Controllers
                 Customer = item.Customer.FullName,
                 CustNo = item.Customer.MembershipNumber,
                 Amount = TransfromerManager.DecimalHumanizedX(item.Amount),
-                TransactionDate = item.OrderDate.ToString(),
+                TransactionDate = item.AddToCartDate.ToString(),
                 CartNumber = item.CartNumber,
                 TransactionNumber = item.PaymentTransactionNumber,
                 TransactionStatus = item.TransactionStatus,
@@ -292,6 +297,8 @@ namespace Portal.Areas.Admin.Controllers
 
             var totalIn = orders.Count();
             ViewData["Totals"] = TransfromerManager.IntegerHuamanized(totalIn);
+            ViewData["Product"] = orders.Select(s => s.Product.Name).Distinct();
+            ViewData["ProductCategory"] = orders.Select(s => s.Product.ProductCategory.Name).Distinct();
 
             var list = orders.Select(item => new OrdersView
             {
@@ -301,7 +308,7 @@ namespace Portal.Areas.Admin.Controllers
                 Customer = item.Customer.FullName,
                 CustNo = item.Customer.MembershipNumber,
                 Amount = TransfromerManager.DecimalHumanizedX(item.Amount),
-                TransactionDate = item.OrderDate.ToString(),
+                TransactionDate = item.AddToCartDate.ToString(),
                 CartNumber = item.CartNumber,
                 TransactionNumber = item.PaymentTransactionNumber,
                 TransactionStatus = item.TransactionStatus,
@@ -348,6 +355,8 @@ namespace Portal.Areas.Admin.Controllers
 
             var totalIn = orders.Count();
             ViewData["Totals"] = TransfromerManager.IntegerHuamanized(totalIn);
+            ViewData["Product"] = orders.Select(s => s.Product.Name).Distinct();
+            ViewData["ProductCategory"] = orders.Select(s => s.Product.ProductCategory.Name).Distinct();
 
             var list = orders.Select(item => new OrdersView
             {
@@ -357,7 +366,7 @@ namespace Portal.Areas.Admin.Controllers
                 Customer = item.Customer.FullName,
                 CustNo = item.Customer.MembershipNumber,
                 Amount = TransfromerManager.DecimalHumanizedX(item.Amount),
-                TransactionDate = item.OrderDate.ToString(),
+                TransactionDate = item.AddToCartDate.ToString(),
                 CartNumber = item.CartNumber,
                 TransactionNumber = item.PaymentTransactionNumber,
                 TransactionStatus = item.TransactionStatus,
@@ -405,6 +414,8 @@ namespace Portal.Areas.Admin.Controllers
 
             var totalIn = orders.Count();
             ViewData["Totals"] = TransfromerManager.IntegerHuamanized(totalIn);
+            ViewData["Product"] = orders.Select(s => s.Product.Name).Distinct();
+            ViewData["ProductCategory"] = orders.Select(s => s.Product.ProductCategory.Name).Distinct();
 
             var list = orders.Select(item => new OrdersView
             {
@@ -414,7 +425,7 @@ namespace Portal.Areas.Admin.Controllers
                 Customer = item.Customer.FullName,
                 CustNo = item.Customer.MembershipNumber,
                 Amount = TransfromerManager.DecimalHumanizedX(item.Amount),
-                TransactionDate = item.OrderDate.ToString(),
+                TransactionDate = item.AddToCartDate.ToString(),
                 CartNumber = item.CartNumber,
                 TransactionNumber = item.PaymentTransactionNumber,
                 TransactionStatus = item.TransactionStatus,
