@@ -7,7 +7,6 @@ using Portal.Business.ViewModels;
 using Portal.Business.TestServices;
 using Microsoft.AspNetCore.Hosting;
 using System.Text.RegularExpressions;
-using System.Globalization;
 
 namespace Portal.Business.StoreManagers
 {
@@ -33,14 +32,21 @@ namespace Portal.Business.StoreManagers
             #region service calling for customer information
 
             var configSetting = _configSettingManager;
-
+            
+            var absoluteUrl = new UriBuilder()
+            {
+                Path = "Dashboard/Index",
+                Host = "localhost",
+                Port = 5000
+            };
             #endregion service calling for customer information
             //authenticate user
             var customerLoginRequest = new ArmOneAuthRequest
             {
                 Membershipkey = username,
                 Password = password,
-                Channel = "Client_Portal"
+                Channel = "Client_Portal",
+                RedirectURL = absoluteUrl.Uri.AbsoluteUri
             };
             var customerLoginResponse = _clientService.ArmOneAuthenticate(customerLoginRequest);
 

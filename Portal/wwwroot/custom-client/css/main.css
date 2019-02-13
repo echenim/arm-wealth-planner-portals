@@ -14669,7 +14669,7 @@ body.menu-side-right .layout-w {
     box-shadow: 0px 2px 4px rgba(126, 142, 177, 0.12);
     -webkit-box-flex: 0;
     -ms-flex: 0 0 260px;
-    flex: 0 0 261px;
+    flex: 0 0 260px;
     border-right: 0px solid rgba(0, 0, 0, 0.05);
     /* Styles for sub menu */
 }
@@ -19360,23 +19360,58 @@ a.el-tablo {
     position: relative;
 }
 
-    .cta-w.purple {
-        background-image: url("../img/cta-pattern-light.png"), -webkit-gradient(linear, left top, left bottom, from(#4B72FA), to(#934BFA));
-        background-image: url("../img/cta-pattern-light.png"), linear-gradient(-180deg, #4B72FA 0%, #934BFA 100%);
+    .cta-w.securities-blue {
+        background-image: url("../img/cta-pattern-light.png"), -webkit-gradient(linear, left top, left bottom, from(#4B72FA), to(#052cac));
+        background-image: url("../img/cta-pattern-light.png"), linear-gradient(-180deg, #4B72FA 0%, hsl(226, 94%, 35%) 100%);
         background-size: cover;
         color: #fff;
     }
 
-    .cta-w.orange {
-        background-image: url("../img/cta-pattern-light.png"), -webkit-gradient(linear, left top, left bottom, from(#FF218E), to(#E36C0F));
-        background-image: url("../img/cta-pattern-light.png"), linear-gradient(-180deg, #FF218E 0%, #E36C0F 100%);
+    .cta-w.pensions-purple {
+        background-image: url("../img/cta-pattern-light.png"), -webkit-gradient(linear, left top, left bottom, from(#FF218E), to(#A51757));
+        background-image: url("../img/cta-pattern-light.png"), linear-gradient(-180deg, #FF218E 0%, #A51757 100%);
         background-size: cover;
         color: #fff;
     }
 
-        .cta-w.orange .highlight-header {
-            background-color: #2283FF;
-        }
+    .cta-w.life-yellow {
+        background-image: url("../img/cta-pattern-light.png"), -webkit-gradient(linear, left top, left bottom, from(#FFfb00), to(#E36C0F));
+        background-image: url("../img/cta-pattern-light.png"), linear-gradient(-180deg, rgb(255, 251, 0) 0%, rgb(255, 167, 2) 100%);
+        background-size: cover;
+        color: #fff;
+    }
+
+    .cta-w.mutual-purple {
+        background-image: url("../img/cta-pattern-light.png");
+        background-color: #F2F4F8;
+        background-size: cover;
+        color: #fff;
+    }
+
+    .cta-w.redemp-white {
+        background-image: url("../img/cta-pattern-light.png");
+        background-color: #fff;
+        background-size: cover;
+        color: #fff;
+    }
+
+    .cta-w.trustees-orange {
+        background-image: url("../img/cta-pattern-light.png"), -webkit-gradient(linear, left top, left bottom, from(#e66f00), to(#ff4800));
+        background-image: url("../img/cta-pattern-light.png"), linear-gradient(-180deg, rgb(230, 110, 0) 50%, rgb(225, 72, 0) 100%);
+        background-size: cover;
+        color: #fff;
+    }
+
+    .cta-w.mixta-red {
+        background-image: url("../img/cta-pattern-light.png"), -webkit-gradient(linear, left top, left bottom, from(#eb392d), to(#ff0000));
+        background-image: url("../img/cta-pattern-light.png"), linear-gradient(-180deg, rgb(235, 57, 45) 50%, rgb(226, 7, 7) 100%);
+        background-size: cover;
+        color: #fff;
+    }
+
+    .cta-w.orange .highlight-header {
+        background-color: #2283FF;
+    }
 
     .cta-w .highlight-header {
         background-color: #a42cef;
@@ -19391,14 +19426,38 @@ a.el-tablo {
         display: inline-block;
     }
 
+    .cta-w .highlight-header-mutual {
+        background-color: #632D50;
+    }
+
+    .cta-w .highlight-header-pensions {
+        background-color: #A51757;
+    }
+
+    .cta-w .highlight-header-life {
+        background-color: #FEB918;
+    }
+
+    .cta-w .highlight-header-Trustee {
+        background-color: #ff7518;
+    }
+
+    .cta-w .highlight-header-securities {
+        background-color: #3B6E8F;
+    }
+
+    .cta-w .highlight-header-mixta {
+        background-color: #DA1D21;
+    }
+
     .cta-w .cta-header {
-        color: #fff;
+        color: #293145;
         text-shadow: 0px 1px 2px rgba(0, 0, 0, 0.1);
         margin-bottom: 2rem;
     }
 
     .cta-w .cta-content {
-        padding: 12% 8%;
+        padding: 12% 3%;
     }
 
         .cta-w .cta-content.extra-padded {
@@ -19412,14 +19471,14 @@ a.el-tablo {
 
     .cta-w.cta-with-media .cta-content {
         padding-right: 0px;
-        width: 65%;
+        width: 100%;
     }
 
     .cta-w.cta-with-media .cta-media {
         position: absolute;
         bottom: 0px;
         right: 0px;
-        width: 25%;
+        width: 24%;
     }
 
         .cta-w.cta-with-media .cta-media img {
@@ -32006,6 +32065,29 @@ Contents:
     color: #ffffff;
 }
 
+.element-balances .balance-value.pending-bal {
+    font-size: 1rem !important;
+    color: #909090;
+}
+
+.portfolio-sideicon {
+    max-width: 50px;
+    height: auto;
+    position: absolute;
+    color: rgba(255, 255, 255, 0.1);
+    bottom: 10px;
+    right: 10px;
+    display: block;
+}
+
+.row-eq-height {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    flex-wrap: wrap;
+}
+
 .arm-btn-inactive {
     color: #aaaaaa !important;
     background-color: #dddddd !important;
@@ -32016,13 +32098,21 @@ Contents:
     display: none;
 }
 
+#test-form {
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+    max-width: 660px;
+    padding: 30px;
+}
+
 .notif {
     font-size: 16px;
     text-align: center !important;
     letter-spacing: 1px;
 }
 
-.notif span {
-    font-size: 12px !important;
-    text-align: center !important;
-}
+    .notif span {
+        font-size: 12px !important;
+        text-align: center !important;
+    }
