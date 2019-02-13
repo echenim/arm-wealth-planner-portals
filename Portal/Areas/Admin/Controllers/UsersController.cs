@@ -3,7 +3,6 @@ using System.Linq;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
 using Portal.Areas.Admin.ViewModels;
 using Portal.Domain.Models.Identity;
 using Portal.Business.Contracts;

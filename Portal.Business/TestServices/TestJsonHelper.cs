@@ -1,15 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using System.Net.Http;
 using System.Text;
-using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using RestSharp;
 using RestSharp.Authenticators;
 using Portal.Business.Contracts;
-using Portal.Domain.ViewModels;
 
 namespace Portal.Business.TestServices
 {

@@ -1,9 +1,6 @@
 ﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Options;
 using Portal.Business.Contracts;
-using Portal.Business.Utilities;
 using Portal.Domain.Models;
 
 namespace Portal.Controllers

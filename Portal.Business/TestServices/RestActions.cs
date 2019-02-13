@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using Microsoft.Extensions.Configuration;
-using System.Text;
-using Portal.Business.TestServices;
-using Portal.Business.Utilities;
 using Newtonsoft.Json;
 
 namespace Portal.Business.TestServices

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Portal.Business.Contracts;
+﻿using Portal.Business.Contracts;
 using Portal.Domain.ViewModels;
 using Portal.Business.ViewModels;
 using Portal.Business.TestServices;
@@ -40,6 +37,7 @@ namespace Portal.Business.StoreManagers
                 Port = 5000
             };
             #endregion service calling for customer information
+
             //authenticate user
             var customerLoginRequest = new ArmOneAuthRequest
             {
@@ -50,13 +48,13 @@ namespace Portal.Business.StoreManagers
             };
             var customerLoginResponse = _clientService.ArmOneAuthenticate(customerLoginRequest);
 
-            //make call to datahub API
-            var dataHubAuthRequest = new AuthenticateRequest
-            {
-                Password = password,
-                UserName = customerLoginResponse.MembershipKey.ToString()
-            };
-            var dataHubAuthResponse = _clientService.Authenticate(dataHubAuthRequest);
+            ////make call to datahub API
+            //var dataHubAuthRequest = new AuthenticateRequest
+            //{
+            //    Password = password,
+            //    UserName = customerLoginResponse.MembershipKey.ToString()
+            //};
+            //  var dataHubAuthResponse = _clientService.Authenticate(dataHubAuthRequest);
 
             //get customer detail from arm one
             var customerInfoRequest = new ArmOneCustomerDetailsRequest { Id = customerLoginResponse.EmailAddress };
@@ -70,7 +68,7 @@ namespace Portal.Business.StoreManagers
                 result.ResponseDescription = customerInfoResponse.ResponseDescription;
                 result.Email = customerInfoResponse.EmailAddress;
                 result.IsAccountActivated = customerInfoResponse.IsAccountActivated;
-                result.AltUsername = dataHubAuthResponse.AltUsername;
+                result.AltUsername = "";  //dataHubAuthResponse.AltUsername;
                 result.MembershipNumber = customerInfoResponse.MembershipKey.ToString();
             }
 
@@ -86,6 +84,7 @@ namespace Portal.Business.StoreManagers
             var configSetting = _configSettingManager;
 
             #endregion service calling for customer information
+
             var customerInfoRequest = new ArmOneCustomerDetailsRequest { Id = username };
             var customerInfoResponse = _clientService.GetArmOneCustomerDetails(customerInfoRequest);
 

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace Portal.Domain.Models
+﻿namespace Portal.Domain.Models
 {
     public partial class ProcessPayments
     {

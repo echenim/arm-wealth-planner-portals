@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Portal.Business.Contracts
+﻿namespace Portal.Business.Contracts
 {
     public interface IArmOneServiceConfigManager
     {

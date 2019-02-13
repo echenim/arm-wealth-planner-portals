@@ -1,20 +1,14 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Portal.Areas.Client.Filter;
 using Portal.Business.Contracts;
 using Portal.Business.StoreManagers;
 using Microsoft.Extensions.Logging;
 using Portal.Domain;
 using Portal.Domain.Models.Identity;
-using System.Collections.Generic;
-using System.Globalization;
-using Portal.Areas.Client.Models;
-using Portal.Business.Utilities;
 
 namespace Portal
 {
