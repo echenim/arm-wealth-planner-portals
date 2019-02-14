@@ -1,5 +1,4 @@
-﻿@model Portal.Areas.Client.ViewModels.AccountStatementViewModel
-@using Portal.Areas.Client.Extensions;
+﻿@model Portal.Business.ViewModels.AccountStatementViewModel
 
 @{
     ViewData["Title"] = "Index";
@@ -143,44 +142,6 @@
                                     <input type="text" value="@df" id="df" hidden />
                                     <input type="text" value="@agf" id="agf" hidden />
                                 }
-                                @*<div class="legend-value-w">
-            <div class="legend-pin legend-pin-squared" style="background-color: #6896f9;"></div>
-            <div class="legend-value">
-                <span>Money Market Fund</span>
-                <div class="legend-sub-value">
-                    17%, &#8358;12,200,420
-                </div>
-            </div>
-        </div>
-        <div class="legend-value-w">
-            <div class="legend-pin legend-pin-squared" style="background-color: #85c751;"></div>
-            <div class="legend-value">
-                <span>Ethical Fund</span>
-                <div class="legend-sub-value">
-                    22%, &#8358;2,200,4200
-                </div>
-            </div>
-        </div>
-
-        <div class="legend-value-w">
-            <div class="legend-pin legend-pin-squared" style="background-color: #6896f9;"></div>
-            <div class="legend-value">
-                <span>Money Market Fund</span>
-                <div class="legend-sub-value">
-                    17%, &#8358;12,200,420
-                </div>
-            </div>
-        </div>
-        <div class="legend-value-w">
-            <div class="legend-pin legend-pin-squared" style="background-color: #85c751;"></div>
-            <div class="legend-value">
-                <span>Ethical Fund</span>
-                <div class="legend-sub-value">
-                    22%, &#8358;2,200,4200
-                </div>
-            </div>
-        </div>*@
-
                             </div>
 
                         </div>
@@ -263,158 +224,6 @@
                             {
                                 <h4> No record available for this month </h4>
                             }
-
-                            @*<tr>
-            <td>
-                <span>Today</span><span class="smaller lighter">1:52am</span>
-            </td>
-            <td>
-                <div>
-                    Subscription
-                </div>
-            </td>
-            <td>
-                <div>
-                    ARMMMF
-                </div>
-            </td>
-            <td class="text-center">
-                <span class="text-success">+&#8358;200,000.00</span>
-            </td>
-            <td>
-                1.00
-            </td>
-            <td class="text-center">
-                <span>&#8358;200,000.00</span>
-            </td>
-            <td class="text-center">
-                <span>&#8358;200,000.00</span>
-            </td>
-            <td>
-                Processed Subscription
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <span>Today</span><span class="smaller lighter">1:52am</span>
-            </td>
-            <td>
-                <div>
-                    Subscription
-                </div>
-            </td>
-            <td>
-                <div>
-                    ARMMMF
-                </div>
-            </td>
-            <td class="text-center">
-                <span class="text-success">+&#8358;200,000.00</span>
-            </td>
-            <td>
-                1.00
-            </td>
-            <td class="text-center">
-                <span>&#8358;200,000.00</span>
-            </td>
-            <td class="text-center">
-                <span>&#8358;200,000.00</span>
-            </td>
-            <td>
-                Processed Subscription
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <span>Today</span><span class="smaller lighter">1:52am</span>
-            </td>
-            <td>
-                <div>
-                    Redemption
-                </div>
-            </td>
-            <td>
-                <div>
-                    ARMMMF
-                </div>
-            </td>
-            <td class="text-center">
-                <span class="text-danger">-&#8358;200,000.00</span>
-            </td>
-            <td>
-                1.00
-            </td>
-            <td class="text-center">
-                <span>&#8358;200,000.00</span>
-            </td>
-            <td class="text-center">
-                <span>&#8358;200,000.00</span>
-            </td>
-            <td>
-                Processed Redemption
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <span>Today</span><span class="smaller lighter">1:52am</span>
-            </td>
-            <td>
-                <div>
-                    Subscription
-                </div>
-            </td>
-            <td>
-                <div>
-                    ARMMMF
-                </div>
-            </td>
-            <td class="text-center">
-                <span class="text-success">+&#8358;200,000.00</span>
-            </td>
-            <td>
-                1.00
-            </td>
-            <td class="text-center">
-                <span>&#8358;200,000.00</span>
-            </td>
-            <td class="text-center">
-                <span>&#8358;200,000.00</span>
-            </td>
-            <td>
-                Processed Subscription
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <span>Today</span><span class="smaller lighter">1:52am</span>
-            </td>
-            <td>
-                <div>
-                    Redemption
-                </div>
-            </td>
-            <td>
-                <div>
-                    ARMMMF
-                </div>
-            </td>
-            <td class="text-center">
-                <span class="text-danger">-&#8358;200,000.00</span>
-            </td>
-            <td>
-                1.00
-            </td>
-            <td class="text-center">
-                <span>&#8358;200,000.00</span>
-            </td>
-            <td class="text-center">
-                <span>&#8358;200,000.00</span>
-            </td>
-            <td>
-                Processed Redemption
-            </td>
-        </tr>*@
-
                         </tbody>
                     </table>
                 </div>
@@ -481,4 +290,3 @@
         </div>
     </div>
 </div>
-

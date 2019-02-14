@@ -37,6 +37,17 @@ namespace Portal.Domain
         public DbSet<ApplicationUserGroup> ApplicationUserGroup { get; set; }
         public DbSet<ApplicationGroupRole> ApplicationGroupRoles { get; set; }
 
+        //client portal
+        public DbSet<DDebit> DDebit { get; set; }
+
+        public DbSet<ClientUpdate> ClientUpdate { get; set; }
+        public DbSet<ClientUpdateTemp> ClientUpdateTemps { get; set; }
+        public DbSet<DirectDebit> DirectDebit { get; set; }
+        public DbSet<DirectDebitTransactions> DirectDebitTransactions { get; set; }
+        public DbSet<PaymentTransactionStatus> PaymentTransactionStatus { get; set; }
+        public DbSet<ProcessPayments> ProcessPayments { get; set; }
+        public DbSet<Redemption> Redemptions { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);

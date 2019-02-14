@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using System.Net.Http;
 using System.Text;
@@ -19,7 +17,8 @@ namespace Portal.Services
             configuration = _configuration;
         }
 
-        public bool AcceptAllCertifications(object sender, System.Security.Cryptography.X509Certificates.X509Certificate certification, System.Security.Cryptography.X509Certificates.X509Chain chain, System.Net.Security.SslPolicyErrors sslPolicyErrors)
+        public bool AcceptAllCertifications(object sender, System.Security.Cryptography.X509Certificates.X509Certificate certification, 
+            System.Security.Cryptography.X509Certificates.X509Chain chain, System.Net.Security.SslPolicyErrors sslPolicyErrors)
         {
             return true;
         }
@@ -79,6 +78,33 @@ namespace Portal.Services
                     response = await PostResponseContentAsync(client, webRequest) as RestResponse;
                 }).Wait();
                 return response;
+            }
+            catch (Exception ex)
+            {
+                Utilities.ProcessError(ex, contentRootPath);
+                return null;
+            }
+        }
+
+        public static string GetArmOneRequest(string contentRootPath, string requestUrl)
+        {
+            try
+            {
+                string response = String.Empty;
+                var httpresponse = new HttpResponseMessage();
+                HttpClient webclient = new HttpClient();
+                var url = new Uri(requestUrl);
+
+                var task = GetArmOneContentAsync(url, webclient);
+                httpresponse = task.Result;
+
+                using (HttpContent rescontent = httpresponse.Content)
+                {
+                    Task<string> res = rescontent.ReadAsStringAsync();
+                    response = res.Result;
+
+                    return response;
+                }
             }
             catch (Exception ex)
             {
@@ -158,6 +184,15 @@ namespace Portal.Services
             var task = Task.Run(async () =>
             {
                 return await client.PostAsync(url, content);
+            });
+            return task;
+        }
+
+        public static Task<HttpResponseMessage> GetArmOneContentAsync(Uri url, HttpClient client)
+        {
+            var task = Task.Run(async () =>
+            {
+                return await client.GetAsync(url);
             });
             return task;
         }

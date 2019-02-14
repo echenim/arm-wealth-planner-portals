@@ -1,19 +1,14 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Portal.Areas.Client.Filter;
 using Portal.Business.Contracts;
 using Portal.Business.StoreManagers;
 using Microsoft.Extensions.Logging;
 using Portal.Domain;
 using Portal.Domain.Models.Identity;
-using System.Collections.Generic;
-using System.Globalization;
-using Portal.Areas.Client.Models;
 
 namespace Portal
 {
@@ -79,13 +74,29 @@ namespace Portal
             services.AddTransient<IUserService, UserManagers>();
             services.AddTransient<IDashBoardManager, DashBoardManager>();
             services.AddTransient<IApplicationGroupManager, ApplicationGroupManager>();
+            services.AddTransient<IArmOneManager, ArmOneManager>();
 
             #endregion service register
+
+            #region register configuration_settings & ArmOneAPI
+
+            services.AddSingleton<IArmOneServiceConfigManager>(Configuration
+                .GetSection("ErmOneServiceConfigManager")
+                .Get<ArmOneServiceConfigManager>());
+
+            services.AddTransient<IArmOneManager, ArmOneManager>();
+
+            #endregion register configuration_settings & ErmOneAPI
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
+            var build = new ConfigurationBuilder()
+                .SetBasePath(env.ContentRootPath)
+                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+                .Build();
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

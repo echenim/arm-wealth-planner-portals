@@ -1,0 +1,167 @@
+﻿@model Portal.Business.ViewModels.BuyViewModel
+
+@{
+    ViewData["Title"] = "Setup Direct Debit";
+    Layout = "~/Areas/Client/Views/Shared/_Layout-Client.cshtml";
+}
+
+<div class="row">
+    <div class="col-12">
+
+        <div class="element-box" style="margin: 2rem 10rem;" ng-app='armApp' ng-controller='AppController'>
+            <form name="ddForm" action="#" method="post">
+                @Html.AntiForgeryToken()
+                <h5 class="form-header">
+                    Setup a Direct Debit Mandate
+                </h5>
+                <div class="form-desc">
+                    Setup a Direct Debit Mandate to automate your investments.
+                </div>
+
+                <div class="form-group">
+                    <label for=""> Select Fund Type to Invest in</label>
+                    <select class="form-control">
+                        <option>
+                            Select Fund Type
+                        </option>
+                        @foreach (var product in Model.Summaries)
+                        {
+                            <option value='@product.ProductCode'>@product.ProductName</option>
+                        }
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="">Enter Amount you want to invest </label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">&#8358;</span>
+                        </div>
+                        @Html.TextBoxFor(model => model.Amount, new { @class = "form-control", @name = "amount", @ng_model = "debit.Amount", @aria_label = "Amount (to the nearest Naira)", @required = "required" })
+                        <div class="input-group-append">
+                            <span class="input-group-text">.00</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for=""> Select the Date you wish to start</label>
+                    <div class="date-input">
+                        @*<input class="single-daterange form-control" placeholder="Date of birth" type="text" value="04/12/1978">*@
+                        @Html.TextBoxFor(model => model.StartDate, new { @placeholder = "Date Of Birth", @name = "date", @class = "single-daterange datepicker form-control", @ng_model = "debit.StartDate", @ng_focus = "getDate()", @required = "required" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for=""> Select Frequency of Investment</label>
+                    @{
+                        var selectList = new SelectList(
+                        new List<SelectListItem>
+                        {
+                           new SelectListItem {Text = "Daily", Value = "Daily"},
+                           new SelectListItem {Text = "Weekly", Value = "Weekly"},
+                           new SelectListItem {Text = "Monthly", Value = "Monthly"},
+                           new SelectListItem {Text = "Quarterly", Value = "Quarterly"},
+                           new SelectListItem {Text = "Bi-Annually", Value = "Bi-Annually"},
+                           new SelectListItem {Text = "Annually", Value = "Annually"},
+                        }, "Value", "Text");
+                    }
+                    @Html.DropDownListFor(model => model.Frequency, selectList, new { @class = "form-control", @name = "frequency", @ng_model = "debit.Frequency", @required = "required" })
+                </div>
+
+
+                <div class="form-check">
+                    <label class="form-check-label"><input class="form-check-input" type="checkbox">I agree to terms and conditions</label>
+                </div>
+                <div class="form-buttons-w">
+                    <button class="btn btn-primary" ng-disabled="loading||ddForm.$invalid" ng-click="sendForProcessing()" ng-if="!loading">
+                        Proceed with Investment
+                    </button>
+                    <a href="" class="btn btn-secondary" ng-disabled="loading" ng-if="loading">Processing...</a>
+                </div>
+            </form>
+
+            <!--hidden form with response from api call-->
+            <div class="test-form-wrap" id="pop-demo">
+                <div class="element-box" style="margin: 2rem 10rem;">
+                    <div class="notif">
+                        ₦{[{debit.Amount}]} will be credited to your {[{debit.ProductCode}]} account {[{debit.Frequency}]}.<br>
+                        <span>You will be taken to the payment gateway to finalize the direct debit set up.</span>
+                        <form id="paymentform" name="submit2aggregator_form" action="{[{trustSrc(transactionData.action)}]}" target="_self" method="post">
+                            <input type="hidden" name="arm_vendor_username" value="{[{transactionData.armVendorUsername}]}" />
+                            <input type="hidden" name="arm_cust_id" value="{[{transactionData.armCustomerId}]}" />
+                            <input type="hidden" name="arm_cust_name" value="{[{transactionData.armCustomerName}]}" />
+                            <input type="hidden" name="arm_dd_amt" value="{[{transactionData.armDdAmt}]}" />
+                            <input type="hidden" name="arm_dd_noti_url" value="{[{transactionData.armDdNotiUrl}]}" />
+                            <input type="hidden" name="arm_xml_data" value="{[{transactionData.armXmlData}]}" />
+                            <input type="hidden" name="arm_hash" value="{[{transactionData.armHash}]}" />
+                            <input type="hidden" name="arm_frequency" value="{[{transactionData.armFrequency}]}" />
+                            <input type="hidden" name="arm_start_date" value="{[{transactionData.armStartDate}]}" />
+                            <div class="def-button"><button ng-disabled="loading">Continue to Payment</button></div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+@section Scripts{
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.0-rc.0/angular.js"></script>
+    <script>
+        angular.module('armApp', []).config(function ($interpolateProvider) {
+            $interpolateProvider.startSymbol('{[{').endSymbol('}]}');
+        })
+            .controller('AppController', function ($scope, $window, $http, $rootScope, $sce) {
+
+                $scope.trustSrc = function (src) {
+                    return $sce.trustAsResourceUrl(src);
+                }
+
+                $scope.sendForProcessing = function () {
+                    console.log("proceed button was clicked");
+                    //var antiForgeryToken = $("input[name=__RequestVerificationToken]").val();
+
+                    var data = $scope.debit
+                    console.log(data);
+                    $scope.loading = true;
+                    var url = "@Url.Action("ProcessDirectDebit", "Buy")";
+
+                    $http.post(url, data)
+                        .success(function (data, status, headers, config) {
+                            $scope.transactionData = data;
+                            $scope.loading = false;
+                            $.magnificPopup.open({
+                                items: {
+                                    src: $('#test-form'),
+                                    type: 'inline'
+                                }
+                            })
+                        })
+                        .error(function (data, status, header, config) {
+                            alert("There was an error processing your request. please try again.");
+                            $scope.loading = false;
+                        });
+                    return false;
+                }
+
+                $scope.getDate = function () {
+                    $(".datepicker").daterangepicker({
+                        singleDatePicker: true,
+                        showDropdowns: true,
+                        locale: {
+                            format: 'MM/DD/YYYY'
+                        }
+                    },
+                    function (start, end, label) {
+                        //code
+                    });
+                }
+
+            })
+
+    </script>
+}

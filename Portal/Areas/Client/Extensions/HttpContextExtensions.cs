@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Caching.Distributed;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Antiforgery;
 
 namespace Portal.Areas.Client.Extensions

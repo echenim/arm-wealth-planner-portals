@@ -1,19 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using Portal.Areas.Client.Models;
-using Portal.Areas.Client.ViewModels;
+//using Portal.Areas.Client.ViewModels;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
-using Portal.Areas.Client.Extensions;
 using Portal.Domain;
 using Portal.Services;
+using Portal.Business.Contracts;
+using Portal.Business.TestServices;
+using Portal.Business.ViewModels;
 
 namespace Portal.Areas.Client.Controllers
 {
@@ -24,18 +23,22 @@ namespace Portal.Areas.Client.Controllers
         public string _webRootPath;
         public string _contentRootPath;
         public readonly IHostingEnvironment _hostingEnvironment;
-        public readonly AppSettings _appSettings;
+        //public readonly AppSettings _appSettings;
         public JsonSerializerSettings _jsonSetting = new JsonSerializerSettings() { NullValueHandling = NullValueHandling.Ignore };
-        public ArmClientServices _clientService;
+        //public ArmClientServices _clientService;
         public readonly ILogger<DashboardController> _logger;
         public readonly IConfiguration _configuration;
+
+        //test
+        private readonly IArmOneServiceConfigManager _configSettingManager;
+        public TestArmClientServices _clientService;
 
         public ApplicationDbContext db;
         public ClientRepository _client;
 
-        public DashboardController(IOptions<AppSettings> appSettings, IHostingEnvironment hostingEnvironment, 
-                                    ILogger<DashboardController> logger, IConfiguration configuration, 
-                                    IDistributedCache cache, ApplicationDbContext _db)
+        public DashboardController(IHostingEnvironment hostingEnvironment,
+                                    ILogger<DashboardController> logger, IConfiguration configuration,
+                                    IDistributedCache cache, ApplicationDbContext _db, IArmOneServiceConfigManager configManager)
         {
             _hostingEnvironment = hostingEnvironment;
             _webRootPath = _hostingEnvironment.WebRootPath;
@@ -44,9 +47,12 @@ namespace Portal.Areas.Client.Controllers
             _logger = logger;
             _configuration = configuration;
 
-            _appSettings = appSettings.Value;
-            _clientService = new ArmClientServices(_appSettings, _contentRootPath, _configuration);
-            _client = new ClientRepository(_appSettings, _configuration);
+            //_appSettings = appSettings.Value;
+            _configSettingManager = configManager;
+
+            //_clientService = new ArmClientServices(_appSettings, _contentRootPath, _configuration);
+            _clientService = new TestArmClientServices(_configSettingManager, _contentRootPath);
+            _client = new ClientRepository(_configSettingManager, _contentRootPath);
 
             db = _db;
         }
@@ -64,7 +70,6 @@ namespace Portal.Areas.Client.Controllers
                 FirstName = "Funmilayo",
                 LastName = "Adeyemi",
                 FullName = "Funmilayo Ruth Adeyemi",
-                
             };
 
             try
@@ -79,6 +84,7 @@ namespace Portal.Areas.Client.Controllers
                 {
                     MembershipNumber = _user.MembershipKey
                 };
+                //var accountsResponse = _clientService.GetAccountSummary(accountsRequest);
                 var accountsResponse = _clientService.GetAccountSummary(accountsRequest);
 
                 if (accountsResponse != null)
@@ -98,7 +104,6 @@ namespace Portal.Areas.Client.Controllers
                     }
 
                     model.Summaries = getSummaries;
-
                 }
 
                 //get last transactions

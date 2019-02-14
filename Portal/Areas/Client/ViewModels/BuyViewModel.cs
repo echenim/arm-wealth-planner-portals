@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using ARMClientPortal.ViewModels.DB;
+using Portal.Domain.ViewModels.Client.DB;
 
 namespace ARMClientPortal.ViewModels
 {
