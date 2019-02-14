@@ -85,6 +85,7 @@ namespace Portal.Controllers
                     user.NewOrOld = "Old";
                     user.MembershipNumber = result.MembershipNumber;
                     user.UserNameAlternative = result.AltUsername;
+                    user.UserName = result.Email;
 
                     var profileUserResult = _userManager.CreateAsync(user, "102Solutionx$#@").Result;
                     if (profileUserResult.Succeeded)
