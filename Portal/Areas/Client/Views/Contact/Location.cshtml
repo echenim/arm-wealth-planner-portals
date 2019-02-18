@@ -1,0 +1,177 @@
+﻿@model Portal.Business.ViewModels.FeedbackViewModel
+
+@{
+    ViewData["Title"] = "Contact Us";
+}
+
+<!---- Page Title & Date --->
+<div class="row">
+    <div class="element-wrapper col-md-12 pb-0">
+        <h6 class="element-header">
+            Contact Us
+            <span class="date-timestamp float-right">Jan 27th 2019, 7:42am</span>
+        </h6>
+    </div>
+</div>
+<!---- Filter Parameters --->
+
+<div class="row">
+
+    <div class="col-md-6 col-sm-12">
+        <div class="profile-tile border-nun">
+            <a class="profile-tile-box upload-prof" href="#">
+
+                <div class="os-icon os-icon-mail-01 contact-icons-card"></div>
+
+                <h6 class="break-word ">enquiries@arminvestmentcenter.com</h6>
+                <div class="pt-user-name">
+                    Send us an email
+                </div>
+            </a>
+
+        </div>
+    </div>
+    <div class="col-md-6 col-sm-12 ">
+        <div class="profile-tile border-nun text-truncate">
+            <a class="profile-tile-box upload-prof" href="#">
+                <div class="os-icon os-icon-phone-call contact-icons-card"></div>
+                <h5>080234687878</h5>
+                <div class="pt-user-name">
+                    Give us a call
+                </div>
+            </a>
+
+        </div>
+    </div>
+
+
+
+    <div class="col-lg-6 col-sm-12">
+
+        @if (TempData["message"] != null)
+        {
+            <div class="element-box">
+                <div class="row">
+                    <div class="col-md-1">
+                        <i class="os-icon os-icon-check"></i>
+                    </div>
+                    <div class="col-md-11">
+                        <span class="smaller_text">@TempData["message"]</span>
+                    </div>
+                </div>             
+            </div>       
+        }
+
+        <div class="element-wrapper">
+
+            <div class="element-box">
+                @using (Html.BeginForm("Feedback", "Contact", FormMethod.Post, new { role = "form", @name = "form" }))
+                {
+                    <h5 class="form-header">
+                        Send us a message
+                    </h5>
+                    <hr>
+                    <div class="form-group row">
+                        <label class="col-form-label col-sm-4" for="">Message Type</label>
+                        @{
+                            var messageType = new SelectList(
+                            new List<SelectListItem>
+                            {
+                                            new SelectListItem {Text = "Assistance", Value = "Assistance"},
+                                            new SelectListItem {Text = "Complaints", Value = "Complaints"},
+                                            new SelectListItem {Text = "Enquiry", Value = "Enquiry"},
+                                            new SelectListItem {Text = "Feedback", Value = "Feedback"},
+                            }, "Value", "Text");
+                        }
+                        <div class="col-sm-8">
+                            @Html.DropDownListFor(model => model.MessageCategory, messageType, new { @class = "form-control" })
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-4 col-form-label" for="">Phone Number</label>
+                        <div class="col-sm-8">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">
+                                        <div class="os-icon os-icon-phone-15"></div>
+                                    </div>
+                                </div>
+                                @Html.TextBoxFor(model => model.MobileNumber, new { @class = "form-control", @placeholder = "Enter Mobile Number *", @required = "required", @type = "tel" })
+                                <small class="text-danger text-small">@Html.ValidationMessageFor(model => model.MobileNumber)</small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-4 col-form-label">Message</label>
+                        <div class="col-sm-8">
+                            @Html.TextAreaFor(model => model.Message, new { @placeholder = "Enter Message Here *", @required = "required", @rows = "6", @class = "form-control" })
+                            <small class="text-danger text-small">@Html.ValidationMessageFor(model => model.Message)</small>
+                        </div>
+                    </div>
+                    <div class="form-buttons-w">
+                        <button class="btn btn-primary" type="submit"> Send Message</button>
+                    </div>
+                }
+
+            </div>
+
+        </div>
+    </div>
+
+    <div class="col-lg-6 col-sm-12">
+
+        <div class="row">
+
+            <div class="col-md-12 col-sm-12 ">
+
+                <div class="element-box element-wrapper">
+                    <h5 class="element-header">
+                        Track Contact Form Request
+
+                    </h5>
+                    <form>
+                        <div class="form-group">
+                            <label class="" for="">Message Type</label>
+                            <div class="">
+                                <select class="form-control">
+                                    <option>
+                                        Select Message Type
+                                    </option>
+                                    <option>
+                                        Assistance
+                                    </option>
+                                    <option>
+                                        Complaints
+                                    </option>
+                                    <option>
+                                        Enquiries
+                                    </option>
+                                    <option>
+                                        Feedback
+                                    </option>
+                                    <option>
+                                        Other
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for=""> Tracking Number</label><input class="form-control" placeholder="enter tracking number (not Compulsory)" type="text">
+                        </div>
+
+                        <div class="b-t mt-3 pt-3">
+                            <button class="btn btn-primary" type="submit"> Get Status</button>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+
+</div>

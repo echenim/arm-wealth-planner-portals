@@ -15,13 +15,13 @@
                 Select the Fund to withdraw from and enter an amount to redeem from at least 1 product.
             </div>
 
-            <div class="wpc-notific-item bg12" ng-if="redemptionResponse.success && redemptionResponse.message">
+            <div class="alert alert-primary" role="alert" ng-if="redemptionResponse.success && redemptionResponse.message">
                 <i class="os-icon os-icon-check"></i>
-                <p>{[{redemptionResponse.message}]}</p>
+                <span class="label">{[{redemptionResponse.message}]}</span>
             </div>
-            <div class="wpc-notific-item bg10" ng-if="!redemptionResponse.success && redemptionResponse.message">
+            <div class="alert alert-danger" role="alert" ng-if="!redemptionResponse.success && redemptionResponse.message">
                 <i class="os-icon os-icon-delete"></i>
-                <p>{[{redemptionResponse.message}]}</p>
+                <span class="label">{[{redemptionResponse.message}]}</span>
             </div>
 
         </div>
@@ -41,7 +41,7 @@
                                 <div class="form-group">
                                     <label class="" for="">Enter Amount</label>
                                     <div class="input-group mb-2 mr-sm-2 mb-sm-0">
-                                        <input type="number" class="form-control" placeholder="Enter Amount..." value="0" min="0" max="@record.CurrentBalance" ng-disabled='loading||otpGenerated' ng-model='@record.ProductCode' data-rel='@record.ProductName' ng-focus="focusCallback($event)" ng-change='addToCart()'>
+                                        <input type="number" class="form-control" placeholder="Enter Amount..." value="0" min="0" max="@record.CurrentBalance" ng-disabled='loading||otpGenerated' id="@record.ProductCode" ng-model='@record.ProductCode' data-rel='@record.ProductName' ng-focus="focusCallback($event)" ng-change='addToCart()'>
                                         <div class="input-group-append">
                                             <div class="input-group-text">
                                                 NGN
@@ -108,14 +108,15 @@
                         <tbody>
                             <tr ng-repeat="(key, value) in myCart">
                                 <td class="label">{[{value.productName}]}</td>
-                                @*<td class="col2 value font-one-four">+₦{[{value.amount}]}</td>*@
+                                <td class="col2 value font-one-four" style="display: none;">+₦{[{value.amount}]}</td>
                             </tr>
                             <tr>
                                 @*<td class="label">Total</td>*@
                                 <td class="col1 value font-one-four">{[{cartTotal |currency : '₦' : 2}]}</td>
                             </tr>
+                            <tr class="spacer"><td></td></tr>
                             <tr class="tcent" ng-show='expectedNetWorth>0'>
-                                <td colspan="2"><div class="label">Your total networth after this withdrawal would be <span class="value font-one-four">{[{expectedNetWorth |currency : '₦' : 2}]}</span></div></td>
+                                <td colspan="2"><div class="smaller_text">Your total networth after this withdrawal would be <span class="value font-one-four">{[{expectedNetWorth |currency : '₦' : 2}]}</span></div></td>
                             </tr>
                             <tr class="tcent" ng-if='expectedNetWorth'>
                                 <td colspan="2" ng-hide="otpGenerated">
@@ -135,10 +136,10 @@
     </div>
 
     <div class="test-form-wrap">
-        <div id="surulere">
-            <div class="notif">
-                <div class="summary">
-                    Processing your request... please wait<br /><br />
+        <div id="processing-form">
+            <div class="element-box processing-frm">
+                <div class="row">
+                    <h5>Processing your request... please wait</h5><br /><br />
                     <i class="fa fa-spinner fa-5x fa-spin"></i>
                 </div>
             </div>
@@ -170,6 +171,7 @@
                                             </td>
                                             <td class="col2">
                                                 <span class="value font-one-four">+₦{[{value.amount}]}</span>
+                                                <span></span>
                                             </td>
                                         </tr>
                                         <tr class="table-secondary">
@@ -177,7 +179,7 @@
                                             <td class="col1">
                                                 <span class="value font-one-four">{[{cartTotal |currency : '₦' : 2}]}</span>
                                             </td>
-                                        </tr>
+                                        </tr>                                        
                                         <tr ng-show='expectedNetWorth>0'>
                                             <td colspan="2">
                                                 <div class="">
@@ -197,9 +199,9 @@
                                         </tr>
                                         <tr ng-show="otpGenerated">
                                             <td colspan="2">
-                                                <div class="alert alert-primary" role="alert">
+                                                <div class="alert alert-success" role="alert">
                                                     <i class="os-icon os-icon-alert-circle"></i>
-                                                    <p>A One-time password (OTP) has been sent to your mobile number/Email. Enter the received code below;  </p>
+                                                    <span>A One-time password (OTP) has been sent to your mobile number/Email. Enter the received code below;  </span>
                                                 </div>
                                                 <div class="form-group">
                                                     <label class="" for="">Enter Amount</label>
@@ -379,7 +381,7 @@
                     $scope.loading = true;
                     $.magnificPopup.open({
                         items: {
-                            src: $('#surulere'),
+                            src: $('#processing-form'),
                             type: 'inline'
                         }
                     });

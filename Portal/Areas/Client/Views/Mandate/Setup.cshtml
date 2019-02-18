@@ -5,10 +5,20 @@
     Layout = "~/Areas/Client/Views/Shared/_Layout-Client.cshtml";
 }
 
+<!---- Page Title & Date --->
 <div class="row">
-    <div class="col-12">
+    <div class="element-wrapper col-md-12 pb-0">
+        <h6 class="element-header">
+            Direct Debit
+            <span class="date-timestamp float-right">Jan 27th 2019, 7:42am</span>
+        </h6>
+    </div>
+</div>
 
-        <div class="element-box" style="margin: 2rem 10rem;" ng-app='armApp' ng-controller='AppController'>
+<div class="row">
+    <div class="col-lg-8 col-sm-12">
+
+        <div class="element-box" ng-app='armApp' ng-controller='AppController'>
             <form name="ddForm" action="#" method="post">
                 @Html.AntiForgeryToken()
                 <h5 class="form-header">
@@ -58,12 +68,12 @@
                         var selectList = new SelectList(
                         new List<SelectListItem>
                         {
-                           new SelectListItem {Text = "Daily", Value = "Daily"},
-                           new SelectListItem {Text = "Weekly", Value = "Weekly"},
-                           new SelectListItem {Text = "Monthly", Value = "Monthly"},
-                           new SelectListItem {Text = "Quarterly", Value = "Quarterly"},
-                           new SelectListItem {Text = "Bi-Annually", Value = "Bi-Annually"},
-                           new SelectListItem {Text = "Annually", Value = "Annually"},
+                                                   new SelectListItem {Text = "Daily", Value = "Daily"},
+                                                   new SelectListItem {Text = "Weekly", Value = "Weekly"},
+                                                   new SelectListItem {Text = "Monthly", Value = "Monthly"},
+                                                   new SelectListItem {Text = "Quarterly", Value = "Quarterly"},
+                                                   new SelectListItem {Text = "Bi-Annually", Value = "Bi-Annually"},
+                                                   new SelectListItem {Text = "Annually", Value = "Annually"},
                         }, "Value", "Text");
                     }
                     @Html.DropDownListFor(model => model.Frequency, selectList, new { @class = "form-control", @name = "frequency", @ng_model = "debit.Frequency", @required = "required" })
@@ -104,6 +114,21 @@
                 </div>
             </div>
 
+        </div>
+    </div>
+
+    <div class="col-lg-4 col-sm-12">
+
+        <div class="element-box">
+            <form>
+                <h5 class="element-box-header">
+                    Ad Banner
+                </h5>
+                <div class="form-desc">
+
+                </div>
+
+            </form>
         </div>
     </div>
 
