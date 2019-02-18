@@ -17,7 +17,8 @@ namespace Portal.Controllers
         public IActionResult Index()
         {
             //var i = _ermOneManager.GetCustomerInformation("myron.echenim@gmail.com", "103Solution123445");
-            //var k = i;
+            var i = _ermOneManager.GetCustomerInformation("gbadebo.ayan@gmail.com", "funmi2018$#");
+            var k = i;
             return View();
         }
 
