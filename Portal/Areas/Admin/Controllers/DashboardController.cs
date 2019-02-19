@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Linq;
+using System.Net;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Portal.Areas.Admin.ViewModels;
 using Portal.Business.Contracts;
@@ -9,6 +11,7 @@ using Portal.Domain.ViewModels;
 namespace Portal.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize]
     public class DashboardController : Controller
     {
         private readonly IDashBoardManager _manager;

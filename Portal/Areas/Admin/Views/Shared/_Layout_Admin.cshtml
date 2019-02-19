@@ -365,10 +365,10 @@
                                         </div>
                                         <div class="logged-user-info-w">
                                             <div class="logged-user-name">
-                                                Firstname Lastname
+                                                @User.Identity
                                             </div>
                                             <div class="logged-user-role">
-                                                firstname.lastname@email.com
+                                                @User.Identity.Name
                                             </div>
                                         </div>
                                     </div>
@@ -381,7 +381,10 @@
                                             <a href="profile.html"><i class="os-icon os-icon-user-male-circle2"></i><span>My Account</span></a>
                                         </li>
                                         <li>
-                                            <a href="#"><i class="os-icon os-icon-signs-11"></i><span>Logout</span></a>
+                                            <a asp-controller="Account" asp-action="LogOut"><i class="os-icon os-icon-signs-11"></i><span>Logout</span></a>
+                                            @*<form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                                                    <button type="submit" class="btn btn-link">Logout</button>
+                                                </form>*@
                                         </li>
                                     </ul>
                                 </div>
@@ -408,7 +411,7 @@
                                 @ViewData["ControllerName"]
                             </h5>
                         </div>
-                        <div class="col-md-6 text-right d-none d-sm-block">Firstname Lastname</div>
+                        <div class="col-md-6 text-right d-none d-sm-block">@User.Identity.Name</div>
                     </div>
                 </div>
 
