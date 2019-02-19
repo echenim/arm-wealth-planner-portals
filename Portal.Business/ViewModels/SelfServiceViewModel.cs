@@ -23,6 +23,9 @@ namespace Portal.Business.ViewModels
 
         public string ErrorMessage { get; set; }
         public string SuccessMessage { get; set; }
+
+        //trackservice
+        public TrackServiceViewModel SelfService { get; set; }
     }
 
     public class EmbassyLetterViewModel
@@ -41,6 +44,12 @@ namespace Portal.Business.ViewModels
 
         [Display(Name = "Additional Instruction")]
         public string AdditionalInstruction { get; set; }
+
+        public string SuccessMessage { get; set; }
+        public string ErrorMessage { get; set; }
+
+        //trackservice
+        public TrackServiceViewModel SelfService { get; set; }
     }
 
     public class TrackServiceViewModel

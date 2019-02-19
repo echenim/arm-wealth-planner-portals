@@ -32236,6 +32236,10 @@ tr.spacer > td {
     transition: all 0.25s ease;
 }
 
-.summary {
-    
+.danger_text {
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: orangered;
+    transition: all 0.25s ease;
 }

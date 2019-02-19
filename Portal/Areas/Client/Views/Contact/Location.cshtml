@@ -58,8 +58,8 @@
                     <div class="col-md-11">
                         <span class="smaller_text">@TempData["message"]</span>
                     </div>
-                </div>             
-            </div>       
+                </div>
+            </div>
         }
 
         <div class="element-wrapper">
@@ -77,10 +77,10 @@
                             var messageType = new SelectList(
                             new List<SelectListItem>
                             {
-                                            new SelectListItem {Text = "Assistance", Value = "Assistance"},
-                                            new SelectListItem {Text = "Complaints", Value = "Complaints"},
-                                            new SelectListItem {Text = "Enquiry", Value = "Enquiry"},
-                                            new SelectListItem {Text = "Feedback", Value = "Feedback"},
+                                new SelectListItem {Text = "Assistance", Value = "Assistance"},
+                                new SelectListItem {Text = "Complaints", Value = "Complaints"},
+                                new SelectListItem {Text = "Enquiry", Value = "Enquiry"},
+                                new SelectListItem {Text = "Feedback", Value = "Feedback"}
                             }, "Value", "Text");
                         }
                         <div class="col-sm-8">
@@ -131,41 +131,35 @@
                         Track Contact Form Request
 
                     </h5>
-                    <form>
+
+                    @using (Html.BeginForm("TrackService", "Contact", FormMethod.Post, new { role = "form", @name = "form" }))
+                    {
                         <div class="form-group">
                             <label class="" for="">Message Type</label>
-                            <div class="">
-                                <select class="form-control">
-                                    <option>
-                                        Select Message Type
-                                    </option>
-                                    <option>
-                                        Assistance
-                                    </option>
-                                    <option>
-                                        Complaints
-                                    </option>
-                                    <option>
-                                        Enquiries
-                                    </option>
-                                    <option>
-                                        Feedback
-                                    </option>
-                                    <option>
-                                        Other
-                                    </option>
-                                </select>
-                            </div>
+                            @{
+                                var selectList = new SelectList(
+                                    new List<SelectListItem>
+                                    {
+                                        new SelectListItem {Text = "Complaints", Value = "Complaints"},
+                                        new SelectListItem {Text = "Embassy Letter", Value = "Embassy Letter"},
+                                        new SelectListItem {Text = "Assistance", Value = "Assistance"},
+                                        new SelectListItem {Text = "Enquiry", Value = "Enquiry"},
+                                        new SelectListItem {Text = "Other", Value = "Other"},
+                                    }, "Value", "Text");
+                            }
+                            @Html.DropDownListFor(model => model.SelfService.RequestType, selectList, new { @class = "form-control selectpicker" })
                         </div>
 
                         <div class="form-group">
-                            <label for=""> Tracking Number</label><input class="form-control" placeholder="enter tracking number (not Compulsory)" type="text">
+                            <label for=""> Tracking Number</label>
+                            @Html.TextBoxFor(model => model.SelfService.TrackingNumber, new { @class = "form-control", @placeholder = "Enter Tracking Number (not compulsory)" })
                         </div>
 
                         <div class="b-t mt-3 pt-3">
                             <button class="btn btn-primary" type="submit"> Get Status</button>
                         </div>
-                    </form>
+                    }
+
                 </div>
 
             </div>
@@ -173,5 +167,63 @@
         </div>
     </div>
 
+    <!-- Track Service Request -->
+    @if (Model.SelfService.RequestStatuses != null)
+    {
+        <div class="row">
+            <div class="col-md-12">
+                <div class="element-box element-wrapper">
+                    <h5 class="element-header">
+                        Track Service Request
+                    </h5>
+
+                    <div class="">
+                        <div class="table-responsive">
+                            <table class="table table-stripped">
+                                <thead>
+                                    <tr>
+                                        <th>TRACKING NUMBER</th>
+                                        <th>DESCRIPTION</th>
+                                        <th>REQUEST DATE</th>
+                                        <th>STATUS</th>
+                                        <th>REMARKS</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var data in Model.SelfService.RequestStatuses)
+                                    {
+                                        <tr>
+                                            <td>@data.TrackingNumber</td>
+                                            <td>@data.RequestDescription</td>
+                                            <td>@data.RequestDate</td>
+                                            <td>@data.CurrentStatus</td>
+                                            <td>@data.Remark</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="row">
+            <div class="col-md-12">
+                <div class="element-box element-wrapper">
+                    <h5 class="element-header">
+                        Track Service Request
+                    </h5>
+                    <p>
+                        <span class="label">
+                            There is no update available for the tracking number submited.
+                        </span>
+                    </p>
+                </div>
+            </div>
+        </div>
+    }
 
 </div>
