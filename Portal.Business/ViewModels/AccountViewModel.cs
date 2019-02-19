@@ -68,5 +68,8 @@ namespace Portal.Business.ViewModels
         public string State { get; set; }
         public string Country { get; set; }
         public DateTime LastLoggedIn { get; set; }
+
+        //reset password
+        public ChangePasswordViewModel ResetPassword { get; set; }
     }
 }

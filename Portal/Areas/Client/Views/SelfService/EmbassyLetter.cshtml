@@ -16,19 +16,19 @@
 <!---- Filter Parameters --->
 
 <div class="row">
-
+    
     <div class="col-lg-8 col-sm-12">
-        <div class="element-box">
-            @if (!String.IsNullOrEmpty(Model.SuccessMessage))
-            {
-                <span class="">@Model.SuccessMessage</span>
-            }
+        @if (Model.SuccessMessage != null && (bool)TempData["message"] == true)
+        {
+            <div class="element-box"><span class="">@Model.SuccessMessage</span></div>              
+        }
 
-            @if (!String.IsNullOrEmpty(Model.ErrorMessage))
-            {
+        @if (Model.ErrorMessage != null && (bool)TempData["message"] == false)
+        {
+            <div class="element-box">
                 <span class="danger_text">@Model.ErrorMessage</span>
-            }
-        </div>
+            </div>               
+        }       
     </div>
     <div class="col-lg-4 col-sm-12"></div>
 
@@ -49,7 +49,6 @@
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label for=""> Passport Number</label>
-                                <input class="form-control" placeholder="enter passport number" type="text">
                                 @Html.TextBoxFor(model => model.PassportNumber, new { @class = "form-control", @placeholder = "Enter Passport Number *", @required = "required" })
                                 <small class="danger_text">@Html.ValidationMessageFor(model => model.PassportNumber)</small>
                             </div>
@@ -57,8 +56,7 @@
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label for="">Attention Name</label>
-                                <input class="form-control" placeholder="enter attention name" type="text">
-                                @Html.TextBoxFor(model => model.AttentionName, new { @class = "form-control", @placeholder = "enter Attention Name *", @required = "required" })
+                                @Html.TextBoxFor(model => model.AttentionName, new { @class = "form-control", @placeholder = "Enter Attention Name *", @required = "required" })
                                 <p class="danger_text">@Html.ValidationMessageFor(model => model.AttentionName)</p>
 
                                 <div class="help-block form-text text-muted form-control-feedback">
@@ -81,7 +79,7 @@
 
                     <div class="form-group">
                         <label> Additional Instructions</label>
-                        @Html.TextAreaFor(model => model.AdditionalInstruction, new { @placeholder = "Additional Instructions", @required = "required" })
+                        @Html.TextAreaFor(model => model.AdditionalInstruction, new { @class = "form-control", @placeholder = "Additional Instructions", @required = "required" })
                     </div>
 
                 </fieldset>
@@ -101,7 +99,7 @@
                 Track Embassy Letter Request
 
             </h5>
-            @using (Html.BeginForm("TrackService", "Contact", FormMethod.Post, new { role = "form", @name = "form" }))
+            @using (Html.BeginForm("TrackService", "SelfService", FormMethod.Post, new { role = "form", @name = "form" }))
             {
                 <div class="form-group">
                     <label for=""> Tracking Number</label>
@@ -130,63 +128,66 @@
     </div>
 
     <!-- Track Service-->
-    <div class="col-lg-4 col-sm-12">
-        @if (Model.SelfService.RequestStatuses != null)
+    <div class="col-lg-12 col-sm-12">
+        @if (Model.SelfService != null && Model.SelfService.TrackingNumber != null)
         {
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="element-box element-wrapper">
-                        <h5 class="element-header">
-                            Track Service Request
-                        </h5>
+            @if (Model.SelfService.RequestStatuses != null)
+            {
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="element-box element-wrapper">
+                            <h5 class="element-header">
+                                Track Service Request
+                            </h5>
 
-                        <div class="">
-                            <div class="table-responsive">
-                                <table class="table table-stripped">
-                                    <thead>
-                                        <tr>
-                                            <th>TRACKING NUMBER</th>
-                                            <th>DESCRIPTION</th>
-                                            <th>REQUEST DATE</th>
-                                            <th>STATUS</th>
-                                            <th>REMARKS</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach (var data in Model.SelfService.RequestStatuses)
-                                        {
+                            <div class="">
+                                <div class="table-responsive">
+                                    <table class="table table-stripped">
+                                        <thead>
                                             <tr>
-                                                <td>@data.TrackingNumber</td>
-                                                <td>@data.RequestDescription</td>
-                                                <td>@data.RequestDate</td>
-                                                <td>@data.CurrentStatus</td>
-                                                <td>@data.Remark</td>
+                                                <th>TRACKING NUMBER</th>
+                                                <th>DESCRIPTION</th>
+                                                <th>REQUEST DATE</th>
+                                                <th>STATUS</th>
+                                                <th>REMARKS</th>
                                             </tr>
-                                        }
-                                    </tbody>
-                                </table>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var data in Model.SelfService.RequestStatuses)
+                                            {
+                                                <tr>
+                                                    <td>@data.TrackingNumber</td>
+                                                    <td>@data.RequestDescription</td>
+                                                    <td>@data.RequestDate</td>
+                                                    <td>@data.CurrentStatus</td>
+                                                    <td>@data.Remark</td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        }
-        else
-        {
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="element-box element-wrapper">
-                        <h5 class="element-header">
-                            Track Service Request
-                        </h5>
-                        <p>
-                            <span class="label">
-                                There is no update available for the tracking number submited.
-                            </span>
-                        </p>
+            }
+            else
+            {
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="element-box element-wrapper">
+                            <h5 class="element-header">
+                                Track Service Request
+                            </h5>
+                            <p>
+                                <span class="label">
+                                    There is no update available for the tracking number submited.
+                                </span>
+                            </p>
+                        </div>
                     </div>
                 </div>
-            </div>
+            }
         }
     </div>
 

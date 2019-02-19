@@ -26,6 +26,10 @@ namespace Portal.Business.ViewModels
 
         //trackservice
         public TrackServiceViewModel SelfService { get; set; }
+
+        public FeedbackViewModel() =>
+            SelfService = new TrackServiceViewModel();
+                 
     }
 
     public class EmbassyLetterViewModel
@@ -50,6 +54,11 @@ namespace Portal.Business.ViewModels
 
         //trackservice
         public TrackServiceViewModel SelfService { get; set; }
+
+        public EmbassyLetterViewModel()
+        {
+            SelfService = new TrackServiceViewModel();
+        }
     }
 
     public class TrackServiceViewModel

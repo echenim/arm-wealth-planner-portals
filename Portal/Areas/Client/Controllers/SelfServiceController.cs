@@ -56,7 +56,7 @@ namespace Portal.Areas.Client.Controllers
             db = _db;
         }
 
-        public IActionResult EmbassyLetter()
+        public IActionResult EmbassyLetter(TrackServiceViewModel model)
         {
             var _user = new AuthenticateResponse
             {
@@ -72,8 +72,12 @@ namespace Portal.Areas.Client.Controllers
                 TempData["SessionTimeOut"] = "You have been logged out due to inactivity. Please login to gain access.";
                 return RedirectToAction("Login", "Account");
             }
-
-            return View();
+            var modelview = new EmbassyLetterViewModel();
+            modelview.SelfService.RequestStatuses = model.RequestStatuses;
+            //modelview.SuccessMessage = null;
+            //modelview.ErrorMessage = null;
+            //TempData["message"] = false;
+            return View("EmbassyLetter", modelview);
         }
 
         [HttpPost]
@@ -92,32 +96,94 @@ namespace Portal.Areas.Client.Controllers
             {
                 if (!ModelState.IsValid)
                 {
-                    TempData["message"] = ViewBag.Message = "Error! Incorrect form details.";
+                    TempData["invalidForm"] = ViewBag.Message = "Error! Incorrect form details.";
                     return View(model);
                 }
 
                 var response = _client.SendEmbassyLetter(model, _user);
 
-                var messageType = new Dictionary<string, string>();
                 if (response != null && response.TrackingID != null)
                 {
+                    TempData["message"] = true;
                     var msg = "Success: " + response.StatusMessage + "your tracking ID is: " + response.TrackingID;
                     model.SuccessMessage = msg;
                 }
                 else
                 {
+                    TempData["message"] = false;
                     model.ErrorMessage = response.StatusMessage;
                 }
 
             }
             catch (Exception ex)
             {
-                TempData["message"] = ViewBag.Message = ex.Message;
+                TempData["message"] = false;
+                model.ErrorMessage = ex.Message;
                 Utilities.ProcessError(ex, _contentRootPath);
                 _logger.LogError(null, ex, ex.Message);
             }
             
             return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult TrackService(EmbassyLetterViewModel modelview)
+        {
+            var _user = new AuthenticateResponse
+            {
+                MembershipKey = 1007435,
+                EmailAddress = "gbadebo.ayan@gmail.com",
+                FirstName = "Funmilayo",
+                LastName = "Adeyemi",
+                FullName = "Funmilayo Ruth Adeyemi",
+            };
+            var model = new TrackServiceViewModel();
+
+            if (_user == null)
+            {
+                TempData["SessionTimeOut"] = "You have been logged out due to inactivity. Please login to gain access.";
+                return RedirectToAction("Login", "Account");
+            }
+
+            try
+            {               
+                model.RequestType = modelview.SelfService.RequestType;
+                model.TrackingNumber = modelview.SelfService.TrackingNumber;
+
+                var trRequest = new TrackServiceRequest
+                {
+                    MembershipNumber = _user.MembershipKey,
+                    RequestType = model.RequestType,
+                    TrackingNumber = model.TrackingNumber
+                };
+
+                List<RequestStatuses> getStatus = new List<RequestStatuses>();
+                var trResponse = _clientService.TrackService(trRequest);
+
+                if (trResponse.RequestStatuses != null && trResponse.RequestStatuses.Count > 0)
+                {
+                    foreach (var req in trResponse.RequestStatuses)
+                    {
+                        var status = new RequestStatuses();
+                        status.MembershipNumber = req.MembershipNumber;
+                        status.Remark = req.Remark;
+                        status.CurrentStatus = req.CurrentStatus;
+                        status.RequestDescription = req.RequestDescription;
+                        status.TrackingNumber = req.TrackingNumber;
+
+                        getStatus.Add(status);
+                    }
+
+                    model.RequestStatuses = getStatus;
+
+                    return EmbassyLetter(model);
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
+            return EmbassyLetter(model);
         }
 
         public IActionResult AccountValidation(ClientUpdateViewModel model)
@@ -243,5 +309,40 @@ namespace Portal.Areas.Client.Controllers
             return View();
         }
 
+        public IActionResult AccountInformation()
+        {
+            var model = new AccountDetailViewModel();
+            var _user = new AuthenticateResponse
+            {
+                MembershipKey = 1007435,
+                EmailAddress = "gbadebo.ayan@gmail.com",
+                FirstName = "Funmilayo",
+                LastName = "Adeyemi",
+                FullName = "Funmilayo Ruth Adeyemi",
+            };
+
+            try
+            {
+                var customer = _client.GetUserProfile(_user.MembershipKey);
+                if (customer != null && customer.MembershipNumber > 0)
+                {
+                    model.FullName = customer.FullName;
+                    model.MembershipNumber = customer.MembershipNumber;
+                    model.PhoneNumber = customer.PhoneNumber;
+                    model.MobileNumber = customer.MobileNumber;
+                    model.EmailAddress = customer.EmailAddress;
+                    model.Address = customer.Address;
+                    model.State = customer.State;
+                    model.Country = customer.Country;
+                }
+            }
+            catch (Exception ex)
+            {
+                TempData["message"] = ViewBag.Message = ex.Message;
+                Utilities.ProcessError(ex, _contentRootPath);
+                _logger.LogError(null, ex, ex.Message);
+            }
+            return View(model);
+        }
     }
 }
