@@ -104,6 +104,12 @@ namespace Portal.Business.StoreManagers
             return result;
         }
 
+        public AdditionalInvResponse AddSales(InvestmentRequest request)
+        {
+            var response = _clientService.AddSales(request);
+            return response;
+        }
+
         public bool UnLockAccount(string securityanswer)
         {
             var state = false;

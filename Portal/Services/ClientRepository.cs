@@ -51,6 +51,21 @@ namespace Portal.Services
             return accountsResponse;
         }
 
+        public Summaries GetProductInAccount(string productcode, SummaryResponse accounts)
+        {
+            if (accounts.Summaries != null)
+            {
+                foreach (var item in accounts.Summaries)
+                {
+                    if (item.ProductCode == productcode)
+                    {
+                        return item;
+                    }
+                }
+            }
+            return null;
+        }
+
         public TotalBalanceResponse GetTotalAccountBalance(int membershipkey)
         {
             var totalBalanceResponse = new TotalBalanceResponse();
@@ -88,6 +103,24 @@ namespace Portal.Services
                 }
             }
             return transactions;
+        }
+
+        public EmbassyLetterResponse SendEmbassyLetter(EmbassyLetterViewModel model, 
+                                                        AuthenticateResponse user)
+        {
+            var embassyLetter = new EmbassyLetterRequest
+            {
+                MembershipKey = user.MembershipKey,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                PassPortNumber = model.PassportNumber,
+                AttentionName = model.AttentionName,
+                RecipientAddress = model.RecipientAddress,
+                AdditionalInstruction = model.AdditionalInstruction
+            };
+
+            var elResponse = _clientService.SendEmbassyLetter(embassyLetter);
+            return elResponse;
         }
 
         public string GenerateUniqueID(int key)
