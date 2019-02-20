@@ -3,6 +3,8 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using Portal.AddMigration;
 
 namespace Portal.AddMigration.Migrations
 {
@@ -13,7 +15,7 @@ namespace Portal.AddMigration.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.2.1-servicing-10028")
+                .HasAnnotation("ProductVersion", "2.2.0-rtm-35687")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -612,12 +614,18 @@ namespace Portal.AddMigration.Migrations
 
                     b.Property<string>("Features");
 
+                    b.Property<string>("HowToBegin");
+
                     b.Property<string>("Image")
                         .IsRequired();
+
+                    b.Property<string>("InvestmentManagement");
 
                     b.Property<string>("IsActive")
                         .IsRequired()
                         .HasMaxLength(10);
+
+                    b.Property<string>("MoreInformation");
 
                     b.Property<string>("Name")
                         .IsRequired()

@@ -31697,6 +31697,74 @@ Contents:
     color: #9e6f89;
 }
 
+.editor-wrapper {
+    min-height: 250px;
+    background-color: white;
+    border-collapse: separate;
+    border: 1px solid #ccc;
+    padding: 4px;
+    box-sizing: content-box;
+    box-shadow: rgba(0, 0, 0, 0.07451) 0px 1px 1px 0px inset;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+    border-bottom-left-radius: 3px;
+    border-top-left-radius: 3px;
+    overflow: scroll;
+    outline: none
+}
+
+.compose {
+    padding: 0;
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    background: #fff;
+    border: 1px solid #D9DEE4;
+    border-right: 0;
+    border-bottom: 0;
+    border-top-left-radius: 5px;
+    z-index: 9999;
+    display: none
+}
+
+    .compose .compose-header {
+        padding: 5px;
+        background: #169F85;
+        color: #fff;
+        border-top-left-radius: 5px
+    }
+
+        .compose .compose-header .close {
+            text-shadow: 0 1px 0 #ffffff;
+            line-height: .8
+        }
+
+    .compose .compose-body .editor.btn-toolbar {
+        margin: 0
+    }
+
+    .compose .compose-body .editor-wrapper {
+        height: 100%;
+        min-height: 50px;
+        max-height: 180px;
+        border-radius: 0;
+        border-left: none;
+        border-right: none;
+        overflow: auto
+    }
+
+    .compose .compose-footer {
+        padding: 10px
+    }
+
+.editor.btn-toolbar {
+    zoom: 1;
+    background: #F7F7F7;
+    margin: 5px 2px;
+    padding: 3px 0;
+    border: 1px solid #EFEFEF
+}
+
 .inst-image {
     display: inline-block;
     float: left;

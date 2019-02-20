@@ -1163,3 +1163,5 @@ INNER JOIN [AspNetUser] AS [s.Customer] ON [s].[CustomerId] = [s.Customer].[Id]"
 2019-02-18T22:48:37.7914758+01:00 0HLKLT190AND4:00000004 [INF] Request starting HTTP/1.1 GET http://localhost/Portal/custom-admin/img/arm-favicon.jpg   (ca22a1cb)
 2019-02-18T22:48:37.7922904+01:00 0HLKLT190AND4:00000004 [INF] Sending file. Request path: '"/custom-admin/img/arm-favicon.jpg"'. Physical path: '"D:\WorkSpace\wealth-planner\Portal\wwwroot\custom-admin\img\arm-favicon.jpg"' (27b0a520)
 2019-02-18T22:48:37.7923875+01:00 0HLKLT190AND4:00000004 [INF] Request finished in 0.9947ms 200 image/jpeg (791a596a)
+2019-02-18T23:08:46.9808508+01:00 0HLKLT190AND5:00000001 [INF] Request starting HTTP/1.1 POST http://127.0.0.1:12540/PORTAL/iisintegration  0 (ca22a1cb)
+2019-02-18T23:08:46.9824122+01:00 0HLKLT190AND5:00000001 [INF] Request finished in 1.7995ms 202  (791a596a)

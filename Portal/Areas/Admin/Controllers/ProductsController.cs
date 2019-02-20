@@ -146,5 +146,37 @@ namespace Portal.Areas.Admin.Controllers
 
             return View("_add", productObj);
         }
+
+        public IActionResult Edit()
+        {
+            return View("_edit");
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Edit(ProductViewModel models)
+        {
+            if (ModelState.IsValid)
+            {
+                #region product | benefit | feature
+
+                var product = new Products
+                {
+                    Id = models.Id,
+                    Name = models.Name,
+                    ProductCategoryId = models.ProductCategory,
+                    Description = models.Description,
+                    StartFrom = models.StartFrom,
+                    ProductTypes = models.ProductTypes,
+                    Features = models.Feature,
+                    Benefits = models.Benefit,
+                    IsActive = models.IsActive == true ? "Yes" : "No"
+                };
+
+                #endregion product | benefit | feature
+            }
+
+            return View("_edit");
+        }
     }
 }
