@@ -53,9 +53,9 @@
                                     var transactionType = new SelectList(
                                     new List<SelectListItem>
                                     {
-                                                                                    new SelectListItem {Text = "All", Value = "All"},
-                                                                                    new SelectListItem {Text = "Redemption", Value = "Redemption"},
-                                                                                    new SelectListItem {Text = "Subscription", Value = "Subscription"},
+                                        new SelectListItem {Text = "All", Value = "All"},
+                                        new SelectListItem {Text = "Redemption", Value = "Redemption"},
+                                        new SelectListItem {Text = "Subscription", Value = "Subscription"},
                                     }, "Value", "Text");
                                 }
                                 @Html.DropDownListFor(model => model.TransactionType, transactionType, new { @class = "form-control" })
@@ -93,184 +93,116 @@
 <!---- Account Statement --->
 <div class="row">
     <div class="col-md-12 ">
+        @if (Model.Transactions != null && Model.Transactions.Count() > 0)
+        {
+            <div class="element-box element-wrapper">
+                @using (Html.BeginForm("PrintStatement", "Portfolio", FormMethod.Post, new { role = "form", @name = "form" }))
+                {
+                    @Html.HiddenFor(x => x.ProductCode)
+                    @Html.HiddenFor(x => x.TransactionType)
+                    @Html.HiddenFor(x => x.StartDate)
+                    @Html.HiddenFor(x => x.EndDate)
+                    <h5 class="element-header">
+                        Transactions                       
+                        <button class=" mb-2 btn btn-primary float-right" type="submit"> Download Statement</button>
+                    </h5>
+                }
+                
+                <div class="">
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>DATE</th>
+                                    <th>TYPE</th>
+                                    <th>FUND</th>
+                                    <th class="text-center">AMOUNT</th>
+                                    <th>UNIT</th>
+                                    <th class="text-center">UNIT PRICE</th>
+                                    <th class="text-center">MARKET VALUE</th>
+                                    <th>DESCRIPTION</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var data in Model.Transactions)
+                                {
+                                    <tr>
+                                        <td>
+                                            <span></span>
+                                            <span class="smaller lighter">
+                                                @data.TransactionDate.ToString("dd MMM yyyy")
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <div>@data.TransactionType</div>
+                                        </td>
+                                        <td>
+                                            <div>@data.FundCode</div>
+                                        </td>
 
-        <div class="element-box element-wrapper">
-            <h5 class="element-header">
-                Transactions
-                <button class=" mb-2 btn btn-primary float-right" type="button"> Download Statement</button>
-            </h5>
-            <div class="">
-                <div class="table-responsive">
-                    <table class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th>DATE</th>
-                                <th>TYPE</th>
-                                <th>FUND</th>
-                                <th class="text-center">AMOUNT</th>
-                                <th>UNIT</th>
-                                <th class="text-center">UNIT PRICE</th>
-                                <th class="text-center">MARKET VALUE</th>
-                                <th>DESCRIPTION</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>
-                                    <span>Today</span><span class="smaller lighter">1:52am</span>
-                                </td>
-                                <td>
-                                    <div>
-                                        Subscription
-                                    </div>
-                                </td>
-                                <td>
-                                    <div>
-                                        ARMMMF
-                                    </div>
-                                </td>
-                                <td class="text-center">
-                                    <span class="text-success">+&#8358;200,000.00</span>
-                                </td>
-                                <td>
-                                    1.00
-                                </td>
-                                <td class="text-center">
-                                    <span>&#8358;200,000.00</span>
-                                </td>
-                                <td class="text-center">
-                                    <span>&#8358;200,000.00</span>
-                                </td>
-                                <td>
-                                    Processed Subscription
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <span>Today</span><span class="smaller lighter">1:52am</span>
-                                </td>
-                                <td>
-                                    <div>
-                                        Subscription
-                                    </div>
-                                </td>
-                                <td>
-                                    <div>
-                                        ARMMMF
-                                    </div>
-                                </td>
-                                <td class="text-center">
-                                    <span class="text-success">+&#8358;200,000.00</span>
-                                </td>
-                                <td>
-                                    1.00
-                                </td>
-                                <td class="text-center">
-                                    <span>&#8358;200,000.00</span>
-                                </td>
-                                <td class="text-center">
-                                    <span>&#8358;200,000.00</span>
-                                </td>
-                                <td>
-                                    Processed Subscription
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <span>Today</span><span class="smaller lighter">1:52am</span>
-                                </td>
-                                <td>
-                                    <div>
-                                        Redemption
-                                    </div>
-                                </td>
-                                <td>
-                                    <div>
-                                        ARMMMF
-                                    </div>
-                                </td>
-                                <td class="text-center">
-                                    <span class="text-danger">-&#8358;200,000.00</span>
-                                </td>
-                                <td>
-                                    1.00
-                                </td>
-                                <td class="text-center">
-                                    <span>&#8358;200,000.00</span>
-                                </td>
-                                <td class="text-center">
-                                    <span>&#8358;200,000.00</span>
-                                </td>
-                                <td>
-                                    Processed Redemption
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <span>Today</span><span class="smaller lighter">1:52am</span>
-                                </td>
-                                <td>
-                                    <div>
-                                        Subscription
-                                    </div>
-                                </td>
-                                <td>
-                                    <div>
-                                        ARMMMF
-                                    </div>
-                                </td>
-                                <td class="text-center">
-                                    <span class="text-success">+&#8358;200,000.00</span>
-                                </td>
-                                <td>
-                                    1.00
-                                </td>
-                                <td class="text-center">
-                                    <span>&#8358;200,000.00</span>
-                                </td>
-                                <td class="text-center">
-                                    <span>&#8358;200,000.00</span>
-                                </td>
-                                <td>
-                                    Processed Subscription
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <span>Today</span><span class="smaller lighter">1:52am</span>
-                                </td>
-                                <td>
-                                    <div>
-                                        Redemption
-                                    </div>
-                                </td>
-                                <td>
-                                    <div>
-                                        ARMMMF
-                                    </div>
-                                </td>
-                                <td class="text-center">
-                                    <span class="text-danger">-&#8358;200,000.00</span>
-                                </td>
-                                <td>
-                                    1.00
-                                </td>
-                                <td class="text-center">
-                                    <span>&#8358;200,000.00</span>
-                                </td>
-                                <td class="text-center">
-                                    <span>&#8358;200,000.00</span>
-                                </td>
-                                <td>
-                                    Processed Redemption
-                                </td>
-                            </tr>
+                                        @if (data.Amount >= 0)
+                                        {
+                                            <td class="text-center">
+                                                <span class="text-success">
+                                                    +₦@String.Format("{0:#,##0.##}", data.Amount)
+                                                </span>
+                                            </td>
+                                        }
+                                        else
+                                        {
+                                            <td class="text-center">
+                                                <span class="text-danger">
+                                                    -₦@String.Format("{0:#,##0.##}", (data.Amount * -1))
+                                                </span>
+                                            </td>
+                                        }
+                                        
+                                        @if (data.Units >= 0)
+                                        {
+                                            <td>
+                                                <span class="text-success">
+                                                    @String.Format("{0:#,##0.##}", data.Units)
+                                                </span>
+                                            </td>
+                                        }
+                                        else
+                                        {
+                                            <td>
+                                                <span class="text-danger">
+                                                    @String.Format("{0:#,##0.##}", (data.Units))
+                                                </span>
+                                            </td>
+                                        }
 
-                        </tbody>
-                    </table>
+                                        <td class="text-center">@data.UnitPrice.ToString("F2")</td>
+
+                                        @if (data.MarketValue >= 0)
+                                        {
+                                            <td class="text-center">
+                                                <span class="text-success">
+                                                    +₦@String.Format("{0:#,##0.##}", data.MarketValue)
+                                                </span>
+                                            </td>
+                                        }
+                                        else
+                                        {
+                                            <td class="text-center">
+                                                <span class="text-danger">
+                                                    -₦@String.Format("{0:#,##0.##}", (data.MarketValue * -1))
+                                                </span>
+                                            </td>
+                                        }
+
+                                        <td>@data.Description</td>
+                                    </tr>
+                                }
+                                                                
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
-        </div>
+        }        
     </div>
 </div>
 
