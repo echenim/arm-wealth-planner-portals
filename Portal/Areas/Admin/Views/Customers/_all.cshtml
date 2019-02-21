@@ -1,5 +1,5 @@
 ﻿@using Portal.Business.Utilities
-@model PaginatedList<OrdersView>
+@model PaginatedList<ExternalUserView>
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Areas/Admin/Views/Shared/_Layout_Admin.cshtml";
@@ -8,19 +8,19 @@
 <div class="row">
     <div class="col-md-12 ">
         <div class="element-box element-wrapper">
-
+          
             <div class="element-box-tp">
                 <div class="os-tabs-w">
                     <div class="os-tabs-controls">
                         <ul class="nav nav-tabs upper">
                             <li class="nav-item">
-                                <a asp-area="Admin" asp-controller="Orders" asp-action="AllTime" class="nav-link">ALL TIME</a>
+                                <a asp-area="Admin" asp-controller="Orders" asp-action="AllTime" class="nav-link  active">ALL TIME</a>
                             </li>
                             <li class="nav-item">
                                 <a asp-area="Admin" asp-controller="Orders" asp-action="LastYear" class="nav-link">LAST YEAR </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link   active" asp-area="Admin" asp-controller="Orders" asp-action="LastMonth">LAST MONTH </a>
+                                <a class="nav-link" asp-area="Admin" asp-controller="Orders" asp-action="LastMonth">LAST MONTH </a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" asp-area="Admin" asp-controller="Orders" asp-action="LastSevenDays">LAST 7 DAYS </a>
@@ -39,43 +39,10 @@
                         <div class="row b-b">
                             <div class="col-md-6">
                                 <div class="form-group row">
-                                    <label class="col-form-label col-sm-4" for=""> <h5>Select Product</h5></label>
-                                    <div class="col-sm-4">
-                                        <select class="form-control" onchange=selectProductCategory(this)>
-                                            <option>
-                                                select
-                                            </option>
-                                            <option>
-                                                All Categories
-                                            </option>
-                                            @foreach (var s in (IEnumerable<string>)ViewData["ProductCategory"])
-                                            {
-                                                <option>
-                                                    @s
-                                                </option>
-                                            }
-                                        </select>
-                                    </div>
-                                    <div class="col-sm-4">
-                                        <select class="form-control" onchange=selectProduct(this)>
-                                            <option>
-                                                select
-                                            </option>
-                                            <option>
-                                                All Products
-                                            </option>
-                                            @foreach (var s in (IEnumerable<string>)ViewData["Product"])
-                                            {
-                                                <option>
-                                                    @s
-                                                </option>
-                                            }
-                                        </select>
-                                    </div>
                                 </div>
                             </div>
                             <div class="col-md-4">
-                                <h5 class=" form-group mt-2"> Total Orders:@ViewData["Totals"]</h5>
+                                <h5 class=" form-group mt-2"> Customers Total:@ViewData["Totals"]</h5>
                             </div>
                             <div class="col-md-2">
                                 <div class="btn-group float-right">
@@ -83,8 +50,7 @@
                                     <form asp-action="OnPostExport" method="get">
                                         <div>
                                             <p>
-                                                <input type="hidden" id="productCategoryName" name="productCategoryName" />
-                                                <input type="hidden" id="productName" name="productName" />
+
                                                 <input type="hidden" id="searchPeriod" name="searchPeriod" value="AllTime" />
                                                 <input type="submit" value="Export To Excel" class="btn btn-primary" />
                                             </p>
@@ -95,71 +61,46 @@
                         </div>
 
                         <div class="table-responsive">
+
                             <table class="table table-striped b-b">
                                 <thead>
                                     <tr>
-
-                                        <th>
-                                            Date
-                                        </th>
-                                        <th>
-                                            CartID
-                                        </th>
-                                        <th>
-                                            Status
-                                        </th>
-                                        <th>
-                                            Customer
-                                        </th>
-                                        <th>
-                                            Item Purchased
-                                        </th>
                                         <th class="text-center">
-                                            Amount
+                                            Membership Number
                                         </th>
                                         <th>
-                                            Category
+                                            Name
+                                        </th>
+                                        <th>
+                                            Email
+                                        </th>
+                                        <th>
                                         </th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach (var item in Model)
                                     {
-                                        <tr>
-                                            <td>
-                                                <span class="smaller lighter">
 
-                                                    @string.Format("{0}", item.AddToCartDate, "MMMM dd, yyyy")
-                                                </span>
+                                        <tr>
+                                            <td class="text-center">
+                                                @item.MembershipNumber
                                             </td>
                                             <td>
-                                                <div>
-                                                    @item.CartNumber
-                                                </div>
+                                                @item.Name
+                                            </td>
+
+                                            <td>
+                                                @item.Email
                                             </td>
                                             <td class="nowrap">
-                                                <span class="status-pill smaller green"></span><span>@item.TransactionStatus</span>
-                                            </td>
-                                            <td>
-                                                <div>
-                                                    <span>@item.Customer</span>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div>
-                                                    @item.Product
-                                                </div>
-                                            </td>
-                                            <td class="text-center">
-                                                <span>&#8358;@item.Amount</span>
-                                            </td>
-                                            <td>
-                                                @item.Category
+                                                <span class="status-pill smaller green"></span><span>@item.Status</span>
                                             </td>
                                         </tr>
                                     }
                                 </tbody>
                             </table>
+
                         </div>
                         <div class="controls-below-table">
                             <div class="table-records-info">
@@ -193,14 +134,3 @@
         </div>
     </div>
 </div>
-<script language="javascript">
-    function selectProductCategory(sel) {
-        document.getElementById("productCategoryName").value = sel.options[sel.selectedIndex].text;
-        document.getElementById("searchPeriod").value = "lastMonth";
-    }
-
-    function selectProduct(sel) {
-        document.getElementById("productName").value = sel.options[sel.selectedIndex].text;
-        document.getElementById("searchPeriod").value = "lastMonth";
-    }
-</script>

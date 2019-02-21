@@ -36,8 +36,7 @@ namespace Portal.Domain.Models
         public string HowToBegin { get; set; }
 
         [Required]
-        [MaxLength(10)]
-        public string IsActive { get; set; }
+        public bool IsActive { get; set; }
 
         public ProductCategory ProductCategory { get; set; }
     }

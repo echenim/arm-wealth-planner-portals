@@ -8,19 +8,37 @@
 <div class="row">
     <div class="col-md-12 ">
         <div class="element-box element-wrapper">
-            <h5 class="element-header">
-                LATEST ORDERS
-            </h5>
+            @*<h5 class="element-header">
+                    LATEST ORDERS
+                </h5>*@
             <div class="element-box-tp">
-                <form asp-action="Index" method="get">
-                    <div class="form-actions no-color">
-                        <p>
-                            Find by name: <input type="text" name="SearchString" value="@ViewData["currentFilter"]" />
-                            <input type="submit" value="Search" class="btn btn-default" /> |
-                            <a asp-action="Index">Back to Full List</a>
-                        </p>
+                <div class="row">
+                    <div class="col-md-6">
+                        <form asp-action="Index" method="get">
+                            <div class="form-actions no-color">
+                                <p>
+                                    Find by CartID: <input type="text" name="SearchString" value="@ViewData["currentFilter"]" />
+                                    <input type="submit" value="Search" class="btn btn-default" /> |
+                                    <a asp-action="Index">Back to Full List</a>
+                                </p>
+                            </div>
+                        </form>
                     </div>
-                </form>
+                    <div class="col-md-6">
+                        <div class="btn-group float-right">
+
+                            <form asp-action="OnCorrection" method="get">
+                                <div class="form-actions no-color">
+                                    <p>
+                                        Correct by CartID: <input type="text" name="transactionId" />
+                                        <input type="submit" value="Correct Transaction to Approved" class="btn btn-primary" />
+                                    </p>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="table-responsive">
                     <table class="table table-striped b-b">
                         <thead>
@@ -55,7 +73,6 @@
                                 <tr>
                                     <td>
                                         <span class="smaller lighter">
-
                                             @string.Format("{0}", item.AddToCartDate, "MMMM dd, yyyy")
                                         </span>
                                     </td>

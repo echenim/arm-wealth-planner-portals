@@ -29,7 +29,12 @@ namespace Portal.Domain.ModelView
 
         public string Benefit { get; set; }
         public string Feature { get; set; }
-        public  bool IsActive { get; set; }
+
+        public string MoreInformation { get; set; }
+        public string InvestmentManagement { get; set; }
+        public string HowToBegin { get; set; }
+
+        public bool IsActive { get; set; }
 
         public List<SelectListItem> AvailableCategories { get; set; }
     }

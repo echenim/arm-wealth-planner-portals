@@ -59,7 +59,249 @@ namespace Portal.Areas.Admin.Controllers
                 Name = item.FullName,
                 Email = item.Email,
                 MembershipNumber = item.MembershipNumber,
+                Status = item.NewOrOld,
+                AltUserName = item.UserNameAlternative
+            })
+                .ToList();
+
+            int pageSize = 20;
+
+            return View(PaginatedList<ExternalUserView>.Create(list.AsQueryable(), page ?? 1, pageSize));
+        }
+
+        public IActionResult AllTime(
+            string sortOrder,
+            string currentFilter,
+            string searchString,
+            int? page
+        )
+        {
+            ViewData["ControllerName"] = "ADMIN/CUSTOMERS/ALL-TIME";
+
+            ViewBag.AreaName = "Roles & Permission";
+            ViewData["CurrentSort"] = sortOrder;
+            ViewData["NameSortParm"] = string.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewData["NumberOfUserSortParm"] = sortOrder == "NumberOfUser" ? "numberOfUser" : "NumberOfUser";
+
+            if (searchString != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            ViewData["CurrentFilter"] = searchString;
+
+            var data = !String.IsNullOrEmpty(searchString) ?
+                _userManager.Users.Where(s => s.IsCustomerOrStaff.Equals("external"))
+                    .Where(s => s.FullName.Contains(searchString))
+                    .OrderBy(s => s.FirstName).ThenBy(s => s.MembershipNumber)
+                : _userManager.Users.Where(s => s.IsCustomerOrStaff.Equals("external"))
+                    .OrderBy(s => s.FirstName).ThenBy(s => s.MembershipNumber);
+
+            var list = data.Select(item => new ExternalUserView
+            {
+                Id = item.Id,
+                Name = item.FullName,
+                Email = item.Email,
+                MembershipNumber = item.MembershipNumber,
+                Status = item.NewOrOld,
+                AltUserName = item.UserNameAlternative
+            })
+                .ToList();
+
+            ViewData["Totals"] = data.Count();
+
+            int pageSize = 20;
+
+            return View("_all", PaginatedList<ExternalUserView>.Create(list.AsQueryable(), page ?? 1, pageSize));
+        }
+
+        public IActionResult LastYear(
+            string sortOrder,
+            string currentFilter,
+            string searchString,
+            int? page
+        )
+        {
+            ViewData["ControllerName"] = "ADMIN/CUSTOMERS";
+
+            ViewBag.AreaName = "Roles & Permission";
+            ViewData["CurrentSort"] = sortOrder;
+            ViewData["NameSortParm"] = string.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewData["NumberOfUserSortParm"] = sortOrder == "NumberOfUser" ? "numberOfUser" : "NumberOfUser";
+
+            if (searchString != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            ViewData["CurrentFilter"] = searchString;
+
+            var data = !String.IsNullOrEmpty(searchString) ?
+                _userManager.Users.Where(s => s.IsCustomerOrStaff.Equals("external"))
+                    .Where(s => s.FullName.Contains(searchString))
+                    .OrderBy(s => s.FirstName).ThenBy(s => s.MembershipNumber)
+                : _userManager.Users.Where(s => s.IsCustomerOrStaff.Equals("external"))
+                    .OrderBy(s => s.FirstName).ThenBy(s => s.MembershipNumber);
+
+            var list = data.Select(item => new ExternalUserView
+            {
+                Id = item.Id,
+                Name = item.FullName,
+                Email = item.Email,
+                MembershipNumber = item.MembershipNumber,
                 Status = "Pending",
+                AltUserName = item.UserNameAlternative
+            })
+                .ToList();
+
+            int pageSize = 20;
+
+            return View(PaginatedList<ExternalUserView>.Create(list.AsQueryable(), page ?? 1, pageSize));
+        }
+
+        public IActionResult LastMonth(
+            string sortOrder,
+            string currentFilter,
+            string searchString,
+            int? page
+        )
+        {
+            ViewData["ControllerName"] = "ADMIN/CUSTOMERS/LAST-MONTH";
+
+            ViewBag.AreaName = "Roles & Permission";
+            ViewData["CurrentSort"] = sortOrder;
+            ViewData["NameSortParm"] = string.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewData["NumberOfUserSortParm"] = sortOrder == "NumberOfUser" ? "numberOfUser" : "NumberOfUser";
+
+            if (searchString != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            ViewData["CurrentFilter"] = searchString;
+
+            var data = !String.IsNullOrEmpty(searchString) ?
+                _userManager.Users.Where(s => s.IsCustomerOrStaff.Equals("external"))
+                    .Where(s => s.FullName.Contains(searchString))
+                    .OrderBy(s => s.FirstName).ThenBy(s => s.MembershipNumber)
+                : _userManager.Users.Where(s => s.IsCustomerOrStaff.Equals("external"))
+                    .OrderBy(s => s.FirstName).ThenBy(s => s.MembershipNumber);
+
+            var list = data.Select(item => new ExternalUserView
+            {
+                Id = item.Id,
+                Name = item.FullName,
+                Email = item.Email,
+                MembershipNumber = item.MembershipNumber,
+                Status = item.NewOrOld,
+                AltUserName = item.UserNameAlternative
+            })
+                .ToList();
+
+            int pageSize = 20;
+
+            return View(PaginatedList<ExternalUserView>.Create(list.AsQueryable(), page ?? 1, pageSize));
+        }
+
+        public IActionResult LastSevenDays(
+            string sortOrder,
+            string currentFilter,
+            string searchString,
+            int? page
+        )
+        {
+            ViewData["ControllerName"] = "ADMIN/CUSTOMERS/LAST-SEVEN-DAYS";
+
+            ViewBag.AreaName = "Roles & Permission";
+            ViewData["CurrentSort"] = sortOrder;
+            ViewData["NameSortParm"] = string.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewData["NumberOfUserSortParm"] = sortOrder == "NumberOfUser" ? "numberOfUser" : "NumberOfUser";
+
+            if (searchString != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            ViewData["CurrentFilter"] = searchString;
+
+            var data = !String.IsNullOrEmpty(searchString) ?
+                _userManager.Users.Where(s => s.IsCustomerOrStaff.Equals("external"))
+                    .Where(s => s.FullName.Contains(searchString))
+                    .OrderBy(s => s.FirstName).ThenBy(s => s.MembershipNumber)
+                : _userManager.Users.Where(s => s.IsCustomerOrStaff.Equals("external"))
+                    .OrderBy(s => s.FirstName).ThenBy(s => s.MembershipNumber);
+
+            var list = data.Select(item => new ExternalUserView
+            {
+                Id = item.Id,
+                Name = item.FullName,
+                Email = item.Email,
+                MembershipNumber = item.MembershipNumber,
+                Status = item.NewOrOld,
+                AltUserName = item.UserNameAlternative
+            })
+                .ToList();
+
+            int pageSize = 20;
+
+            return View(PaginatedList<ExternalUserView>.Create(list.AsQueryable(), page ?? 1, pageSize));
+        }
+
+        public IActionResult SelectedPeriod(
+            string sortOrder,
+            string currentFilter,
+            string searchString,
+            int? page
+        )
+        {
+            ViewData["ControllerName"] = "ADMIN/CUSTOMERS/SELECTED-PERIOD";
+
+            ViewBag.AreaName = "Roles & Permission";
+            ViewData["CurrentSort"] = sortOrder;
+            ViewData["NameSortParm"] = string.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewData["NumberOfUserSortParm"] = sortOrder == "NumberOfUser" ? "numberOfUser" : "NumberOfUser";
+
+            if (searchString != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            ViewData["CurrentFilter"] = searchString;
+
+            var data = !String.IsNullOrEmpty(searchString) ?
+                _userManager.Users.Where(s => s.IsCustomerOrStaff.Equals("external"))
+                    .Where(s => s.FullName.Contains(searchString))
+                    .OrderBy(s => s.FirstName).ThenBy(s => s.MembershipNumber)
+                : _userManager.Users.Where(s => s.IsCustomerOrStaff.Equals("external"))
+                    .OrderBy(s => s.FirstName).ThenBy(s => s.MembershipNumber);
+
+            var list = data.Select(item => new ExternalUserView
+            {
+                Id = item.Id,
+                Name = item.FullName,
+                Email = item.Email,
+                MembershipNumber = item.MembershipNumber,
+                Status = item.NewOrOld,
                 AltUserName = item.UserNameAlternative
             })
                 .ToList();

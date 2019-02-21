@@ -7,5 +7,6 @@
         public string ProductCategory { get; set; }
         public decimal StartFrom { get; set; }
         public string Description { get; set; }
+        public bool IsActive { get; set; }
     }
 }

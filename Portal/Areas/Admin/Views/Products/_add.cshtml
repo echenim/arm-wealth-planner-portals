@@ -17,28 +17,7 @@
                             @Html.AntiForgeryToken()
                             <div class="row">
 
-                                <div class="col-md-4">
-                                    <div class="element-wrapper">
-
-                                        <div class="element-box">
-                                            <h5 class="form-header">
-                                                Product Image(s)
-                                            </h5>
-                                            <div class="form-desc">
-                                            </div>
-                                            <div class="dz-message">
-                                                <div>
-                                                    <h5>
-                                                        Drop files here or click to upload.
-                                                    </h5>
-                                                    <input class="os-icon os-icon-upload" name="UploadProductImage" asp-for="UploadProductImage" type="file" />
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-8">
+                                <div class="col-md-12">
                                     <div class="element-box">
 
                                         <h5 class="form-header">
@@ -48,6 +27,10 @@
                                         <div class="form-group">
                                             <label for=""> Product Name</label>
                                             <input name="Name" asp-for="Name" class="form-control" placeholder="Enter product name" type="text">
+                                        </div>
+                                        <div class="form-group">
+                                            <label> Description</label>
+                                            <input name="Description" asp-for="Description" class="form-control" rows="2"/>
                                         </div>
 
                                         <div class="form-group">
@@ -90,97 +73,56 @@
                                                 </div>
                                             </div>
                                         </div>
-
-                                        <div class="row">
-                                            <div class="col-sm-6">
-                                                <div class="form-group">
-                                                    <label>Key Benefits</label>
-                                                    <textarea name="Benefit" asp-for="Benefit" class="form-control" rows="3"></textarea>
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-6">
-                                                <div class="form-group">
-                                                    <label> Key Features</label>
-                                                    <textarea name="Feature" asp-for="Feature" class="form-control" rows="3"></textarea>
-                                                </div>
-                                            </div>
-                                        </div>
-
                                         <div class="form-group">
-                                            <label> Product Description</label>
-                                            <div class="col-md-12 col-sm-12 col-xs-12">
-                                                <div class="x_content">
-                                                    <div class="btn-toolbar editor" data-role="editor-toolbar" data-target="#editor-one">
-                                                        <div class="btn-group">
-                                                            <a class="btn dropdown-toggle" data-toggle="dropdown" title="Font"><i class="fa fa-font"></i><b class="caret"></b></a>
-                                                            <ul class="dropdown-menu"></ul>
+                                            <label>Key Features</label>
+                                            <textarea name="Feature" asp-for="Feature" class="form-control" rows="3"></textarea>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Key Benefits</label>
+                                            <textarea name="Benefit" asp-for="Benefit" class="form-control" rows="3"></textarea>
+                                        </div>
+                                        <div class="form-group">
+                                            <label> Investment Management</label>
+                                            <textarea name="InvestmentManagement" asp-for="InvestmentManagement" class="form-control" rows="3"></textarea>
+                                        </div>
+                                        <div class="form-group">
+                                            <label> More Information</label>
+                                            <textarea name="MoreInformation" asp-for="MoreInformation" class="form-control" rows="3"></textarea>
+                                        </div>
+                                        <div class="form-group">
+                                            <label> How To Begin</label>
+                                            <textarea name="HowToBegin" asp-for="HowToBegin" class="form-control" rows="3"></textarea>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-8">
+                                                <div class="element-wrapper">
+
+                                                    <div class="element-box">
+                                                        <h5 class="form-header">
+                                                            Product Image(s)
+                                                        </h5>
+                                                        <div class="form-desc">
                                                         </div>
-                                                        <div class="btn-group">
-                                                            <a class="btn dropdown-toggle" data-toggle="dropdown" title="Font Size"><i class="fa fa-text-height"></i>&nbsp;<b class="caret"></b></a>
-                                                            <ul class="dropdown-menu">
-                                                                <li>
-                                                                    <a data-edit="fontSize 5">
-                                                                        <p style="font-size: 17px">Huge</p>
-                                                                    </a>
-                                                                </li>
-                                                                <li>
-                                                                    <a data-edit="fontSize 3">
-                                                                        <p style="font-size: 14px">Normal</p>
-                                                                    </a>
-                                                                </li>
-                                                                <li>
-                                                                    <a data-edit="fontSize 1">
-                                                                        <p style="font-size: 11px">Small</p>
-                                                                    </a>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
-                                                        <div class="btn-group">
-                                                            <a class="btn" data-edit="bold" title="Bold (Ctrl/Cmd+B)"><i class="fa fa-bold"></i></a>
-                                                            <a class="btn" data-edit="italic" title="Italic (Ctrl/Cmd+I)"><i class="fa fa-italic"></i></a>
-                                                            <a class="btn" data-edit="strikethrough" title="Strikethrough"><i class="fa fa-strikethrough"></i></a>
-                                                            <a class="btn" data-edit="underline" title="Underline (Ctrl/Cmd+U)"><i class="fa fa-underline"></i></a>
-                                                        </div>
-                                                        <div class="btn-group">
-                                                            <a class="btn" data-edit="insertunorderedlist" title="Bullet list"><i class="fa fa-list-ul"></i></a>
-                                                            <a class="btn" data-edit="insertorderedlist" title="Number list"><i class="fa fa-list-ol"></i></a>
-                                                            <a class="btn" data-edit="outdent" title="Reduce indent (Shift+Tab)"><i class="fa fa-dedent"></i></a>
-                                                            <a class="btn" data-edit="indent" title="Indent (Tab)"><i class="fa fa-indent"></i></a>
-                                                        </div>
-                                                        <div class="btn-group">
-                                                            <a class="btn" data-edit="justifyleft" title="Align Left (Ctrl/Cmd+L)"><i class="fa fa-align-left"></i></a>
-                                                            <a class="btn" data-edit="justifycenter" title="Center (Ctrl/Cmd+E)"><i class="fa fa-align-center"></i></a>
-                                                            <a class="btn" data-edit="justifyright" title="Align Right (Ctrl/Cmd+R)"><i class="fa fa-align-right"></i></a>
-                                                            <a class="btn" data-edit="justifyfull" title="Justify (Ctrl/Cmd+J)"><i class="fa fa-align-justify"></i></a>
-                                                        </div>
-                                                        <div class="btn-group">
-                                                            <a class="btn dropdown-toggle" data-toggle="dropdown" title="Hyperlink"><i class="fa fa-link"></i></a>
-                                                            <div class="dropdown-menu input-append">
-                                                                <input class="span2" placeholder="URL" type="text" data-edit="createLink" />
-                                                                <button class="btn" type="button">Add</button>
+                                                        <div class="dz-message">
+                                                            <div>
+                                                                <h5>
+                                                                    Drop files here or click to upload.
+                                                                </h5>
+                                                                <input class="os-icon os-icon-upload" name="UploadProductImage" asp-for="UploadProductImage" type="file" />
                                                             </div>
-                                                            <a class="btn" data-edit="unlink" title="Remove Hyperlink"><i class="fa fa-cut"></i></a>
                                                         </div>
                                                     </div>
-                                                    <div id="editor-description" class="editor-wrapper" onchange='showInDescription()'></div>
-                                                    <textarea id="description"
-                                                              asp-for="Description"
-                                                              class="col-sm-12 "
-                                                              name="Description"
-                                                              style="display: none;">
-                                                    </textarea>
                                                 </div>
                                             </div>
-
-                                            @*<textarea name="Description" asp-for="Description" class="form-control" rows="5"></textarea>*@
-                                        </div>
-
-                                        <div class="form-group">
-                                            Active
-                                            <label class="switch">
-                                                <input name="IsActive" asp-for="IsActive" type="checkbox" class="success">
-                                                <span class="slider round"></span>
-                                            </label>
+                                            <div class="col-md-2">
+                                                <div class="form-group">
+                                                    Active
+                                                    <label class="switch">
+                                                        <input name="IsActive" asp-for="IsActive" type="checkbox" class="success">
+                                                        <span class="slider round"></span>
+                                                    </label>
+                                                </div>
+                                            </div>
                                         </div>
                                         <div class="form-buttons-w">
                                             <button class="btn btn-primary" type="submit">Add Product</button>
@@ -195,32 +137,6 @@
         </div>
     </div>
 </div>
-<script type="text/javascript">
-    function showInDescription() {
-        var textInsideDiv = document.getElementById('editor-description').innerHTML;
-        document.getElementById('description').value = textInsideDiv;
-    }
-    function showInMoreInfo() {
-        var textInsideDiv = document.getElementById('editor-more-info').innerHTML;
-        document.getElementById('more-info').value = textInsideDiv;
-    }
-    function showInBenefit() {
-        var textInsideDiv = document.getElementById('editor-key-benefit').innerHTML;
-        document.getElementById('key-benefit').value = textInsideDiv;
-    }
-    function showInFeature() {
-        var textInsideDiv = document.getElementById('editor-key-feature').innerHTML;
-        document.getElementById('key-feature').value = textInsideDiv;
-    }
-    function showInInvestmentManager() {
-        var textInsideDiv = document.getElementById('editor-investment-manager').innerHTML;
-        document.getElementById('investment-manager').value = textInsideDiv;
-    }
-    function showInHowToBegin() {
-        var textInsideDiv = document.getElementById('editor-how-to-begin').innerHTML;
-        document.getElementById('how-to-begin').value = textInsideDiv;
-    }
-</script>
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

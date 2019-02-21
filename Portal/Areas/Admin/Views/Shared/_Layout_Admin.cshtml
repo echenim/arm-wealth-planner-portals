@@ -486,27 +486,27 @@
     <script>
         tinymce.init({
             selector: 'textarea',
-            plugins: 'print preview fullpage powerpaste searchreplace autolink directionality advcode visualblocks visualchars fullscreen image link media template codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists wordcount tinymcespellchecker a11ychecker imagetools textpattern help',
+            plugins: 'print preview fullpage searchreplace autolink directionality visualblocks visualchars fullscreen image link media template codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists wordcount imagetools textpattern help',
             toolbar: 'formatselect | bold italic strikethrough forecolor backcolor | link | alignleft aligncenter alignright alignjustify  | numlist bullist outdent indent  | removeformat',
             image_advtab: true,
             content_css: [
                 '//fonts.googleapis.com/css?family=Lato:300,300i,400,400i',
                 '//www.tiny.cloud/css/codepen.min.css'
             ],
-            link_list: [
-                { title: 'My page 1', value: 'http://www.tinymce.com' },
-                { title: 'My page 2', value: 'http://www.moxiecode.com' }
-            ],
-            image_list: [
-                { title: 'My page 1', value: 'http://www.tinymce.com' },
-                { title: 'My page 2', value: 'http://www.moxiecode.com' }
-            ],
-            image_class_list: [
-                { title: 'None', value: '' },
-                { title: 'Some class', value: 'class-name' }
-            ],
+            //link_list: [
+            //    { title: 'My page 1', value: 'http://www.tinymce.com' },
+            //    { title: 'My page 2', value: 'http://www.moxiecode.com' }
+            //],
+            //image_list: [
+            //    { title: 'My page 1', value: 'http://www.tinymce.com' },
+            //    { title: 'My page 2', value: 'http://www.moxiecode.com' }
+            //],
+            //image_class_list: [
+            //    { title: 'None', value: '' },
+            //    { title: 'Some class', value: 'class-name' }
+            //],
             importcss_append: true,
-            height: 400,
+            height: 300,
             file_picker_callback: function (callback, value, meta) {
                 /* Provide file and text for the link dialog */
                 if (meta.filetype === 'file') {

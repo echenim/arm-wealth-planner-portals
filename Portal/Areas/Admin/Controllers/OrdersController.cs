@@ -68,7 +68,7 @@ namespace Portal.Areas.Admin.Controllers
                     Customer = item.Customer.FullName,
                     CustNo = item.Customer.MembershipNumber,
                     Amount = TransfromerManager.DecimalHumanizedX(item.Amount),
-                    TransactionDate = item.OrderDate.ToString(),
+                    TransactionDate = TransfromerManager.DateHumanized(item.AddToCartDate),
                     CartNumber = item.CartNumber,
                     TransactionNumber = item.PaymentTransactionNumber,
                     TransactionStatus = item.TransactionStatus,
@@ -96,6 +96,18 @@ namespace Portal.Areas.Admin.Controllers
             int pageSize = 20;
 
             return View(PaginatedList<OrdersView>.Create(list.AsQueryable(), page ?? 1, pageSize));
+        }
+
+        public IActionResult OnCorrection(string transactionId)
+        {
+            if (!string.IsNullOrEmpty(transactionId))
+            {
+                // var resultsets = _ordersAndSalesService.Get(s => s.CartNumber.Equals(transactionId));
+                _ordersAndSalesService.Edit(transactionId);
+                return RedirectToAction("Index");
+            }
+
+            return RedirectToAction("Index");
         }
 
         public IActionResult Interest(
@@ -383,7 +395,8 @@ namespace Portal.Areas.Admin.Controllers
         public IActionResult SelectedPeriod(
            string sortOrder,
            string currentFilter,
-           string searchString,
+           //string searchString,
+           string selectedPeriodValues,
            int? page
            )
         {
@@ -394,20 +407,21 @@ namespace Portal.Areas.Admin.Controllers
             ViewData["NameSortParm"] = string.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
             ViewData["NumberOfUserSortParm"] = sortOrder == "NumberOfUser" ? "numberOfUser" : "NumberOfUser";
 
-            if (searchString != null)
-            {
-                page = 1;
-            }
-            else
-            {
-                searchString = currentFilter;
-            }
+            //if (searchString != null)
+            //{
+            //    page = 1;
+            //}
+            //else
+            //{
+            //    searchString = currentFilter;
+            //}
 
-            ViewData["CurrentFilter"] = searchString;
+            var k = selectedPeriodValues;
+            //   ViewData["CurrentFilter"] = searchString;
 
-            var orders = !String.IsNullOrEmpty(searchString) ?
+            var orders = !String.IsNullOrEmpty(currentFilter) ?
                 _ordersAndSalesService.Get(s => !s.Product.ProductTypes.Equals("Expression of Interest")
-                                                && s.CartNumber.Equals(searchString))
+                                                && s.CartNumber.Equals(currentFilter))
                 .OrderByDescending(s => s.AddToCartDate).ThenBy(s => s.Customer)
                 : _ordersAndSalesService.Get(s => !s.Product.ProductTypes.Equals("Expression of Interest"))
                     .OrderByDescending(s => s.AddToCartDate).ThenBy(s => s.Customer);
