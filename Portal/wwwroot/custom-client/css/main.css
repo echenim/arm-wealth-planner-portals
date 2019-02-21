@@ -32264,3 +32264,54 @@ tr.spacer > td {
     text-transform: inherit;
     color: #bbbbbb;
 }
+
+/**input file, custom.*/
+
+input[type='file'] {
+    display: none;
+}
+
+.file-info {
+    font-size: 0.9em;
+}
+
+.browse-btn {
+    background: #29BF2F;
+    color: #fff;
+    min-height: 30px;
+    padding: 6px;
+    border: none;
+    border-top-left-radius: 3px;
+    border-bottom-left-radius: 3px;
+}
+
+.input-container {
+    max-width: 300px;
+    background-color: #EDEDED;
+    border: 1px solid #DFDFDF;
+}
+
+    .browse-btn:hover {
+        background: #267b2a;
+    }
+
+@media (max-width: 300px) {
+    button {
+        width: 100%;
+        border-top-right-radius: 5px;
+        border-bottom-left-radius: 0;
+    }
+
+    .file-info {
+        display: block;
+        margin: 10px 5px;
+    }
+}
+
+.centered {
+    /*position: fixed;*/
+    top: 50%;
+    left: 50%;
+    /*margin-top: -50px;*/
+    margin-left: -21px;
+}

@@ -74,6 +74,7 @@ namespace Portal.Areas.Client.Controllers
             }
             var modelview = new EmbassyLetterViewModel();
             modelview.SelfService.RequestStatuses = model.RequestStatuses;
+            modelview.SelfService.TrackingNumber = model.TrackingNumber;
             //modelview.SuccessMessage = null;
             //modelview.ErrorMessage = null;
             //TempData["message"] = false;

@@ -129,9 +129,11 @@
 
     <!-- Track Service-->
     <div class="col-lg-12 col-sm-12">
-        @if (Model.SelfService != null && Model.SelfService.TrackingNumber != null)
+        @if (Model.SelfService != null 
+            && Model.SelfService.TrackingNumber != null)
         {
-            @if (Model.SelfService.RequestStatuses != null)
+            @if (Model.SelfService.RequestStatuses != null 
+                && Model.SelfService.RequestStatuses.Count() > 0)
             {
                 <div class="row">
                     <div class="col-md-12">
@@ -181,7 +183,7 @@
                             </h5>
                             <p>
                                 <span class="label">
-                                    There is no update available for the tracking number submited.
+                                    There is no update available for the tracking number submitted.
                                 </span>
                             </p>
                         </div>
