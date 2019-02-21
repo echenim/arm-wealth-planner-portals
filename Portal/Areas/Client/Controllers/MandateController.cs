@@ -113,30 +113,8 @@ namespace Portal.Areas.Client.Controllers
             return View(model);
         }
 
-        public IActionResult Manage()
-        {
-            var _user = new AuthenticateResponse
-            {
-                MembershipKey = 1007435,
-                EmailAddress = "gbadebo.ayan@gmail.com",
-                FirstName = "Funmilayo",
-                LastName = "Adeyemi",
-                FullName = "Funmilayo Ruth Adeyemi",
-            };
-
-            if (_user == null)
-            {
-                TempData["SessionTimeOut"] = "You have been logged out due to inactivity. Please login to gain access.";
-                return RedirectToAction("Login", "Account");
-            }
-            return View();
-        }
-
         //public IActionResult Manage()
         //{
-        //    var model = new BuyViewModel();
-
-        //    //_user is expected to contain client details. mock data for model.
         //    var _user = new AuthenticateResponse
         //    {
         //        MembershipKey = 1007435,
@@ -146,51 +124,73 @@ namespace Portal.Areas.Client.Controllers
         //        FullName = "Funmilayo Ruth Adeyemi",
         //    };
 
-        //    try
+        //    if (_user == null)
         //    {
-        //        var debitquery = db.DDebit.Where(s => s.CustomerId == _user.MembershipKey.ToString()).AsQueryable();
-
-        //        var listOfDebits = debitquery != null ? debitquery.ToList() : null;
-
-        //        List<ProductSummary> getSummaries = new List<ProductSummary>();
-        //        var accountsRequest = new SummaryRequest
-        //        {
-        //            MembershipNumber = _user.MembershipKey
-        //        };
-        //        var accountsResponse = _clientService.GetAccountSummary(accountsRequest);
-
-        //        var balanceRequest = new TotalBalanceRequest
-        //        {
-        //            MembershipNumber = _user.MembershipKey
-        //        };
-        //        var balanceResponse = _clientService.GetTotalBalance(balanceRequest);
-
-        //        if (accountsResponse != null && balanceResponse != null)
-        //        {
-        //            foreach (var item in accountsResponse.Summaries)
-        //            {
-        //                var summaries = new ProductSummary();
-        //                summaries.ProductName = item.ProductName;
-        //                summaries.ProductCode = item.ProductCode;
-        //                summaries.Currency = item.Currency;
-        //                summaries.AccruedInterest = item.AccruedInterest;
-        //                summaries.CurrentBalance = item.CurrentBalance;
-
-        //                getSummaries.Add(summaries);
-        //            }
-
-        //            model.TotalBalance = balanceResponse.TotalBalance;
-        //            model.Summaries = getSummaries;
-        //            model.GetDirectDebit = listOfDebits;
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        TempData["message"] = ViewBag.Message = ex.Message;
-        //        Utilities.ProcessError(ex, _contentRootPath);
-        //        _logger.LogError(null, ex, ex.Message);
+        //        TempData["SessionTimeOut"] = "You have been logged out due to inactivity. Please login to gain access.";
+        //        return RedirectToAction("Login", "Account");
         //    }
         //    return View();
         //}
+
+        public IActionResult Manage()
+        {
+            var model = new BuyViewModel();
+
+            //_user is expected to contain client details. mock data for model.
+            var _user = new AuthenticateResponse
+            {
+                MembershipKey = 1007435,
+                EmailAddress = "gbadebo.ayan@gmail.com",
+                FirstName = "Funmilayo",
+                LastName = "Adeyemi",
+                FullName = "Funmilayo Ruth Adeyemi",
+            };
+
+            try
+            {
+                var debitquery = db.DDebit.Where(s => s.CustomerId == _user.MembershipKey.ToString()).AsQueryable();
+
+                var listOfDebits = debitquery != null ? debitquery.ToList() : null;
+
+                List<ProductSummary> getSummaries = new List<ProductSummary>();
+                var accountsRequest = new SummaryRequest
+                {
+                    MembershipNumber = _user.MembershipKey
+                };
+                var accountsResponse = _clientService.GetAccountSummary(accountsRequest);
+
+                var balanceRequest = new TotalBalanceRequest
+                {
+                    MembershipNumber = _user.MembershipKey
+                };
+                var balanceResponse = _clientService.GetTotalBalance(balanceRequest);
+
+                if (accountsResponse != null && balanceResponse != null)
+                {
+                    foreach (var item in accountsResponse.Summaries)
+                    {
+                        var summaries = new ProductSummary();
+                        summaries.ProductName = item.ProductName;
+                        summaries.ProductCode = item.ProductCode;
+                        summaries.Currency = item.Currency;
+                        summaries.AccruedInterest = item.AccruedInterest;
+                        summaries.CurrentBalance = item.CurrentBalance;
+
+                        getSummaries.Add(summaries);
+                    }
+
+                    model.TotalBalance = balanceResponse.TotalBalance;
+                    model.Summaries = getSummaries;
+                    model.GetDirectDebit = listOfDebits;
+                }
+            }
+            catch (Exception ex)
+            {
+                TempData["message"] = ViewBag.Message = ex.Message;
+                Utilities.ProcessError(ex, _contentRootPath);
+                _logger.LogError(null, ex, ex.Message);
+            }
+            return View(model);
+        }
     }
 }

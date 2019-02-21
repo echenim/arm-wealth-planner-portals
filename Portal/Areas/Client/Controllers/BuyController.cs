@@ -614,7 +614,15 @@ namespace Portal.Areas.Client.Controllers
         {
             var decrypt = new SecureCredentials();
 
-            var _user = HttpContext.Session.Get<AuthenticateResponse>("ArmUser");
+            //var _user = HttpContext.Session.Get<AuthenticateResponse>("ArmUser");
+            var _user = new AuthenticateResponse
+            {
+                MembershipKey = 1007435,
+                EmailAddress = "gbadebo.ayan@gmail.com",
+                FirstName = "Funmilayo",
+                LastName = "Adeyemi",
+                FullName = "Funmilayo Ruth Adeyemi",
+            };
             var vendorUserName = decrypt.DecryptCredentials(_configSettingManager.ArmServiceUsername);
             var mackey = _configSettingManager.ArmMacKey;
             try

@@ -105,6 +105,24 @@ namespace Portal.Services
             return transactions;
         }
 
+        public StatementResponse GetClientTransactions(AuthenticateResponse user, 
+                                                        AccountStatementViewModel model)
+        {
+            var response = new StatementResponse();
+            var request = new StatementRequest
+            {
+                MembershipNumber = user.MembershipKey,
+                EndDate = model.EndDate.Value.AddDays(1),
+                StartDate = model.StartDate.Value.AddDays(1),
+                TransactionType = model.TransactionType,
+                ProductCode = model.ProductCode
+            };
+
+            response = _clientService.GetTransactions(request);
+
+            return response;
+        }
+
         public EmbassyLetterResponse SendEmbassyLetter(EmbassyLetterViewModel model, 
                                                         AuthenticateResponse user)
         {

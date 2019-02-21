@@ -1,0 +1,290 @@
+﻿@model Portal.Business.ViewModels.AccountStatementViewModel
+
+@{
+    ViewData["Title"] = "Investment History";
+}
+
+<!---- Filter Parameters --->
+
+<div class="row">
+    <div class="col-md-12">
+
+        <div class="element-wrapper pb-0">
+            <h6 class="element-header">
+                Investment History
+                <span class="date-timestamp float-right">Jan 27th 2019, 7:42am</span>
+            </h6>
+            <div class="element-box">
+                <h5 class="form-header">
+                    Filter Parameters
+                </h5>
+
+                <div class="form-desc">
+                    Refine your search
+                </div>
+
+                @using (Html.BeginForm("InvestmentHistory", "Portfolio", FormMethod.Post, new { role = "form", @name = "form" }))
+                {
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label for="">Investment Type</label>
+                                @{
+                                    var selectList = new List<SelectListItem>();
+                                    foreach (var item in Model.SelectProductName)
+                                    {
+                                        selectList.Add(new SelectListItem
+                                        {
+                                            Value = item.ProductCode,
+                                            Text = item.ProductName
+                                        });
+                                    }
+
+                                    var product = new SelectList(selectList, "Value", "Text");
+                                }
+                                @Html.DropDownListFor(model => model.ProductCode, product, new { @class = "form-control" })
+                            </div>
+                        </div>
+
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label for=""> Transaction Type</label>
+                                @{
+                                    var transactionType = new SelectList(
+                                    new List<SelectListItem>
+                                    {
+                                                                                    new SelectListItem {Text = "All", Value = "All"},
+                                                                                    new SelectListItem {Text = "Redemption", Value = "Redemption"},
+                                                                                    new SelectListItem {Text = "Subscription", Value = "Subscription"},
+                                    }, "Value", "Text");
+                                }
+                                @Html.DropDownListFor(model => model.TransactionType, transactionType, new { @class = "form-control" })
+                            </div>
+                        </div>
+
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <div class="form-group">
+                                    <label for="">Transaction Period</label>
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            @Html.TextBoxFor(model => model.StartDate, new { @class = "datepicker form-control", @id = "startDate", @placeholder = "Start Date" })
+                                        </div>
+                                        <div class="col-sm-6">
+                                            @Html.TextBoxFor(model => model.EndDate, new { @class = "datepicker form-control", @id = "endDate", @placeholder = "End Date" })
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-buttons-w text-right compact w-100 mr-2">
+                            <button class="btn btn-primary " type="submit"><span>View Transactions</span></button>
+                        </div>
+                    </div>
+
+                }
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!---- Account Statement --->
+<div class="row">
+    <div class="col-md-12 ">
+
+        <div class="element-box element-wrapper">
+            <h5 class="element-header">
+                Transactions
+                <button class=" mb-2 btn btn-primary float-right" type="button"> Download Statement</button>
+            </h5>
+            <div class="">
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>DATE</th>
+                                <th>TYPE</th>
+                                <th>FUND</th>
+                                <th class="text-center">AMOUNT</th>
+                                <th>UNIT</th>
+                                <th class="text-center">UNIT PRICE</th>
+                                <th class="text-center">MARKET VALUE</th>
+                                <th>DESCRIPTION</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <span>Today</span><span class="smaller lighter">1:52am</span>
+                                </td>
+                                <td>
+                                    <div>
+                                        Subscription
+                                    </div>
+                                </td>
+                                <td>
+                                    <div>
+                                        ARMMMF
+                                    </div>
+                                </td>
+                                <td class="text-center">
+                                    <span class="text-success">+&#8358;200,000.00</span>
+                                </td>
+                                <td>
+                                    1.00
+                                </td>
+                                <td class="text-center">
+                                    <span>&#8358;200,000.00</span>
+                                </td>
+                                <td class="text-center">
+                                    <span>&#8358;200,000.00</span>
+                                </td>
+                                <td>
+                                    Processed Subscription
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span>Today</span><span class="smaller lighter">1:52am</span>
+                                </td>
+                                <td>
+                                    <div>
+                                        Subscription
+                                    </div>
+                                </td>
+                                <td>
+                                    <div>
+                                        ARMMMF
+                                    </div>
+                                </td>
+                                <td class="text-center">
+                                    <span class="text-success">+&#8358;200,000.00</span>
+                                </td>
+                                <td>
+                                    1.00
+                                </td>
+                                <td class="text-center">
+                                    <span>&#8358;200,000.00</span>
+                                </td>
+                                <td class="text-center">
+                                    <span>&#8358;200,000.00</span>
+                                </td>
+                                <td>
+                                    Processed Subscription
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span>Today</span><span class="smaller lighter">1:52am</span>
+                                </td>
+                                <td>
+                                    <div>
+                                        Redemption
+                                    </div>
+                                </td>
+                                <td>
+                                    <div>
+                                        ARMMMF
+                                    </div>
+                                </td>
+                                <td class="text-center">
+                                    <span class="text-danger">-&#8358;200,000.00</span>
+                                </td>
+                                <td>
+                                    1.00
+                                </td>
+                                <td class="text-center">
+                                    <span>&#8358;200,000.00</span>
+                                </td>
+                                <td class="text-center">
+                                    <span>&#8358;200,000.00</span>
+                                </td>
+                                <td>
+                                    Processed Redemption
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span>Today</span><span class="smaller lighter">1:52am</span>
+                                </td>
+                                <td>
+                                    <div>
+                                        Subscription
+                                    </div>
+                                </td>
+                                <td>
+                                    <div>
+                                        ARMMMF
+                                    </div>
+                                </td>
+                                <td class="text-center">
+                                    <span class="text-success">+&#8358;200,000.00</span>
+                                </td>
+                                <td>
+                                    1.00
+                                </td>
+                                <td class="text-center">
+                                    <span>&#8358;200,000.00</span>
+                                </td>
+                                <td class="text-center">
+                                    <span>&#8358;200,000.00</span>
+                                </td>
+                                <td>
+                                    Processed Subscription
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span>Today</span><span class="smaller lighter">1:52am</span>
+                                </td>
+                                <td>
+                                    <div>
+                                        Redemption
+                                    </div>
+                                </td>
+                                <td>
+                                    <div>
+                                        ARMMMF
+                                    </div>
+                                </td>
+                                <td class="text-center">
+                                    <span class="text-danger">-&#8358;200,000.00</span>
+                                </td>
+                                <td>
+                                    1.00
+                                </td>
+                                <td class="text-center">
+                                    <span>&#8358;200,000.00</span>
+                                </td>
+                                <td class="text-center">
+                                    <span>&#8358;200,000.00</span>
+                                </td>
+                                <td>
+                                    Processed Redemption
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{ 
+    <script>
+        $(".datepicker").daterangepicker({
+            singleDatePicker: true,
+            showDropdowns: true,
+            locale: {
+                format: 'DD/MM/YYYY'
+            }
+        },
+        function (start, end, label) {
+            //code
+        });
+    </script>
+}
