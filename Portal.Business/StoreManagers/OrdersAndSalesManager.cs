@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Portal.Domain;
 using Portal.Domain.Models;
@@ -49,6 +51,12 @@ namespace Portal.Business.StoreManagers
             _context.PurchaseOrders.Add(model);
             model.Id = _context.SaveChanges();
             return model;
+        }
+
+        public async void Edit(string cartId)
+        {
+            var sql = $"UPDATE PurchaseOrders SET TransactionStatus='Succeed' WHERE CartNumber={cartId}";
+            await _context.Database.ExecuteSqlCommandAsync(sql: sql);
         }
     }
 }

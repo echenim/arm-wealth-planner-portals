@@ -31133,3 +31133,23 @@ div.wpcf7 input[type="file"]:disabled {
     display: inline-block;
     padding: 0 30px;
 }
+
+.brk-tab-item ul{
+}
+
+.brk-tab-item ul li{
+display: block;
+    text-align: left;
+    padding: .4375em .4375em .4375em 3.125em;
+    position: relative;
+    z-index: 1;
+}
+
+.brk-tab-item ul li >.after {
+    content: '';
+    right: 0;
+    bottom: 0;
+    box-shadow: 0 0 10px 0 rgba(0,0,0,.26);
+    top: 0;
+    left: 0;
+}

@@ -17,28 +17,7 @@
                             @Html.AntiForgeryToken()
                             <div class="row">
 
-                                <div class="col-md-4">
-                                    <div class="element-wrapper">
-
-                                        <div class="element-box">
-                                            <h5 class="form-header">
-                                                Product Image(s)
-                                            </h5>
-                                            <div class="form-desc">
-                                            </div>
-                                            <div class="dz-message">
-                                                <div>
-                                                    <h5>
-                                                        Drop files here or click to upload.
-                                                    </h5>
-                                                    <input class="os-icon os-icon-upload" name="UploadProductImage" asp-for="UploadProductImage" type="file" />
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-8">
+                                <div class="col-md-12">
                                     <div class="element-box">
 
                                         <h5 class="form-header">
@@ -48,6 +27,10 @@
                                         <div class="form-group">
                                             <label for=""> Product Name</label>
                                             <input name="Name" asp-for="Name" class="form-control" placeholder="Enter product name" type="text">
+                                        </div>
+                                        <div class="form-group">
+                                            <label> Description</label>
+                                            <input name="Description" asp-for="Description" class="form-control" rows="2"/>
                                         </div>
 
                                         <div class="form-group">
@@ -90,33 +73,56 @@
                                                 </div>
                                             </div>
                                         </div>
-
+                                        <div class="form-group">
+                                            <label>Key Features</label>
+                                            <textarea name="Feature" asp-for="Feature" class="form-control" rows="3"></textarea>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Key Benefits</label>
+                                            <textarea name="Benefit" asp-for="Benefit" class="form-control" rows="3"></textarea>
+                                        </div>
+                                        <div class="form-group">
+                                            <label> Investment Management</label>
+                                            <textarea name="InvestmentManagement" asp-for="InvestmentManagement" class="form-control" rows="3"></textarea>
+                                        </div>
+                                        <div class="form-group">
+                                            <label> More Information</label>
+                                            <textarea name="MoreInformation" asp-for="MoreInformation" class="form-control" rows="3"></textarea>
+                                        </div>
+                                        <div class="form-group">
+                                            <label> How To Begin</label>
+                                            <textarea name="HowToBegin" asp-for="HowToBegin" class="form-control" rows="3"></textarea>
+                                        </div>
                                         <div class="row">
-                                            <div class="col-sm-6">
-                                                <div class="form-group">
-                                                    <label>Key Benefits</label>
-                                                    <textarea name="Benefit" asp-for="Benefit" class="form-control" rows="3"></textarea>
+                                            <div class="col-md-8">
+                                                <div class="element-wrapper">
+
+                                                    <div class="element-box">
+                                                        <h5 class="form-header">
+                                                            Product Image(s)
+                                                        </h5>
+                                                        <div class="form-desc">
+                                                        </div>
+                                                        <div class="dz-message">
+                                                            <div>
+                                                                <h5>
+                                                                    Drop files here or click to upload.
+                                                                </h5>
+                                                                <input class="os-icon os-icon-upload" name="UploadProductImage" asp-for="UploadProductImage" type="file" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <div class="col-sm-6">
+                                            <div class="col-md-2">
                                                 <div class="form-group">
-                                                    <label> Key Features</label>
-                                                    <textarea name="Feature" asp-for="Feature" class="form-control" rows="3"></textarea>
+                                                    Active
+                                                    <label class="switch">
+                                                        <input name="IsActive" asp-for="IsActive" type="checkbox" class="success">
+                                                        <span class="slider round"></span>
+                                                    </label>
                                                 </div>
                                             </div>
-                                        </div>
-
-                                        <div class="form-group">
-                                            <label> Product Description</label>
-                                            <textarea name="Description" asp-for="Description" class="form-control" rows="5"></textarea>
-                                        </div>
-
-                                        <div class="form-group">
-                                            Active
-                                            <label class="switch">
-                                                <input name="IsActive" asp-for="IsActive" type="checkbox" class="success">
-                                                <span class="slider round"></span>
-                                            </label>
                                         </div>
                                         <div class="form-buttons-w">
                                             <button class="btn btn-primary" type="submit">Add Product</button>
@@ -131,7 +137,6 @@
         </div>
     </div>
 </div>
-
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

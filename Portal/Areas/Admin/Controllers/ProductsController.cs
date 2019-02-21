@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Portal.Areas.Admin.ViewModels;
 using Portal.Business.Contracts;
+using Portal.Business.Utilities;
 using Portal.Domain.Models;
 using Portal.Domain.ModelView;
 
@@ -38,6 +39,7 @@ namespace Portal.Areas.Admin.Controllers
         {
             ViewData["ControllerName"] = "Admin/Products";
             var list = new List<ProductView>();
+
             var data = _product.Get();
             foreach (var item in data)
             {
@@ -47,7 +49,8 @@ namespace Portal.Areas.Admin.Controllers
                     Name = item.Name,
                     ProductCategory = item.ProductCategory.Name,
                     StartFrom = item.StartFrom,
-                    Description = item.Description
+                    Description = item.Description,
+                    IsActive = item.IsActive
                 });
             }
 
@@ -85,6 +88,7 @@ namespace Portal.Areas.Admin.Controllers
             {
                 #region product | benefit | feature
 
+                var feature = models.Feature.Replace(FromTinyMc.Head, FromTinyMc.ReplaceWith);
                 var product = new Products
                 {
                     Id = models.Id,
@@ -93,14 +97,13 @@ namespace Portal.Areas.Admin.Controllers
                     Description = models.Description,
                     StartFrom = models.StartFrom,
                     ProductTypes = models.ProductTypes,
-                    Features = models.Feature,
-                    Benefits = models.Benefit,
-                    IsActive = models.IsActive == true ? "Yes" : "No"
+                    Features = models.Feature.Replace(FromTinyMc.Breaker, FromTinyMc.ReplaceWith).Replace(FromTinyMc.Head, FromTinyMc.ReplaceWith).Replace(FromTinyMc.End, FromTinyMc.ReplaceWith),
+                    Benefits = models.Benefit.Replace(FromTinyMc.Breaker, FromTinyMc.ReplaceWith).Replace(FromTinyMc.Head, FromTinyMc.ReplaceWith).Replace(FromTinyMc.End, FromTinyMc.ReplaceWith),
+                    MoreInformation = models.MoreInformation.Replace(FromTinyMc.Breaker, FromTinyMc.ReplaceWith).Replace(FromTinyMc.Head, FromTinyMc.ReplaceWith).Replace(FromTinyMc.End, FromTinyMc.ReplaceWith),
+                    InvestmentManagement = models.InvestmentManagement.Replace(FromTinyMc.Breaker, FromTinyMc.ReplaceWith).Replace(FromTinyMc.Head, FromTinyMc.ReplaceWith).Replace(FromTinyMc.End, FromTinyMc.ReplaceWith),
+                    HowToBegin = models.HowToBegin.Replace(FromTinyMc.Breaker, FromTinyMc.ReplaceWith).Replace(FromTinyMc.Head, FromTinyMc.ReplaceWith).Replace(FromTinyMc.End, FromTinyMc.ReplaceWith),
+                    IsActive = models.IsActive
                 };
-
-                var benefit = new ProductKeyBenefit { Description = models.Benefit };
-
-                var feature = new ProductFeatures { Description = models.Feature };
 
                 #endregion product | benefit | feature
 
@@ -112,10 +115,6 @@ namespace Portal.Areas.Admin.Controllers
 
                     product.Image = filename;
                     var products = _product.Save(product);
-                    //benefit.ProductId = products.Id;
-                    //feature.ProductId = products.Id;
-                    //var prodBenefit = _benefitService.Save(benefit);
-                    //var prodFeature = _productFeature.Save(feature);
 
                     var upload = Path.Combine(Directory.GetCurrentDirectory(), "Uploads");
 
@@ -145,6 +144,46 @@ namespace Portal.Areas.Admin.Controllers
             }
 
             return View("_add", productObj);
+        }
+
+        public IActionResult Edit()
+        {
+            return View("_edit");
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Edit(ProductViewModel models)
+        {
+            if (ModelState.IsValid)
+            {
+                #region product | benefit | feature
+
+                var product = new Products
+                {
+                    Id = models.Id,
+                    Name = models.Name,
+                    ProductCategoryId = models.ProductCategory,
+                    Description = models.Description,
+                    StartFrom = models.StartFrom,
+                    ProductTypes = models.ProductTypes,
+                    Features = models.Feature.Replace(FromTinyMc.Head, FromTinyMc.ReplaceWith)
+                        .Replace(FromTinyMc.End, FromTinyMc.ReplaceWith),
+                    Benefits = models.Benefit.Replace(FromTinyMc.Head, FromTinyMc.ReplaceWith)
+                        .Replace(FromTinyMc.End, FromTinyMc.ReplaceWith),
+                    MoreInformation = models.MoreInformation.Replace(FromTinyMc.Head, FromTinyMc.ReplaceWith)
+                        .Replace(FromTinyMc.End, FromTinyMc.ReplaceWith),
+                    InvestmentManagement = models.InvestmentManagement.Replace(FromTinyMc.Head, FromTinyMc.ReplaceWith)
+                        .Replace(FromTinyMc.End, FromTinyMc.ReplaceWith),
+                    HowToBegin = models.HowToBegin.Replace(FromTinyMc.Head, FromTinyMc.ReplaceWith)
+                        .Replace(FromTinyMc.End, FromTinyMc.ReplaceWith),
+                    IsActive = models.IsActive
+                };
+
+                #endregion product | benefit | feature
+            }
+
+            return View("_edit");
         }
     }
 }

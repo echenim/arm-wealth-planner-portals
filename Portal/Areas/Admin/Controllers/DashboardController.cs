@@ -11,7 +11,7 @@ using Portal.Domain.ViewModels;
 namespace Portal.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize]
+    // [Authorize]
     public class DashboardController : Controller
     {
         private readonly IDashBoardManager _manager;

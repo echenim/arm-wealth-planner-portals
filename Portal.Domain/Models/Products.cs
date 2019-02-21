@@ -29,12 +29,14 @@ namespace Portal.Domain.Models
         [Required]
         public string ProductTypes { get; set; }
 
-        public  string Features { get; set; }
-        public  string Benefits { get; set; }
+        public string Features { get; set; }
+        public string Benefits { get; set; }
+        public string MoreInformation { get; set; }
+        public string InvestmentManagement { get; set; }
+        public string HowToBegin { get; set; }
 
         [Required]
-        [MaxLength(10)]
-        public  string IsActive { get; set; }
+        public bool IsActive { get; set; }
 
         public ProductCategory ProductCategory { get; set; }
     }
