@@ -55,10 +55,36 @@ namespace Portal.Areas.Client.Controllers
             db = _db;
         }
 
-        //public IActionResult AccountStatement()
-        //{
-        //    return View();
-        //}
+        public IActionResult FamilyAccounts()
+        {
+            var model = new FamilyAccountsViewModel();
+            var _user = new AuthenticateResponse
+            {
+                MembershipKey = 1007435,
+                EmailAddress = "gbadebo.ayan@gmail.com",
+                FirstName = "Funmilayo",
+                LastName = "Adeyemi",
+                FullName = "Funmilayo Ruth Adeyemi",
+            };
+
+            try
+            {
+                var familyAccounts = _client.GetFamilyAccount(_user.MembershipKey.ToString());
+                var accountBalance = _client.GetTotalAccountBalance(_user.MembershipKey);
+
+                model.Status = familyAccounts.Status;
+                model.StatusMessage = familyAccounts.StatusMessage;
+                model.AccountDetails = familyAccounts.AccountDetails;
+
+            }
+            catch (Exception ex)
+            {
+                TempData["message"] = ViewBag.Message = ex.Message;
+                Utilities.ProcessError(ex, _contentRootPath);
+                _logger.LogError(null, ex, ex.Message);
+            }
+            return View(model);
+        }
 
         public IActionResult AccountStatement(string code)
         {

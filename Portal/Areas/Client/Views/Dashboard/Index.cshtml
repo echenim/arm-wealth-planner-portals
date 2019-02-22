@@ -290,3 +290,222 @@
         </div>
     </div>
 </div>
+
+
+@section Scripts{
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.0-rc.0/angular.js"></script>
+<script src="https://www.amcharts.com/lib/3/amcharts.js"></script>
+<script src="https://www.amcharts.com/lib/3/serial.js"></script>
+<script src="https://www.amcharts.com/lib/3/themes/light.js"></script>
+<script src="~/lib/piechat/js/vendor/dependencies.js"></script>
+<script src="~/lib/piechat/js/pizza.js"></script>
+<script>
+        $(window).load(function () {
+            Pizza.init();
+            $(document).foundation();
+    });
+</script>
+<script>
+        angular.module('chartApp', [])
+            .controller('amChartsController', function ($scope, $http, $filter) {
+                $scope.init = function () {
+                    plotYield();
+                    loadPrice('ARMDF');
+                    loadPrice('AGF');
+                    loadPrice('ARMEF');
+                }
+
+                function GraphData(data) {
+                    this.data = data
+                }
+
+                function loadPrice(fund_code) {
+                    var url = '@Url.Action("FundPriceHistory", "Dashboard", new { fundCode = fund_code })';
+                    $http.get(url)
+                        .success(function (data, status, headers, config) {
+                            var graphData = new GraphData(data.Prices.reverse());
+                            var plotter = new FundPlotter(fund_code, graphData.data);
+                            plotter.plot();
+                        })
+                        .error(function (data, status, header, config) {
+                        });
+                }
+
+                function FundPlotter(divId, data) {
+                    this.div = divId;
+                    this.data = data;
+                    this.plot = function () {
+                        var chart = AmCharts.makeChart(this.div, {
+                            "type": "serial",
+                            "theme": "light",
+                            "dataDateFormat": "YYYY-MM-DD",
+                            "precision": 2,
+                            "valueAxes": [{
+                                "id": "v1",
+                                "title": "Price",
+                                "position": "left",
+                                "gridAlpha": 0.2,
+                                "dashLength": 0,
+                                "autoGridCount": false,
+                                "labelFunction": function (value) {
+                                    return "₦" + Math.round(value);
+                                }
+                            }],
+                            "graphs": [{
+                                "id": "g1",
+                                "valueAxis": "v1",
+                                "lineThickness": 2,
+                                "lineColor": "#20acd4",
+                                "type": "line",
+                                "title": "Bid Price",
+                                "useLineColorForBulletBorder": true,
+                                "valueField": "BidPrice",
+                                "balloonText": "[[title]]<br /><b style='font-size: 130%'>₦[[value]]</b>"
+                            }, {
+                                "id": "g4",
+                                "valueAxis": "v1",
+                                "lineColor": "#62cf73",
+                                "fillColors": "#62cf73",
+                                "fillAlphas": 0.5,
+                                "type": "column",
+                                "title": "Offer Price",
+                                "valueField": "OfferPrice",
+                                "clustered": false,
+                                "columnWidth": 0.5,
+                                "legendValueText": "₦[[value]]",
+                                "balloonText": "[[title]]<br /><b style='font-size: 130%'>₦[[value]]</b>"
+                            }],
+                            "chartScrollbar": {
+                                "graph": "g1",
+                                "oppositeAxis": false,
+                                "offset": 30,
+                                "scrollbarHeight": 50,
+                                "backgroundAlpha": 0,
+                                "selectedBackgroundAlpha": 0.1,
+                                "selectedBackgroundColor": "#888888",
+                                "graphFillAlpha": 0,
+                                "graphLineAlpha": 0.5,
+                                "selectedGraphFillAlpha": 0,
+                                "selectedGraphLineAlpha": 1,
+                                "autoGridCount": true,
+                                "color": "#AAAAAA"
+                            },
+                            "chartCursor": {
+                                "pan": true,
+                                "valueLineEnabled": true,
+                                "valueLineBalloonEnabled": true,
+                                "cursorAlpha": 0,
+                                "valueLineAlpha": 0.2
+                            },
+                            "categoryField": 'PriceDate',
+                            "categoryAxis": {
+                                "dashLength": 1,
+                                "minorGridEnabled": true,
+                                "categoryFunction": function (val, data, axis) {
+                                    return $filter('date')(val, 'dd MMM yy');
+                                }
+                            },
+                            "legend": {
+                                "useGraphSettings": true,
+                                "position": "top"
+                            },
+                            "balloon": {
+                                "borderThickness": 1,
+                                "shadowAlpha": 0
+                            },
+                            "dataProvider": this.data
+                        });
+                    }
+
+                }
+
+                function plotYield() {
+                    var url = "fund/yieldhistory";
+                    $http.get(url)
+                        .success(function (data, status, headers, config) {
+                            var graphData = new GraphData(data.Yields.reverse());
+                            this.plot(graphData.data);
+                        })
+                        .error(function (data, status, header, config) {
+                        });
+
+                    this.plot = function (data) {
+                        var chart = AmCharts.makeChart("ARMMMF", {
+                            "type": "serial",
+                            "theme": "light",
+                            "dataProvider": data,
+                            "valueAxes": [{
+                                "gridColor": "#FFFFFF",
+                                "gridAlpha": 0.2,
+                                "dashLength": 0,
+                                "id": "v1",
+                                "title": "Yield",
+                                "position": "left",
+                                "autoGridCount": false,
+                                "labelFunction": function (value) {
+                                    return Math.round(value);
+                                }
+                            }],
+                            "gridAboveGraphs": true,
+                            "startDuration": 1,
+                            "graphs": [{
+                                "id": "y1",
+                                "valueAxis": "v1",
+                                "fillAlphas": 0.8,
+                                "lineAlpha": 0.2,
+                                "lineColor": "#62cf73",
+                                "fillColors": "#62cf73",
+                                "type": "column",
+                                "title": "Effective Yield",
+                                "valueField": "EffectiveYield",
+                                "clustered": false,
+                                "balloonText": "[[category]]: <b style='font-size: 130%'>[[value]]</b>"
+                            }],
+                            "chartScrollbar": {
+                                "graph": "y1",
+                                "oppositeAxis": false,
+                                "offset": 30,
+                                "scrollbarHeight": 50,
+                                "backgroundAlpha": 0,
+                                "selectedBackgroundAlpha": 0.1,
+                                "selectedBackgroundColor": "#888888",
+                                "graphFillAlpha": 0,
+                                "graphLineAlpha": 0.3,
+                                "selectedGraphFillAlpha": 0,
+                                "selectedGraphLineAlpha": 0.1,
+                                "autoGridCount": true,
+                                "color": "#AAAAAA"
+                            },
+                            "chartCursor": {
+                                "pan": true,
+                                "valueLineEnabled": true,
+                                "valueLineBalloonEnabled": true,
+                                "cursorAlpha": 0,
+                                "valueLineAlpha": 0.2
+                            },
+                            "categoryField": "PriceDate",
+                            "categoryAxis": {
+                                "gridPosition": "start",
+                                "gridAlpha": 0,
+                                "tickPosition": "start",
+                                "tickLength": 20,
+                                "categoryFunction": function (val, data, axis) {
+                                    return $filter('date')(val, 'dd MMM yy');
+                                }
+                            },
+                            "legend": {
+                                "useGraphSettings": true,
+                                "position": "top"
+                            },
+                            "balloon": {
+                                "borderThickness": 1,
+                                "shadowAlpha": 0
+                            }
+
+                        });
+                    }
+                }
+
+            });
+</script>
+}

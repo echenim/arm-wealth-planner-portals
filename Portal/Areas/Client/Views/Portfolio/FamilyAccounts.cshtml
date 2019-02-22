@@ -1,0 +1,83 @@
+﻿@model Portal.Business.ViewModels.FamilyAccountsViewModel
+
+@{
+    ViewData["Title"] = "Family Accounts";
+}
+
+<!---- Page Title & Date --->
+<div class="row">
+    <div class="element-wrapper col-md-12 pb-0">
+        <h6 class="element-header">
+            Family Accounts
+            <span class="date-timestamp float-right">Jan 27th 2019, 7:42am</span>
+        </h6>
+    </div>
+</div>
+
+@if (TempData["message"] != null)
+{
+    <div class="row">
+        <div class="col-lg-12 col-sm-12">
+            <div class="element-box">
+                @Html.Raw(TempData["message"].ToString())
+            </div>
+        </div>
+    </div>
+}
+
+<div class="row">
+    <!----Redemption form --->
+    <div class="col-lg-8 col-sm-12">
+        <div class="element-box">
+            @if (Model.AccountDetails != null && Model.AccountDetails.Count() > 0)
+            {
+                foreach (var account in Model.AccountDetails)
+                {
+                    <div class="mt-3">
+                        <h5 class="form-header">
+                            @account.AccountName
+                        </h5>
+                        <div class="table-responsive">
+                            <table class="table table-padded">
+                                <tbody>
+                                    <tr>
+                                        <td>Membership Number</td>
+                                        <td>@account.MembershipNumber</td>
+                                    </tr>
+                                    <tr>
+                                        <td>@account.ProductName</td>
+                                        <td>@account.CurrencySymbol @account.CurrentBalance.ToString("F2")</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Accrued Interest</td>
+                                        <td>@account.CurrencySymbol @account.AccruedInterest.ToString("F2")</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                }
+            }
+            else
+            {
+                <h2>There were no Family Accounts found for this account.</h2>
+            }
+        </div>
+    </div>
+
+    <div class="col-lg-4 col-sm-12">
+
+        <div class="element-box">
+            <form>
+                <h5 class="element-box-header">
+                    Ad Banner
+                </h5>
+                <div class="form-desc">
+
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+</div>
