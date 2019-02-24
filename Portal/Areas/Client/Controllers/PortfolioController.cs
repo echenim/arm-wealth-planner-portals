@@ -86,6 +86,11 @@ namespace Portal.Areas.Client.Controllers
             return View(model);
         }
 
+        public IActionResult MyInvestments()
+        {
+            return View();
+        }
+
         public IActionResult AccountStatement(string code)
         {
             var model = new AccountStatementViewModel();

@@ -320,7 +320,7 @@
                 }
 
                 function loadPrice(fund_code) {
-                    var url = '@Url.Action("FundPriceHistory", "Dashboard", new { fundCode = fund_code })';
+                    var url = '@Url.Action("FundPriceHistory", "Dashboard")' + '?fundCode=' + fund_code;
                     $http.get(url)
                         .success(function (data, status, headers, config) {
                             var graphData = new GraphData(data.Prices.reverse());
@@ -420,7 +420,7 @@
                 }
 
                 function plotYield() {
-                    var url = "fund/yieldhistory";
+                    var url = '@Url.Action("FundYieldHistory", "Dashboard")';
                     $http.get(url)
                         .success(function (data, status, headers, config) {
                             var graphData = new GraphData(data.Yields.reverse());
