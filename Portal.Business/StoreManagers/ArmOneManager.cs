@@ -1,15 +1,10 @@
-﻿using System;
-using Portal.Business.Contracts;
+﻿using Portal.Business.Contracts;
 using Portal.Domain.ViewModels;
 using Portal.Business.ViewModels;
 using Portal.Business.TestServices;
 using Microsoft.AspNetCore.Hosting;
 using System.Text.RegularExpressions;
-
-using System;
-
 using System.Collections.Generic;
-using KycStatus = Portal.Domain.ViewModels.KycStatus;
 
 namespace Portal.Business.StoreManagers
 {
