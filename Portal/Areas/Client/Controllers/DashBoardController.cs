@@ -168,5 +168,37 @@ namespace Portal.Areas.Client.Controllers
             }
             return View(model);
         }
+
+        public IActionResult FundPriceHistory(string fundCode)
+        {            
+            try
+            {
+                var fHistoryResponse = _client.GetFundPriceHistory(fundCode);
+                return Json(fHistoryResponse);
+            }
+            catch (Exception ex)
+            {
+                TempData["message"] = ViewBag.Message = ex.Message;
+                Utilities.ProcessError(ex, _contentRootPath);
+                _logger.LogError(null, ex, ex.Message);
+            }
+            return View();
+        }
+
+        public IActionResult FundYieldHistory(string fundCode = "ARMMMF")
+        {
+            try
+            {
+                var yieldResponse = _client.GetYieldHistory(fundCode);
+                return Json(yieldResponse);
+            }
+            catch (Exception ex)
+            {
+                TempData["message"] = ViewBag.Message = ex.Message;
+                Utilities.ProcessError(ex, _contentRootPath);
+                _logger.LogError(null, ex, ex.Message);
+            }
+            return View();
+        }
     }
 }

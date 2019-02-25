@@ -55,6 +55,18 @@ namespace Portal.Business.ViewModels
         }
     }
 
+    public class FamilyAccountsViewModel
+    {
+        public string StatusMessage { get; set; }
+        public int Status { get; set; }
+        public List<AccountDetail> AccountDetails { get; set; }
+
+        public FamilyAccountsViewModel()
+        {
+            AccountDetails = new List<AccountDetail>();
+        }
+    }
+
     public class PrintPDF
     {
         public string productCode { get; set; }
@@ -90,4 +102,6 @@ namespace Portal.Business.ViewModels
         public Decimal UnitPrice { get; set; }
         public string FundCode { get; set; }
     }
+
+
 }

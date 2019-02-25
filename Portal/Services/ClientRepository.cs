@@ -123,6 +123,41 @@ namespace Portal.Services
             return response;
         }
 
+        public SubAccountsResponse GetFamilyAccount(string membershipkey)
+        {
+            var response = new SubAccountsResponse();
+            var request = new SubAccountsRequest { CustomerReference = membershipkey };
+
+            response = _clientService.SubAccounts(request);
+
+            return response;
+        }
+
+        public PriceHistoryResponse GetFundPriceHistory(string fundcode)
+        {
+            var request = new PriceHistoryRequest
+            {
+                FundCode = fundcode,
+                StartDate = DateTime.Now.AddYears(-1),
+                EndDate = DateTime.Now
+            };
+            var response = _clientService.GetFundPriceHistory(request);
+            return response;
+        }
+
+        public YieldHistoryResponse GetYieldHistory(string fundcode)
+        {
+            var request = new YieldHistoryRequest
+            {
+                FundCode = fundcode,
+                StartDate = DateTime.Now.AddYears(-1),
+                EndDate = DateTime.Now
+            };
+            var response = _clientService.GetFundYieldHistory(request);
+
+            return response;
+        }
+
         public EmbassyLetterResponse SendEmbassyLetter(EmbassyLetterViewModel model, 
                                                         AuthenticateResponse user)
         {

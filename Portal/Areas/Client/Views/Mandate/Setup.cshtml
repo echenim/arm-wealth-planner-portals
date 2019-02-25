@@ -68,12 +68,11 @@
                         var selectList = new SelectList(
                         new List<SelectListItem>
                         {
-                                                   new SelectListItem {Text = "Daily", Value = "Daily"},
-                                                   new SelectListItem {Text = "Weekly", Value = "Weekly"},
-                                                   new SelectListItem {Text = "Monthly", Value = "Monthly"},
-                                                   new SelectListItem {Text = "Quarterly", Value = "Quarterly"},
-                                                   new SelectListItem {Text = "Bi-Annually", Value = "Bi-Annually"},
-                                                   new SelectListItem {Text = "Annually", Value = "Annually"},
+                            new SelectListItem {Text = "Weekly", Value = "Weekly"},
+                            new SelectListItem {Text = "Monthly", Value = "Monthly"},
+                            new SelectListItem {Text = "Quarterly", Value = "Quarterly"},
+                            new SelectListItem {Text = "Bi-Annually", Value = "Bi-Annually"},
+                            new SelectListItem {Text = "Annually", Value = "Annually"},
                         }, "Value", "Text");
                     }
                     @Html.DropDownListFor(model => model.Frequency, selectList, new { @class = "form-control", @name = "frequency", @ng_model = "debit.Frequency", @required = "required" })

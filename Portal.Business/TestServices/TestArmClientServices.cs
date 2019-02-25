@@ -273,5 +273,45 @@ namespace Portal.Business.TestServices
             string url = _configSettingManager.ArmBaseUrl + "/Payment/CancelDirectDebit";
             return _client.CallRestAction<CancelDirectDebitResponse, CancelDirectDebitRequest>(payload, url);
         }
+
+        public SubAccountsResponse SubAccounts(SubAccountsRequest payload)
+        {
+            var _client = new RestActions(_contentRootPath);
+            string url = _configSettingManager.ArmBaseUrl + "/Client/SubAccounts";
+            var encryptedValue = new SecureCredentials();
+            payload.ServiceUsername = encryptedValue.DecryptCredentials(_configSettingManager.ArmServiceUsername);
+            payload.ServicePassword = encryptedValue.DecryptCredentials(_configSettingManager.ArmServicePassword);
+            return _client.CallRestAction<SubAccountsResponse, SubAccountsRequest>(payload, url);
+        }
+
+        public AllPriceResponse GetFundPrices(AllPriceRequest payload)
+        {
+            var _client = new RestActions(_contentRootPath);
+            string url = _configSettingManager.ArmBaseUrl + "/Fund/AllPrice";
+            var encryptedValue = new SecureCredentials();
+            payload.ServiceUsername = encryptedValue.DecryptCredentials(_configSettingManager.ArmServiceUsername);
+            payload.ServicePassword = encryptedValue.DecryptCredentials(_configSettingManager.ArmServicePassword);
+            return _client.CallRestAction<AllPriceResponse, AllPriceRequest>(payload, url);
+        }
+
+        public PriceHistoryResponse GetFundPriceHistory(PriceHistoryRequest payload)
+        {
+            var _client = new RestActions(_contentRootPath);
+            string url = _configSettingManager.ArmBaseUrl + "/Fund/PriceHistory";
+            var encryptedValue = new SecureCredentials();
+            payload.ServiceUsername = encryptedValue.DecryptCredentials(_configSettingManager.ArmServiceUsername);
+            payload.ServicePassword = encryptedValue.DecryptCredentials(_configSettingManager.ArmServicePassword);
+            return _client.CallRestAction<PriceHistoryResponse, PriceHistoryRequest>(payload, url);
+        }
+
+        public YieldHistoryResponse GetFundYieldHistory(YieldHistoryRequest payload)
+        {
+            var _client = new RestActions(_contentRootPath);
+            string url = _configSettingManager.ArmBaseUrl + "/Fund/YieldHistory";
+            var encryptedValue = new SecureCredentials();
+            payload.ServiceUsername = encryptedValue.DecryptCredentials(_configSettingManager.ArmServiceUsername);
+            payload.ServicePassword = encryptedValue.DecryptCredentials(_configSettingManager.ArmServicePassword);
+            return _client.CallRestAction<YieldHistoryResponse, YieldHistoryRequest>(payload, url);
+        }
     }
 }
