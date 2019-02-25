@@ -5,7 +5,11 @@ using Portal.Business.ViewModels;
 using Portal.Business.TestServices;
 using Microsoft.AspNetCore.Hosting;
 using System.Text.RegularExpressions;
+
 using System;
+
+using System.Collections.Generic;
+using KycStatus = Portal.Domain.ViewModels.KycStatus;
 
 namespace Portal.Business.StoreManagers
 {
@@ -108,6 +112,30 @@ namespace Portal.Business.StoreManagers
         {
             var response = _clientService.AddSales(request);
             return response;
+        }
+
+        /// <summary>
+        /// send a single email of a customer that their kyc statsu need to be verify
+        /// </summary>
+        /// <param name="customerEmail">email of customer</param>
+        /// <returns>single customer kyc status</returns>
+        public KycStatus GetKycStatus(string customerEmail)
+        {
+            var kyc = new KycStatus();
+
+            return kyc;
+        }
+
+        /// <summary>
+        /// get the kyc status of customer whose email is included in  list of customers
+        /// </summary>
+        /// <param name="customerEmail">list of email</param>
+        /// <returns>the kyc status of each memeber in the list</returns>
+        public List<KycStatus> GetKycStatus(List<string> customerEmail)
+        {
+            var kyc = new List<KycStatus>();
+
+            return kyc;
         }
 
         public bool UnLockAccount(string securityanswer)

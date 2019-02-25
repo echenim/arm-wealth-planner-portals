@@ -465,8 +465,8 @@
         <script src="~/custom-admin/components/bootstrap/js/dist/tab.js"></script>
         <script src="~/custom-admin/components/bootstrap/js/dist/tooltip.js"></script>
         <script src="~/custom-admin/components/bootstrap/js/dist/popover.js"></script>
-        <script src="~/js/tinymce/jquery.tinymce.min.js"></script>
-        <script src="~/js/tinymce/tinymce.min.js"></script>
+        <script src="~/custom-admin/js/chart-loader.js"></script>
+        @*<script src="~/js/tinymce/tinymce.min.js"></script>*@
         <script src="~/custom-admin/js/main.js?version=4.4.0" asp-append-version="true"></script>
     </environment>
     <environment exclude="Development">
@@ -483,57 +483,31 @@
                 integrity="sha256-E/V4cWE4qvAeO5MOhjtGtqDzPndRO1LBk8lJ/PR7CA4=">
         </script>
     </environment>
-    <script>
-        tinymce.init({
-            selector: 'textarea',
-            plugins: 'print preview fullpage searchreplace autolink directionality visualblocks visualchars fullscreen image link media template codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists wordcount imagetools textpattern help',
-            toolbar: 'formatselect | bold italic strikethrough forecolor backcolor | link | alignleft aligncenter alignright alignjustify  | numlist bullist outdent indent  | removeformat',
-            image_advtab: true,
-            content_css: [
-                '//fonts.googleapis.com/css?family=Lato:300,300i,400,400i',
-                '//www.tiny.cloud/css/codepen.min.css'
-            ],
-            //link_list: [
-            //    { title: 'My page 1', value: 'http://www.tinymce.com' },
-            //    { title: 'My page 2', value: 'http://www.moxiecode.com' }
-            //],
-            //image_list: [
-            //    { title: 'My page 1', value: 'http://www.tinymce.com' },
-            //    { title: 'My page 2', value: 'http://www.moxiecode.com' }
-            //],
-            //image_class_list: [
-            //    { title: 'None', value: '' },
-            //    { title: 'Some class', value: 'class-name' }
-            //],
-            importcss_append: true,
-            height: 300,
-            file_picker_callback: function (callback, value, meta) {
-                /* Provide file and text for the link dialog */
-                if (meta.filetype === 'file') {
-                    callback('https://www.google.com/logos/google.jpg', { text: 'My text' });
-                }
 
-                /* Provide image and alt text for the image dialog */
-                if (meta.filetype === 'image') {
-                    callback('https://www.google.com/logos/google.jpg', { alt: 'My alt text' });
-                }
+    <script type="text/javascript">
+        // Load google charts
+        google.charts.load('current', { 'packages': ['corechart'] });
+        google.charts.setOnLoadCallback(drawChart);
 
-                /* Provide alternative source and posted for the media dialog */
-                if (meta.filetype === 'media') {
-                    callback('movie.mp4', { source2: 'alt.ogg', poster: 'https://www.google.com/logos/google.jpg' });
-                }
-            },
-            templates: [
-                { title: 'Some title 1', description: 'Some desc 1', content: 'My content' },
-                { title: 'Some title 2', description: 'Some desc 2', content: '<div class="mceTmpl"><span class="cdate">cdate</span><span class="mdate">mdate</span>My content2</div>' }
-            ],
-            template_cdate_format: '[CDATE: %m/%d/%Y : %H:%M:%S]',
-            template_mdate_format: '[MDATE: %m/%d/%Y : %H:%M:%S]',
-            image_caption: true,
+        // Draw the chart and set the chart values
+        function drawChart() {
+            var data = google.visualization.arrayToDataTable([
+                ['Task', 'Hours per Day'],
+                ['Work', 8],
+                ['Friends', 2],
+                ['Eat', 2],
+                ['TV', 2],
+                ['Gym', 2],
+                ['Sleep', 8]
+            ]);
 
-            spellchecker_dialog: true,
-            spellchecker_whitelist: ['Ephox', 'Moxiecode']
-        });
+            // Optional; add a title and set the width and height of the chart
+            var options = { 'title': 'My Average Day', 'width': 550, 'height': 400 };
+
+            // Display the chart inside the <div> element with id="piechart"
+            var chart = new google.visualization.PieChart(document.getElementById('pieChart'));
+            chart.draw(data, options);
+        }
     </script>
     <script>
         (function (i, s, o, g, r, a, m) {
@@ -550,6 +524,12 @@
 
         ga('create', 'UA-XXXXXXX-9', 'auto');
         ga('send', 'pageview');
+    </script>
+    <script type="text/javascript">
+        function onTransactionCorrection() {
+            var table = document.getElementById('status').values;
+            alert('mmmm');
+        }
     </script>
 
     @RenderSection("Scripts", required: false)

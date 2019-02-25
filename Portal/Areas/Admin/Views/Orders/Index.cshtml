@@ -5,6 +5,77 @@
     Layout = "~/Areas/Admin/Views/Shared/_Layout_Admin.cshtml";
 }
 
+<!---- Orders Overview --->
+<div class="row">
+    <div class=" col-md-12 ">
+        <div class=" ">
+            <div class="">
+
+                <div class="element-box">
+                    <div class="m-b">
+                        <div class="header text-left">
+                            <h5>
+                                Orders Overview
+                            </h5>
+                        </div>
+                        <div>
+                            <div class="row">
+                                <div class="col-sm-8 col-md-12 col-lg-8">
+                                    <div class="element-wrapper">
+                                        <h5 class="element-header ">
+
+                                            <form class="float-right">
+                                                <select class="form-control form-control-sm rounded bright">
+                                                    <option selected="selected" value="">
+                                                        This Month
+                                                    </option>
+                                                    <option value="January">
+                                                        January
+                                                    </option>
+                                                    <option value="February">
+                                                        February
+                                                    </option>
+                                                    <option value="March">
+                                                        March
+                                                    </option>
+                                                </select>
+                                                <span class="mg-left-a font-2rem">23,250 Orders</span>
+                                            </form>
+                                        </h5>
+
+                                        <div class="element-box mt-5">
+
+                                            <div class="el-chart-w">
+                                                <canvas height="145" id="barChart2" width="300"></canvas>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4 col-md-6 col-lg-4">
+                                    <div class="element-wrapper">
+                                        <div class="element-box">
+                                            <h5 class="element-header">
+                                                Orders Status
+                                            </h5>
+
+                                            <div class="el-chart-w">
+                                                @*<canvas height="150px" id="pieChart2" width="150px"></canvas>*@
+                                                <div height="150px" id="pieChart" width="150px"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!---- Latest Orders --->
+
 <div class="row">
     <div class="col-md-12 ">
         <div class="element-box element-wrapper">
@@ -20,6 +91,8 @@
                                     Find by CartID: <input type="text" name="SearchString" value="@ViewData["currentFilter"]" />
                                     <input type="submit" value="Search" class="btn btn-default" /> |
                                     <a asp-action="Index">Back to Full List</a>
+                                    Checkbox:
+                                <p id="text"></p>
                                 </p>
                             </div>
                         </form>
@@ -43,16 +116,15 @@
                     <table class="table table-striped b-b">
                         <thead>
                             <tr>
-
+                                <th>
+                                </th>
                                 <th>
                                     Date
                                 </th>
                                 <th>
                                     CartID
                                 </th>
-                                <th>
-                                    Status
-                                </th>
+
                                 <th>
                                     Customer
                                 </th>
@@ -71,6 +143,22 @@
                             @foreach (var item in Model)
                             {
                                 <tr>
+
+                                    <td class="nowrap">
+                                        @if (item.TransactionStatus.Equals("Succeed"))
+                                        {
+                                            <span class="status-pill smaller green"></span><span>@item.TransactionStatus</span>
+                                        }
+                                        @if (item.TransactionStatus.Equals("Failed"))
+                                        {
+                                            <input type="checkbox" id="myCheck" onclick="myFunction(this)" value='+@item.Id+'>@item.Id
+                                            <span class="status-pill smaller red"></span><span>@item.TransactionStatus</span>
+                                        }
+                                        @if (item.TransactionStatus.Equals("Incart"))
+                                        {
+                                            <span class="status-pill smaller yellow"></span><span>@item.TransactionStatus</span>
+                                        }
+                                    </td>
                                     <td>
                                         <span class="smaller lighter">
                                             @string.Format("{0}", item.AddToCartDate, "MMMM dd, yyyy")
@@ -81,9 +169,7 @@
                                             @item.CartNumber
                                         </div>
                                     </td>
-                                    <td class="nowrap">
-                                        <span class="status-pill smaller green"></span><span>@item.TransactionStatus</span>
-                                    </td>
+
                                     <td>
                                         <div>
                                             <span>@item.Customer</span>
@@ -135,3 +221,19 @@
         </div>
     </div>
 </div>
+
+<script>
+    function myFunction(ele) {
+        var checkBox = document.getElementById("myCheck");
+        var text = document.getElementById("text");
+        if (checkBox.checked == true) {
+            //text.style.display = "block";
+            //text.innerHTML = checkBox.value;
+
+            alert(checkBox.value);
+
+        } else {
+            text.style.display = "none";
+        }
+    }
+</script>

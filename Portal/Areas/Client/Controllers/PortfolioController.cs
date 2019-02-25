@@ -122,7 +122,7 @@ namespace Portal.Areas.Client.Controllers
         [HttpPost]
         public IActionResult AccountStatement()
         {
-
+            return View();
         }
     }
 }
