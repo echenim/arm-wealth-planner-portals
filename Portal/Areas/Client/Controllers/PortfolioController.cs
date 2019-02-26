@@ -60,11 +60,11 @@ namespace Portal.Areas.Client.Controllers
             var model = new FamilyAccountsViewModel();
             var _user = new AuthenticateResponse
             {
-                MembershipKey = 1007435,
-                EmailAddress = "gbadebo.ayan@gmail.com",
-                FirstName = "Funmilayo",
-                LastName = "Adeyemi",
-                FullName = "Funmilayo Ruth Adeyemi",
+                MembershipKey = 1006979,//1007435,
+                EmailAddress = "tolu.olusakin@gmail.com",//"gbadebo.ayan@gmail.com",
+                FirstName = "Tolulope",
+                LastName = "Olusakin",
+                FullName = "Olusakin Tolulope S"//"Funmilayo Ruth Adeyemi",
             };
 
             try
@@ -87,7 +87,61 @@ namespace Portal.Areas.Client.Controllers
 
         public IActionResult MyInvestments()
         {
-            return View();
+            var model = new AccountStatementViewModel();
+            var _user = new AuthenticateResponse
+            {
+                MembershipKey = 1006979,//1007435,
+                EmailAddress = "tolu.olusakin@gmail.com",//"gbadebo.ayan@gmail.com",
+                FirstName = "Tolulope",
+                LastName = "Olusakin",
+                FullName = "Olusakin Tolulope S"//"Funmilayo Ruth Adeyemi",
+            };
+
+            try
+            {
+                var customer = _client.GetUserProfile(_user.MembershipKey);
+
+                List<ProductDetails> getSummaries = new List<ProductDetails>();
+                List<decimal> sumOfAccruedInterests = new List<decimal>();
+
+                //get account summary
+                var accountsResponse = _client.GetAccountSummary(_user.MembershipKey);
+                if (accountsResponse != null)
+                {
+                    foreach (var item in accountsResponse.Summaries)
+                    {
+                        var summaries = new ProductDetails();
+                        summaries.ProductName = item.ProductName;
+                        summaries.ProductCode = item.ProductCode;
+                        summaries.Currency = item.Currency;
+                        summaries.AccruedInterest = item.AccruedInterest;
+                        summaries.CurrentBalance = item.CurrentBalance;
+                        summaries.PendingTransaction = item.PendingTransaction;
+
+                        getSummaries.Add(summaries);
+                        sumOfAccruedInterests.Add(summaries.AccruedInterest);
+                    }
+
+                    model.Summaries = getSummaries;
+                }
+
+                //get total balance
+                var totalBalanceResponse = _client.GetTotalAccountBalance(_user.MembershipKey);
+                if (totalBalanceResponse != null)
+                {
+                    model.TotalBalance = totalBalanceResponse.TotalBalance;
+                }
+
+                var accruedInterests = sumOfAccruedInterests.Sum();
+                ViewBag.SumAccruedInterest = accruedInterests;
+            }
+            catch (Exception ex)
+            {
+                TempData["message"] = ViewBag.Message = ex.Message;
+                Utilities.ProcessError(ex, _contentRootPath);
+                _logger.LogError(null, ex, ex.Message);
+            }
+            return View(model);
         }
 
         public IActionResult AccountStatement(string code)
@@ -95,11 +149,11 @@ namespace Portal.Areas.Client.Controllers
             var model = new AccountStatementViewModel();
             var _user = new AuthenticateResponse
             {
-                MembershipKey = 1007435,
-                EmailAddress = "gbadebo.ayan@gmail.com",
-                FirstName = "Funmilayo",
-                LastName = "Adeyemi",
-                FullName = "Funmilayo Ruth Adeyemi",
+                MembershipKey = 1006979,//1007435,
+                EmailAddress = "tolu.olusakin@gmail.com",//"gbadebo.ayan@gmail.com",
+                FirstName = "Tolulope",
+                LastName = "Olusakin",
+                FullName = "Olusakin Tolulope S"//"Funmilayo Ruth Adeyemi",
             };
             try
             {
@@ -157,11 +211,11 @@ namespace Portal.Areas.Client.Controllers
         {
             var _user = new AuthenticateResponse
             {
-                MembershipKey = 1007435,
-                EmailAddress = "gbadebo.ayan@gmail.com",
-                FirstName = "Funmilayo",
-                LastName = "Adeyemi",
-                FullName = "Funmilayo Ruth Adeyemi",
+                MembershipKey = 1006979,//1007435,
+                EmailAddress = "tolu.olusakin@gmail.com",//"gbadebo.ayan@gmail.com",
+                FirstName = "Tolulope",
+                LastName = "Olusakin",
+                FullName = "Olusakin Tolulope S"//"Funmilayo Ruth Adeyemi",
             };
 
             try

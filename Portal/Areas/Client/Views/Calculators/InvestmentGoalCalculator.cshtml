@@ -1,0 +1,309 @@
+﻿
+@{
+    ViewData["Title"] = "Investment Goal Calculator";
+}
+
+<!---- Page Title & Date --->
+<div class="row">
+    <div class="element-wrapper col-md-12 pb-0">
+        <h6 class="element-header">
+            Investment Goal Calculator
+            @{
+                var now = DateTime.Now;
+                var time = now.ToString("HH:mm tt");
+                var date = now.ToString("MMM dd yyyy");
+            }
+            <span class="date-timestamp float-right">@date, @time</span>
+        </h6>
+    </div>
+</div>
+<!---- Filter Parameters --->
+
+<div class="row">
+
+    <div class="col-lg-7 col-sm-12">
+        <div class="element-box">
+            <form id="goals" class="split AppForm calculator">
+                <fieldset class="form-group">
+
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label for="">Cost of your goal in today's money (₦)</label>
+                                <input type="text" name="goalcost" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label for="">Years until you need the money in your goal</label>
+                                <select class="form-control" name='goalyears'>
+                                    <option>-</option>
+                                    <option>1 Years</option>
+                                    <option>2 Years</option>
+                                    <option>3 Years</option>
+                                    <option>4 Years</option>
+                                    <option>5 Years</option>
+                                    <option>6 Years</option>
+                                    <option>7 Years</option>
+                                    <option>8 Years</option>
+                                    <option>9 Years</option>
+                                    <option>10 Years</option>
+                                    <option>11 Years</option>
+                                    <option>12 Years</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label for="">Factors for inflation (%)</label>
+                                <input type="text" name="inflationfactor" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label for="">Expected annual rate of return for your savings (%)</label>
+                                <input type="text" name="savingsfactor" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label for="">Amount you've already saved towards your goal (₦)</label>
+                                <input type="text" name="amountsaved" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+
+                </fieldset>
+
+                <div class="form-buttons-w">
+                    <button type="button" class="btn btn-primary" onClick="return(CalculateGoal(document.forms['goals']))">Calculate</button>
+                </div>
+            </form>            
+        </div>
+    </div>
+
+    <div class="col-lg-5 col-sm-12">
+        <div class="element-box element-wrapper">
+            <h5 class="element-header">
+                Savings needed based on the information provided.
+            </h5>
+            
+            <div class="form-group">
+                <label for="">Future value of goal amount (₦)</label>
+                <input type="text" name="amountsave" id ="amountsave" onfocus="reFocus()" disabled="disabled" class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <label for="">Annual savings (₦) assuming annual interest</label>
+                <input type="text" name="annualsavings" id ="annualsavings" onfocus="reFocus()" disabled="disabled" class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <label for="">Monthly savings savings (₦) assuming annual interest</label>
+                <input type="text" name="monthlysavings" id="monthlysavings" onfocus="reFocus()" disabled="disabled" class="form-control" />
+            </div>
+        </div>
+
+
+        <div class="element-box">
+            <form>
+                <h5 class="element-box-header">
+                    Ad Banner
+                </h5>
+                <div class="form-desc">
+
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts{ 
+    <script type="text/javascript">
+        var myFlag;
+
+        function initArraySize(size) {
+            this.length = size;
+            for (i = 0; i < this.length; i++)
+                this[i] = "";
+        }
+
+        function isdigit(c) {
+            return ((c >= '0') && (c <= '99999999999999999'));
+        }
+
+        function fv(pv, yrs, intr) {
+            return (parseFloat(pv) * Math.pow(1 + parseFloat(intr), parseInt(yrs)));
+        }
+
+        function pv(fv, yrs, intr) {
+            return (parseFloat(fv) / Math.pow(1 + parseFloat(intr), parseInt(yrs)));
+        }
+
+        function round_decimals(original_number, decimals) {
+            var result1 = original_number * Math.pow(10, decimals);
+            var result2 = Math.round(result1);
+            var result3 = result2 / Math.pow(10, decimals);
+            return result3;
+        }
+
+        function CalculateGoal(formObj) {
+            document.forms["goals"].amountsaved.value = document.forms["goals"].amountsaved.value == 0 ? 0 : (parseFloat(document.forms["goals"].amountsaved.value) ? parseFloat(document.forms["goals"].amountsaved.value) : '');
+            document.forms["goals"].goalcost.value = document.forms["goals"].goalcost.value == 0 ? 0 : (parseFloat(document.forms["goals"].goalcost.value) ? parseFloat(document.forms["goals"].goalcost.value) : '');
+            myFlag = 0;
+            var goalamount = formObj.goalcost.value;
+            var goalyears = parseInt(formObj.goalyears.options[formObj.goalyears.selectedIndex].value);
+            var goalinflation = parseFloat(formObj.inflationfactor.value);
+            var savingsfactor = parseFloat(formObj.savingsfactor.value);
+            var goalsaved = formObj.amountsaved.value;
+            goalamount = parseFloat(goalamount);
+            goalsaved = parseFloat(goalsaved);
+            if (!isdigit(goalamount)) {
+                alert("Please enter a valid and unformatted goal amount [ between 0 and 10,000,000 ]");
+                document.forms['goals'].goalcost.focus();
+            } else if (emptyField(formObj.goalcost)) {
+                alert("Please enter the cost of your goal");
+                document.forms['goals'].goalcost.focus();
+            } else if (emptyField(formObj.amountsaved)) {
+                alert("Please enter the amount you have already saved towards your goal");
+                document.forms['goals'].amountsaved.focus();
+            } else if (!isdigit(goalsaved)) {
+                alert("Please enter a valid amount already saved [ between 0 and 10,000,000 ]");
+                document.forms['goals'].amountsaved.focus();
+            } else if (!isdigit(goalyears)) {
+                alert("Please enter a valid year [ between 0 and 50 ]");
+                document.forms["goals"].goalyears.focus();
+            } else if (!isdigit(goalinflation)) {
+                alert("Please enter a valid goal inflation [ between 0 and 1000 ]");
+                document.forms["goals"].inflationfactor.focus();
+            } else if (!isdigit(savingsfactor)) {
+                alert("Please enter a valid savings factor [ between 0 and 1000 ]");
+                document.forms["goals"].savingsfactor.focus();
+            } else if (goalsaved > goalamount) {
+                alert("The amount you have already saved must be less than the cost of your goal; Please re-enter.");
+            } else {
+                var lump_sum;
+                var months;
+                var monthly_int;
+                var int_factor;
+                var future_goal;
+                var inflation = goalinflation / 100;
+                var returnRate = savingsfactor / 100;
+                future_goal = fv(goalamount, goalyears, inflation);
+
+                var amountsave_value = round_decimals(future_goal, 2);
+                $('#amountsave').val(amountsave_value);
+
+                lump_sum = future_goal - fv(goalsaved, goalyears, returnRate);
+                yearly_int = returnRate / goalyears;
+                int_factor = (Math.pow(1 + yearly_int, goalyears) - 1) / yearly_int;
+
+                var annualsavings_value = round_decimals((lump_sum / int_factor), 2); 
+                $('#annualsavings').val(annualsavings_value);
+
+                months = parseInt(goalyears) * 12;
+                monthly_int = returnRate / 12;
+                int_factor = (Math.pow(1 + monthly_int, months) - 1) / monthly_int;
+
+                var monthlysavings_value = round_decimals((lump_sum / int_factor), 2); 
+                $('#monthlysavings').val(monthlysavings_value);
+            }
+            return false;
+        }
+
+        
+
+        function reFocus() {
+            if (emptyField(document.forms['goals'].goalcost))
+                setTimeout("document.forms['goals'].goalcost.focus()", 1);
+            else
+                setTimeout("document.forms['goals'].amountsaved.focus()", 1);
+        }
+
+        function emptyField(textObj) {
+            if (textObj.value.length == 0)
+                return true;
+            for (var i = 0; i < textObj.value.length; ++i) {
+                var ch = textObj.value.charAt(i);
+                if (ch != ' ' && ch != '\t')
+                    return false;
+            }
+            return true;
+        }
+
+        function clearFnc(formObj) {
+            for (var z = 0; z < formObj.length; ++z) {
+                if (formObj[z].type == "text")
+                    formObj[z].value = "";
+                else
+                    formObj[z].selectedIndex = 0;
+            }
+            formObj.goalcost.focus();
+            return false;
+        }
+
+        function delimit(numObj) {
+            if ((numObj + 0) <= 0) {
+                if (myFlag == 0)
+                    myFlag = 1;
+                return "";
+            }
+            var arr = new Array();
+            var temp = numObj + 0;
+            var n = 0;
+            while (temp > 0) {
+                arr[n] = temp % 10;
+                temp /= 10;
+                temp = Math.floor(temp);
+                ++n;
+            }
+            arr.reverse();
+            var len = arr.length;
+            var nOD = Math.floor(len / 3);
+            var fDP = len % 3;
+            if (nOD == 0)
+                return (numObj)
+            else if ((nOD == 1) && (fDP == 0))
+                return (numObj)
+            else {
+                if (fDP == 0) {
+                    fDP = 3;
+                    --nOD;
+                }
+                var p1 = 0,
+                    p2 = 0;
+                var res = new Array();
+                for (var i = 0; i < fDP; ++i)
+                    res[p2++] = arr[p1++] + "";
+                res[p2++] = ",";
+                --nOD;
+                while (nOD >= 0) {
+                    for (var j = 0; j < 3; ++j) {
+                        res[p2++] = arr[p1++] + "";
+                    }
+                    res[p2++] = ",";
+                    --nOD;
+                }
+                res[--p2] = "";
+                var str = "";
+                for (var m = 0; m < res.length; ++m) {
+                    str += res[m];
+                }
+                return (str)
+            }
+        }
+    </script>
+}

@@ -29,59 +29,91 @@
             var currentBalance = String.Empty;
         }
 
-        @if (Model.Summaries != null && Model.Summaries.Count > 0)
-        {
-            foreach (var record in Model.Summaries)
-            {
-                currentBalance = record.CurrentBalance.ToString("F2");
-                <div class="element-wrapper pb-0">
-                    <div class="element-box">
-                        <div class="row">
-                            <div class="col-sm-5">
-                                <div class="form-group">
-                                    <label class="" for="">Enter Amount</label>
-                                    <div class="input-group mb-2 mr-sm-2 mb-sm-0">
-                                        <input type="number" class="form-control" placeholder="Enter Amount..." value="0" min="0" max="@record.CurrentBalance" ng-disabled='loading||otpGenerated' id="@record.ProductCode" ng-model='@record.ProductCode' data-rel='@record.ProductName' ng-focus="focusCallback($event)" ng-change='addToCart()'>
-                                        <div class="input-group-append">
-                                            <div class="input-group-text">
-                                                NGN
+        <div class="row">
+            <div class="col-sm-6">
+                @if (Model.Summaries != null && Model.Summaries.Count > 0)
+                {
+                    foreach (var record in Model.Summaries)
+                    {
+                        currentBalance = record.CurrentBalance.ToString("F2");
+                        <div class="element-wrapper pb-0">
+                            <h5 class="element-header">
+                                @record.ProductName
+                            </h5>
+                            <div class="element-box">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="form-group">
+                                            <label class="" for="">Enter Amount</label>
+                                            <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                                                <input type="number" class="form-control" placeholder="Enter Amount..." value="0" min="0" max="@record.CurrentBalance" ng-disabled='loading||otpGenerated' id="@record.ProductCode" ng-model='@record.ProductCode' data-rel='@record.ProductName' ng-focus="focusCallback($event)" ng-change='addToCart()'>
+                                                <div class="input-group-append">
+                                                    <div class="input-group-text">
+                                                        NGN
+                                                    </div>
+                                                </div>
                                             </div>
+                                            <input type="hidden" class="accruedInterest" value="@record.AccruedInterest" />
                                         </div>
                                     </div>
-                                    <input type="hidden" class="accruedInterest" value="@record.AccruedInterest" />
+                                    @*<div class="col-sm-7">
+                                        <div class="form-group">
+                                            <label class="" for="">Reason for Redemption</label>
+                                            <select class="form-control" name='source' ng-model="record.Source">
+                                                <option value=""> Select an Option</option>
+                                                <option value="">Urgent Fund Requirement</option>
+                                                <option value="">Investment Goal Realised</option>
+                                                <option value="">To Reallocate my Investment</option>
+                                                <option value="">Others</option>
+                                            </select>
+                                            <p ng-show="redForm.source.$invalid" class="help-block">Reason for redemption is required.</p>
+                                        </div>
+                                    </div>*@
                                 </div>
-                            </div>
-                            <div class="col-sm-7">
-                                <div class="form-group">
-                                    <label class="" for="">Reason for Redemption</label>
-                                    <select class="form-control" name='source' ng-model="record.Source">
-                                        <option value=""> Select an Option</option>
-                                        <option value="">Urgent Fund Requirement</option>
-                                        <option value="">Investment Goal Realised</option>
-                                        <option value="">To Reallocate my Investment</option>
-                                        <option value="">Others</option>
-                                    </select>
-                                    <p ng-show="redForm.source.$invalid" class="help-block">Reason for redemption is required.</p>
-                                </div>
+                                @*<div class="row">
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <input type="text" name="sourceothers" class="form-control" placeholder="If others, please specify" ng-model="record.SourceOther" ng-required="record.Source == 'Others'" />
+                                        </div>
+                                    </div>
+                                </div>*@
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="form-group">
-                                    <input type="text" name="sourceothers" class="form-control" placeholder="If others, please specify" ng-model="record.SourceOther" ng-required="record.Source == 'Others'" />
-                                </div>
-                            </div>
+                    }
+                }
+                else
+                {
+                    <div class="element-box">
+                        <h5>No transaction records available for the selected date.</h5>
+                    </div>
+                }
+            </div>
+        
+            <div class="col-sm-6">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label class="" for="">Reason for Redemption</label>
+                            <select class="form-control" name='source' ng-model="record.Source">
+                                <option value=""> Select an Option</option>
+                                <option value="">Urgent Fund Requirement</option>
+                                <option value="">Investment Goal Realised</option>
+                                <option value="">To Reallocate my Investment</option>
+                                <option value="">Others</option>
+                            </select>
+                            <p ng-show="redForm.source.$invalid" class="help-block">Reason for redemption is required.</p>
                         </div>
                     </div>
                 </div>
-            }
-        }
-        else
-        {
-                <div class="element-box">
-                    <h5>No transaction records available for the selected date.</h5>
-                </div>           
-        }
+                <div class="row">
+                    <div class="col-12">
+                        <div class="form-group">
+                            <input type="text" name="sourceothers" class="form-control" placeholder="If others, please specify" ng-model="record.SourceOther" ng-required="record.Source == 'Others'" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
 

@@ -32315,3 +32315,15 @@ input[type='file'] {
     /*margin-top: -50px;*/
     margin-left: -21px;
 }
+
+/**my investments*/
+.products-content {
+    padding-right: 12% 8%;
+    width: 100% !important;
+}
+
+.products-header {
+    color: #293145;
+    margin-bottom: 0.5rem !important;
+    text-shadow: 0px 1px 2px rgba(0, 0, 0, 0.1);
+}

@@ -1,8 +1,8 @@
 ﻿@*@model Portal.Areas.Client.ViewModels.AccountStatementViewModel*@
 @{
     //var _user = new AuthenticateResponse();
-    var _userMembershipKey = 1007435;
-    var _userFullName = "Funmilayo Ruth Adeyemi";
+    var _userMembershipKey = 1006979;
+    var _userFullName = "Olusakin Tolulope S";
 
 }
 <!DOCTYPE html>
@@ -26,6 +26,7 @@
         <link href="~/custom-client/components/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
         <link href="~/custom-client/components/fullcalendar/dist/fullcalendar.min.css" rel="stylesheet">
         <link href="~/custom-client/components/perfect-scrollbar/css/perfect-scrollbar.min.css" rel="stylesheet">
+        @*<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/1.4.0/css/perfect-scrollbar.min.css" />*@
         <link href="~/custom-client/components/slick-carousel/slick/slick.css" rel="stylesheet">
         <link href="~/custom-client/css/magnific-popup.css" rel="stylesheet" />
         <link href="~/custom-client/css/main.css?version=4.4.0" rel="stylesheet">
@@ -302,7 +303,7 @@
                                         <a asp-area="Client" asp-controller="SelfService" asp-action="AccountValidation">Account Validation</a>
                                     </li>
                                     <li>
-                                         <a asp-area="Client" asp-controller="SelfService" asp-action="EmbassyLetter">Embassy Letter</a>
+                                        <a asp-area="Client" asp-controller="SelfService" asp-action="EmbassyLetter">Embassy Letter</a>
                                     </li>
                                 </ul>
                             </div>
@@ -330,6 +331,34 @@
                                     </li>
                                     <li>
                                         <a asp-area="Client" asp-controller="Contact" asp-action="Location">Contact Us</a>
+                                    </li>
+
+                                </ul>
+                            </div>
+                        </div>
+                    </li>
+
+                    <li class="has-sub-menu">
+                        <a href="javascript:void(0)">
+                            <div class="icon-w">
+                                <div class="os-icon os-icon-bar-chart-stats-up"></div>
+                            </div>
+                            <span>Calculators</span>
+                        </a>
+                        <div class="sub-menu-w">
+                            <div class="sub-menu-header">
+                                Calculators
+                            </div>
+                            <div class="sub-menu-icon">
+                                <i class="os-icon os-icon-bar-chart-stats-up"></i>
+                            </div>
+                            <div class="sub-menu-i">
+                                <ul class="sub-menu">
+                                    <li>
+                                        <a asp-area="Client" asp-controller="Calculators" asp-action="InvestmentGoalCalculator">Investment Goal Calculator</a>
+                                    </li>
+                                    <li>
+                                        <a asp-area="Client" asp-controller="Calculators" asp-action="SavingsPlanCalculator">Savings Plan Calculator</a>
                                     </li>
 
                                 </ul>
@@ -440,7 +469,8 @@
         <div class="display-type"></div>
     </div>
     <environment include="Development">
-        <script src="~/custom-client/components/jquery/dist/jquery.min.js"></script>
+        @*<script src="~/custom-client/components/jquery/dist/jquery.min.js"></script>*@
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
         <script src="~/custom-client/components/popper.js/dist/umd/popper.min.js"></script>
         <script src="~/custom-client/components/moment/moment.js"></script>
         <script src="~/custom-client/components/chart.js/dist/Chart.min.js"></script>
@@ -457,6 +487,7 @@
         <script src="~/custom-client/components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
         <script src="~/custom-client/components/fullcalendar/dist/fullcalendar.min.js"></script>
         <script src="~/custom-client/components/perfect-scrollbar/js/perfect-scrollbar.jquery.min.js"></script>
+        @*<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/1.4.0/perfect-scrollbar.js"></script>*@
         <script src="~/custom-client/components/tether/dist/js/tether.min.js"></script>
         <script src="~/custom-client/components/slick-carousel/slick/slick.min.js"></script>
         <script src="~/custom-client/components/bootstrap/js/dist/util.js"></script>
