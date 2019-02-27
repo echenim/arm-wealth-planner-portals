@@ -313,5 +313,15 @@ namespace Portal.Business.TestServices
             payload.ServicePassword = encryptedValue.DecryptCredentials(_configSettingManager.ArmServicePassword);
             return _client.CallRestAction<YieldHistoryResponse, YieldHistoryRequest>(payload, url);
         }
+
+        public CustomerDetailsResponse GetCustomerDetails(CustomerDetailsRequest payload)
+        {
+            var _client = new RestActions(_contentRootPath);
+            string url = _configSettingManager.ArmBaseUrl + "/Fund/YieldHistory";
+            var encryptedValue = new SecureCredentials();
+            payload.ServiceUsername = encryptedValue.DecryptCredentials(_configSettingManager.ArmServiceUsername);
+            payload.ServicePassword = encryptedValue.DecryptCredentials(_configSettingManager.ArmServicePassword);
+            return _client.CallRestAction<CustomerDetailsResponse, CustomerDetailsRequest>(payload, url);
+        }
     }
 }

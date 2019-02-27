@@ -16,5 +16,7 @@ namespace Portal.Domain.ViewModels
         public string Email { get; set; }
         public string AltUsername { get; set; }
         public Boolean IsAccountActivated { get; set; }
+        public string BvnNumber { get; set; }
+        public string Gender { get; set; }
     }
 }
