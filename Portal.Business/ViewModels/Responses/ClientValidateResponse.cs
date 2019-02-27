@@ -33,6 +33,7 @@ namespace Portal.Business.ViewModels
         public string Country { get; set; }
         public int Status { get; set; }
         public string StatusMessage { get; set; }
+        public string BvnNumber { get; set; }
         public List<ProductItem> ProductItems { get; set; }
     }
 }
