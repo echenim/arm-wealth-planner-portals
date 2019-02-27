@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Portal.ViewModel;
 using Portal.Business.Contracts;
 using Portal.Business.Utilities;
@@ -50,26 +51,22 @@ namespace Portal.Controllers
         public IActionResult Login(LoginViewModels model)
         {
             if (!ModelState.IsValid) return View(model);
-            var isValiedUser = _userManager.Users.SingleOrDefault(s => s.UserName.Equals(model.Username)
-                                                                     || s.MembershipNumber.Equals(model.Username));
+            var isValiedUser = _userManager.Users.Include(s => s.Person).SingleOrDefault(s => s.UserName.Equals(model.Username)
+                                                                       || s.Person.MembershipNo.Equals(model.Username));
             if (isValiedUser != null)
             {
-                if (isValiedUser.IsCustomerOrStaff.ToLower().Equals("External".ToLower()))
+                if (isValiedUser.Person.IsCustomer)
                 {
-                    var result = _signInManager.PasswordSignInAsync(isValiedUser, "102Solutionx$#@", true, true).Result;
-                    if (result.Succeeded)
+                    var resultCustomer = _signInManager.PasswordSignInAsync(isValiedUser, "102Solutionx$#@", true, true).Result;
+                    if (resultCustomer.Succeeded)
                     {
                         return RedirectToAction("Index", "Dashboard", new { area = "Client" });
                     }
                 }
-
-                if (isValiedUser.IsCustomerOrStaff.ToLower().Equals("Internal".ToLower()))
+                var resultStaff = _signInManager.PasswordSignInAsync(isValiedUser, model.Password, true, true).Result;
+                if (resultStaff.Succeeded)
                 {
-                    var result = _signInManager.PasswordSignInAsync(isValiedUser, model.Password, true, true).Result;
-                    if (result.Succeeded)
-                    {
-                        return RedirectToAction("Index", "Dashboard", new { area = "Admin" });
-                    }
+                    return RedirectToAction("Index", "Dashboard", new { area = "Admin" });
                 }
             }
             else
@@ -78,14 +75,14 @@ namespace Portal.Controllers
                 if (result != null)
                 {
                     var user = new ApplicationUser();
-                    user.CustomerOnboardingDate = DateTime.Now;
-                    user.IsCustomerOrStaff = "External";
-                    user.FirstName = result.FirstName;
-                    user.LastName = result.LastName;
+                    //user.CustomerOnboardingDate = DateTime.Now;
+                    //user.IsCustomerOrStaff = "External";
+                    //user.FirstName = result.FirstName;
+                    //user.LastName = result.LastName;
                     user.Email = result.Email;
-                    user.NewOrOld = "Old";
-                    user.MembershipNumber = result.MembershipNumber;
-                    user.UserNameAlternative = result.AltUsername;
+                    //user.NewOrOld = "Old";
+                    //user.MembershipNumber = result.MembershipNumber;
+                    //user.UserNameAlternative = result.AltUsername;
                     user.UserName = result.Email;
 
                     var profileUserResult = _userManager.CreateAsync(user, "102Solutionx$#@").Result;
@@ -113,10 +110,15 @@ namespace Portal.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        public IActionResult Registration()
+        {
+            return View();
+        }
+
         private ApplicationUser IfMemberShipNumberIsEmptyUpdateRecord(ApplicationUser user, string membershipnumber)
         {
             var userObj = _userManager.FindByEmailAsync(user.Email).Result;
-            userObj.MembershipNumber = membershipnumber;
+            // userObj.MembershipNumber = membershipnumber;
             var result = _userManager.UpdateAsync(userObj).Result;
             return result.Succeeded ? userObj : user;
         }

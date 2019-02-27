@@ -42,12 +42,12 @@ namespace Portal.Business.StoreManagers
 
             var data = predicate != null
                 ? _context.PurchaseOrders
-                    .Include(s => s.Customer)
+                    .Include(s => s.Person)
                     .Include(s => s.Product).Include(s => s.Product.ProductCategory)
                     .Where(predicate: predicate)
                     .AsQueryable()
                 : _context.PurchaseOrders
-                    .Include(s => s.Customer)
+                    .Include(s => s.Person)
                     .Include(s => s.Product).Include(s => s.Product.ProductCategory)
                     .AsQueryable();
 
@@ -56,7 +56,7 @@ namespace Portal.Business.StoreManagers
                 resultingData.Add(new PurchaseOrderViewModel
                 {
                     Id = item.Id,
-                    Customer = item.Customer.FullName,
+                    Customer = item.Person.FullName,
                     ProductCateogry = item.Product.ProductCategory.Name,
                     ProductName = item.Product.Name,
                     ProductType = item.Product.ProductTypes,

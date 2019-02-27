@@ -24,7 +24,7 @@ namespace Portal.Business.StoreManagers
                         select new
                         {
                             id = usr.Id,
-                            Name = usr.FullName,
+                            Name = usr.UserName,
                             Email = usr.Email,
 
                             Role = gr.Name
@@ -62,7 +62,7 @@ namespace Portal.Business.StoreManagers
                 select new ViewModelInternalUser
                 {
                     Id = users.Id,
-                    Name = users.FullName,
+                    Name = users.UserName,
                     Role = roles.Name,
                     Email = users.Email,
                     IsActive = users.LockoutEnabled ? "Yes" : "No"

@@ -11,28 +11,10 @@ namespace Portal.Domain.Models.Identity
         {
         }
 
-        [MaxLength(20)]
-        public string UserNameAlternative { get; set; }
-
         [Required]
-        [MaxLength(50)]
-        public string FirstName { get; set; }
+        [ForeignKey(nameof(Person))]
+        public long PersonId { get; set; }
 
-        [Required]
-        [MaxLength(50)]
-        public string LastName { get; set; }
-
-        [Required]
-        [MaxLength(10)]
-        public string IsCustomerOrStaff { get; set; }
-
-        [MaxLength(20)]
-        public string MembershipNumber { get; set; }
-
-        public DateTime CustomerOnboardingDate { get; set; }
-        public string NewOrOld { get; set; }
-
-        [NotMapped]
-        public string FullName => $"{FirstName} {LastName}";
+        public virtual Person Person { get; set; }
     }
 }

@@ -1,8 +1,401 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout_Home.cshtml";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<h1 class="sr-only">ARM Investment Center</h1>
+<!---- Slider Area -->
+
+<div class="pt-110 slider-dark arrows-dark slick-loading fa-req" data-slick="{&quot;slidesToShow&quot;: 1, &quot;slidesToScroll&quot;: 1, &quot;arrows&quot;: true, &quot;autoplay&quot;: true, &quot;autoplaySpeed&quot;: 3500}" data-brk-library="slider__slick">
+    <div><img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="img/payday-banner.png" alt="alt" class="lazyload"></div>
+    <div><img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="img/payday-banner.png" alt="alt" class="lazyload"></div>
+    <div><img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="img/payday-banner.png" alt="alt" class="lazyload"></div>
+    <div><img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="img/payday-banner.png" alt="alt" class="lazyload"></div>
 </div>
+
+<!---- Intro Area -->
+<section class="brk-sc-item-page-header mb-10">
+    <div class="brk-sc-item-page-header__info pt-10">
+
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <!-- Category Title and intro text -->
+
+                    <div class="mt-20 text-center">
+
+                        <h2 class="title__heading-01 font__family-montserrat font__size-50 font__weight-bold title__heading-main wow zoomIn" data-brk-library="component__title">Realising Ambitions</h2>
+                        <h4 class="title__heading-01 title__heading-sub font__family-montserrat font__size-21 line-height-1-625" data-brk-library="component__title">The ARM Investment Center offers you a platform to achieve all your investment objectives. No matter who you are, all you need to do is have the dream and we provide the means.</h4>
+                        <div class="divider-layers wow zoomIn " data-brk-library="component__title"><span class="before"></span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!---Client Portal login -->
+<section class="pt-30 pb-30 " id="">
+    <div class="container">
+        <div class="row align-items-end justify-content-center" data-brk-library="component__image_frames">
+            <div class="col-lg-6 text-left mt-20 mt-lg-40 mb-20">
+                <div class="extra__heading-3" data-brk-library="component__title_section">
+                    <div class="heading pt-50">
+                        <h2 class="font__family-montserrat font__weight-ultralight font__size-40 text-uppercase">Manage your</h2>
+                        <h2 class="font__family-montserrat font__weight-bold font__size-40 text-uppercase">Portfolio</h2>
+                    </div>
+                    <h2 class="font__family-montserrat font__weight-semibold after-heading">Client Portal</h2>
+                    <p class="font__family-open-sans font__size-16">Blah blah blah, some body of text explaining how wonderful it is that you can manage your investments in here and all that.</p>
+                    <a href="#" class="font__family-montserrat font__weight-medium font__size-13 text-uppercase letter-spacing-100 text-blue link-icon mt-20">Learn more <i class="icon fa fa-long-arrow-right"></i></a>
+                </div>
+                @if (!User.Identity.IsAuthenticated)
+                {
+                    <div>
+                        <a asp-controller="Registration" asp-action="Index" class="btn btn-inside-out btn-md btn-icon-abs border-radius-25 font__family-open-sans font__weight-bold m-0 mr-10 mb-20" data-brk-library="component__button"><span class="before">sign up</span><span class="text">sign up</span><span class="after">sign up</span> </a>
+                        <a asp-controller="Account" asp-action="Login" class="btn btn-inside-out btn-md btn-icon btn-inside-out_dark border-radius-25 font__family-open-sans font__weight-bold m-0 mb-20" data-brk-library="component__button"><i class="far fa-file-pdf icon-inside"></i> <span class="before">login</span><span class="text">login</span><span class="after">login</span></a>
+                    </div>
+                }
+            </div>
+            <div class="col-lg-6 flex-lg-last">
+                <div class="frame-image">
+                    <div class="img"><img class="lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="img/client-portal-screenshot.png " alt="alt"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!----Product Showcase -->
+<section>
+    <div class="mt-10 text-center">
+        <h2 class="title__heading-06 title__heading-sub wow zoomIn font__family-montserrat font__size-56 font__weight-bold" data-brk-library="component__title">Solutions</h2>
+        <h4 class="title__heading-01 title__heading-sub font__family-montserrat font__size-21 line-height-1-625 mt--30" data-brk-library="component__title">Explore our bouquet<br><span class="font__weight-extrabold">of investment products</span></h4>
+    </div>
+    <div class="container mb-20 pt-20">
+        <div class="brk-tabs brk-tabs-side-left" data-hash="true" data-brk-library="component__tabs">
+            <ul class="brk-tabs-nav font__family-montserrat">
+                <li class="brk-tab"><i class="far fa-gem" aria-hidden="true"></i><span>Mutual Funds</span><span class="after"></span></li>
+                <li class="brk-tab"><i class="fab fa-delicious" aria-hidden="true"></i><span>Pensions</span><span class="after"></span></li>
+                <li class="brk-tab"><i class="fab fa-gg" aria-hidden="true"></i><span>Insurance</span><span class="after"></span></li>
+                <li class="brk-tab"><i class="far fa-gem" aria-hidden="true"></i><span>Trustees</span><span class="after"></span></li>
+                <li class="brk-tab"><i class="fab fa-delicious" aria-hidden="true"></i><span>Securities</span><span class="after"></span></li>
+                <li class="brk-tab"><i class="fab fa-gg" aria-hidden="true"></i><span>Real Estate</span><span class="after"></span></li>
+            </ul>
+            <div class="brk-tabs-content">
+                <!-- Mutual Funds-->
+                <div class="brk-tab-item">
+                    <div class="container mb-140">
+                        <h4 class="title__divider title__divider--chevron font__size-21 font__weight-bold font__family-montserrat line__height-24 text-center" data-brk-library="component__dividers">
+                            <span class="title__divider__wrapper">Mutual Funds <span class="line brk-base-bg-gradient-chevron-pseudo"></span></span>
+                        </h4>
+                        <div class="default-slider slick-loading default-slider_mode arrows-classic-dark-circle brk-base-box-shadow fa-req" data-slick="{&quot;slidesToShow&quot;: 4, &quot;slidesToScroll&quot;: 1, &quot;arrows&quot;: true, &quot;responsive&quot;: [
+                {&quot;breakpoint&quot;: 1230, &quot;settings&quot;: {&quot;slidesToShow&quot;: 3}},
+                {&quot;breakpoint&quot;: 768, &quot;settings&quot;: {&quot;slidesToShow&quot;: 2}},
+                {&quot;breakpoint&quot;: 480, &quot;settings&quot;: {&quot;slidesToShow&quot;: 1}}
+                ]}" data-brk-library="slider__slick">
+                            <div class="pl-15 pr-15">
+                                <div class="shop-setout text-center" data-brk-library="component__content_slider">
+                                    <div class="shop-setout__img lazyload" data-bg="img/mmf.jpg"><a href="#" class="add-cart"><i class="fas fa-info"></i><span class="shop-slider-text-hover">View More</span></a></div>
+                                    <a class="shop-setout__link" href="#">
+                                        <h3 class="font__family-montserrat font__weight-semibold font__size-16">ARM Money Market Fund</h3>
+                                    </a>
+                                    <div class="brk-base-font-color font__family-montserrat font__size-15 font__weight-semibold">Starting from <span class="font__weight-bold">&#8358;1,000</span></div>
+                                </div>
+                            </div>
+                            <div class="pl-15 pr-15">
+                                <div class="shop-setout text-center" data-brk-library="component__content_slider">
+                                    <div class="shop-setout__img lazyload" data-bg="img/mmf.jpg"><a href="#" class="add-cart"><i class="fas fa-info"></i><span class="shop-slider-text-hover">View More</span></a></div>
+                                    <a href="#" class="shop-setout__link">
+                                        <h3 class="font__family-montserrat font__weight-semibold font__size-16">ARM Aggressive Fund</h3>
+                                    </a>
+                                    <div class="brk-base-font-color font__family-montserrat font__size-15 font__weight-semibold">Starting from <span class="font__weight-bold">&#8358;1,000</span></div>
+                                </div>
+                            </div>
+                            <div class="pl-15 pr-15">
+                                <div class="shop-setout text-center" data-brk-library="component__content_slider">
+                                    <div class="shop-setout__img lazyload" data-bg="img/mmf.jpg"><a href="#" class="add-cart"><i class="fas fa-info"></i><span class="shop-slider-text-hover">View More</span></a></div>
+                                    <a href="#" class="shop-setout__link">
+                                        <h3 class="font__family-montserrat font__weight-semibold font__size-16">ARM Money Market Fund</h3>
+                                    </a>
+                                    <div class="brk-base-font-color font__family-montserrat font__size-15 font__weight-semibold">Starting from <span class="font__weight-bold">&#8358;1,000</span></div>
+                                </div>
+                            </div>
+                            <div class="pl-15 pr-15">
+                                <div class="shop-setout text-center" data-brk-library="component__content_slider">
+                                    <div class="shop-setout__img lazyload" data-bg="img/mmf.jpg"><a href="#" class="add-cart"><i class="fas fa-info"></i><span class="shop-slider-text-hover">View More</span></a></div>
+                                    <a href="#" class="shop-setout__link">
+                                        <h3 class="font__family-montserrat font__weight-semibold font__size-16">ARM Ethical Fund</h3>
+                                    </a>
+                                    <div class="brk-base-font-color font__family-montserrat font__size-15 font__weight-semibold">Starting from <span class="font__weight-bold">&#8358;1,000</span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Pensions-->
+                <div class="brk-tab-item">
+                    <div class="container mb-140">
+                        <h4 class="title__divider title__divider--chevron font__size-21 font__weight-bold font__family-montserrat line__height-24 text-center" data-brk-library="component__dividers">
+                            <span class="title__divider__wrapper">Pensions <span class="line brk-base-bg-gradient-chevron-pseudo"></span></span>
+                        </h4>
+                        <div class="default-slider slick-loading default-slider_mode arrows-classic-dark-circle brk-base-box-shadow fa-req" data-slick="{&quot;slidesToShow&quot;: 4, &quot;slidesToScroll&quot;: 1, &quot;arrows&quot;: true, &quot;responsive&quot;: [
+                        {&quot;breakpoint&quot;: 1230, &quot;settings&quot;: {&quot;slidesToShow&quot;: 3}},
+                        {&quot;breakpoint&quot;: 768, &quot;settings&quot;: {&quot;slidesToShow&quot;: 2}},
+                        {&quot;breakpoint&quot;: 480, &quot;settings&quot;: {&quot;slidesToShow&quot;: 1}}
+                        ]}" data-brk-library="slider__slick">
+                            <div class="pl-15 pr-15">
+                                <div class="shop-setout text-center" data-brk-library="component__content_slider">
+                                    <div class="shop-setout__img lazyload" data-bg="img/mmf.jpg"><a href="#" class="add-cart"><i class="fas fa-info"></i><span class="shop-slider-text-hover">View More</span></a></div>
+                                    <a class="shop-setout__link" href="#">
+                                        <h3 class="font__family-montserrat font__weight-semibold font__size-16">Retirement Savings Account</h3>
+                                    </a>
+                                    <div class="brk-base-font-color font__family-montserrat font__size-15 font__weight-semibold">Starting from <span class="font__weight-bold">&#8358;1,000</span></div>
+                                </div>
+                            </div>
+                            <div class="pl-15 pr-15">
+                                <div class="shop-setout text-center" data-brk-library="component__content_slider">
+                                    <div class="shop-setout__img lazyload" data-bg="img/mmf.jpg"><a href="#" class="add-cart"><i class="fas fa-info"></i><span class="shop-slider-text-hover">View More</span></a></div>
+                                    <a href="#" class="shop-setout__link">
+                                        <h3 class="font__family-montserrat font__weight-semibold font__size-16">Additional Voluntary Contribution </h3>
+                                    </a>
+                                    <div class="brk-base-font-color font__family-montserrat font__size-15 font__weight-semibold">Starting from <span class="font__weight-bold">&#8358;1,000</span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Insurance-->
+                <div class="brk-tab-item">
+                    <div class="container mb-140">
+                        <h4 class="title__divider title__divider--chevron font__size-21 font__weight-bold font__family-montserrat line__height-24 text-center" data-brk-library="component__dividers">
+                            <span class="title__divider__wrapper">Insurance <span class="line brk-base-bg-gradient-chevron-pseudo"></span></span>
+                        </h4>
+                        <div class="default-slider slick-loading default-slider_mode arrows-classic-dark-circle brk-base-box-shadow fa-req" data-slick="{&quot;slidesToShow&quot;: 4, &quot;slidesToScroll&quot;: 1, &quot;arrows&quot;: true, &quot;responsive&quot;: [
+                        {&quot;breakpoint&quot;: 1230, &quot;settings&quot;: {&quot;slidesToShow&quot;: 3}},
+                        {&quot;breakpoint&quot;: 768, &quot;settings&quot;: {&quot;slidesToShow&quot;: 2}},
+                        {&quot;breakpoint&quot;: 480, &quot;settings&quot;: {&quot;slidesToShow&quot;: 1}}
+                        ]}" data-brk-library="slider__slick">
+                            <div class="pl-15 pr-15">
+                                <div class="shop-setout text-center" data-brk-library="component__content_slider">
+                                    <div class="shop-setout__img lazyload" data-bg="img/mmf.jpg"><a href="#" class="add-cart"><i class="fas fa-info"></i><span class="shop-slider-text-hover">View More</span></a></div>
+                                    <a class="shop-setout__link" href="#">
+                                        <h3 class="font__family-montserrat font__weight-semibold font__size-16">Life Protection Plan</h3>
+                                    </a>
+                                    <div class="brk-base-font-color font__family-montserrat font__size-15 font__weight-semibold">Starting from <span class="font__weight-bold">&#8358;1,000</span></div>
+                                </div>
+                            </div>
+                            <div class="pl-15 pr-15">
+                                <div class="shop-setout text-center" data-brk-library="component__content_slider">
+                                    <div class="shop-setout__img lazyload" data-bg="img/mmf.jpg"><a href="#" class="add-cart"><i class="fas fa-info"></i><span class="shop-slider-text-hover">View More</span></a></div>
+                                    <a href="#" class="shop-setout__link">
+                                        <h3 class="font__family-montserrat font__weight-semibold font__size-16">Life Savings Plan</h3>
+                                    </a>
+                                    <div class="brk-base-font-color font__family-montserrat font__size-15 font__weight-semibold">Starting from <span class="font__weight-bold">&#8358;1,000</span></div>
+                                </div>
+                            </div>
+                            <div class="pl-15 pr-15">
+                                <div class="shop-setout text-center" data-brk-library="component__content_slider">
+                                    <div class="shop-setout__img lazyload" data-bg="img/mmf.jpg"><a href="#" class="add-cart"><i class="fas fa-info"></i><span class="shop-slider-text-hover">View More</span></a></div>
+                                    <a href="#" class="shop-setout__link">
+                                        <h3 class="font__family-montserrat font__weight-semibold font__size-16">Life Education Plan</h3>
+                                    </a>
+                                    <div class="brk-base-font-color font__family-montserrat font__size-15 font__weight-semibold">Starting from <span class="font__weight-bold">&#8358;1,000</span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Trustees-->
+                <div class="brk-tab-item">
+                    <div class="container mb-140">
+                        <h4 class="title__divider title__divider--chevron font__size-21 font__weight-bold font__family-montserrat line__height-24 text-center" data-brk-library="component__dividers">
+                            <span class="title__divider__wrapper">Trustees <span class="line brk-base-bg-gradient-chevron-pseudo"></span></span>
+                        </h4>
+                        <div class="default-slider slick-loading default-slider_mode arrows-classic-dark-circle brk-base-box-shadow fa-req" data-slick="{&quot;slidesToShow&quot;: 4, &quot;slidesToScroll&quot;: 1, &quot;arrows&quot;: true, &quot;responsive&quot;: [
+                    {&quot;breakpoint&quot;: 1230, &quot;settings&quot;: {&quot;slidesToShow&quot;: 3}},
+                    {&quot;breakpoint&quot;: 768, &quot;settings&quot;: {&quot;slidesToShow&quot;: 2}},
+                    {&quot;breakpoint&quot;: 480, &quot;settings&quot;: {&quot;slidesToShow&quot;: 1}}
+                    ]}" data-brk-library="slider__slick">
+                            <div class="pl-15 pr-15">
+                                <div class="shop-setout text-center" data-brk-library="component__content_slider">
+                                    <div class="shop-setout__img lazyload" data-bg="img/mmf.jpg"><a href="#" class="add-cart"><i class="fas fa-info"></i><span class="shop-slider-text-hover">View More</span></a></div>
+                                    <a class="shop-setout__link" href="#">
+                                        <h3 class="font__family-montserrat font__weight-semibold font__size-16">Easy Will</h3>
+                                    </a>
+                                    <div class="brk-base-font-color font__family-montserrat font__size-15 font__weight-semibold">Starting from <span class="font__weight-bold">&#8358;1,000</span></div>
+                                </div>
+                            </div>
+                            <div class="pl-15 pr-15">
+                                <div class="shop-setout text-center" data-brk-library="component__content_slider">
+                                    <div class="shop-setout__img lazyload" data-bg="img/mmf.jpg"><a href="#" class="add-cart"><i class="fas fa-info"></i><span class="shop-slider-text-hover">View More</span></a></div>
+                                    <a href="#" class="shop-setout__link">
+                                        <h3 class="font__family-montserrat font__weight-semibold font__size-16">Education Trust</h3>
+                                    </a>
+                                    <div class="brk-base-font-color font__family-montserrat font__size-15 font__weight-semibold">Starting from <span class="font__weight-bold">&#8358;1,000</span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Securities-->
+                <div class="brk-tab-item">
+                    <div class="container mb-140">
+                        <h4 class="title__divider title__divider--chevron font__size-21 font__weight-bold font__family-montserrat line__height-24 text-center" data-brk-library="component__dividers">
+                            <span class="title__divider__wrapper">Securities <span class="line brk-base-bg-gradient-chevron-pseudo"></span></span>
+                        </h4>
+                        <div class="default-slider slick-loading default-slider_mode arrows-classic-dark-circle brk-base-box-shadow fa-req" data-slick="{&quot;slidesToShow&quot;: 4, &quot;slidesToScroll&quot;: 1, &quot;arrows&quot;: true, &quot;responsive&quot;: [
+                            {&quot;breakpoint&quot;: 1230, &quot;settings&quot;: {&quot;slidesToShow&quot;: 3}},
+                            {&quot;breakpoint&quot;: 768, &quot;settings&quot;: {&quot;slidesToShow&quot;: 2}},
+                            {&quot;breakpoint&quot;: 480, &quot;settings&quot;: {&quot;slidesToShow&quot;: 1}}
+                            ]}" data-brk-library="slider__slick">
+                            <div class="pl-15 pr-15">
+                                <div class="shop-setout text-center" data-brk-library="component__content_slider">
+                                    <div class="shop-setout__img lazyload" data-bg="img/mmf.jpg"><a href="#" class="add-cart"><i class="fas fa-info"></i><span class="shop-slider-text-hover">View More</span></a></div>
+                                    <a class="shop-setout__link" href="#">
+                                        <h3 class="font__family-montserrat font__weight-semibold font__size-16">StockTrade: Online stock trading</h3>
+                                    </a>
+                                    <div class="brk-base-font-color font__family-montserrat font__size-15 font__weight-semibold">Starting from <span class="font__weight-bold">&#8358;1,000</span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Real Estate-->
+                <div class="brk-tab-item">
+                    <div class="container mb-140">
+                        <h4 class="title__divider title__divider--chevron font__size-21 font__weight-bold font__family-montserrat line__height-24 text-center" data-brk-library="component__dividers">
+                            <span class="title__divider__wrapper">Real Estate <span class="line brk-base-bg-gradient-chevron-pseudo"></span></span>
+                        </h4>
+                        <div class="default-slider slick-loading default-slider_mode arrows-classic-dark-circle brk-base-box-shadow fa-req" data-slick="{&quot;slidesToShow&quot;: 4, &quot;slidesToScroll&quot;: 1, &quot;arrows&quot;: true, &quot;responsive&quot;: [
+                            {&quot;breakpoint&quot;: 1230, &quot;settings&quot;: {&quot;slidesToShow&quot;: 3}},
+                            {&quot;breakpoint&quot;: 768, &quot;settings&quot;: {&quot;slidesToShow&quot;: 2}},
+                            {&quot;breakpoint&quot;: 480, &quot;settings&quot;: {&quot;slidesToShow&quot;: 1}}
+                            ]}" data-brk-library="slider__slick">
+                            <div class="pl-15 pr-15">
+                                <div class="shop-setout text-center" data-brk-library="component__content_slider">
+                                    <div class="shop-setout__img lazyload" data-bg="img/mmf.jpg"><a href="#" class="add-cart"><i class="fas fa-info"></i><span class="shop-slider-text-hover">View More</span></a></div>
+                                    <a class="shop-setout__link" href="#">
+                                        <h3 class="font__family-montserrat font__weight-semibold font__size-16">ARM Money Market Fund</h3>
+                                    </a>
+                                    <div class="brk-base-font-color font__family-montserrat font__size-15 font__weight-semibold">Starting from <span class="font__weight-bold">&#8358;1,000</span></div>
+                                </div>
+                            </div>
+                            <div class="pl-15 pr-15">
+                                <div class="shop-setout text-center" data-brk-library="component__content_slider">
+                                    <div class="shop-setout__img lazyload" data-bg="img/mmf.jpg"><a href="#" class="add-cart"><i class="fas fa-info"></i><span class="shop-slider-text-hover">View More</span></a></div>
+                                    <a href="#" class="shop-setout__link">
+                                        <h3 class="font__family-montserrat font__weight-semibold font__size-16">ARM Money Market Fund</h3>
+                                    </a>
+                                    <div class="brk-base-font-color font__family-montserrat font__size-15 font__weight-semibold">Starting from <span class="font__weight-bold">&#8358;1,000</span></div>
+                                </div>
+                            </div>
+                            <div class="pl-15 pr-15">
+                                <div class="shop-setout text-center" data-brk-library="component__content_slider">
+                                    <div class="shop-setout__img lazyload" data-bg="img/mmf.jpg"><a href="#" class="add-cart"><i class="fas fa-info"></i><span class="shop-slider-text-hover">View More</span></a></div>
+                                    <a href="#" class="shop-setout__link">
+                                        <h3 class="font__family-montserrat font__weight-semibold font__size-16">ARM Money Market Fund</h3>
+                                    </a>
+                                    <div class="brk-base-font-color font__family-montserrat font__size-15 font__weight-semibold">Starting from <span class="font__weight-bold">&#8358;1,000</span></div>
+                                </div>
+                            </div>
+                            <div class="pl-15 pr-15">
+                                <div class="shop-setout text-center" data-brk-library="component__content_slider">
+                                    <div class="shop-setout__img lazyload" data-bg="img/mmf.jpg"><a href="#" class="add-cart"><i class="fas fa-info"></i><span class="shop-slider-text-hover">View More</span></a></div>
+                                    <a href="#" class="shop-setout__link">
+                                        <h3 class="font__family-montserrat font__weight-semibold font__size-16">ARM Money Market Fund</h3>
+                                    </a>
+                                    <div class="brk-base-font-color font__family-montserrat font__size-15 font__weight-semibold">Starting from <span class="font__weight-bold">&#8358;1,000</span></div>
+                                </div>
+                            </div>
+                            <div class="pl-15 pr-15">
+                                <div class="shop-setout text-center" data-brk-library="component__content_slider">
+                                    <div class="shop-setout__img lazyload" data-bg="img/mmf.jpg"><a href="#" class="add-cart"><i class="fas fa-info"></i><span class="shop-slider-text-hover">View More</span></a></div>
+                                    <a href="#" class="shop-setout__link">
+                                        <h3 class="font__family-montserrat font__weight-semibold font__size-16">ARM Money Market Fund</h3>
+                                    </a>
+                                    <div class="brk-base-font-color font__family-montserrat font__size-15 font__weight-semibold">Starting from <span class="font__weight-bold">&#8358;1,000</span></div>
+                                </div>
+                            </div>
+
+                            <div class="pl-15 pr-15">
+                                <div class="shop-setout text-center" data-brk-library="component__content_slider">
+                                    <div class="shop-setout__img lazyload" data-bg="img/mmf.jpg"><a href="#" class="add-cart"><i class="fas fa-info"></i><span class="shop-slider-text-hover">View More</span></a></div>
+                                    <a class="shop-setout__link" href="#">
+                                        <h3 class="font__family-montserrat font__weight-semibold font__size-16">ARM Money Market Fund</h3>
+                                    </a>
+                                    <div class="brk-base-font-color font__family-montserrat font__size-15 font__weight-semibold">Starting from <span class="font__weight-bold">&#8358;1,000</span></div>
+                                </div>
+                            </div>
+                            <div class="pl-15 pr-15">
+                                <div class="shop-setout text-center" data-brk-library="component__content_slider">
+                                    <div class="shop-setout__img lazyload" data-bg="img/mmf.jpg"><a href="#" class="add-cart"><i class="fas fa-info"></i><span class="shop-slider-text-hover">View More</span></a></div>
+                                    <a href="#" class="shop-setout__link">
+                                        <h3 class="font__family-montserrat font__weight-semibold font__size-16">ARM Money Market Fund</h3>
+                                    </a>
+                                    <div class="brk-base-font-color font__family-montserrat font__size-15 font__weight-semibold">Starting from <span class="font__weight-bold">&#8358;1,000</span></div>
+                                </div>
+                            </div>
+                            <div class="pl-15 pr-15">
+                                <div class="shop-setout text-center" data-brk-library="component__content_slider">
+                                    <div class="shop-setout__img lazyload" data-bg="img/mmf.jpg"><a href="#" class="add-cart"><i class="fas fa-info"></i><span class="shop-slider-text-hover">View More</span></a></div>
+                                    <a href="#" class="shop-setout__link">
+                                        <h3 class="font__family-montserrat font__weight-semibold font__size-16">ARM Money Market Fund</h3>
+                                    </a>
+                                    <div class="brk-base-font-color font__family-montserrat font__size-15 font__weight-semibold">Starting from <span class="font__weight-bold">&#8358;1,000</span></div>
+                                </div>
+                            </div>
+                            <div class="pl-15 pr-15">
+                                <div class="shop-setout text-center" data-brk-library="component__content_slider">
+                                    <div class="shop-setout__img lazyload" data-bg="img/mmf.jpg"><a href="#" class="add-cart"><i class="fas fa-info"></i><span class="shop-slider-text-hover">View More</span></a></div>
+                                    <a href="#" class="shop-setout__link">
+                                        <h3 class="font__family-montserrat font__weight-semibold font__size-16">ARM Money Market Fund</h3>
+                                    </a>
+                                    <div class="brk-base-font-color font__family-montserrat font__size-15 font__weight-semibold">Starting from <span class="font__weight-bold">&#8358;1,000</span></div>
+                                </div>
+                            </div>
+                            <div class="pl-15 pr-15">
+                                <div class="shop-setout text-center" data-brk-library="component__content_slider">
+                                    <div class="shop-setout__img lazyload" data-bg="img/mmf.jpg"><a href="#" class="add-cart"><i class="fas fa-info"></i><span class="shop-slider-text-hover">View More</span></a></div>
+                                    <a href="#" class="shop-setout__link">
+                                        <h3 class="font__family-montserrat font__weight-semibold font__size-16">ARM Money Market Fund</h3>
+                                    </a>
+                                    <div class="brk-base-font-color font__family-montserrat font__size-15 font__weight-semibold">Starting from <span class="font__weight-bold">&#8358;1,000</span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!----Blog/Video/Fund prices -->
+
+<section></section>
+<!--- Partners -->
+<section>
+    <div class="container mb-20">
+        <h4 class="font__family-varela-round font__weight-bold font__size-24 line__height-32 mt-30 text-center " data-brk-library="component__title ">Our Partners</h4>
+        <div class="divider-layers wow zoomIn " data-brk-library="component__title "><span class="before "></span></div>
+        <div class="row ">
+            <div class="col-lg-2 col-md-4 col-sm-6">
+                <a href="# " class="logo-set " data-brk-library="component__widgets "><img class="logo-set__img lazyload mx-auto d-block pb-3" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="img/armim.jpg " alt="alt "></a>
+            </div>
+            <div class="col-lg-2 col-md-4 col-sm-6">
+                <a href="# " class="logo-set " data-brk-library="component__widgets "><img class="logo-set__img lazyload mx-auto d-block pb-3" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="img/arml.jpg " alt="alt "></a>
+            </div>
+            <div class="col-lg-2 col-md-4 col-sm-6">
+                <a href="# " class="logo-set " data-brk-library="component__widgets "><img class="logo-set__img lazyload mx-auto d-block pb-3" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="img/armp.jpg " alt="alt "></a>
+            </div>
+            <div class="col-lg-2 col-md-4 col-sm-6">
+                <a href="# " class="logo-set " data-brk-library="component__widgets "><img class="logo-set__img lazyload mx-auto d-block pb-3" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="img/armt.jpg " alt="alt "></a>
+            </div>
+            <div class="col-lg-2 col-md-4 col-sm-6">
+                <a href="# " class="logo-set " data-brk-library="component__widgets "><img class="logo-set__img lazyload mx-auto d-block pb-3" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="img/arms.jpg " alt="alt "></a>
+            </div>
+            <div class="col-lg-2 col-md-4 col-sm-6">
+                <a href="# " class="logo-set " data-brk-library="component__widgets "><img class="logo-set__img lazyload mx-auto d-block pb-3" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="img/mixta.jpg " alt="alt "></a>
+            </div>
+        </div>
+    </div>
+</section>
