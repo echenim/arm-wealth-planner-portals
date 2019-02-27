@@ -1,6 +1,7 @@
-﻿
+﻿@model Portal.Business.ViewModels.AccountStatementViewModel
+
 @{
-    ViewData["Title"] = "MyInvestments";
+    ViewData["Title"] = "My Investments";
 }
 
 
@@ -10,7 +11,12 @@
     <div class="element-wrapper col-md-12">
         <h6 class="element-header">
             My Investments
-            <span class="date-timestamp float-right">Jan 27th 2019, 7:42am</span>
+            @{ 
+                var now = DateTime.Now;
+                var time = now.ToString("HH:mm tt");
+                var date = now.ToString("MMM dd yyyy");
+            }
+            <span class="date-timestamp float-right">@date, @time</span>
         </h6>
         <div class="element-box element-wrapper row">
             <!---- Investment Position --->
@@ -21,10 +27,17 @@
                             Your Investment Position
                         </div>
                         <div class="balance-value">
-                            <span>&#8358;72,246,000</span>
+                            <span>&#8358;@String.Format("{0:#,##0.##}", Model.TotalBalance)</span>
                         </div>
                         <div class="balance-value pending-bal">
-                            <span>Pending Transactions:</span><span> &#8358;72,246,000</span>
+                            <span>Pending Transactions:</span>
+                            @if (Model.Summaries != null && Model.Summaries.Count > 0)
+                            {
+                                foreach (var data in Model.Summaries)
+                                {
+                                    <span> &#8358;@String.Format("{0:#,##0.##}", data.PendingTransaction)</span>
+                                }
+                            }
                         </div>
                     </div>
 
@@ -169,50 +182,77 @@
                     <div class="el-chart-w">
                         <canvas height="120" id="donutChart1" width="120"></canvas>
                         <div class="inside-donut-chart-label">
-                            <strong>&#8358;26.3m</strong><span>Spread</span>
+                            <strong>&#8358;@String.Format("{0:#,##0.##}", @ViewBag.SumAccruedInterest)</strong><span>Spread</span>
                         </div>
                     </div>
                     <div class="el-legend condensed">
                         <div class="row">
                             <div class=" col-xxxxl-6 ml-sm-auto mr-sm-auto">
-                                <div class="legend-value-w">
-                                    <div class="legend-pin legend-pin-squared" style="background-color: #6896f9;"></div>
-                                    <div class="legend-value">
-                                        <span>Money Market Fund</span>
-                                        <div class="legend-sub-value">
-                                            17%, &#8358;12,200,420
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="legend-value-w">
-                                    <div class="legend-pin legend-pin-squared" style="background-color: #85c751;"></div>
-                                    <div class="legend-value">
-                                        <span>Ethical Fund</span>
-                                        <div class="legend-sub-value">
-                                            22%, &#8358;2,200,4200
-                                        </div>
-                                    </div>
-                                </div>
+                                @if (Model.Summaries != null && Model.Summaries.Count > 0)
+                                {
+                                    var mmf = String.Empty;
+                                    var ef = String.Empty;
+                                    var df = String.Empty;
+                                    var agf = String.Empty;
 
-                                <div class="legend-value-w">
-                                    <div class="legend-pin legend-pin-squared" style="background-color: #6896f9;"></div>
-                                    <div class="legend-value">
-                                        <span>Money Market Fund</span>
-                                        <div class="legend-sub-value">
-                                            17%, &#8358;12,200,420
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="legend-value-w">
-                                    <div class="legend-pin legend-pin-squared" style="background-color: #85c751;"></div>
-                                    <div class="legend-value">
-                                        <span>Ethical Fund</span>
-                                        <div class="legend-sub-value">
-                                            22%, &#8358;2,200,4200
-                                        </div>
-                                    </div>
-                                </div>
+                                    foreach (var data in Model.Summaries)
+                                    {
+                                        var productcode = data.ProductCode;
+                                        var balance = (Model.TotalBalance == 0) ? 0 : (((data.CurrentBalance) / (Model.TotalBalance)) * 100);
 
+                                        <div class="legend-value-w">
+                                            @if (data.ProductName.Equals("ARM Money Market Fund"))
+                                            {
+                                                mmf = (Math.Round(balance, 2)).ToString();
+                                                <div class="legend-pin legend-pin-squared" style="background-color: #6896f9;"></div>
+                                                <div class="legend-value">
+                                                    <span>@data.ProductName</span>
+                                                    <div class="legend-sub-value">
+                                                        @Math.Round(balance, 2)%, &#8358;@String.Format("{0:#,##0.##}", data.AccruedInterest)
+                                                    </div>
+                                                </div>
+                                            }
+                                            else if (data.ProductName.Equals("ARM Ethical Fund"))
+                                            {
+                                                ef = (Math.Round(balance, 2)).ToString();
+                                                <div class="legend-pin legend-pin-squared" style="background-color: #85c751;"></div>
+                                                <div class="legend-value">
+                                                    <span>@data.ProductName</span>
+                                                    <div class="legend-sub-value">
+                                                        @Math.Round(balance, 2)%, &#8358;@String.Format("{0:#,##0.##}", data.AccruedInterest)
+                                                    </div>
+                                                </div>
+                                            }
+                                            else if (data.ProductName.Equals("ARM Discovery Fund"))
+                                            {
+                                                df = (Math.Round(balance, 2)).ToString();
+                                                <div class="legend-pin legend-pin-squared" style="background-color: #ffcc29;"></div>
+                                                <div class="legend-value">
+                                                    <span>@data.ProductName</span>
+                                                    <div class="legend-sub-value">
+                                                        @Math.Round(balance, 2)%, &#8358;@String.Format("{0:#,##0.##}", data.AccruedInterest)
+                                                    </div>
+                                                </div>
+                                            }
+                                            else if (data.ProductName.Equals("ARM Aggressive Growth Fund"))
+                                            {
+                                                agf = (Math.Round(balance, 2)).ToString();
+                                                <div class="legend-pin legend-pin-squared" style="background-color: #f37070;"></div>
+                                                <div class="legend-value">
+                                                    <span>@data.ProductName</span>
+                                                    <div class="legend-sub-value">
+                                                        @Math.Round(balance, 2)%, &#8358;@String.Format("{0:#,##0.##}", data.AccruedInterest)
+                                                    </div>
+                                                </div>
+                                            }
+                                        </div>
+                                    }
+
+                                    <input type="text" value="@mmf" id="mmf" hidden />
+                                    <input type="text" value="@ef" id="ef" hidden />
+                                    <input type="text" value="@df" id="df" hidden />
+                                    <input type="text" value="@agf" id="agf" hidden />
+                                }
                             </div>
 
                         </div>
@@ -228,7 +268,7 @@
 <div class=" element-wrapper">
 
     <div class="row">
-        <div class="col-md-12 ">
+        @*<div class="col-md-12 ">
             <div class="element-box element-wrapper">
                 <h5 class="element-header">
                     My Portfolio
@@ -317,6 +357,49 @@
 
                         </div>
 
+                    </div>
+                </div>
+            </div>
+        </div>*@
+
+        <!--This is to test prudct page and possibly get approval-->
+        <div class="col-md-12">
+            <div class="element-box element-wrapper">
+                <h5 class="element-header">
+                    My Portfolio
+                </h5>
+                <div>
+                    <div class="col-md-12">
+                        <div class="row">
+                            @if (Model.Summaries != null && Model.Summaries.Count > 0)
+                            {
+                                foreach (var data in Model.Summaries)
+                                {
+                                    <div class="col-sm-6 col-lg-4 col-12 pb-4">
+                                        <a class="el-tablo highlight smaller cta-w cta-with-media mutual-purple" href="#">
+                                            <div class="cta-content products-content">
+                                                <div class="highlight-header highlight-header-mutual">
+                                                    Mutual Funds
+                                                </div>
+                                                <h6 class="cta-header products-header">
+                                                    <span class="label">@data.ProductName</span>
+                                                </h6>
+                                                
+                                                <h5>@data.Currency @String.Format("{0:#,##0.##}", data.CurrentBalance)</h5>
+                                                <h6 title="Pending Transactions">
+                                                    <span class="label">Pending Transactions</span>
+                                                </h6>
+                                                <h5>@data.Currency @String.Format("{0:#,##0.##}", data.PendingTransaction)</h5>
+                                                <h6 title="Accrued Interest">
+                                                    <span class="label">Interest:</span> <span>@data.Currency @String.Format("{0:#,##0.##}", data.AccruedInterest)</span>
+                                                </h6>
+                                                <img class="portfolio-sideicon" alt="" src="img/orders-icon.svg">
+                                            </div>
+                                        </a>
+                                    </div>
+                                }
+                            }
+                        </div>
                     </div>
                 </div>
             </div>
