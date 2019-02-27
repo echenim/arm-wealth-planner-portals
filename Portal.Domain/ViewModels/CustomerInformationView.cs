@@ -9,6 +9,7 @@ namespace Portal.Domain.ViewModels
         //public string UserName { get; set; }
         //public string AlterUserName { get; set; }
         public string FirstName { get; set; }
+
         public string LastName { get; set; }
         public string ResponseCode { get; set; }
         public string ResponseDescription { get; set; }
