@@ -17,20 +17,15 @@ namespace Portal.Areas.Admin.Controllers
     public class ProductsController : Controller
     {
         private readonly IProductManager _product;
-        private readonly IProductFeatureManager _productFeature;
-        private readonly IProductKeyBenefitManager _benefitService;
+
         private readonly IProductCategoryManager _categoryService;
         private readonly IHostingEnvironment _hostingEnvironment;
 
         public ProductsController(IProductManager product,
             IProductCategoryManager categoryService,
-            IProductFeatureManager productFeature,
-            IProductKeyBenefitManager benefitService,
         IHostingEnvironment hostingEnvironment)
         {
             _product = product;
-            _benefitService = benefitService;
-            _productFeature = productFeature;
             _categoryService = categoryService;
             _hostingEnvironment = hostingEnvironment;
         }

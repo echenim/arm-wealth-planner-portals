@@ -4,6 +4,7 @@ using Portal.Business.Contracts;
 using Portal.Domain;
 using Portal.Domain.Models;
 using Microsoft.EntityFrameworkCore;
+using Portal.Business.Utilities;
 
 namespace Portal.Business.StoreManagers
 {
@@ -16,18 +17,47 @@ namespace Portal.Business.StoreManagers
             _context = context;
         }
 
-        public Person Save(Person model)
+        public NotificationResult<Person> Save(Person model)
         {
-            _context.Add(model);
-            model.Id = _context.SaveChanges();
-            return model;
+            var notification = new NotificationResult<Person>();
+
+            try
+            {
+                model.OnCreated = DateTime.Now.ToUniversalTime();
+                _context.Add(model);
+                _context.SaveChanges();
+
+                notification.Succeed = true;
+                notification.TObj = model;
+            }
+            catch (Exception ex)
+            {
+                notification.Succeed = false;
+                notification.TObj = null;
+            }
+
+            return notification;
         }
 
-        public Person Edit(Person model)
+        public NotificationResult<Person> Edit(Person model)
         {
-            _context.Entry(model).State = EntityState.Modified;
-            _context.SaveChanges();
-            return model;
+            var notification = new NotificationResult<Person>();
+
+            try
+            {
+                _context.Entry(model).State = EntityState.Modified;
+                _context.SaveChanges();
+
+                notification.Succeed = true;
+                notification.TObj = model;
+            }
+            catch (Exception ex)
+            {
+                notification.Succeed = false;
+                notification.TObj = null;
+            }
+
+            return notification;
         }
 
         public Person FindById(Func<Person, bool> predicate)

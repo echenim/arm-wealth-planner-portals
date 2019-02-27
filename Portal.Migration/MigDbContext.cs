@@ -25,13 +25,13 @@ namespace Portal.AddMigration
         public DbSet<Person> Person { get; set; }
         public DbSet<ProductCategory> ProductCategory { get; set; }
         public DbSet<Products> Products { get; set; }
-        public DbSet<ProductFeatures> ProductFeatures { get; set; }
-        public DbSet<ProductKeyBenefit> ProductKeyBenefit { get; set; }
-        public DbSet<ProductPerformance> ProductPerformance { get; set; }
+        public DbSet<WhatYouNeedToKNowAboutThisProduct> WhatYouNeedToKNowAboutThisProduct { get; set; }
+
         public DbSet<PurchaseOrders> PurchaseOrders { get; set; }
 
         //client portal
         public DbSet<DDebit> DDebit { get; set; }
+
         public DbSet<ClientUpdate> ClientUpdate { get; set; }
         public DbSet<ClientUpdateTemp> ClientUpdateTemps { get; set; }
         public DbSet<DirectDebit> DirectDebit { get; set; }

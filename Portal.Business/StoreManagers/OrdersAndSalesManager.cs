@@ -21,24 +21,24 @@ namespace Portal.Business.StoreManagers
         public IQueryable<PurchaseOrders> Get(Func<PurchaseOrders, bool> predicate = null)
             => predicate != null
                 ? _context.PurchaseOrders
-                    .Include(s => s.Customer)
+                    .Include(s => s.Person)
                     .Include(s => s.Product).Include(s => s.Product.ProductCategory)
                     .Where(predicate: predicate)
                     .AsQueryable()
                 : _context.PurchaseOrders
-                    .Include(s => s.Customer)
+                    .Include(s => s.Person)
                     .Include(s => s.Product).Include(s => s.Product.ProductCategory)
                     .AsQueryable();
 
         public IQueryable<PurchaseOrders> Sales(Func<PurchaseOrders, bool> predicate = null)
             => (predicate != null
                 ? _context.PurchaseOrders
-                    .Include(s => s.Customer)
+                    .Include(s => s.Person)
                     .Include(s => s.Product).Include(s => s.Product.ProductCategory)
                     .Where(predicate: predicate)
                     .AsQueryable()
                 : _context.PurchaseOrders
-                    .Include(s => s.Customer)
+                    .Include(s => s.Person)
                     .Include(s => s.Product).Include(s => s.Product.ProductCategory)
                     .AsQueryable()).Where(s => s.OrderDate != null
                                                && s.TransactionStatus.Equals("Succeed"));
