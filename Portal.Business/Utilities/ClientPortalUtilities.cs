@@ -18,55 +18,55 @@ namespace Portal.Business.Utilities
         public ClientPortalUtilities(IArmOneServiceConfigManager configManager)
         {
             _configSettingManager = configManager;
-        }
+        }       
 
         public string ARMOneToken()
         {
-            //    HttpClient webclient = new HttpClient();
+            HttpClient webclient = new HttpClient();
 
-            //    SecureCredentials decrypt = new SecureCredentials();
+            SecureCredentials decrypt = new SecureCredentials();
 
-            //    var uname = _configSettingManager.ArmOneUsername;
-            //    var pass = _configSettingManager.ArmOnePassword;
-            //    var Url = _configSettingManager.ArmOneToken;
+            var uname = _configSettingManager.ArmOneUsername;
+            var pass = _configSettingManager.ArmOnePassword;
+            var Url = _configSettingManager.ArmOneToken;
 
-            //    var Username = decrypt.DecryptCredentials(uname);
-            //    var Password = decrypt.DecryptCredentials(pass);
-            //    var EmailAddress = _configSettingManager.ArmOneEmail;
+            var Username = decrypt.DecryptCredentials(uname);
+            var Password = decrypt.DecryptCredentials(pass);
+            var EmailAddress = _configSettingManager.ArmOneEmail;
 
-            //    Uri mUrl = new Uri(Url);
+            Uri mUrl = new Uri(Url);
             string Token = "";
 
-            //    Dictionary<string, object> data = new Dictionary<string, object>();
-            //    data.Add("Username", Username);
-            //    data.Add("Password", Password);
-            //    data.Add("EmailAddress", EmailAddress);
+            Dictionary<string, object> data = new Dictionary<string, object>();
+            data.Add("Username", Username);
+            data.Add("Password", Password);
+            data.Add("EmailAddress", EmailAddress);
 
-            //    var MySerializedObject = JsonConvert.SerializeObject(data);
+            var MySerializedObject = JsonConvert.SerializeObject(data);
 
-            //    var content = new StringContent(MySerializedObject, Encoding.UTF8, "application/json");
+            var content = new StringContent(MySerializedObject, Encoding.UTF8, "application/json");
 
-            //    var task = Task.Run(async () =>
-            //    {
-            //        return await webclient.PostAsync(mUrl, content);
-            //    });
+            var task = Task.Run(async () =>
+            {
+                return await webclient.PostAsync(mUrl, content);
+            });
 
-            //    var response = task.Result;
-            //    if (response.StatusCode == HttpStatusCode.OK)
-            //    {
-            //        response.EnsureSuccessStatusCode();
-            //        var task1 = Task.Run(async () =>
-            //        {
-            //            return await response.Content.ReadAsStringAsync();
-            //        });
+            var response = task.Result;
+            if (response.StatusCode == HttpStatusCode.OK)
+            {
+                response.EnsureSuccessStatusCode();
+                var task1 = Task.Run(async () =>
+                {
+                    return await response.Content.ReadAsStringAsync();
+                });
 
-            //        var rep = task1.Result;
+                var rep = task1.Result;
 
-            //        Dictionary<string, object> aoresult = JsonConvert.DeserializeObject<Dictionary<string, object>>(rep);
+                Dictionary<string, object> aoresult = JsonConvert.DeserializeObject<Dictionary<string, object>>(rep);
 
-            //        aoresult.TryGetValue("CustomerReference", out object MK);
-            //        Token = MK.ToString();
-            //    }
+                aoresult.TryGetValue("CustomerReference", out object MK);
+                Token = MK.ToString();
+            }
             return Token;
         }
     }

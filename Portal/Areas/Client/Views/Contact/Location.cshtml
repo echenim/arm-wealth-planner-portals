@@ -1,4 +1,6 @@
 ﻿@model Portal.Business.ViewModels.FeedbackViewModel
+@using Portal.Business.ViewModels
+@using Newtonsoft.Json;
 
 @{
     ViewData["Title"] = "Contact Us";
@@ -58,7 +60,9 @@
             <div class="element-box">
                 <div class="row">
                     <div class="col-md-1">
-                        <i class="os-icon os-icon-check"></i>
+                        <div class="icon-w">
+                            <i class="os-icon os-icon-check"></i>
+                        </div>
                     </div>
                     <div class="col-md-11">
                         <span class="smaller_text">@TempData["message"]</span>
@@ -82,10 +86,10 @@
                             var messageType = new SelectList(
                             new List<SelectListItem>
                             {
-                                new SelectListItem {Text = "Assistance", Value = "Assistance"},
-                                new SelectListItem {Text = "Complaints", Value = "Complaints"},
-                                new SelectListItem {Text = "Enquiry", Value = "Enquiry"},
-                                new SelectListItem {Text = "Feedback", Value = "Feedback"}
+                                                        new SelectListItem {Text = "Assistance", Value = "Assistance"},
+                                                        new SelectListItem {Text = "Complaints", Value = "Complaints"},
+                                                        new SelectListItem {Text = "Enquiry", Value = "Enquiry"},
+                                                        new SelectListItem {Text = "Feedback", Value = "Feedback"}
                             }, "Value", "Text");
                         }
                         <div class="col-sm-8">
@@ -145,11 +149,11 @@
                                 var selectList = new SelectList(
                                     new List<SelectListItem>
                                     {
-                                        new SelectListItem {Text = "Complaints", Value = "Complaints"},
-                                        new SelectListItem {Text = "Embassy Letter", Value = "Embassy Letter"},
-                                        new SelectListItem {Text = "Assistance", Value = "Assistance"},
-                                        new SelectListItem {Text = "Enquiry", Value = "Enquiry"},
-                                        new SelectListItem {Text = "Other", Value = "Other"},
+                                                                        new SelectListItem {Text = "Complaints", Value = "Complaints"},
+                                                                        new SelectListItem {Text = "Embassy Letter", Value = "Embassy Letter"},
+                                                                        new SelectListItem {Text = "Assistance", Value = "Assistance"},
+                                                                        new SelectListItem {Text = "Enquiry", Value = "Enquiry"},
+                                                                        new SelectListItem {Text = "Other", Value = "Other"},
                                     }, "Value", "Text");
                             }
                             @Html.DropDownListFor(model => model.SelfService.RequestType, selectList, new { @class = "form-control selectpicker" })
@@ -172,65 +176,65 @@
         </div>
     </div>
 
-    <!-- Track Service Request -->
-    @if (Model.SelfService.RequestStatuses != null)
-    {
-        <div class="col-lg-12 col-sm-12">
-            <div class="row">
-                <div class="col-md-12 col-sm-12 ">
-                    <div class="element-box element-wrapper">
-                        <h5 class="element-header">
-                            Track Service Request
-                        </h5>
+</div>
 
-                        <div class="">
-                            <div class="table-responsive">
-                                <table class="table table-stripped">
-                                    <thead>
-                                        <tr>
-                                            <th>TRACKING NUMBER</th>
-                                            <th>DESCRIPTION</th>
-                                            <th>REQUEST DATE</th>
-                                            <th>STATUS</th>
-                                            <th>REMARKS</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach (var data in Model.SelfService.RequestStatuses)
-                                        {
-                                            <tr>
-                                                <td>@data.TrackingNumber</td>
-                                                <td>@data.RequestDescription</td>
-                                                <td>@data.RequestDate</td>
-                                                <td>@data.CurrentStatus</td>
-                                                <td>@data.Remark</td>
-                                            </tr>
-                                        }
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
+<!-- Track Service Request -->
+@if (TempData["TrackService"] != null)
+{
+    var trackService = TempData["TrackService"].ToString();
+    var requests = JsonConvert.DeserializeObject<List<RequestStatuses>>(trackService);
+    <div class="row">
+        <div class="col-md-12 col-sm-12 ">
+            <div class="element-box element-wrapper">
+                <h5 class="element-header">
+                    Track Service Request
+                </h5>
+
+                <div class="">
+                    <div class="table-responsive">
+                        <table class="table table-stripped">
+                            <thead>
+                                <tr>
+                                    <th>TRACKING NUMBER</th>
+                                    <th>DESCRIPTION</th>
+                                    <th>REQUEST DATE</th>
+                                    <th>STATUS</th>
+                                    <th>REMARKS</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var data in requests)
+                                {
+                                    <tr>
+                                        <td>@data.TrackingNumber</td>
+                                        <td>@data.RequestDescription</td>
+                                        <td>@data.RequestDate</td>
+                                        <td>@data.CurrentStatus</td>
+                                        <td>@data.Remark</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
-        </div>        
-    }
-    else
-    {
-        <div class="row">
-            <div class="col-md-12">
-                <div class="element-box element-wrapper">
-                    <h5 class="element-header">
-                        Track Service Request
-                    </h5>
-                    <p>
-                        <span class="label">
-                            There is no update available for the tracking number submited.
-                        </span>
-                    </p>
-                </div>
+        </div>
+    </div>
+}
+else
+{
+    <div class="row">
+        <div class="col-md-12">
+            <div class="element-box element-wrapper">
+                <h5 class="element-header">
+                    Track Service Request
+                </h5>
+                <p>
+                    <span class="label">
+                        There is no update available for the tracking number submited.
+                    </span>
+                </p>
             </div>
         </div>
-    }
-
-</div>
+    </div>
+}

@@ -54,6 +54,7 @@ namespace Portal.Areas.Client.Controllers
 
         public IActionResult Location()
         {
+            var model = new FeedbackViewModel();
             var _user = new AuthenticateResponse
             {
                 MembershipKey = 1007435,
@@ -69,7 +70,7 @@ namespace Portal.Areas.Client.Controllers
                 return RedirectToAction("Login", "Account");
             }
 
-            return View();
+            return View(model);
         }
 
         public IActionResult FindInvestmentCenter()
@@ -117,11 +118,11 @@ namespace Portal.Areas.Client.Controllers
         {
             var _user = new AuthenticateResponse
             {
-                MembershipKey = 1007435,
-                EmailAddress = "gbadebo.ayan@gmail.com",
-                FirstName = "Funmilayo",
-                LastName = "Adeyemi",
-                FullName = "Funmilayo Ruth Adeyemi",
+                MembershipKey = 1006979,//1007435,
+                EmailAddress = "tolu.olusakin@gmail.com",//"gbadebo.ayan@gmail.com",
+                FirstName = "Tolulope",
+                LastName = "Olusakin",
+                FullName = "Olusakin Tolulope S"//"Funmilayo Ruth Adeyemi",
             };
 
             try
@@ -146,8 +147,8 @@ namespace Portal.Areas.Client.Controllers
                 var fbResponse = _clientService.SendFeedback(fbRequest);
                 if (fbResponse != null && fbResponse.TrackingID != null)
                 {
-                    var msg = "Success: " + fbResponse.StatusMessage + "Your previous message was sent successfully. Please take note of your Tracking Number:" + fbResponse.TrackingID;
-                    TempData["message"] = ViewBag.Message = msg;
+                    var msg = "Success: " + fbResponse.StatusMessage + ":" + fbResponse.TrackingID;
+                    TempData["message"] =  msg;
                     return RedirectToAction("Location", "Contact");
                 }
                 else
@@ -162,6 +163,72 @@ namespace Portal.Areas.Client.Controllers
                 _logger.LogError(null, ex, ex.Message);
             }
             return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult TrackService(FeedbackViewModel modelview)
+        {
+            var trackServiceStatus = new FeedbackViewModel();
+            var _user = new AuthenticateResponse
+            {
+                MembershipKey = 1006979,//1007435,
+                EmailAddress = "tolu.olusakin@gmail.com",//"gbadebo.ayan@gmail.com",
+                FirstName = "Tolulope",
+                LastName = "Olusakin",
+                FullName = "Olusakin Tolulope S"//"Funmilayo Ruth Adeyemi",
+            };
+            var model = new TrackServiceViewModel();
+
+            if (_user == null)
+            {
+                TempData["SessionTimeOut"] = "You have been logged out due to inactivity. Please login to gain access.";
+                return RedirectToAction("Login", "Account");
+            }
+
+            try
+            {
+                model.RequestType = modelview.SelfService.RequestType;
+                model.TrackingNumber = modelview.SelfService.TrackingNumber;
+
+                var trRequest = new TrackServiceRequest
+                {
+                    MembershipNumber = _user.MembershipKey,
+                    RequestType = model.RequestType,
+                    TrackingNumber = model.TrackingNumber
+                };
+
+                List<RequestStatuses> getStatus = new List<RequestStatuses>();
+                var trResponse = _clientService.TrackService(trRequest);
+
+                if (trResponse.RequestStatuses != null && trResponse.RequestStatuses.Count > 0)
+                {
+                    foreach (var req in trResponse.RequestStatuses)
+                    {
+                        var status = new RequestStatuses();
+                        status.MembershipNumber = req.MembershipNumber;
+                        status.Remark = req.Remark;
+                        status.CurrentStatus = req.CurrentStatus;
+                        status.RequestDescription = req.RequestDescription;
+                        status.TrackingNumber = req.TrackingNumber;
+
+                        getStatus.Add(status);
+                    }
+
+                    model.RequestStatuses = getStatus;
+                    
+                    trackServiceStatus.SelfService.RequestStatuses = model.RequestStatuses;                    
+                }
+
+                var serializeStatus = JsonConvert.SerializeObject(getStatus);
+                TempData["TrackService"] = serializeStatus;
+                return RedirectToAction("Location", "Contact");
+            }
+            catch (Exception ex)
+            {
+                Utilities.ProcessError(ex, _contentRootPath);
+                _logger.LogError(null, ex, ex.Message);
+            }
+            return View();
         }
     }
 }

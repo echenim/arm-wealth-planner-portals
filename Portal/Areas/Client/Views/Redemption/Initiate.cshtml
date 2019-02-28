@@ -37,8 +37,10 @@
                     {
                         currentBalance = record.CurrentBalance.ToString("F2");
                         <div class="element-wrapper pb-0">
-                            <h5 class="element-header">
-                                @record.ProductName
+                            <h5 class="element_header_redemption element-header">
+                                @record.ProductName 
+                                <br/>                               
+                                <span class="newbalance smaller_text date-timestamp float-right">New Balance - &#8358;@currentBalance</span>
                             </h5>
                             <div class="element-box">
                                 <div class="row">
@@ -46,7 +48,7 @@
                                         <div class="form-group">
                                             <label class="" for="">Enter Amount</label>
                                             <div class="input-group mb-2 mr-sm-2 mb-sm-0">
-                                                <input type="number" class="form-control" placeholder="Enter Amount..." value="0" min="0" max="@record.CurrentBalance" ng-disabled='loading||otpGenerated' id="@record.ProductCode" ng-model='@record.ProductCode' data-rel='@record.ProductName' ng-focus="focusCallback($event)" ng-change='addToCart()'>
+                                                <input type="number" class="form-control" placeholder="₦0.00" min="0" max="@record.CurrentBalance" ng-disabled='loading||otpGenerated' id="@record.ProductCode" ng-model='@record.ProductCode' data-rel='@record.ProductName' ng-focus="focusCallback($event)" ng-change='addToCart()'>
                                                 <div class="input-group-append">
                                                     <div class="input-group-text">
                                                         NGN
@@ -90,28 +92,31 @@
             </div>
         
             <div class="col-sm-6">
-                <div class="row">
-                    <div class="col-12">
-                        <div class="form-group">
-                            <label class="" for="">Reason for Redemption</label>
-                            <select class="form-control" name='source' ng-model="record.Source">
-                                <option value=""> Select an Option</option>
-                                <option value="">Urgent Fund Requirement</option>
-                                <option value="">Investment Goal Realised</option>
-                                <option value="">To Reallocate my Investment</option>
-                                <option value="">Others</option>
-                            </select>
-                            <p ng-show="redForm.source.$invalid" class="help-block">Reason for redemption is required.</p>
+                <div class="element-box">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label class="" for="">Reason for Redemption</label>
+                                <select class="form-control" name='source' ng-model="record.Source">
+                                    <option value=""> Select an Option</option>
+                                    <option value="">Urgent Fund Requirement</option>
+                                    <option value="">Investment Goal Realised</option>
+                                    <option value="">To Reallocate my Investment</option>
+                                    <option value="">Others</option>
+                                </select>
+                                <p ng-show="redForm.source.$invalid" class="help-block">Reason for redemption is required.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="form-group">
+                                <input type="text" name="sourceothers" class="form-control" placeholder="If others, please specify" ng-model="record.SourceOther" ng-required="record.Source == 'Others'" />
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-12">
-                        <div class="form-group">
-                            <input type="text" name="sourceothers" class="form-control" placeholder="If others, please specify" ng-model="record.SourceOther" ng-required="record.Source == 'Others'" />
-                        </div>
-                    </div>
-                </div>
+                
             </div>
         </div>
     </div>
@@ -125,25 +130,23 @@
                     <div class="highlight-header highlight-header-mutual">
                         Mutual Funds
                     </div>
-                    @*<h5 class="cta-header">
-                            Available balance
-                        </h5>*@
-                    <div class="label">
+                    
+                    @*<div class="label">
                         New Balance
                     </div>
                     <div class="value font-one-four">
                         &#8358;@currentBalance
                     </div>
-                    @*<img class="portfolio-sideicon" alt="" src="img/orders-icon.svg">*@
-                    <p></p>
+                    
+                    <p></p>*@
                     <table>
                         <tbody>
                             <tr ng-repeat="(key, value) in myCart">
                                 <td class="label">{[{value.productName}]}</td>
-                                <td class="col2 value font-one-four" style="display: none;">+₦{[{value.amount}]}</td>
+                                <td class="col2 value font-one-four">+₦{[{value.amount}]}</td>
                             </tr>
                             <tr>
-                                @*<td class="label">Total</td>*@
+                                <td class="label">Total</td>
                                 <td class="col1 value font-one-four">{[{cartTotal |currency : '₦' : 2}]}</td>
                             </tr>
                             <tr class="spacer"><td></td></tr>
@@ -253,21 +256,6 @@
         </div>        
         <!--end test-->
 
-        @*<div id="test-form">
-            <form >
-                <div class="notif">
-                    Confirm the information below and click continue to proceed with redemption.
-                    <div class="summary">
-                        <h4>Transaction Summary</h4>
-                        <div class="wpc-t-summary">
-                            <div class="wpc-t-summary-item">
-                                
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </form>
-        </div>*@
     </div>
 
 </div>
@@ -286,13 +274,15 @@
                 $scope.init = function () {
                     $scope.myCart = {};
                     $scope.accruedInterest = 0;
-                    var inputs = angular.element(document).find(".accruedInterest").each(function (idx, input) {
-                        $scope.accruedInterest += $(input).val();
-                    });
+                    
+                    $(".accruedInterest").each(function () {
+                        $scope.accruedInterest += parseFloat(this.value);
+                    });                   
+
                     $scope.cartTotal = 0;
                     $scope.targetField = null;
                     $scope.checkoutProduct = []
-                    $scope.realNetWorth = '@Model.TotalBalance' - $scope.accruedInterest;
+                    $scope.realNetWorth = @Model.TotalBalance - $scope.accruedInterest;
                     $scope.expectedNetWorth = 0;
                     $scope.redemptionResponse = [];
                     $scope.loading = false;
@@ -346,8 +336,9 @@
                     angular.forEach($scope.myCart, function (value, key) {
                         total = total + value.amount;
                     })
+                    
                     $scope.cartTotal = total;
-                    $scope.expectedNetWorth = $scope.realNetWorth - total;
+                    $scope.expectedNetWorth = $scope.realNetWorth - total;                    
                 }
 
                 $scope.sendOtp = function () {
