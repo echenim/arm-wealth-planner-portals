@@ -62,7 +62,7 @@ namespace Portal.Areas.Client.Controllers
                 FirstName = "Funmilayo",
                 LastName = "Adeyemi",
                 FullName = "Funmilayo Ruth Adeyemi",
-            };
+            }; 
 
             if (_user == null)
             {
