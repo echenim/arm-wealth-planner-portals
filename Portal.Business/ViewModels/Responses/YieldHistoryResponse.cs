@@ -6,11 +6,11 @@ namespace Portal.Business.ViewModels
 {
     public class YieldHistoryResponse
     {
-        public List<Yields> Yield { get; set; }
+        public List<Yields> Yields { get; set; }
 
         public YieldHistoryResponse()
         {
-            Yield = new List<Yields>();
+            Yields = new List<Yields>();
         }
     }
 

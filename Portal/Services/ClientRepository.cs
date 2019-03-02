@@ -6,6 +6,9 @@ using Portal.Business.TestServices;
 using Portal.Business.ViewModels;
 using System.Security.Cryptography;
 using System.Text;
+using Portal.Business.Utilities;
+using System.Data.SqlClient;
+using Dapper;
 
 namespace Portal.Services
 {
@@ -133,6 +136,8 @@ namespace Portal.Services
             return response;
         }
 
+        //currently api can't pull from test db as endpoint has not been written. 
+        //pulling directly from the tesdb.
         public PriceHistoryResponse GetFundPriceHistory(string fundcode)
         {
             var request = new PriceHistoryRequest
@@ -142,6 +147,24 @@ namespace Portal.Services
                 EndDate = DateTime.Now
             };
             var response = _clientService.GetFundPriceHistory(request);
+            return response;
+        }
+
+        //until the endpoint for the above method has been created,
+        //this is what would be used to spool data for fund prices
+        public FundPrices GetFundPrices(string fundcode)
+        {
+            var response = new FundPrices();
+            var settings = _configSettingManager.FundPriceConnection;
+
+            var sql = $@"SELECT * FROM dw.FactFundPrice
+                         WHERE ProductCode = '{fundcode}'";
+
+            using (var connection = new SqlConnection(settings))
+            {
+                response.FundPrice = connection.Query<FactFundPrice>(sql).ToList();
+            }
+
             return response;
         }
 

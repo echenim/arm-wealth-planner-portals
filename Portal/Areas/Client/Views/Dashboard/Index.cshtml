@@ -262,22 +262,22 @@
 
 
                         <div class="tab-content" ng-app="chartApp" ng-controller="amChartsController" ng-init="init()">
-                            <div class="tab-pane active" id="tab_mmf">
+                            <div class="tab-pane active" id="ARMMMF">
 
                                 @*MMF PERFORMANCE*@
                             </div>
 
-                            <div class="tab-pane" id="tab_df">
+                            <div class="tab-pane" id="ARMDF">
 
                                 @*Discovery Fund PERFORMANCE*@
                             </div>
 
-                            <div class="tab-pane" id="tab_agf">
+                            <div class="tab-pane" id="AGF">
 
                                 @*Aggressive Fund PERFORMANCE*@
                             </div>
 
-                            <div class="tab-pane" id="tab_ef">
+                            <div class="tab-pane" id="ARMEF">
 
                                 @*Ethical Fund PERFORMANCE*@
                             </div>
@@ -323,7 +323,7 @@
                     var url = '@Url.Action("FundPriceHistory", "Dashboard")' + '?fundCode=' + fund_code;
                     $http.get(url)
                         .success(function (data, status, headers, config) {
-                            var graphData = new GraphData(data.prices.reverse());
+                            var graphData = new GraphData(data.fundPrice.reverse());
                             var plotter = new FundPlotter(fund_code, graphData.data);
                             plotter.plot();
                         })
@@ -415,6 +415,7 @@
                             },
                             "dataProvider": this.data
                         });
+                        
                     }
 
                 }
@@ -423,7 +424,7 @@
                     var url = '@Url.Action("FundYieldHistory", "Dashboard")';
                     $http.get(url)
                         .success(function (data, status, headers, config) {
-                            var graphData = new GraphData(data.yield.reverse());
+                            var graphData = new GraphData(data.yields.reverse());
                             this.plot(graphData.data);
                         })
                         .error(function (data, status, header, config) {

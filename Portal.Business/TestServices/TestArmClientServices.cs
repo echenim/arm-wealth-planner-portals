@@ -287,7 +287,7 @@ namespace Portal.Business.TestServices
         public AllPriceResponse GetFundPrices(AllPriceRequest payload)
         {
             var _client = new RestActions(_contentRootPath);
-            string url = _configSettingManager.ArmBaseUrl + "/Fund/AllPrice";
+            string url = _configSettingManager.ArmFundBaseUrl + "/Fund/AllPrice";
             var encryptedValue = new SecureCredentials();
             payload.ServiceUsername = encryptedValue.DecryptCredentials(_configSettingManager.ArmServiceUsername);
             payload.ServicePassword = encryptedValue.DecryptCredentials(_configSettingManager.ArmServicePassword);
@@ -297,7 +297,7 @@ namespace Portal.Business.TestServices
         public PriceHistoryResponse GetFundPriceHistory(PriceHistoryRequest payload)
         {
             var _client = new RestActions(_contentRootPath);
-            string url = _configSettingManager.ArmBaseUrl + "/Fund/PriceHistory";
+            string url = _configSettingManager.ArmFundBaseUrl + "/Fund/PriceHistory";
             var encryptedValue = new SecureCredentials();
             payload.ServiceUsername = encryptedValue.DecryptCredentials(_configSettingManager.ArmServiceUsername);
             payload.ServicePassword = encryptedValue.DecryptCredentials(_configSettingManager.ArmServicePassword);
@@ -307,7 +307,7 @@ namespace Portal.Business.TestServices
         public YieldHistoryResponse GetFundYieldHistory(YieldHistoryRequest payload)
         {
             var _client = new RestActions(_contentRootPath);
-            string url = _configSettingManager.ArmBaseUrl + "/Fund/YieldHistory";
+            string url = _configSettingManager.ArmFundBaseUrl + "/Fund/YieldHistory";
             var encryptedValue = new SecureCredentials();
             payload.ServiceUsername = encryptedValue.DecryptCredentials(_configSettingManager.ArmServiceUsername);
             payload.ServicePassword = encryptedValue.DecryptCredentials(_configSettingManager.ArmServicePassword);
