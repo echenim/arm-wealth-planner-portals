@@ -431,7 +431,7 @@ namespace Portal.Areas.Client.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        //[ValidateAntiForgeryToken]
         public IActionResult ProcessDirectDebit([FromBody]SetUp model)
         {
             ////var _user = HttpContext.Session.Get<AuthenticateResponse>("ArmUser");
@@ -521,7 +521,6 @@ namespace Portal.Areas.Client.Controllers
             }
             catch (Exception ex)
             {
-                HttpContext.Session.Set("error", ex.Message);
                 TempData["message"] = ViewBag.Message = ex.Message;
                 Utilities.ProcessError(ex, _contentRootPath);
                 _logger.LogError(null, ex, ex.Message);

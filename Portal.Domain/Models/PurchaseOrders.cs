@@ -13,7 +13,7 @@ namespace Portal.Domain.Models
         public long Id { get; set; }
 
         [Required]
-        [ForeignKey(nameof(Customer))]
+        [ForeignKey(nameof(Person))]
         public long CustomerId { get; set; }
 
         [Required]
@@ -42,7 +42,7 @@ namespace Portal.Domain.Models
 
         public string OrderDate { get; set; }
 
-        public virtual ApplicationUser Customer { get; set; }
+        public virtual Person Person { get; set; }
         public virtual Products Product { get; set; }
     }
 }

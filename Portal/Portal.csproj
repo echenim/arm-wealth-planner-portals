@@ -15,6 +15,7 @@
 
 
   <ItemGroup>
+    <PackageReference Include="Dapper" Version="1.50.7" />
     <PackageReference Include="Microsoft.AspNetCore" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
@@ -29,9 +30,6 @@
 
 
   <ItemGroup>
-    <Folder Include="Areas\Admin\Data\" />
-    <Folder Include="Areas\Admin\Models\" />
-    <Folder Include="Areas\Admin\Uploads\" />
     <Folder Include="Areas\API\Controllers\" />
     <Folder Include="Areas\API\Data\" />
     <Folder Include="Areas\API\Models\" />
@@ -43,6 +41,46 @@
 
 
   <ItemGroup>
+    <None Include="Areas\Admin\Views\Analytics\add.cshtml" />
+    <None Include="Areas\Admin\Views\Analytics\Index.cshtml" />
+    <None Include="Areas\Admin\Views\AuditTrail\Edit.cshtml" />
+    <None Include="Areas\Admin\Views\AuditTrail\Index.cshtml" />
+    <None Include="Areas\Admin\Views\Customers\Index.cshtml" />
+    <None Include="Areas\Admin\Views\Customers\_all.cshtml" />
+    <None Include="Areas\Admin\Views\Dashboard\Index.cshtml" />
+    <None Include="Areas\Admin\Views\Home\Index.cshtml" />
+    <None Include="Areas\Admin\Views\Home\Privacy.cshtml" />
+    <None Include="Areas\Admin\Views\Orders\AllTime.cshtml" />
+    <None Include="Areas\Admin\Views\Orders\Index.cshtml" />
+    <None Include="Areas\Admin\Views\Orders\LastMonth.cshtml" />
+    <None Include="Areas\Admin\Views\Orders\LastSevenDays.cshtml" />
+    <None Include="Areas\Admin\Views\Orders\LastYear.cshtml" />
+    <None Include="Areas\Admin\Views\Orders\SelectedPeriod.cshtml" />
+    <None Include="Areas\Admin\Views\Products\Index.cshtml" />
+    <None Include="Areas\Admin\Views\Products\_add.cshtml" />
+    <None Include="Areas\Admin\Views\Products\_edit.cshtml" />
+    <None Include="Areas\Admin\Views\Sales\AllTime.cshtml" />
+    <None Include="Areas\Admin\Views\Sales\Index.cshtml" />
+    <None Include="Areas\Admin\Views\Sales\LastMonth.cshtml" />
+    <None Include="Areas\Admin\Views\Sales\LastSevenDays.cshtml" />
+    <None Include="Areas\Admin\Views\Sales\LastYear.cshtml" />
+    <None Include="Areas\Admin\Views\Sales\SelectedPeriod.cshtml" />
+    <None Include="Areas\Admin\Views\Settings\Index.cshtml" />
+    <None Include="Areas\Admin\Views\Settings\ViewProductCategory.cshtml" />
+    <None Include="Areas\Admin\Views\Settings\ViewRoles.cshtml" />
+    <None Include="Areas\Admin\Views\Settings\_AddProductCategory.cshtml" />
+    <None Include="Areas\Admin\Views\Settings\_managepermission.cshtml" />
+    <None Include="Areas\Admin\Views\Settings\_viewpermission.cshtml" />
+    <None Include="Areas\Admin\Views\Shared\Error.cshtml" />
+    <None Include="Areas\Admin\Views\Shared\_CookieConsentPartial.cshtml" />
+    <None Include="Areas\Admin\Views\Shared\_Layout_Admin.cshtml" />
+    <None Include="Areas\Admin\Views\Shared\_LoginPartial.cshtml" />
+    <None Include="Areas\Admin\Views\Shared\_ValidationScriptsPartial.cshtml" />
+    <None Include="Areas\Admin\Views\Users\Add.cshtml" />
+    <None Include="Areas\Admin\Views\Users\Edit.cshtml" />
+    <None Include="Areas\Admin\Views\Users\Index.cshtml" />
+    <None Include="Areas\Admin\Views\_ViewImports.cshtml" />
+    <None Include="Areas\Admin\Views\_ViewStart.cshtml" />
     <None Include="wwwroot\custom-client\css\index.scss" />
     <None Include="wwwroot\custom-client\fonts\Gotham-Medium.svg" />
     <None Include="wwwroot\custom-client\fonts\Gotham-Medium.woff2" />

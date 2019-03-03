@@ -95,11 +95,8 @@ namespace Portal.Areas.Admin.Controllers
             {
                 var user = new ApplicationUser
                 {
-                    FirstName = models.FirstName,
-                    LastName = models.LastName,
                     Email = models.Email,
                     UserName = models.Email,
-                    IsCustomerOrStaff = "internal"
                 };
 
                 var result = _userManager.CreateAsync(user: user, password: models.Password).Result;
@@ -124,8 +121,6 @@ namespace Portal.Areas.Admin.Controllers
             var internalUser = new EditInternalUserViewModel
             {
                 Email = user.Email,
-                FirstName = user.FirstName,
-                LastName = user.LastName,
             };
             internalUser.AvailableRoles.Add(new SelectListItem
             {
@@ -153,8 +148,7 @@ namespace Portal.Areas.Admin.Controllers
             if (ModelState.IsValid)
             {
                 var user = _userManager.FindByIdAsync(models.Id.ToString()).Result;
-                user.FirstName = models.FirstName;
-                user.LastName = models.LastName;
+
                 user.Email = models.Email;
 
                 var result = _userManager.UpdateAsync(user).Result;

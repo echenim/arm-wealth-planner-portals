@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Portal.Business.Contracts;
 using Portal.Business.StoreManagers;
 using Microsoft.Extensions.Logging;
+using Portal.Business.Utilities;
 using Portal.Domain;
 using Portal.Domain.Models.Identity;
 
@@ -67,14 +68,14 @@ namespace Portal
 
             services.AddTransient<IProductCategoryManager, ProductCategoryManager>();
             services.AddTransient<IProductManager, ProductManager>();
-            services.AddTransient<IProductFeatureManager, ProductFeatureManager>();
-            services.AddTransient<IProductKeyBenefitManager, ProductKeyBenefitManager>();
-            services.AddTransient<IProductPerformanceManager, ProductPerformanceManager>();
+            services.AddTransient<IPersonManager, PersonManager>();
             services.AddTransient<IOrdersAndSalesManager, OrdersAndSalesManager>();
             services.AddTransient<IUserService, UserManagers>();
             services.AddTransient<IDashBoardManager, DashBoardManager>();
             services.AddTransient<IApplicationGroupManager, ApplicationGroupManager>();
             services.AddTransient<IArmOneManager, ArmOneManager>();
+
+            services.AddTransient<UserUtils>();
 
             #endregion service register
 
@@ -86,7 +87,7 @@ namespace Portal
 
             services.AddTransient<IArmOneManager, ArmOneManager>();
 
-            #endregion register configuration_settings & ErmOneAPI
+            #endregion register configuration_settings & ArmOneAPI
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

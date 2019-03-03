@@ -72,9 +72,7 @@ namespace Portal.API
             services.AddTransient<IPersonManager, PersonManager>();
             services.AddTransient<IProductCategoryManager, ProductCategoryManager>();
             services.AddTransient<IProductManager, ProductManager>();
-            services.AddTransient<IProductFeatureManager, ProductFeatureManager>();
-            services.AddTransient<IProductKeyBenefitManager, ProductKeyBenefitManager>();
-            services.AddTransient<IProductPerformanceManager, ProductPerformanceManager>();
+
             services.AddTransient<IApplicationGroupManager, ApplicationGroupManager>();
 
             #endregion service register

@@ -2,6 +2,7 @@
 using System.Linq;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Portal.Areas.Admin.ViewModels;
 using Portal.Business.Utilities;
 using Portal.Domain.Models.Identity;
@@ -47,20 +48,19 @@ namespace Portal.Areas.Admin.Controllers
             ViewData["CurrentFilter"] = searchString;
 
             var data = !String.IsNullOrEmpty(searchString) ?
-                    _userManager.Users.Where(s => s.IsCustomerOrStaff.Equals("external"))
-                        .Where(s => s.FullName.Contains(searchString))
-                        .OrderBy(s => s.FirstName).ThenBy(s => s.MembershipNumber)
-                : _userManager.Users.Where(s => s.IsCustomerOrStaff.Equals("external"))
-                    .OrderBy(s => s.FirstName).ThenBy(s => s.MembershipNumber);
+                    _userManager.Users.Include(s => s.Person).Where(s => s.Person.IsCustomer == true)
+                        .Where(s => s.Person.FullName.Contains(searchString))
+                        .OrderBy(s => s.Person.FullName).ThenBy(s => s.Person.MembershipNo)
+                : _userManager.Users.Include(s => s.Person).Where(s => s.Person.IsCustomer == true)
+                    .OrderBy(s => s.Person.FullName).ThenBy(s => s.Person.MembershipNo);
 
             var list = data.Select(item => new ExternalUserView
             {
                 Id = item.Id,
-                Name = item.FullName,
+                Name = item.Person.FullName,
                 Email = item.Email,
-                MembershipNumber = item.MembershipNumber,
-                Status = item.NewOrOld,
-                AltUserName = item.UserNameAlternative
+                MembershipNumber = item.Person.MembershipNo,
+                Status = item.Person.PortalOnBoarding
             })
                 .ToList();
 
@@ -95,20 +95,19 @@ namespace Portal.Areas.Admin.Controllers
             ViewData["CurrentFilter"] = searchString;
 
             var data = !String.IsNullOrEmpty(searchString) ?
-                _userManager.Users.Where(s => s.IsCustomerOrStaff.Equals("external"))
-                    .Where(s => s.FullName.Contains(searchString))
-                    .OrderBy(s => s.FirstName).ThenBy(s => s.MembershipNumber)
-                : _userManager.Users.Where(s => s.IsCustomerOrStaff.Equals("external"))
-                    .OrderBy(s => s.FirstName).ThenBy(s => s.MembershipNumber);
+                _userManager.Users.Include(s => s.Person).Where(s => s.Person.IsCustomer == true)
+                    .Where(s => s.Person.FullName.Contains(searchString))
+                    .OrderBy(s => s.Person.FullName).ThenBy(s => s.Person.MembershipNo)
+                : _userManager.Users.Include(s => s.Person).Where(s => s.Person.IsCustomer == true)
+                    .OrderBy(s => s.Person.FullName).ThenBy(s => s.Person.MembershipNo);
 
             var list = data.Select(item => new ExternalUserView
             {
                 Id = item.Id,
-                Name = item.FullName,
+                Name = item.Person.FullName,
                 Email = item.Email,
-                MembershipNumber = item.MembershipNumber,
-                Status = item.NewOrOld,
-                AltUserName = item.UserNameAlternative
+                MembershipNumber = item.Person.MembershipNo,
+                Status = item.Person.PortalOnBoarding
             })
                 .ToList();
 
@@ -145,20 +144,19 @@ namespace Portal.Areas.Admin.Controllers
             ViewData["CurrentFilter"] = searchString;
 
             var data = !String.IsNullOrEmpty(searchString) ?
-                _userManager.Users.Where(s => s.IsCustomerOrStaff.Equals("external"))
-                    .Where(s => s.FullName.Contains(searchString))
-                    .OrderBy(s => s.FirstName).ThenBy(s => s.MembershipNumber)
-                : _userManager.Users.Where(s => s.IsCustomerOrStaff.Equals("external"))
-                    .OrderBy(s => s.FirstName).ThenBy(s => s.MembershipNumber);
+                _userManager.Users.Include(s => s.Person).Where(s => s.Person.IsCustomer == true)
+                    .Where(s => s.Person.FullName.Contains(searchString))
+                    .OrderBy(s => s.Person.FullName).ThenBy(s => s.Person.MembershipNo)
+                : _userManager.Users.Include(s => s.Person).Where(s => s.Person.IsCustomer == true)
+                    .OrderBy(s => s.Person.FullName).ThenBy(s => s.Person.MembershipNo);
 
             var list = data.Select(item => new ExternalUserView
             {
                 Id = item.Id,
-                Name = item.FullName,
+                Name = item.Person.FullName,
                 Email = item.Email,
-                MembershipNumber = item.MembershipNumber,
-                Status = "Pending",
-                AltUserName = item.UserNameAlternative
+                MembershipNumber = item.Person.MembershipNo,
+                Status = item.Person.PortalOnBoarding
             })
                 .ToList();
 
@@ -193,23 +191,21 @@ namespace Portal.Areas.Admin.Controllers
             ViewData["CurrentFilter"] = searchString;
 
             var data = !String.IsNullOrEmpty(searchString) ?
-                _userManager.Users.Where(s => s.IsCustomerOrStaff.Equals("external"))
-                    .Where(s => s.FullName.Contains(searchString))
-                    .OrderBy(s => s.FirstName).ThenBy(s => s.MembershipNumber)
-                : _userManager.Users.Where(s => s.IsCustomerOrStaff.Equals("external"))
-                    .OrderBy(s => s.FirstName).ThenBy(s => s.MembershipNumber);
+                _userManager.Users.Include(s => s.Person).Where(s => s.Person.IsCustomer == true)
+                    .Where(s => s.Person.FullName.Contains(searchString))
+                    .OrderBy(s => s.Person.FullName).ThenBy(s => s.Person.MembershipNo)
+                : _userManager.Users.Include(s => s.Person).Where(s => s.Person.IsCustomer == true)
+                    .OrderBy(s => s.Person.FullName).ThenBy(s => s.Person.MembershipNo);
 
             var list = data.Select(item => new ExternalUserView
             {
                 Id = item.Id,
-                Name = item.FullName,
+                Name = item.Person.FullName,
                 Email = item.Email,
-                MembershipNumber = item.MembershipNumber,
-                Status = item.NewOrOld,
-                AltUserName = item.UserNameAlternative
+                MembershipNumber = item.Person.MembershipNo,
+                Status = item.Person.PortalOnBoarding
             })
                 .ToList();
-
             int pageSize = 20;
 
             return View(PaginatedList<ExternalUserView>.Create(list.AsQueryable(), page ?? 1, pageSize));
@@ -241,20 +237,19 @@ namespace Portal.Areas.Admin.Controllers
             ViewData["CurrentFilter"] = searchString;
 
             var data = !String.IsNullOrEmpty(searchString) ?
-                _userManager.Users.Where(s => s.IsCustomerOrStaff.Equals("external"))
-                    .Where(s => s.FullName.Contains(searchString))
-                    .OrderBy(s => s.FirstName).ThenBy(s => s.MembershipNumber)
-                : _userManager.Users.Where(s => s.IsCustomerOrStaff.Equals("external"))
-                    .OrderBy(s => s.FirstName).ThenBy(s => s.MembershipNumber);
+                _userManager.Users.Include(s => s.Person).Where(s => s.Person.IsCustomer == true)
+                    .Where(s => s.Person.FullName.Contains(searchString))
+                    .OrderBy(s => s.Person.FullName).ThenBy(s => s.Person.MembershipNo)
+                : _userManager.Users.Include(s => s.Person).Where(s => s.Person.IsCustomer == true)
+                    .OrderBy(s => s.Person.FullName).ThenBy(s => s.Person.MembershipNo);
 
             var list = data.Select(item => new ExternalUserView
             {
                 Id = item.Id,
-                Name = item.FullName,
+                Name = item.Person.FullName,
                 Email = item.Email,
-                MembershipNumber = item.MembershipNumber,
-                Status = item.NewOrOld,
-                AltUserName = item.UserNameAlternative
+                MembershipNumber = item.Person.MembershipNo,
+                Status = item.Person.PortalOnBoarding
             })
                 .ToList();
 
@@ -289,20 +284,19 @@ namespace Portal.Areas.Admin.Controllers
             ViewData["CurrentFilter"] = searchString;
 
             var data = !String.IsNullOrEmpty(searchString) ?
-                _userManager.Users.Where(s => s.IsCustomerOrStaff.Equals("external"))
-                    .Where(s => s.FullName.Contains(searchString))
-                    .OrderBy(s => s.FirstName).ThenBy(s => s.MembershipNumber)
-                : _userManager.Users.Where(s => s.IsCustomerOrStaff.Equals("external"))
-                    .OrderBy(s => s.FirstName).ThenBy(s => s.MembershipNumber);
+                _userManager.Users.Include(s => s.Person).Where(s => s.Person.IsCustomer == true)
+                    .Where(s => s.Person.FullName.Contains(searchString))
+                    .OrderBy(s => s.Person.FullName).ThenBy(s => s.Person.MembershipNo)
+                : _userManager.Users.Include(s => s.Person).Where(s => s.Person.IsCustomer == true)
+                    .OrderBy(s => s.Person.FullName).ThenBy(s => s.Person.MembershipNo);
 
             var list = data.Select(item => new ExternalUserView
             {
                 Id = item.Id,
-                Name = item.FullName,
+                Name = item.Person.FullName,
                 Email = item.Email,
-                MembershipNumber = item.MembershipNumber,
-                Status = item.NewOrOld,
-                AltUserName = item.UserNameAlternative
+                MembershipNumber = item.Person.MembershipNo,
+                Status = item.Person.PortalOnBoarding
             })
                 .ToList();
 

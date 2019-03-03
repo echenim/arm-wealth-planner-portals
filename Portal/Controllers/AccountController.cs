@@ -4,9 +4,11 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Portal.ViewModel;
 using Portal.Business.Contracts;
 using Portal.Business.Utilities;
+using Portal.Domain.Models;
 using Portal.Domain.Models.Identity;
 
 namespace Portal.Controllers
@@ -20,6 +22,7 @@ namespace Portal.Controllers
         private readonly IPasswordHasher<ApplicationUser> _passwordHasher;
         private readonly IHostingEnvironment _hostingEnvironment;
         private readonly IArmOneManager _armOneManager;
+        private readonly IPersonManager _personManager;
 
         public AccountController(
             IUserService userService,
@@ -28,7 +31,8 @@ namespace Portal.Controllers
             SignInManager<ApplicationUser> signInManager,
             IPasswordHasher<ApplicationUser> passwordHasher,
             IHostingEnvironment hostingEnvironment,
-            IArmOneManager armOneManager
+            IArmOneManager armOneManager,
+            IPersonManager personManager
             )
         {
             _signInManager = signInManager;
@@ -38,6 +42,7 @@ namespace Portal.Controllers
             _hostingEnvironment = hostingEnvironment;
             _userService = userService;
             _armOneManager = armOneManager;
+            _personManager = personManager;
         }
 
         public IActionResult Login()
@@ -50,54 +55,62 @@ namespace Portal.Controllers
         public IActionResult Login(LoginViewModels model)
         {
             if (!ModelState.IsValid) return View(model);
-            var isValiedUser = _userManager.Users.SingleOrDefault(s => s.UserName.Equals(model.Username)
-                                                                     || s.MembershipNumber.Equals(model.Username));
+            var isValiedUser = _userManager.Users.Include(s => s.Person).SingleOrDefault(s => s.UserName.Equals(model.Username)
+                                                                       || s.Person.MembershipNo.Equals(model.Username));
             if (isValiedUser != null)
             {
-                if (isValiedUser.IsCustomerOrStaff.ToLower().Equals("External".ToLower()))
+                if (isValiedUser.Person.IsCustomer)
                 {
-                    var result = _signInManager.PasswordSignInAsync(isValiedUser, "102Solutionx$#@", true, true).Result;
-                    if (result.Succeeded)
+                    var resultCustomer = _signInManager.PasswordSignInAsync(isValiedUser, "102Solutionx$#@", true, true).Result;
+                    if (resultCustomer.Succeeded)
                     {
                         return RedirectToAction("Index", "Dashboard", new { area = "Client" });
                     }
                 }
-
-                if (isValiedUser.IsCustomerOrStaff.ToLower().Equals("Internal".ToLower()))
+                var resultStaff = _signInManager.PasswordSignInAsync(isValiedUser, model.Password, true, true).Result;
+                if (resultStaff.Succeeded)
                 {
-                    var result = _signInManager.PasswordSignInAsync(isValiedUser, model.Password, true, true).Result;
-                    if (result.Succeeded)
-                    {
-                        return RedirectToAction("Index", "Dashboard", new { area = "Admin" });
-                    }
+                    return RedirectToAction("Index", "Dashboard", new { area = "Admin" });
                 }
             }
             else
             {
-                var result = _armOneManager.GetCustomerInformation(model.Username, model.Password);
-                if (result != null)
+                var armOneObj = _armOneManager.GetCustomerInformation(model.Username, model.Password);
+                if (armOneObj != null)
                 {
-                    var user = new ApplicationUser();
-                    user.CustomerOnboardingDate = DateTime.Now;
-                    user.IsCustomerOrStaff = "External";
-                    user.FirstName = result.FirstName;
-                    user.LastName = result.LastName;
-                    user.Email = result.Email;
-                    user.NewOrOld = "Old";
-                    user.MembershipNumber = result.MembershipNumber;
-                    user.UserNameAlternative = result.AltUsername;
-                    user.UserName = result.Email;
-
-                    var profileUserResult = _userManager.CreateAsync(user, "102Solutionx$#@").Result;
-                    if (profileUserResult.Succeeded)
+                    var person = new Person
                     {
-                        var valiedUser = _userManager.Users.SingleOrDefault(s => s.Email.Equals(user.Email));
-                        if (valiedUser != null)
+                        FirstName = armOneObj.FirstName,
+                        LastName = armOneObj.LastName,
+                        BioetricVerificationNumber = string.Empty,
+                        Gender = string.Empty,
+                        IsCustomer = true,
+                        Email = armOneObj.Email,
+                        OnCreated = DateTime.Now.ToUniversalTime(),
+                        PortalOnBoarding = "OPB"
+                    };
+
+                    var personResult = _personManager.Save(person);
+                    if (personResult.Succeed)
+                    {
+                        var userObj = new ApplicationUser
                         {
-                            var signInResult = _signInManager.PasswordSignInAsync(valiedUser, "102Solutionx$#@", true, true).Result;
-                            if (signInResult.Succeeded)
+                            UserName = armOneObj.Email,
+                            Email = armOneObj.Email,
+                            PersonId = personResult.TObj.Id
+                        };
+
+                        var profileUserResult = _userManager.CreateAsync(userObj, "102Solutionx$#@").Result;
+                        if (profileUserResult.Succeeded)
+                        {
+                            var valiedUser = _userManager.Users.SingleOrDefault(s => s.Email.Equals(userObj.Email));
+                            if (valiedUser != null)
                             {
-                                return RedirectToAction("Index", "Dashboard", new { area = "Client" });
+                                var signInResult = _signInManager.PasswordSignInAsync(valiedUser, "102Solutionx$#@", true, true).Result;
+                                if (signInResult.Succeeded)
+                                {
+                                    return RedirectToAction("Index", "Dashboard", new { area = "Client" });
+                                }
                             }
                         }
                     }
@@ -113,10 +126,15 @@ namespace Portal.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        public IActionResult Registration()
+        {
+            return View();
+        }
+
         private ApplicationUser IfMemberShipNumberIsEmptyUpdateRecord(ApplicationUser user, string membershipnumber)
         {
             var userObj = _userManager.FindByEmailAsync(user.Email).Result;
-            userObj.MembershipNumber = membershipnumber;
+            // userObj.MembershipNumber = membershipnumber;
             var result = _userManager.UpdateAsync(userObj).Result;
             return result.Succeeded ? userObj : user;
         }

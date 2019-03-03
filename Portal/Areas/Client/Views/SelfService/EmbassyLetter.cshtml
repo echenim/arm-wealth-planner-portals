@@ -1,4 +1,6 @@
 ﻿@model Portal.Business.ViewModels.EmbassyLetterViewModel
+@using Portal.Business.ViewModels
+@using Newtonsoft.Json;
 
 @{
     ViewData["Title"] = "Embassy Letter";
@@ -21,19 +23,19 @@
 <!---- Filter Parameters --->
 
 <div class="row">
-    
+
     <div class="col-lg-8 col-sm-12">
         @if (Model.SuccessMessage != null && (bool)TempData["message"] == true)
         {
-            <div class="element-box"><span class="">@Model.SuccessMessage</span></div>              
+            <div class="element-box"><span class="">@Model.SuccessMessage</span></div>
         }
 
         @if (Model.ErrorMessage != null && (bool)TempData["message"] == false)
         {
             <div class="element-box">
                 <span class="danger_text">@Model.ErrorMessage</span>
-            </div>               
-        }       
+            </div>
+        }
     </div>
     <div class="col-lg-4 col-sm-12"></div>
 
@@ -109,7 +111,7 @@
                 <div class="form-group">
                     <label for=""> Tracking Number</label>
                     @Html.TextBoxFor(model => model.SelfService.TrackingNumber, new { @class = "form-control" })
-                </div>  
+                </div>
 
                 <div class="b-t mt-3 pt-3">
                     <button class="btn btn-primary" type="submit"> Get Status</button>
@@ -134,11 +136,13 @@
 
     <!-- Track Service-->
     <div class="col-lg-12 col-sm-12">
-        @if (Model.SelfService != null 
-            && Model.SelfService.TrackingNumber != null)
+        @if (TempData["TrackService"] != null)
         {
-            @if (Model.SelfService.RequestStatuses != null 
-                && Model.SelfService.RequestStatuses.Count() > 0)
+            var trackService = TempData["TrackService"].ToString();
+            var requests = JsonConvert.DeserializeObject<List<RequestStatuses>>(trackService);
+
+            @if (requests != null
+              && requests.Count() > 0)
             {
                 <div class="row">
                     <div class="col-md-12">
@@ -160,7 +164,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach (var data in Model.SelfService.RequestStatuses)
+                                            @foreach (var data in requests)
                                             {
                                                 <tr>
                                                     <td>@data.TrackingNumber</td>
@@ -195,6 +199,27 @@
                     </div>
                 </div>
             }
+        }
+        else
+        {
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="element-box element-wrapper">
+                                <h5 class="element-header">
+                                    Track Service Request
+                                </h5>
+                                <p>
+                                    <span class="label">
+                                        There is no update available for the tracking number submitted.
+                                    </span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         }
     </div>
 

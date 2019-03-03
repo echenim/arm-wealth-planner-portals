@@ -1,10 +1,13 @@
-﻿@*@model Portal.Areas.Client.ViewModels.AccountStatementViewModel*@
+﻿@using Portal.Business.Utilities
+@*@model Portal.Areas.Client.ViewModels.AccountStatementViewModel*@
 @{
     //var _user = new AuthenticateResponse();
-    var _userMembershipKey = 1006979;
-    var _userFullName = "Olusakin Tolulope S";
+    var _userMembershipKey = 1007435;
+    var _userFullName = "Funmilayo Ruth Adeyemi";
 
 }
+@inject UserUtils UserUtil
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -26,12 +29,9 @@
         <link href="~/custom-client/components/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
         <link href="~/custom-client/components/fullcalendar/dist/fullcalendar.min.css" rel="stylesheet">
         <link href="~/custom-client/components/perfect-scrollbar/css/perfect-scrollbar.min.css" rel="stylesheet">
-        @*<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/1.4.0/css/perfect-scrollbar.min.css" />*@
         <link href="~/custom-client/components/slick-carousel/slick/slick.css" rel="stylesheet">
         <link href="~/custom-client/css/magnific-popup.css" rel="stylesheet" />
         <link href="~/custom-client/css/main.css?version=4.4.0" rel="stylesheet">
-
-
     </environment>
     <environment exclude="Development">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css"
@@ -70,7 +70,6 @@
                                 </div>
                                 <span>Dashboard</span>
                             </a>
-
                         </li>
 
                         <li class="has-sub-menu">
@@ -88,7 +87,6 @@
                                     <a href="transaction-history.html">Transaction History</a>
                                 </li>
                             </ul>
-
                         </li>
                         <li class="has-sub-menu">
                             <a href="javascript:void(0)">
@@ -101,7 +99,6 @@
                                 <li>
                                     <a href="initiate-redemption.html">Initiate a Redemption</a>
                                 </li>
-
                             </ul>
                         </li>
                         <li class="has-sub-menu">
@@ -118,7 +115,6 @@
                                 <li>
                                     <a href="manage-mandate.html">Manage Mandates</a>
                                 </li>
-
                             </ul>
                         </li>
 
@@ -142,7 +138,6 @@
                                 <li>
                                     <a href="track-service-request.html">Track Service Request</a>
                                 </li>
-
                             </ul>
                         </li>
                         <li class="has-sub-menu">
@@ -159,10 +154,8 @@
                                 <li>
                                     <a href="contact-us.html">Contact Us</a>
                                 </li>
-
                             </ul>
                         </li>
-
                     </ul>
                     <!--------------------
                     END - Mobile Menu List
@@ -179,7 +172,6 @@
                 <div class="logo-w">
                     <a class="logo" href="Dashboard.html">
                         <img src="~/custom-client/img/arm-logo.png">
-
                     </a>
                 </div>
                 <!---- Menu starts here ----->
@@ -192,7 +184,6 @@
                             </div>
                             <span>Dashboard</span>
                         </a>
-
                     </li>
 
                     <li class="has-sub-menu ">
@@ -244,12 +235,10 @@
                                     <li>
                                         <a asp-area="Client" asp-controller="Redemption" asp-action="Initiate">Initiate a Redemption</a>
                                     </li>
-
                                 </ul>
                             </div>
                         </div>
                     </li>
-
 
                     <li class="has-sub-menu">
                         <a href="javascript:void(0)">
@@ -273,12 +262,10 @@
                                     <li>
                                         <a asp-area="Client" asp-controller="Mandate" asp-action="Manage">Manage Mandates</a>
                                     </li>
-
                                 </ul>
                             </div>
                         </div>
                     </li>
-
 
                     <li class="has-sub-menu">
                         <a href="javascript:void(0)">
@@ -332,7 +319,6 @@
                                     <li>
                                         <a asp-area="Client" asp-controller="Contact" asp-action="Location">Contact Us</a>
                                     </li>
-
                                 </ul>
                             </div>
                         </div>
@@ -355,21 +341,18 @@
                             <div class="sub-menu-i">
                                 <ul class="sub-menu">
                                     <li>
-                                        <a asp-area="Client" asp-controller="Calculators" asp-action="InvestmentGoalCalculator">Investment Goal Calculator</a>
+                                        <a asp-area="Client" asp-controller="Calculators" asp-action="InvestmentGoalCalculator">Investment Goal Calclator</a>
                                     </li>
                                     <li>
                                         <a asp-area="Client" asp-controller="Calculators" asp-action="SavingsPlanCalculator">Savings Plan Calculator</a>
                                     </li>
-
                                 </ul>
                             </div>
                         </div>
                     </li>
-
                 </ul>
 
                 <!---- Menu ends here ----->
-
             </div>
             <!--------------------
             END - Main Menu
@@ -379,7 +362,6 @@
                 START - Top Bar
                 -------------------->
                 <div class="top-bar color-scheme-bright">
-
 
                     <!--------------------
                     START - Top Menu Controls
@@ -393,12 +375,16 @@
 
                             <div class="logged-user-i">
                                 <div class="logged-user-info-w top-personal-info">
-                                    <div class="logged-user-name">
-                                        @_userFullName
-                                    </div>
-                                    <div class="logged-user-role">
-                                        Member ID: @_userMembershipKey
-                                    </div>
+                                    @if (User.Identity.IsAuthenticated)
+                                    {
+                                        var person = UserUtil.GetUser(User.Identity.Name);
+                                        <div class="logged-user-name">
+                                            @string.Format("{0}", person.FullName)
+                                        </div>
+                                        <div class="logged-user-role">
+                                            @string.Format("Member ID:  {0}", person.MembershipNo)
+                                        </div>
+                                    }
                                 </div>
                                 <div class="avatar-w">
                                     <img alt="" src="~/custom-client/img/default-profile.svg">
@@ -410,12 +396,16 @@
                                             <img alt="" src="~/custom-client/img/default-profile.svg">
                                         </div>
                                         <div class="logged-user-info-w">
-                                            <div class="logged-user-name">
-                                                @_userFullName
-                                            </div>
-                                            <div class="logged-user-role">
-                                                @_userMembershipKey
-                                            </div>
+                                            @if (User.Identity.IsAuthenticated)
+                                            {
+                                                var person = UserUtil.GetUser(User.Identity.Name);
+                                                <div class="logged-user-name">
+                                                    @string.Format("{0}", person.FullName)
+                                                </div>
+                                                <div class="logged-user-role">
+                                                    @string.Format("Member ID:  {0}", person.MembershipNo)
+                                                </div>
+                                            }
                                         </div>
                                     </div>
                                     <div class="bg-icon">
@@ -424,7 +414,9 @@
                                     <ul>
 
                                         <li>
-                                            <a href="profile.html"><i class="os-icon os-icon-user-male-circle2"></i><span>My Account</span></a>
+                                            <a asp-area="Client" asp-controller="SelfService" asp-action="AccountInformation">
+                                                <i class="os-icon os-icon-user-male-circle2"></i><span>My Account</span>
+                                            </a>
                                         </li>
                                         <li>
                                             <a href="#"><i class="os-icon os-icon-signs-11"></i><span>Logout</span></a>
@@ -455,9 +447,7 @@
                     <div class="content-box">
 
                         @RenderBody()
-
                     </div>
-
                 </div>
                 <div class="footer-w">
                     <div class="deep-footer">
@@ -469,8 +459,7 @@
         <div class="display-type"></div>
     </div>
     <environment include="Development">
-        @*<script src="~/custom-client/components/jquery/dist/jquery.min.js"></script>*@
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
+        <script src="~/custom-client/components/jquery/dist/jquery.min.js"></script>
         <script src="~/custom-client/components/popper.js/dist/umd/popper.min.js"></script>
         <script src="~/custom-client/components/moment/moment.js"></script>
         <script src="~/custom-client/components/chart.js/dist/Chart.min.js"></script>
@@ -487,7 +476,6 @@
         <script src="~/custom-client/components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
         <script src="~/custom-client/components/fullcalendar/dist/fullcalendar.min.js"></script>
         <script src="~/custom-client/components/perfect-scrollbar/js/perfect-scrollbar.jquery.min.js"></script>
-        @*<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/1.4.0/perfect-scrollbar.js"></script>*@
         <script src="~/custom-client/components/tether/dist/js/tether.min.js"></script>
         <script src="~/custom-client/components/slick-carousel/slick/slick.min.js"></script>
         <script src="~/custom-client/components/bootstrap/js/dist/util.js"></script>

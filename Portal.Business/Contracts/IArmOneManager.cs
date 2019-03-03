@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using Portal.Business.ViewModels;
 using Portal.Domain.ViewModels;
 
 namespace Portal.Business.Contracts
@@ -8,6 +10,10 @@ namespace Portal.Business.Contracts
         CustomerInformationView GetCustomerInformation(string username, string password);
 
         CustomerInformationView GetCustomerInformation(string username);
+
+        AllPriceResponse GetAllFundPrices(DateTime? date);
+
+        AllPriceResponse GetAllFundPrices();
 
         KycStatus GetKycStatus(string customerEmail);
 

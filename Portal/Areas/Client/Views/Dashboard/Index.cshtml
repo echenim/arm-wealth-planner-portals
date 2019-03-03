@@ -26,7 +26,7 @@
                 </div>
                 <div class="element-wrapper pb-4 mb-4 border-bottom">
                     <div class="element-box-tp">
-                        <a class="btn btn-primary" href="#"><i class="os-icon os-icon-plus-circle"></i><span>New Investment</span></a><a class="btn btn-grey" href="#"><i class="os-icon os-icon-agenda-1"></i><span>Manage Portfolio </span></a>
+                        <a class="btn btn-primary" href="#"><i class="os-icon os-icon-plus-circle"></i><span>New Investment</span></a><a class="btn btn-grey" asp-area="Client" asp-controller="Portfolio" asp-action="MyInvestments"><i class="os-icon os-icon-agenda-1"></i><span>Manage Portfolio </span></a>
 
                     </div>
                 </div>
@@ -160,7 +160,7 @@
         <div class=" element-wrapper mt-5">
             <h5 class="element-header">
                 Latest Transactions
-                <button class="mr-2 mb-2 btn btn-primary float-right" type="button"> Transaction History</button>
+                <a class="mr-2 mb-2 btn btn-primary float-right" asp-area="Client" asp-controller="Portfolio" asp-action="AccountStatement"> Transaction History</a>
             </h5>
             <div class="">
                 <div class="table-responsive">
@@ -261,25 +261,25 @@
                         </div>
 
 
-                        <div class="tab-content">
-                            <div class="tab-pane active" id="tab_mmf">
+                        <div class="tab-content" ng-app="chartApp" ng-controller="amChartsController" ng-init="init()">
+                            <div class="tab-pane active" id="ARMMMF">
 
-                                MMF PERFORMANCE
+                                @*MMF PERFORMANCE*@
                             </div>
 
-                            <div class="tab-pane" id="tab_df">
+                            <div class="tab-pane" id="ARMDF">
 
-                                Discovery Fund PERFORMANCE
+                                @*Discovery Fund PERFORMANCE*@
                             </div>
 
-                            <div class="tab-pane" id="tab_agf">
+                            <div class="tab-pane" id="AGF">
 
-                                Aggressive Fund PERFORMANCE
+                                @*Aggressive Fund PERFORMANCE*@
                             </div>
 
-                            <div class="tab-pane" id="tab_ef">
+                            <div class="tab-pane" id="ARMEF">
 
-                                Ethical Fund PERFORMANCE
+                                @*Ethical Fund PERFORMANCE*@
                             </div>
                         </div>
 
@@ -323,7 +323,7 @@
                     var url = '@Url.Action("FundPriceHistory", "Dashboard")' + '?fundCode=' + fund_code;
                     $http.get(url)
                         .success(function (data, status, headers, config) {
-                            var graphData = new GraphData(data.Prices.reverse());
+                            var graphData = new GraphData(data.fundPrice.reverse());
                             var plotter = new FundPlotter(fund_code, graphData.data);
                             plotter.plot();
                         })
@@ -415,6 +415,7 @@
                             },
                             "dataProvider": this.data
                         });
+                        
                     }
 
                 }
@@ -423,7 +424,7 @@
                     var url = '@Url.Action("FundYieldHistory", "Dashboard")';
                     $http.get(url)
                         .success(function (data, status, headers, config) {
-                            var graphData = new GraphData(data.Yields.reverse());
+                            var graphData = new GraphData(data.yields.reverse());
                             this.plot(graphData.data);
                         })
                         .error(function (data, status, header, config) {

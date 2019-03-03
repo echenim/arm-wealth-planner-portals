@@ -56,8 +56,9 @@ namespace Portal.Areas.Client.Controllers
             db = _db;
         }
 
-        public IActionResult EmbassyLetter(TrackServiceViewModel model)
+        public IActionResult EmbassyLetter()
         {
+            //TrackServiceViewModel model
             var _user = new AuthenticateResponse
             {
                 MembershipKey = 1006979,//1007435,
@@ -72,13 +73,10 @@ namespace Portal.Areas.Client.Controllers
                 TempData["SessionTimeOut"] = "You have been logged out due to inactivity. Please login to gain access.";
                 return RedirectToAction("Login", "Account");
             }
-            var modelview = new EmbassyLetterViewModel();
-            modelview.SelfService.RequestStatuses = model.RequestStatuses;
-            modelview.SelfService.TrackingNumber = model.TrackingNumber;
-            //modelview.SuccessMessage = null;
-            //modelview.ErrorMessage = null;
-            //TempData["message"] = false;
-            return View("EmbassyLetter", modelview);
+            var modelview = new EmbassyLetterViewModel();           
+            
+            //return View("EmbassyLetter", modelview);
+            return View(modelview);
         }
 
         [HttpPost]
@@ -173,18 +171,21 @@ namespace Portal.Areas.Client.Controllers
                         status.TrackingNumber = req.TrackingNumber;
 
                         getStatus.Add(status);
-                    }
-
-                    model.RequestStatuses = getStatus;
-
-                    return EmbassyLetter(model);
+                    }                   
                 }
+
+                //model.RequestStatuses = getStatus;
+                var serializeStatus = JsonConvert.SerializeObject(getStatus);
+                TempData["TrackService"] = serializeStatus;
+
+                return RedirectToAction("EmbassyLetter", "SelfService");
             }
             catch (Exception ex)
             {
-
+                Utilities.ProcessError(ex, _contentRootPath);
+                _logger.LogError(null, ex, ex.Message);
             }
-            return EmbassyLetter(model);
+            return View();
         }
 
         public IActionResult AccountValidation(ClientUpdateViewModel model)
