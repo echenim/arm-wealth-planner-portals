@@ -85,9 +85,11 @@ namespace Portal.Business.StoreManagers
             return result;
         }
 
-        //public ArmOneRegisterResponse OnboardNewUsers(Person model, string username, string password)
-        //{
-        //    var response = new ArmOneRegisterResponse();
+        public ArmOneRegisterResponse OnboardNewUsers(Person model)
+        {
+            var response = new ArmOneRegisterResponse();
+            
+            //onboard on datahub API
 
         //    //onboard on datahub API
 

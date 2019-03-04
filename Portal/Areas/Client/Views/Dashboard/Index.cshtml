@@ -71,7 +71,7 @@
                     <div class="el-chart-w">
                         <canvas height="120" id="donutChart1" width="120"></canvas>
                         <div class="inside-donut-chart-label">
-                            <strong>&#8358;@String.Format("{0:#,##0.##}", @ViewBag.SumAccruedInterest)</strong><span>Spread</span>
+                            <strong>&#8358;@String.Format("{0:#,##0.##}", @ViewBag.SumAccruedInterest)</strong><span>Accrued Interest</span>
                         </div>
                     </div>
                     <div class="el-legend condensed">
@@ -323,6 +323,7 @@
                     var url = '@Url.Action("FundPriceHistory", "Dashboard")' + '?fundCode=' + fund_code;
                     $http.get(url)
                         .success(function (data, status, headers, config) {
+                            console.log("Fund Price \n" + data.fundPrice.reverse());
                             var graphData = new GraphData(data.fundPrice.reverse());
                             var plotter = new FundPlotter(fund_code, graphData.data);
                             plotter.plot();
@@ -342,7 +343,7 @@
                             "precision": 2,
                             "valueAxes": [{
                                 "id": "v1",
-                                "title": "Price",
+                                "title": "price",
                                 "position": "left",
                                 "gridAlpha": 0.2,
                                 "dashLength": 0,
@@ -359,7 +360,7 @@
                                 "type": "line",
                                 "title": "Bid Price",
                                 "useLineColorForBulletBorder": true,
-                                "valueField": "BidPrice",
+                                "valueField": "bidPrice",
                                 "balloonText": "[[title]]<br /><b style='font-size: 130%'>₦[[value]]</b>"
                             }, {
                                 "id": "g4",
@@ -369,7 +370,7 @@
                                 "fillAlphas": 0.5,
                                 "type": "column",
                                 "title": "Offer Price",
-                                "valueField": "OfferPrice",
+                                "valueField": "offerPrice",
                                 "clustered": false,
                                 "columnWidth": 0.5,
                                 "legendValueText": "₦[[value]]",
@@ -397,7 +398,7 @@
                                 "cursorAlpha": 0,
                                 "valueLineAlpha": 0.2
                             },
-                            "categoryField": 'PriceDate',
+                            "categoryField": 'priceDate',
                             "categoryAxis": {
                                 "dashLength": 1,
                                 "minorGridEnabled": true,
@@ -415,7 +416,6 @@
                             },
                             "dataProvider": this.data
                         });
-                        
                     }
 
                 }
@@ -424,6 +424,7 @@
                     var url = '@Url.Action("FundYieldHistory", "Dashboard")';
                     $http.get(url)
                         .success(function (data, status, headers, config) {
+                            console.log("Yield History \n" + data.yields.reverse());
                             var graphData = new GraphData(data.yields.reverse());
                             this.plot(graphData.data);
                         })

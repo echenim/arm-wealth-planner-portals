@@ -63,11 +63,16 @@ namespace Portal.Areas.Client.Controllers
             //_user is expected to contain client details. mock data for model.
             var _user = new AuthenticateResponse
             {
-                MembershipKey = 1007435,
-                EmailAddress = "gbadebo.ayan@gmail.com",
-                FirstName = "Funmilayo",
-                LastName = "Adeyemi",
-                FullName = "Funmilayo Ruth Adeyemi",
+                MembershipKey = 1006979,//1007435,
+                EmailAddress = "tolu.olusakin@gmail.com",//"gbadebo.ayan@gmail.com",
+                FirstName = "Tolulope",
+                LastName = "Olusakin",
+                FullName = "Olusakin Tolulope S"//"Funmilayo Ruth Adeyemi",
+                //MembershipKey = 1007435,
+                //EmailAddress = "gbadebo.ayan@gmail.com",
+                //FirstName = "Funmilayo",
+                //LastName = "Adeyemi",
+                //FullName = "Funmilayo Ruth Adeyemi",
             };
 
             try
@@ -112,26 +117,7 @@ namespace Portal.Areas.Client.Controllers
 
             return View(model);
         }
-
-        //public IActionResult Manage()
-        //{
-        //    var _user = new AuthenticateResponse
-        //    {
-        //        MembershipKey = 1007435,
-        //        EmailAddress = "gbadebo.ayan@gmail.com",
-        //        FirstName = "Funmilayo",
-        //        LastName = "Adeyemi",
-        //        FullName = "Funmilayo Ruth Adeyemi",
-        //    };
-
-        //    if (_user == null)
-        //    {
-        //        TempData["SessionTimeOut"] = "You have been logged out due to inactivity. Please login to gain access.";
-        //        return RedirectToAction("Login", "Account");
-        //    }
-        //    return View();
-        //}
-
+        
         public IActionResult Manage()
         {
             var model = new BuyViewModel();
@@ -139,11 +125,16 @@ namespace Portal.Areas.Client.Controllers
             //_user is expected to contain client details. mock data for model.
             var _user = new AuthenticateResponse
             {
-                MembershipKey = 1007435,
-                EmailAddress = "gbadebo.ayan@gmail.com",
-                FirstName = "Funmilayo",
-                LastName = "Adeyemi",
-                FullName = "Funmilayo Ruth Adeyemi",
+                MembershipKey = 1006979,//1007435,
+                EmailAddress = "tolu.olusakin@gmail.com",//"gbadebo.ayan@gmail.com",
+                FirstName = "Tolulope",
+                LastName = "Olusakin",
+                FullName = "Olusakin Tolulope S"//"Funmilayo Ruth Adeyemi",
+                //MembershipKey = 1007435,
+                //EmailAddress = "gbadebo.ayan@gmail.com",
+                //FirstName = "Funmilayo",
+                //LastName = "Adeyemi",
+                //FullName = "Funmilayo Ruth Adeyemi",
             };
 
             try
