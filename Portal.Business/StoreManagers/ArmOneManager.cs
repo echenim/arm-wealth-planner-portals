@@ -52,34 +52,35 @@ namespace Portal.Business.StoreManagers
                 RedirectURL = absoluteUrl.Uri.AbsoluteUri
             };
             var customerLoginResponse = _clientService.ArmOneAuthenticate(customerLoginRequest);
-          
+
             //get customer detail from arm one
-            var customerInfoRequest = new ArmOneCustomerDetailsRequest { Id = customerLoginResponse.EmailAddress };
-            var customerInfoResponse = _clientService.GetArmOneCustomerDetails(customerInfoRequest);            
 
-            if (customerInfoResponse != null)
-            {
-                //make datahub call for bvn and gender
-                var customerRequest = new ClientValidateRequest
-                { CustomerReference = customerInfoResponse.MembershipKey.ToString() };
-                var customerResponse = _clientService.ClientValidate(customerRequest);
+            //var customerInfoRequest = new ArmOneCustomerDetailsRequest { Id = customerLoginResponse.EmailAddress };
+            //var customerInfoResponse = _clientService.GetArmOneCustomerDetails(customerInfoRequest);
 
-                if (customerResponse != null)
-                {
-                    var customerDetail = customerResponse.CustomerDetails.FirstOrDefault();
+            //if (customerInfoResponse != null)
+            //{
+            //    //make datahub call for bvn and gender
+            //    var customerRequest = new ClientValidateRequest
+            //    { CustomerReference = customerInfoResponse.MembershipKey.ToString() };
+            //    var customerResponse = _clientService.ClientValidate(customerRequest);
 
-                    result.FirstName = customerInfoResponse.FirstName;
-                    result.LastName = customerInfoResponse.LastName;
-                    result.ResponseCode = customerInfoResponse.ResponseCode;
-                    result.ResponseDescription = customerInfoResponse.ResponseDescription;
-                    result.Email = customerInfoResponse.EmailAddress;
-                    result.IsAccountActivated = customerInfoResponse.IsAccountActivated;                    
-                    result.MembershipNumber = customerInfoResponse.MembershipKey.ToString();
-                    result.BvnNumber = customerDetail.BvnNumber;
-                    result.Gender = customerDetail.Gender;
-                }
-                
-            }
+            //    if (customerResponse != null)
+            //    {
+            //        var customerDetail = customerResponse.CustomerDetails.FirstOrDefault();
+
+            //        result.FirstName = customerInfoResponse.FirstName;
+            //        result.LastName = customerInfoResponse.LastName;
+            //        result.ResponseCode = customerInfoResponse.ResponseCode;
+            //        result.ResponseDescription = customerInfoResponse.ResponseDescription;
+            //        result.Email = customerInfoResponse.EmailAddress;
+            //        result.IsAccountActivated = customerInfoResponse.IsAccountActivated;
+            //        result.MembershipNumber = customerInfoResponse.MembershipKey.ToString();
+            //        result.BvnNumber = customerDetail.BvnNumber;
+            //        result.Gender = customerDetail.Gender;
+            //    }
+
+            //}
 
             return result;
         }
@@ -90,10 +91,27 @@ namespace Portal.Business.StoreManagers
             
             //onboard on datahub API
 
-            
+        //    //onboard on datahub API
 
-            return response;
-        }
+        //    //onboard on ArmOne
+        //    var armRequest = new ArmOneRegisterRequest
+        //    {
+        //        Membershipkey = Convert.ToInt32(model.MembershipNo),
+        //        Password = password,
+        //        EmailAddress = model.Email,
+        //        MobileNumber = "",
+        //        SecurityQuestion = "",
+        //        SecurityAnswer = "",
+        //        SecurtiyQuestion2 = String.Empty,
+        //        SecurityAnswer2 = String.Empty,
+        //        FirstName = model.FirstName,
+        //        LastName = model.LastName,
+        //        Channel = "CLient_Portal"
+        //    };
+        //    response = _clientService.ArmOneRegister(armRequest);
+
+        //    return response;
+        //}
 
         public ArmOneRegisterResponse OnboardOldUsers(string username, string password)
         {
@@ -101,10 +119,10 @@ namespace Portal.Business.StoreManagers
             var response = new ArmOneRegisterResponse();
 
             //make call to datahub API
-            var dataHubAuthRequest = new AuthenticateRequest{ Password = password, UserName = username };
-            var dataHubAuthResponse = _clientService.Authenticate(dataHubAuthRequest); 
+            var dataHubAuthRequest = new AuthenticateRequest { Password = password, UserName = username };
+            var dataHubAuthResponse = _clientService.Authenticate(dataHubAuthRequest);
 
-            if (dataHubAuthResponse != null && dataHubAuthResponse.IsActive == true) 
+            if (dataHubAuthResponse != null && dataHubAuthResponse.IsActive == true)
             {
                 //get customer details
                 customer = GetUserProfile(dataHubAuthResponse.MembershipKey);
@@ -125,7 +143,7 @@ namespace Portal.Business.StoreManagers
                     Channel = "CLient_Portal"
                 };
                 response = _clientService.ArmOneRegister(request);
-            }           
+            }
 
             return response;
         }
@@ -145,7 +163,7 @@ namespace Portal.Business.StoreManagers
         }
 
         public AllPriceResponse GetAllFundPrices(DateTime? date)
-        {           
+        {
             var request = new AllPriceRequest { PriceDate = date.Value };
             var response = _clientService.GetFundPrices(request);
 

@@ -30,17 +30,22 @@ namespace Portal.ViewModel
         [EmailAddress]
         public string Email { get; set; }
 
+        [Required]
         [MaxLength(15)]
         public string Tel { get; set; }
 
-        [MaxLength(15)]
+        [MaxLength(11, ErrorMessage = "BVN must be 11 digit")]
+        [MinLength(11, ErrorMessage = "BVN must be 11 digit")]
         public string BioetricVerificationNumber { get; set; }
 
         [Required]
         [DataType(DataType.Password)]
         public string Password { get; set; }
 
-        [MaxLength(20)]
+        [Required]
+        public string Address { get; set; }
+
+        [EmailAddress]
         public string EmailOfReferrer { get; set; }
 
         public static implicit operator Person(RegistrationViewModel model)
@@ -51,6 +56,8 @@ namespace Portal.ViewModel
                 LastName = model.LastName,
                 Email = model.Email,
                 BioetricVerificationNumber = model.BioetricVerificationNumber,
+                Address = model.Address,
+                Tel = model.Tel,
                 Gender = model.Gender,
                 IsCustomer = true,
                 OnCreated = DateTime.Now.ToUniversalTime(),
@@ -65,6 +72,8 @@ namespace Portal.ViewModel
                 FirstName = model.FirstName,
                 LastName = model.LastName,
                 Email = model.Email,
+                Address = model.Address,
+                Tel = model.Tel,
                 BioetricVerificationNumber = model.BioetricVerificationNumber,
                 Gender = model.Gender
             };

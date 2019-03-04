@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+
 //using Portal.Areas.Client.ViewModels;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -23,14 +24,18 @@ namespace Portal.Areas.Client.Controllers
         public string _webRootPath;
         public string _contentRootPath;
         public readonly IHostingEnvironment _hostingEnvironment;
+
         //public readonly AppSettings _appSettings;
         public JsonSerializerSettings _jsonSetting = new JsonSerializerSettings() { NullValueHandling = NullValueHandling.Ignore };
+
         //public ArmClientServices _clientService;
         public readonly ILogger<DashboardController> _logger;
+
         public readonly IConfiguration _configuration;
 
         //test
         private readonly IArmOneServiceConfigManager _configSettingManager;
+
         public TestArmClientServices _clientService;
 
         public ApplicationDbContext db;
@@ -170,12 +175,12 @@ namespace Portal.Areas.Client.Controllers
         }
 
         public IActionResult FundPriceHistory(string fundCode)
-        {            
+        {
             try
             {
                 //var fHistoryResponse = _client.GetFundPriceHistory(fundCode);
-                var fHistoryResponse = _client.GetFundPrices(fundCode);
-                return Json(fHistoryResponse);
+                //var fHistoryResponse = _client.GetFundPrices(fundCode);
+                //return Json(fHistoryResponse);
             }
             catch (Exception ex)
             {

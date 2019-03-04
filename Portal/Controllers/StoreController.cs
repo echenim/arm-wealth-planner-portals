@@ -40,11 +40,11 @@ namespace Portal.Controllers
                     resultObj.ProductName = data.Name;
                     resultObj.ProductCategory = data.ProductCategory.Name;
                     resultObj.Description = data.Description;
-                    resultObj.Feature = data.Features;
-                    resultObj.Benefit = data.Benefits;
-                    resultObj.InvestmentManagement = data.InvestmentManagement;
-                    resultObj.HowToBegin = data.HowToBegin;
-                    resultObj.MoreInformation = data.MoreInformation;
+                    //resultObj.Feature = data.Features;
+                    //resultObj.Benefit = data.Benefits;
+                    //resultObj.InvestmentManagement = data.InvestmentManagement;
+                    //resultObj.HowToBegin = data.HowToBegin;
+                    //resultObj.MoreInformation = data.MoreInformation;
                     resultObj.ProductTypes = data.ProductTypes;
                 }
             }

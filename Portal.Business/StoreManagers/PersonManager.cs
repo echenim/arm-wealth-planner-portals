@@ -24,11 +24,11 @@ namespace Portal.Business.StoreManagers
             try
             {
                 model.OnCreated = DateTime.Now.ToUniversalTime();
-                _context.Add(model);
+                var modelObj = _context.Person.Add(model).Entity;
                 _context.SaveChanges();
 
                 notification.Succeed = true;
-                notification.TObj = model;
+                notification.TObj = modelObj;
             }
             catch (Exception ex)
             {

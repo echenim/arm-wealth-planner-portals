@@ -1,0 +1,76 @@
+﻿@model Portal.Areas.Admin.ViewModels.PropertiesView
+
+@{
+    ViewData["Title"] = "_add";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout_Admin.cshtml";
+}
+
+<!---- Dashboard Overview --->
+<div class="row">
+    <div class=" col-md-12 ">
+        <div class=" ">
+            <div class="">
+
+                <div class="element-box">
+                    <div class="m-b">
+                        <form asp-controller="Products" asp-action="AddFeatures" method="post">
+                            @Html.AntiForgeryToken()
+                            <div class="row">
+
+                                <div class="col-md-12">
+                                    <div class="element-box">
+
+                                        <h5 class="form-header">
+                                            Add New Product
+                                        </h5>
+                                        <input name="ProductId" asp-for="ProductId" class="form-control" readonly="readonly" type="hidden">
+
+                                        <div class="form-group">
+                                            <label for=""> Product Name</label>
+                                            <input name="ProductName" asp-for="ProductName" class="form-control" readonly="readonly" type="text">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for=""> Select Product Features</label>
+                                            <select name="Sections" asp-for="Sections" class="form-control">
+                                                <option value="">--select-- </option>
+                                                <option value="More Info">More Info</option>
+                                                <option value="Key Benefits">Key Benefits</option>
+                                                <option value="Key Features">Key Features</option>
+                                                <option value="Investment Manager">Investment Manager</option>
+                                                <option value="How To Begin">How To Begin</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label> Hierarchy</label>
+                                            <input name="Hierarchy" asp-for="Hierarchy" class="form-control" />
+                                        </div>
+                                        <div class="form-group">
+                                            <label> Title</label>
+                                            <input name="Title" asp-for="Title" class="form-control" />
+                                        </div>
+                                        <div class="form-group">
+                                            <label> Description</label>
+                                            <input name="Description" asp-for="Description" class="form-control" />
+                                            <label>Please seperate every sentence with a pipe || like the illustration below</label>
+
+                                            <label>Government securities: 25% – 95% || Do you currently have cash in a savings or current </label>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <button class="btn btn-primary" type="submit">Add More</button>
+                                            @Html.Raw("     ") <a asp-action="Index">Finished</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

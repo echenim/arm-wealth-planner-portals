@@ -11,5 +11,7 @@ namespace Portal.Business.Contracts
         IQueryable<PurchaseOrders> Sales(Func<PurchaseOrders, bool> predicate = null);
 
         void Edit(string cartId);
+
+        IQueryable<PurchaseOrders> PersonBuyHistory(long personId);
     }
 }

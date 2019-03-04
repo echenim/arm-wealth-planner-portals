@@ -83,7 +83,6 @@ namespace Portal.Areas.Admin.Controllers
             {
                 #region product | benefit | feature
 
-                var feature = models.Feature.Replace(FromTinyMc.Head, FromTinyMc.ReplaceWith);
                 var product = new Products
                 {
                     Id = models.Id,
@@ -92,11 +91,6 @@ namespace Portal.Areas.Admin.Controllers
                     Description = models.Description,
                     StartFrom = models.StartFrom,
                     ProductTypes = models.ProductTypes,
-                    Features = models.Feature.Replace(FromTinyMc.Breaker, FromTinyMc.ReplaceWith).Replace(FromTinyMc.Head, FromTinyMc.ReplaceWith).Replace(FromTinyMc.End, FromTinyMc.ReplaceWith),
-                    Benefits = models.Benefit.Replace(FromTinyMc.Breaker, FromTinyMc.ReplaceWith).Replace(FromTinyMc.Head, FromTinyMc.ReplaceWith).Replace(FromTinyMc.End, FromTinyMc.ReplaceWith),
-                    MoreInformation = models.MoreInformation.Replace(FromTinyMc.Breaker, FromTinyMc.ReplaceWith).Replace(FromTinyMc.Head, FromTinyMc.ReplaceWith).Replace(FromTinyMc.End, FromTinyMc.ReplaceWith),
-                    InvestmentManagement = models.InvestmentManagement.Replace(FromTinyMc.Breaker, FromTinyMc.ReplaceWith).Replace(FromTinyMc.Head, FromTinyMc.ReplaceWith).Replace(FromTinyMc.End, FromTinyMc.ReplaceWith),
-                    HowToBegin = models.HowToBegin.Replace(FromTinyMc.Breaker, FromTinyMc.ReplaceWith).Replace(FromTinyMc.Head, FromTinyMc.ReplaceWith).Replace(FromTinyMc.End, FromTinyMc.ReplaceWith),
                     IsActive = models.IsActive
                 };
 
@@ -111,7 +105,7 @@ namespace Portal.Areas.Admin.Controllers
                     product.Image = filename;
                     var products = _product.Save(product);
 
-                    var upload = Path.Combine(Directory.GetCurrentDirectory(), "Uploads");
+                    var upload = Path.Combine(Directory.GetCurrentDirectory(), "Liber\\FileArchives");
 
                     var filelocation = Path.Combine(upload, filename);
                     using (var filestream = new FileStream(filelocation, FileMode.Create))
@@ -162,16 +156,6 @@ namespace Portal.Areas.Admin.Controllers
                     Description = models.Description,
                     StartFrom = models.StartFrom,
                     ProductTypes = models.ProductTypes,
-                    Features = models.Feature.Replace(FromTinyMc.Head, FromTinyMc.ReplaceWith)
-                        .Replace(FromTinyMc.End, FromTinyMc.ReplaceWith),
-                    Benefits = models.Benefit.Replace(FromTinyMc.Head, FromTinyMc.ReplaceWith)
-                        .Replace(FromTinyMc.End, FromTinyMc.ReplaceWith),
-                    MoreInformation = models.MoreInformation.Replace(FromTinyMc.Head, FromTinyMc.ReplaceWith)
-                        .Replace(FromTinyMc.End, FromTinyMc.ReplaceWith),
-                    InvestmentManagement = models.InvestmentManagement.Replace(FromTinyMc.Head, FromTinyMc.ReplaceWith)
-                        .Replace(FromTinyMc.End, FromTinyMc.ReplaceWith),
-                    HowToBegin = models.HowToBegin.Replace(FromTinyMc.Head, FromTinyMc.ReplaceWith)
-                        .Replace(FromTinyMc.End, FromTinyMc.ReplaceWith),
                     IsActive = models.IsActive
                 };
 
@@ -179,6 +163,63 @@ namespace Portal.Areas.Admin.Controllers
             }
 
             return View("_edit");
+        }
+
+        public IActionResult AddFeatures(int id)
+        {
+            if (id < 1) return RedirectToAction("Index");
+            var product = _product.Get(s => s.Id == id).SingleOrDefault();
+            var features = new PropertiesView();
+            features.ProductId = id;
+            features.ProductName = $"{ product.Name.ToUpper()} ||  {product.ProductCategory.Name.ToUpper()}";
+
+            return View("_properties", features);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult AddFeatures(PropertiesView model)
+        {
+            if (ModelState.IsValid)
+            {
+                var rs = _product.Save(model);
+                if (rs.Id > 0)
+                {
+                    model.Description = string.Empty;
+                    return View("_properties", model);
+                }
+            }
+
+            return View("_properties", model);
+        }
+
+        public IActionResult AddInvestmentInfo(int id)
+        {
+            if (id < 1) return RedirectToAction("Index");
+            var product = _product.Get(s => s.Id == id).SingleOrDefault();
+            var features = new ProductInvestmentInformationView();
+            features.ProductId = id;
+            features.ProductName = $"{ product.Name.ToUpper()} ||  {product.ProductCategory.Name.ToUpper()}";
+
+            return View("_investment", features);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult AddInvestmentInfo(ProductInvestmentInformationView model)
+        {
+            if (ModelState.IsValid)
+            {
+                var rs = _product.Save(model);
+                if (rs.Id > 0)
+                {
+                    model.RangOrCost = string.Empty;
+                    model.Abs = string.Empty;
+                    return View("_investment", model);
+                }
+            }
+
+            return View("_properties", model);
         }
     }
 }

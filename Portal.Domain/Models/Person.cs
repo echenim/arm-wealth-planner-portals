@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace Portal.Domain.Models
 {
@@ -22,9 +25,6 @@ namespace Portal.Domain.Models
         [MaxLength(10)]
         public string Gender { get; set; }
 
-        [MaxLength(20)]
-        public string MembershipNo { get; set; }
-
         [Required]
         [EmailAddress]
         public string Email { get; set; }
@@ -32,12 +32,16 @@ namespace Portal.Domain.Models
         [MaxLength(15)]
         public string Tel { get; set; }
 
+        public string Address { get; set; }
+
         [MaxLength(15)]
         public string BioetricVerificationNumber { get; set; }
 
         [Required]
         [MaxLength(10)]
         public bool IsCustomer { get; set; }
+
+        public string MemberShipNo { get; set; }
 
         public string PortalOnBoarding { get; set; }
 
@@ -47,5 +51,7 @@ namespace Portal.Domain.Models
 
         [NotMapped]
         public string FullName => $"{FirstName} {LastName}";
+
+        public ICollection<PurchaseOrders> PurchaseOrderses { get; set; }
     }
 }

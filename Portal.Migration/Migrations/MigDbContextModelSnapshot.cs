@@ -428,6 +428,30 @@ namespace Portal.AddMigration.Migrations
                     b.ToTable("ApplicationUserGroups");
                 });
 
+            modelBuilder.Entity("Portal.Domain.Models.MemberShip", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Number")
+                        .IsRequired()
+                        .HasMaxLength(15);
+
+                    b.Property<DateTime>("OnCreated");
+
+                    b.Property<long>("PersonId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Number")
+                        .IsUnique();
+
+                    b.HasIndex("PersonId");
+
+                    b.ToTable("MemberShip");
+                });
+
             modelBuilder.Entity("Portal.Domain.Models.PaymentTransactionStatus", b =>
                 {
                     b.Property<int>("Id")
@@ -463,6 +487,8 @@ namespace Portal.AddMigration.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("Address");
+
                     b.Property<string>("BioetricVerificationNumber")
                         .HasMaxLength(15);
 
@@ -484,8 +510,7 @@ namespace Portal.AddMigration.Migrations
                         .IsRequired()
                         .HasMaxLength(50);
 
-                    b.Property<string>("MembershipNo")
-                        .HasMaxLength(20);
+                    b.Property<string>("MemberShipNo");
 
                     b.Property<DateTime>("OnCreated");
 
@@ -495,6 +520,9 @@ namespace Portal.AddMigration.Migrations
                         .HasMaxLength(15);
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Email")
+                        .IsUnique();
 
                     b.ToTable("Person");
                 });
@@ -546,7 +574,35 @@ namespace Portal.AddMigration.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("Name")
+                        .IsUnique();
+
                     b.ToTable("ProductCategory");
+                });
+
+            modelBuilder.Entity("Portal.Domain.Models.ProductInvestmentInfo", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Abs")
+                        .IsRequired();
+
+                    b.Property<DateTime>("OnCreated");
+
+                    b.Property<int>("ProductId");
+
+                    b.Property<string>("RangOrCost");
+
+                    b.Property<string>("Sections")
+                        .IsRequired();
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("ProductInvestmentInfo");
                 });
 
             modelBuilder.Entity("Portal.Domain.Models.Products", b =>
@@ -555,22 +611,12 @@ namespace Portal.AddMigration.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Benefits");
-
                     b.Property<string>("Description");
-
-                    b.Property<string>("Features");
-
-                    b.Property<string>("HowToBegin");
 
                     b.Property<string>("Image")
                         .IsRequired();
 
-                    b.Property<string>("InvestmentManagement");
-
                     b.Property<bool>("IsActive");
-
-                    b.Property<string>("MoreInformation");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -651,6 +697,26 @@ namespace Portal.AddMigration.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Redemptions");
+                });
+
+            modelBuilder.Entity("Portal.Domain.Models.Referrer", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("OnCreated");
+
+                    b.Property<long>("PersonId");
+
+                    b.Property<string>("ReferrerEmail")
+                        .IsRequired();
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PersonId");
+
+                    b.ToTable("Referrer");
                 });
 
             modelBuilder.Entity("Portal.Domain.Models.WhatYouNeedToKNowAboutThisProduct", b =>
@@ -795,6 +861,22 @@ namespace Portal.AddMigration.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
+            modelBuilder.Entity("Portal.Domain.Models.MemberShip", b =>
+                {
+                    b.HasOne("Portal.Domain.Models.Person", "Person")
+                        .WithMany()
+                        .HasForeignKey("PersonId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Portal.Domain.Models.ProductInvestmentInfo", b =>
+                {
+                    b.HasOne("Portal.Domain.Models.Products", "Products")
+                        .WithMany("ProductInvestmentInfos")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
             modelBuilder.Entity("Portal.Domain.Models.Products", b =>
                 {
                     b.HasOne("Portal.Domain.Models.ProductCategory", "ProductCategory")
@@ -816,10 +898,18 @@ namespace Portal.AddMigration.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
+            modelBuilder.Entity("Portal.Domain.Models.Referrer", b =>
+                {
+                    b.HasOne("Portal.Domain.Models.Person", "Person")
+                        .WithMany()
+                        .HasForeignKey("PersonId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
             modelBuilder.Entity("Portal.Domain.Models.WhatYouNeedToKNowAboutThisProduct", b =>
                 {
                     b.HasOne("Portal.Domain.Models.Products", "Products")
-                        .WithMany()
+                        .WithMany("WhatYouNeedToKNowAboutThisProducts")
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
