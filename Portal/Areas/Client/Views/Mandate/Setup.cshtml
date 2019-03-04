@@ -63,7 +63,7 @@
                     <label for=""> Select the Date you wish to start</label>
                     <div class="date-input">
                         @*<input class="single-daterange form-control" placeholder="Date of birth" type="text" value="04/12/1978">*@
-                        @Html.TextBoxFor(model => model.StartDate, new { @placeholder = "Date Of Birth", @name = "date", @class = "single-daterange datepicker form-control", @ng_model = "debit.StartDate", @ng_focus = "getDate()", @required = "required" })
+                        @Html.TextBoxFor(model => model.StartDate, new { @placeholder = "Start Date", @name = "date", @class = "single-daterange datepicker form-control", @ng_model = "debit.StartDate", @ng_focus = "getDate()", @required = "required" })
                     </div>
                 </div>
 
