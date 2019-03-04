@@ -84,13 +84,28 @@ namespace Portal.Business.StoreManagers
             return result;
         }
 
-        public ArmOneRegisterResponse OnboardNewUsers(Person model)
+        public ArmOneRegisterResponse OnboardNewUsers(Person model, string username, string password)
         {
-            var response = new ArmOneRegisterResponse();
+            var response = new ArmOneRegisterResponse(); 
 
             //onboard on datahub API
 
-            
+            //onboard on ArmOne
+            var armRequest = new ArmOneRegisterRequest
+            {
+                Membershipkey = Convert.ToInt32(model.MembershipNo),
+                Password = password,
+                EmailAddress = model.Email,
+                MobileNumber = "",
+                SecurityQuestion = "",
+                SecurityAnswer = "",
+                SecurtiyQuestion2 = String.Empty,
+                SecurityAnswer2 = String.Empty,
+                FirstName = model.FirstName,
+                LastName = model.LastName,
+                Channel = "CLient_Portal"
+            };
+            response = _clientService.ArmOneRegister(armRequest);
 
             return response;
         }
