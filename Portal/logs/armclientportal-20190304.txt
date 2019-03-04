@@ -15206,3 +15206,675 @@ ORDER BY [t0].[Id]" (0723d8ff)
 2019-03-04T13:25:20.3322346+01:00 0HLL0IMTU7USS:00000024 [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported cultures '["en-US", "en"]'. (70503d1b)
 2019-03-04T13:25:20.3325588+01:00 0HLL0IMTU7USS:00000024 [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported UI Cultures '["en-US", "en"]'. (31a7522c)
 2019-03-04T13:25:20.3328881+01:00 0HLL0IMTU7USS:00000024 [INF] Request finished in 2.7575ms 404  (791a596a)
+2019-03-04T13:35:25.1592673+01:00 0HLL0IMTU7USU:00000001 [INF] Request starting HTTP/1.1 GET http://localhost/armwealth   (ca22a1cb)
+2019-03-04T13:35:25.1629319+01:00 0HLL0IMTU7USU:00000001 [INF] "Identity.Application" was not authenticated. Failure message: "Unprotect ticket failed" (48071232)
+2019-03-04T13:35:25.1632688+01:00 0HLL0IMTU7USU:00000001 [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported cultures '["en-US", "en"]'. (70503d1b)
+2019-03-04T13:35:25.1633283+01:00 0HLL0IMTU7USU:00000001 [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported UI Cultures '["en-US", "en"]'. (31a7522c)
+2019-03-04T13:35:25.1634172+01:00 0HLL0IMTU7USU:00000001 [INF] Executing endpoint '"Portal.Controllers.HomeController.Index (Portal)"' (500cc934)
+2019-03-04T13:35:25.1669300+01:00 0HLL0IMTU7USU:00000001 [INF] Route matched with "{action = \"Index\", controller = \"Home\", area = \"\"}". Executing action "Portal.Controllers.HomeController.Index (Portal)" (a44c0341)
+2019-03-04T13:35:25.1677695+01:00 0HLL0IMTU7USU:00000001 [INF] Executing action method "Portal.Controllers.HomeController.Index (Portal)" - Validation state: Valid (dad538d7)
+2019-03-04T13:35:25.1711073+01:00 0HLL0IMTU7USU:00000001 [INF] Entity Framework Core "2.2.0-rtm-35687" initialized '"ApplicationDbContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None" (9958f5bb)
+2019-03-04T13:35:25.1714850+01:00 0HLL0IMTU7USU:00000001 [INF] Executed action method "Portal.Controllers.HomeController.Index (Portal)", returned result "Microsoft.AspNetCore.Mvc.ViewResult" in 3.6252ms. (50a9e262)
+2019-03-04T13:35:25.1808151+01:00 0HLL0IMTU7USU:00000001 [INF] Executing ViewResult, running view "Index". (c83d0e25)
+2019-03-04T13:35:25.2025210+01:00 0HLL0IMTU7USU:00000001 [INF] Executed DbCommand ("3"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [s].[Id], [s].[Description], [s].[Image], [s].[IsActive], [s].[Name], [s].[ProductCategoryId], [s].[ProductTypes], [s].[StartFrom], [s.ProductCategory].[Id], [s.ProductCategory].[Name]
+FROM [Products] AS [s]
+INNER JOIN [ProductCategory] AS [s.ProductCategory] ON [s].[ProductCategoryId] = [s.ProductCategory].[Id]
+ORDER BY [s].[Id]" (0723d8ff)
+2019-03-04T13:35:25.2073014+01:00 0HLL0IMTU7USU:00000001 [INF] Executed DbCommand ("4"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [s.WhatYouNeedToKNowAboutThisProducts].[Id], [s.WhatYouNeedToKNowAboutThisProducts].[Description], [s.WhatYouNeedToKNowAboutThisProducts].[Hierarchy], [s.WhatYouNeedToKNowAboutThisProducts].[OnCreated], [s.WhatYouNeedToKNowAboutThisProducts].[ProductId], [s.WhatYouNeedToKNowAboutThisProducts].[Sections], [s.WhatYouNeedToKNowAboutThisProducts].[Title]
+FROM [WhatYouNeedToKNowAboutThisProduct] AS [s.WhatYouNeedToKNowAboutThisProducts]
+INNER JOIN (
+    SELECT DISTINCT [s0].[Id]
+    FROM [Products] AS [s0]
+    INNER JOIN [ProductCategory] AS [s.ProductCategory0] ON [s0].[ProductCategoryId] = [s.ProductCategory0].[Id]
+) AS [t] ON [s.WhatYouNeedToKNowAboutThisProducts].[ProductId] = [t].[Id]
+ORDER BY [t].[Id]" (0723d8ff)
+2019-03-04T13:35:25.2150107+01:00 0HLL0IMTU7USU:00000001 [INF] Executed DbCommand ("7"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [s.ProductInvestmentInfos].[Id], [s.ProductInvestmentInfos].[Abs], [s.ProductInvestmentInfos].[OnCreated], [s.ProductInvestmentInfos].[ProductId], [s.ProductInvestmentInfos].[RangOrCost], [s.ProductInvestmentInfos].[Sections]
+FROM [ProductInvestmentInfo] AS [s.ProductInvestmentInfos]
+INNER JOIN (
+    SELECT DISTINCT [s1].[Id]
+    FROM [Products] AS [s1]
+    INNER JOIN [ProductCategory] AS [s.ProductCategory1] ON [s1].[ProductCategoryId] = [s.ProductCategory1].[Id]
+) AS [t0] ON [s.ProductInvestmentInfos].[ProductId] = [t0].[Id]
+ORDER BY [t0].[Id]" (0723d8ff)
+2019-03-04T13:35:25.2697624+01:00 0HLL0IMTU7USU:00000001 [INF] Executed ViewResult - view "Index" executed in 98.1641ms. (f66409e9)
+2019-03-04T13:35:25.2701675+01:00 0HLL0IMTU7USU:00000001 [INF] Executed action "Portal.Controllers.HomeController.Index (Portal)" in 103.024ms (afa2e885)
+2019-03-04T13:35:25.2702337+01:00 0HLL0IMTU7USU:00000001 [INF] Executed endpoint '"Portal.Controllers.HomeController.Index (Portal)"' (99874f2b)
+2019-03-04T13:35:25.2704672+01:00 0HLL0IMTU7USU:00000001 [INF] Request finished in 111.5818ms 200 text/html; charset=utf-8 (791a596a)
+2019-03-04T13:35:38.7637564+01:00 0HLL0IMTU7USU:00000002 [INF] Request starting HTTP/1.1 GET http://localhost/armwealth/Account/Login   (ca22a1cb)
+2019-03-04T13:35:38.7644758+01:00 0HLL0IMTU7USU:00000002 [INF] "Identity.Application" was not authenticated. Failure message: "Unprotect ticket failed" (48071232)
+2019-03-04T13:35:38.7646041+01:00 0HLL0IMTU7USU:00000002 [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported cultures '["en-US", "en"]'. (70503d1b)
+2019-03-04T13:35:38.7646652+01:00 0HLL0IMTU7USU:00000002 [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported UI Cultures '["en-US", "en"]'. (31a7522c)
+2019-03-04T13:35:38.7647550+01:00 0HLL0IMTU7USU:00000002 [INF] Executing endpoint '"Portal.Controllers.AccountController.Login (Portal)"' (500cc934)
+2019-03-04T13:35:38.7707221+01:00 0HLL0IMTU7USU:00000002 [INF] Route matched with "{action = \"Login\", controller = \"Account\", area = \"\"}". Executing action "Portal.Controllers.AccountController.Login (Portal)" (a44c0341)
+2019-03-04T13:35:38.7807185+01:00 0HLL0IMTU7USU:00000002 [INF] Executing action method "Portal.Controllers.AccountController.Login (Portal)" - Validation state: Valid (dad538d7)
+2019-03-04T13:35:38.7812189+01:00 0HLL0IMTU7USU:00000002 [INF] Executed action method "Portal.Controllers.AccountController.Login (Portal)", returned result "Microsoft.AspNetCore.Mvc.ViewResult" in 0.3416ms. (50a9e262)
+2019-03-04T13:35:38.7846350+01:00 0HLL0IMTU7USU:00000002 [INF] Executing ViewResult, running view "Login". (c83d0e25)
+2019-03-04T13:35:38.8715322+01:00 0HLL0IMTU7USU:00000002 [INF] Executed ViewResult - view "Login" executed in 89.7342ms. (f66409e9)
+2019-03-04T13:35:38.8717871+01:00 0HLL0IMTU7USU:00000002 [INF] Executed action "Portal.Controllers.AccountController.Login (Portal)" in 100.9841ms (afa2e885)
+2019-03-04T13:35:38.8718568+01:00 0HLL0IMTU7USU:00000002 [INF] Executed endpoint '"Portal.Controllers.AccountController.Login (Portal)"' (99874f2b)
+2019-03-04T13:35:38.8726060+01:00 0HLL0IMTU7USU:00000002 [INF] Request finished in 108.9667ms 200 text/html; charset=utf-8 (791a596a)
+2019-03-04T13:35:38.9175999+01:00 0HLL0IMTU7USU:00000003 [INF] Request starting HTTP/1.1 GET http://localhost/armwealth/custom-admin/components/select2/dist/css/select2.min.css   (ca22a1cb)
+2019-03-04T13:35:38.9224098+01:00 0HLL0IMTU7USU:00000003 [INF] "Identity.Application" was not authenticated. Failure message: "Unprotect ticket failed" (48071232)
+2019-03-04T13:35:38.9226360+01:00 0HLL0IMTU7USU:00000003 [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported cultures '["en-US", "en"]'. (70503d1b)
+2019-03-04T13:35:38.9227438+01:00 0HLL0IMTU7USU:00000003 [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported UI Cultures '["en-US", "en"]'. (31a7522c)
+2019-03-04T13:35:38.9232479+01:00 0HLL0IMTU7USU:00000003 [INF] Request finished in 8.8314ms 404  (791a596a)
+2019-03-04T13:35:38.9652641+01:00 0HLL0IMTU7USU:00000004 [INF] Request starting HTTP/1.1 GET http://localhost/armwealth/custom-admin/components/fullcalendar/dist/fullcalendar.min.css   (ca22a1cb)
+2019-03-04T13:35:38.9665945+01:00 0HLL0IMTU7USU:00000004 [INF] "Identity.Application" was not authenticated. Failure message: "Unprotect ticket failed" (48071232)
+2019-03-04T13:35:38.9667964+01:00 0HLL0IMTU7USU:00000004 [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported cultures '["en-US", "en"]'. (70503d1b)
+2019-03-04T13:35:38.9668918+01:00 0HLL0IMTU7USU:00000004 [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported UI Cultures '["en-US", "en"]'. (31a7522c)
+2019-03-04T13:35:38.9678942+01:00 0HLL0IMTU7USU:00000004 [INF] Request finished in 2.027ms 404  (791a596a)
+2019-03-04T13:35:38.9703164+01:00 0HLL0IMTU7UT0:00000001 [INF] Request starting HTTP/1.1 GET http://localhost/armwealth/custom-admin/components/bootstrap-daterangepicker/daterangepicker.css   (ca22a1cb)
+2019-03-04T13:35:38.9710358+01:00 0HLL0IMTU7UT0:00000001 [INF] "Identity.Application" was not authenticated. Failure message: "Unprotect ticket failed" (48071232)
+2019-03-04T13:35:38.9711478+01:00 0HLL0IMTU7UT0:00000001 [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported cultures '["en-US", "en"]'. (70503d1b)
+2019-03-04T13:35:38.9711910+01:00 0HLL0IMTU7UT0:00000001 [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported UI Cultures '["en-US", "en"]'. (31a7522c)
+2019-03-04T13:35:38.9712731+01:00 0HLL0IMTU7UT0:00000001 [INF] Request finished in 3.1984ms 404  (791a596a)
+2019-03-04T13:35:38.9814401+01:00 0HLL0IMTU7USV:00000001 [INF] Request starting HTTP/1.1 GET http://localhost/armwealth/custom-admin/components/datatables.net-bs/css/dataTables.bootstrap.min.css   (ca22a1cb)
+2019-03-04T13:35:38.9817279+01:00 0HLL0IMTU7UT1:00000001 [INF] Request starting HTTP/1.1 GET http://localhost/armwealth/custom-admin/components/dropzone/dist/dropzone.css   (ca22a1cb)
+2019-03-04T13:35:38.9819071+01:00 0HLL0IMTU7USV:00000001 [INF] "Identity.Application" was not authenticated. Failure message: "Unprotect ticket failed" (48071232)
+2019-03-04T13:35:38.9820068+01:00 0HLL0IMTU7USV:00000001 [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported cultures '["en-US", "en"]'. (70503d1b)
+2019-03-04T13:35:38.9820397+01:00 0HLL0IMTU7USV:00000001 [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported UI Cultures '["en-US", "en"]'. (31a7522c)
+2019-03-04T13:35:38.9820842+01:00 0HLL0IMTU7UT1:00000001 [INF] "Identity.Application" was not authenticated. Failure message: "Unprotect ticket failed" (48071232)
+2019-03-04T13:35:38.9821667+01:00 0HLL0IMTU7UT1:00000001 [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported cultures '["en-US", "en"]'. (70503d1b)
+2019-03-04T13:35:38.9822078+01:00 0HLL0IMTU7USV:00000001 [INF] Request finished in 0.9968ms 404  (791a596a)
+2019-03-04T13:35:38.9822043+01:00 0HLL0IMTU7UT1:00000001 [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported UI Cultures '["en-US", "en"]'. (31a7522c)
+2019-03-04T13:35:38.9822732+01:00 0HLL0IMTU7UT1:00000001 [INF] Request finished in 0.5649ms 404  (791a596a)
+2019-03-04T13:35:38.9918104+01:00 0HLL0IMTU7UT0:00000002 [INF] Request starting HTTP/1.1 GET http://localhost/armwealth/custom-admin/components/perfect-scrollbar/css/perfect-scrollbar.min.css   (ca22a1cb)
+2019-03-04T13:35:38.9924535+01:00 0HLL0IMTU7UT0:00000002 [INF] "Identity.Application" was not authenticated. Failure message: "Unprotect ticket failed" (48071232)
+2019-03-04T13:35:38.9925887+01:00 0HLL0IMTU7UT0:00000002 [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported cultures '["en-US", "en"]'. (70503d1b)
+2019-03-04T13:35:38.9926426+01:00 0HLL0IMTU7UT0:00000002 [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported UI Cultures '["en-US", "en"]'. (31a7522c)
+2019-03-04T13:35:38.9927572+01:00 0HLL0IMTU7UT0:00000002 [INF] Request finished in 0.9977ms 404  (791a596a)
+2019-03-04T13:35:39.0070775+01:00 0HLL0IMTU7USU:00000005 [INF] Request starting HTTP/1.1 GET http://localhost/armwealth/custom-admin/font-awesome/css/fontawesome.css   (ca22a1cb)
+2019-03-04T13:35:39.0076754+01:00 0HLL0IMTU7USU:00000005 [INF] "Identity.Application" was not authenticated. Failure message: "Unprotect ticket failed" (48071232)
+2019-03-04T13:35:39.0078122+01:00 0HLL0IMTU7USU:00000005 [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported cultures '["en-US", "en"]'. (70503d1b)
+2019-03-04T13:35:39.0078751+01:00 0HLL0IMTU7USU:00000005 [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported UI Cultures '["en-US", "en"]'. (31a7522c)
+2019-03-04T13:35:39.0080163+01:00 0HLL0IMTU7USU:00000005 [INF] Request finished in 0.9566ms 404  (791a596a)
+2019-03-04T13:35:39.0211410+01:00 0HLL0IMTU7USV:00000002 [INF] Request starting HTTP/1.1 GET http://localhost/armwealth/custom-admin/components/slick-carousel/slick/slick.css   (ca22a1cb)
+2019-03-04T13:35:39.0211799+01:00 0HLL0IMTU7UT1:00000002 [INF] Request starting HTTP/1.1 GET http://localhost/armwealth/custom-admin/css/main.css?version=4.4.0   (ca22a1cb)
+2019-03-04T13:35:39.0217893+01:00 0HLL0IMTU7UT1:00000002 [INF] "Identity.Application" was not authenticated. Failure message: "Unprotect ticket failed" (48071232)
+2019-03-04T13:35:39.0217452+01:00 0HLL0IMTU7USV:00000002 [INF] "Identity.Application" was not authenticated. Failure message: "Unprotect ticket failed" (48071232)
+2019-03-04T13:35:39.0219655+01:00 0HLL0IMTU7USV:00000002 [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported cultures '["en-US", "en"]'. (70503d1b)
+2019-03-04T13:35:39.0220412+01:00 0HLL0IMTU7USV:00000002 [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported UI Cultures '["en-US", "en"]'. (31a7522c)
+2019-03-04T13:35:39.0220994+01:00 0HLL0IMTU7UT1:00000002 [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported cultures '["en-US", "en"]'. (70503d1b)
+2019-03-04T13:35:39.0221387+01:00 0HLL0IMTU7USV:00000002 [INF] Request finished in 1.037ms 404  (791a596a)
+2019-03-04T13:35:39.0221798+01:00 0HLL0IMTU7UT1:00000002 [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported UI Cultures '["en-US", "en"]'. (31a7522c)
+2019-03-04T13:35:39.0223179+01:00 0HLL0IMTU7UT1:00000002 [INF] Request finished in 1.1405ms 404  (791a596a)
+2019-03-04T13:35:39.0322766+01:00 0HLL0IMTU7UT0:00000003 [INF] Request starting HTTP/1.1 GET http://localhost/armwealth/custom-admin/components/chart.js/dist/Chart.min.js   (ca22a1cb)
+2019-03-04T13:35:39.0327133+01:00 0HLL0IMTU7UT0:00000003 [INF] "Identity.Application" was not authenticated. Failure message: "Unprotect ticket failed" (48071232)
+2019-03-04T13:35:39.0328540+01:00 0HLL0IMTU7UT0:00000003 [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported cultures '["en-US", "en"]'. (70503d1b)
+2019-03-04T13:35:39.0328980+01:00 0HLL0IMTU7UT0:00000003 [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported UI Cultures '["en-US", "en"]'. (31a7522c)
+2019-03-04T13:35:39.0329891+01:00 0HLL0IMTU7UT0:00000003 [INF] Request finished in 0.7603ms 404  (791a596a)
+2019-03-04T13:35:39.0383370+01:00 0HLL0IMTU7USU:00000006 [INF] Request starting HTTP/1.1 GET http://localhost/armwealth/custom-admin/components/jquery/dist/jquery.min.js   (ca22a1cb)
+2019-03-04T13:35:39.0405979+01:00 0HLL0IMTU7USU:00000006 [INF] "Identity.Application" was not authenticated. Failure message: "Unprotect ticket failed" (48071232)
+2019-03-04T13:35:39.0407681+01:00 0HLL0IMTU7USU:00000006 [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported cultures '["en-US", "en"]'. (70503d1b)
+2019-03-04T13:35:39.0409495+01:00 0HLL0IMTU7USU:00000006 [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported UI Cultures '["en-US", "en"]'. (31a7522c)
+2019-03-04T13:35:39.0410646+01:00 0HLL0IMTU7USU:00000006 [INF] Request finished in 2.7536ms 404  (791a596a)
+2019-03-04T13:35:39.0412557+01:00 0HLL0IMTU7UT1:00000003 [INF] Request starting HTTP/1.1 GET http://localhost/armwealth/custom-admin/components/popper.js/dist/umd/popper.min.js   (ca22a1cb)
+2019-03-04T13:35:39.0419862+01:00 0HLL0IMTU7UT1:00000003 [INF] "Identity.Application" was not authenticated. Failure message: "Unprotect ticket failed" (48071232)
+2019-03-04T13:35:39.0421649+01:00 0HLL0IMTU7UT1:00000003 [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported cultures '["en-US", "en"]'. (70503d1b)
+2019-03-04T13:35:39.0422338+01:00 0HLL0IMTU7UT1:00000003 [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported UI Cultures '["en-US", "en"]'. (31a7522c)
+2019-03-04T13:35:39.0423728+01:00 0HLL0IMTU7UT1:00000003 [INF] Request finished in 1.1615ms 404  (791a596a)
+2019-03-04T13:35:39.0480832+01:00 0HLL0IMTU7USV:00000003 [INF] Request starting HTTP/1.1 GET http://localhost/armwealth/custom-admin/components/moment/moment.js   (ca22a1cb)
+2019-03-04T13:35:39.0494820+01:00 0HLL0IMTU7USV:00000003 [INF] "Identity.Application" was not authenticated. Failure message: "Unprotect ticket failed" (48071232)
+2019-03-04T13:35:39.0496531+01:00 0HLL0IMTU7USV:00000003 [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported cultures '["en-US", "en"]'. (70503d1b)
+2019-03-04T13:35:39.0497322+01:00 0HLL0IMTU7USV:00000003 [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported UI Cultures '["en-US", "en"]'. (31a7522c)
+2019-03-04T13:35:39.0498567+01:00 0HLL0IMTU7USV:00000003 [INF] Request finished in 1.9424ms 404  (791a596a)
+2019-03-04T13:35:39.0501466+01:00 0HLL0IMTU7UT0:00000004 [INF] Request starting HTTP/1.1 GET http://localhost/armwealth/custom-admin/components/jquery-bar-rating/dist/jquery.barrating.min.js   (ca22a1cb)
+2019-03-04T13:35:39.0510097+01:00 0HLL0IMTU7UT0:00000004 [INF] "Identity.Application" was not authenticated. Failure message: "Unprotect ticket failed" (48071232)
+2019-03-04T13:35:39.0511354+01:00 0HLL0IMTU7UT0:00000004 [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported cultures '["en-US", "en"]'. (70503d1b)
+2019-03-04T13:35:39.0513364+01:00 0HLL0IMTU7UT0:00000004 [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported UI Cultures '["en-US", "en"]'. (31a7522c)
+2019-03-04T13:35:39.0514716+01:00 0HLL0IMTU7UT0:00000004 [INF] Request finished in 1.3338ms 404  (791a596a)
+2019-03-04T13:35:39.0536388+01:00 0HLL0IMTU7USU:00000007 [INF] Request starting HTTP/1.1 GET http://localhost/armwealth/custom-admin/components/select2/dist/js/select2.full.min.js   (ca22a1cb)
+2019-03-04T13:35:39.0542928+01:00 0HLL0IMTU7USU:00000007 [INF] "Identity.Application" was not authenticated. Failure message: "Unprotect ticket failed" (48071232)
+2019-03-04T13:35:39.0544292+01:00 0HLL0IMTU7USU:00000007 [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported cultures '["en-US", "en"]'. (70503d1b)
+2019-03-04T13:35:39.0544724+01:00 0HLL0IMTU7USU:00000007 [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported UI Cultures '["en-US", "en"]'. (31a7522c)
+2019-03-04T13:35:39.0545639+01:00 0HLL0IMTU7USU:00000007 [INF] Request finished in 0.9729ms 404  (791a596a)
+2019-03-04T13:35:39.0657859+01:00 0HLL0IMTU7UT1:00000004 [INF] Request starting HTTP/1.1 GET http://localhost/armwealth/custom-admin/components/ckeditor/ckeditor.js   (ca22a1cb)
+2019-03-04T13:35:39.0669560+01:00 0HLL0IMTU7UT1:00000004 [INF] "Identity.Application" was not authenticated. Failure message: "Unprotect ticket failed" (48071232)
+2019-03-04T13:35:39.0670757+01:00 0HLL0IMTU7UT1:00000004 [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported cultures '["en-US", "en"]'. (70503d1b)
+2019-03-04T13:35:39.0671253+01:00 0HLL0IMTU7UT1:00000004 [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported UI Cultures '["en-US", "en"]'. (31a7522c)
+2019-03-04T13:35:39.0672267+01:00 0HLL0IMTU7UT1:00000004 [INF] Request finished in 1.4668ms 404  (791a596a)
+2019-03-04T13:35:39.0744622+01:00 0HLL0IMTU7USV:00000004 [INF] Request starting HTTP/1.1 GET http://localhost/armwealth/custom-admin/components/ion.rangeSlider/js/ion.rangeSlider.min.js   (ca22a1cb)
+2019-03-04T13:35:39.0748548+01:00 0HLL0IMTU7USV:00000004 [INF] "Identity.Application" was not authenticated. Failure message: "Unprotect ticket failed" (48071232)
+2019-03-04T13:35:39.0749575+01:00 0HLL0IMTU7USV:00000004 [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported cultures '["en-US", "en"]'. (70503d1b)
+2019-03-04T13:35:39.0750045+01:00 0HLL0IMTU7USV:00000004 [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported UI Cultures '["en-US", "en"]'. (31a7522c)
+2019-03-04T13:35:39.0750887+01:00 0HLL0IMTU7USV:00000004 [INF] Request finished in 0.6714ms 404  (791a596a)
+2019-03-04T13:35:39.0789915+01:00 0HLL0IMTU7UT0:00000005 [INF] Request starting HTTP/1.1 GET http://localhost/armwealth/custom-admin/components/bootstrap-daterangepicker/daterangepicker.js   (ca22a1cb)
+2019-03-04T13:35:39.0793216+01:00 0HLL0IMTU7USU:00000008 [INF] Request starting HTTP/1.1 GET http://localhost/armwealth/custom-admin/components/dropzone/dist/dropzone.js   (ca22a1cb)
+2019-03-04T13:35:39.0798643+01:00 0HLL0IMTU7USU:00000008 [INF] "Identity.Application" was not authenticated. Failure message: "Unprotect ticket failed" (48071232)
+2019-03-04T13:35:39.0803681+01:00 0HLL0IMTU7USU:00000008 [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported cultures '["en-US", "en"]'. (70503d1b)
+2019-03-04T13:35:39.0804156+01:00 0HLL0IMTU7UT0:00000005 [INF] "Identity.Application" was not authenticated. Failure message: "Unprotect ticket failed" (48071232)
+2019-03-04T13:35:39.0804344+01:00 0HLL0IMTU7USU:00000008 [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported UI Cultures '["en-US", "en"]'. (31a7522c)
+2019-03-04T13:35:39.0804895+01:00 0HLL0IMTU7UT0:00000005 [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported cultures '["en-US", "en"]'. (70503d1b)
+2019-03-04T13:35:39.0805302+01:00 0HLL0IMTU7USU:00000008 [INF] Request finished in 1.4642ms 404  (791a596a)
+2019-03-04T13:35:39.0805340+01:00 0HLL0IMTU7UT0:00000005 [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported UI Cultures '["en-US", "en"]'. (31a7522c)
+2019-03-04T13:35:39.0805960+01:00 0HLL0IMTU7UT0:00000005 [INF] Request finished in 1.6789ms 404  (791a596a)
+2019-03-04T13:35:39.0806567+01:00 0HLL0IMTU7UT1:00000005 [INF] Request starting HTTP/1.1 GET http://localhost/armwealth/custom-admin/components/bootstrap-validator/dist/validator.min.js   (ca22a1cb)
+2019-03-04T13:35:39.0813752+01:00 0HLL0IMTU7UT1:00000005 [INF] "Identity.Application" was not authenticated. Failure message: "Unprotect ticket failed" (48071232)
+2019-03-04T13:35:39.0816669+01:00 0HLL0IMTU7UT1:00000005 [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported cultures '["en-US", "en"]'. (70503d1b)
+2019-03-04T13:35:39.0817541+01:00 0HLL0IMTU7UT1:00000005 [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported UI Cultures '["en-US", "en"]'. (31a7522c)
+2019-03-04T13:35:39.0818563+01:00 0HLL0IMTU7UT1:00000005 [INF] Request finished in 1.2218ms 404  (791a596a)
+2019-03-04T13:35:39.0832244+01:00 0HLL0IMTU7USV:00000005 [INF] Request starting HTTP/1.1 GET http://localhost/armwealth/custom-admin/components/editable-table/mindmup-editabletable.js   (ca22a1cb)
+2019-03-04T13:35:39.0836371+01:00 0HLL0IMTU7USV:00000005 [INF] "Identity.Application" was not authenticated. Failure message: "Unprotect ticket failed" (48071232)
+2019-03-04T13:35:39.0837278+01:00 0HLL0IMTU7USV:00000005 [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported cultures '["en-US", "en"]'. (70503d1b)
+2019-03-04T13:35:39.0837851+01:00 0HLL0IMTU7USV:00000005 [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported UI Cultures '["en-US", "en"]'. (31a7522c)
+2019-03-04T13:35:39.0838817+01:00 0HLL0IMTU7USV:00000005 [INF] Request finished in 0.7787ms 404  (791a596a)
+2019-03-04T13:35:39.1096782+01:00 0HLL0IMTU7USU:00000009 [INF] Request starting HTTP/1.1 GET http://localhost/armwealth/custom-admin/img/arm-logo.png   (ca22a1cb)
+2019-03-04T13:35:39.1113230+01:00 0HLL0IMTU7USU:00000009 [INF] "Identity.Application" was not authenticated. Failure message: "Unprotect ticket failed" (48071232)
+2019-03-04T13:35:39.1118520+01:00 0HLL0IMTU7USU:00000009 [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported cultures '["en-US", "en"]'. (70503d1b)
+2019-03-04T13:35:39.1118879+01:00 0HLL0IMTU7UT0:00000006 [INF] Request starting HTTP/1.1 GET http://localhost/armwealth/custom-admin/components/datatables.net/js/jquery.dataTables.min.js   (ca22a1cb)
+2019-03-04T13:35:39.1119273+01:00 0HLL0IMTU7USU:00000009 [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported UI Cultures '["en-US", "en"]'. (31a7522c)
+2019-03-04T13:35:39.1120329+01:00 0HLL0IMTU7USU:00000009 [INF] Request finished in 2.5731ms 404  (791a596a)
+2019-03-04T13:35:39.1124088+01:00 0HLL0IMTU7UT0:00000006 [INF] "Identity.Application" was not authenticated. Failure message: "Unprotect ticket failed" (48071232)
+2019-03-04T13:35:39.1125149+01:00 0HLL0IMTU7UT0:00000006 [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported cultures '["en-US", "en"]'. (70503d1b)
+2019-03-04T13:35:39.1125666+01:00 0HLL0IMTU7UT0:00000006 [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported UI Cultures '["en-US", "en"]'. (31a7522c)
+2019-03-04T13:35:39.1126509+01:00 0HLL0IMTU7UT0:00000006 [INF] Request finished in 0.9168ms 404  (791a596a)
+2019-03-04T13:35:39.1142118+01:00 0HLL0IMTU7UT1:00000006 [INF] Request starting HTTP/1.1 GET http://localhost/armwealth/custom-admin/components/fullcalendar/dist/fullcalendar.min.js   (ca22a1cb)
+2019-03-04T13:35:39.1181518+01:00 0HLL0IMTU7UT1:00000006 [INF] "Identity.Application" was not authenticated. Failure message: "Unprotect ticket failed" (48071232)
+2019-03-04T13:35:39.1181509+01:00 0HLL0IMTU7USV:00000006 [INF] Request starting HTTP/1.1 GET http://localhost/armwealth/custom-admin/components/perfect-scrollbar/js/perfect-scrollbar.jquery.min.js   (ca22a1cb)
+2019-03-04T13:35:39.1189404+01:00 0HLL0IMTU7USV:00000006 [INF] "Identity.Application" was not authenticated. Failure message: "Unprotect ticket failed" (48071232)
+2019-03-04T13:35:39.1190999+01:00 0HLL0IMTU7USV:00000006 [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported cultures '["en-US", "en"]'. (70503d1b)
+2019-03-04T13:35:39.1192072+01:00 0HLL0IMTU7USV:00000006 [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported UI Cultures '["en-US", "en"]'. (31a7522c)
+2019-03-04T13:35:39.1193531+01:00 0HLL0IMTU7UT1:00000006 [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported cultures '["en-US", "en"]'. (70503d1b)
+2019-03-04T13:35:39.1193509+01:00 0HLL0IMTU7USV:00000006 [INF] Request finished in 2.7729ms 404  (791a596a)
+2019-03-04T13:35:39.1196118+01:00 0HLL0IMTU7UT1:00000006 [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported UI Cultures '["en-US", "en"]'. (31a7522c)
+2019-03-04T13:35:39.1197358+01:00 0HLL0IMTU7UT1:00000006 [INF] Request finished in 5.5556ms 404  (791a596a)
+2019-03-04T13:35:39.1212056+01:00 0HLL0IMTU7USU:0000000A [INF] Request starting HTTP/1.1 GET http://localhost/armwealth/custom-admin/components/datatables.net-bs/js/dataTables.bootstrap.min.js   (ca22a1cb)
+2019-03-04T13:35:39.1230262+01:00 0HLL0IMTU7USU:0000000A [INF] "Identity.Application" was not authenticated. Failure message: "Unprotect ticket failed" (48071232)
+2019-03-04T13:35:39.1232618+01:00 0HLL0IMTU7USU:0000000A [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported cultures '["en-US", "en"]'. (70503d1b)
+2019-03-04T13:35:39.1233615+01:00 0HLL0IMTU7USU:0000000A [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported UI Cultures '["en-US", "en"]'. (31a7522c)
+2019-03-04T13:35:39.1235424+01:00 0HLL0IMTU7USU:0000000A [INF] Request finished in 2.3704ms 404  (791a596a)
+2019-03-04T13:35:39.1263063+01:00 0HLL0IMTU7UT0:00000007 [INF] Request starting HTTP/1.1 GET http://localhost/armwealth/custom-admin/components/jquery/dist/jquery.min.js   (ca22a1cb)
+2019-03-04T13:35:39.1269264+01:00 0HLL0IMTU7UT0:00000007 [INF] "Identity.Application" was not authenticated. Failure message: "Unprotect ticket failed" (48071232)
+2019-03-04T13:35:39.1270632+01:00 0HLL0IMTU7UT0:00000007 [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported cultures '["en-US", "en"]'. (70503d1b)
+2019-03-04T13:35:39.1271359+01:00 0HLL0IMTU7UT0:00000007 [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported UI Cultures '["en-US", "en"]'. (31a7522c)
+2019-03-04T13:35:39.1282679+01:00 0HLL0IMTU7UT0:00000007 [INF] Request finished in 1.6387ms 404  (791a596a)
+2019-03-04T13:35:39.1287353+01:00 0HLL0IMTU7USV:00000007 [INF] Request starting HTTP/1.1 GET http://localhost/armwealth/custom-admin/components/slick-carousel/slick/slick.min.js   (ca22a1cb)
+2019-03-04T13:35:39.1300636+01:00 0HLL0IMTU7USV:00000007 [INF] "Identity.Application" was not authenticated. Failure message: "Unprotect ticket failed" (48071232)
+2019-03-04T13:35:39.1302351+01:00 0HLL0IMTU7UT1:00000007 [INF] Request starting HTTP/1.1 GET http://localhost/armwealth/custom-admin/components/tether/dist/js/tether.min.js   (ca22a1cb)
+2019-03-04T13:35:39.1302312+01:00 0HLL0IMTU7USV:00000007 [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported cultures '["en-US", "en"]'. (70503d1b)
+2019-03-04T13:35:39.1303129+01:00 0HLL0IMTU7USV:00000007 [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported UI Cultures '["en-US", "en"]'. (31a7522c)
+2019-03-04T13:35:39.1304258+01:00 0HLL0IMTU7USV:00000007 [INF] Request finished in 1.7221ms 404  (791a596a)
+2019-03-04T13:35:39.1308326+01:00 0HLL0IMTU7UT1:00000007 [INF] "Identity.Application" was not authenticated. Failure message: "Unprotect ticket failed" (48071232)
+2019-03-04T13:35:39.1309716+01:00 0HLL0IMTU7UT1:00000007 [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported cultures '["en-US", "en"]'. (70503d1b)
+2019-03-04T13:35:39.1310336+01:00 0HLL0IMTU7UT1:00000007 [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported UI Cultures '["en-US", "en"]'. (31a7522c)
+2019-03-04T13:35:39.1311465+01:00 0HLL0IMTU7UT1:00000007 [INF] Request finished in 1.2145ms 404  (791a596a)
+2019-03-04T13:35:39.1326984+01:00 0HLL0IMTU7USU:0000000B [INF] Request starting HTTP/1.1 GET http://localhost/armwealth/custom-admin/components/bootstrap/js/dist/util.js   (ca22a1cb)
+2019-03-04T13:35:39.1338569+01:00 0HLL0IMTU7USU:0000000B [INF] "Identity.Application" was not authenticated. Failure message: "Unprotect ticket failed" (48071232)
+2019-03-04T13:35:39.1348957+01:00 0HLL0IMTU7USU:0000000B [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported cultures '["en-US", "en"]'. (70503d1b)
+2019-03-04T13:35:39.1349462+01:00 0HLL0IMTU7USU:0000000B [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported UI Cultures '["en-US", "en"]'. (31a7522c)
+2019-03-04T13:35:39.1361466+01:00 0HLL0IMTU7USU:0000000B [INF] Request finished in 2.645ms 404  (791a596a)
+2019-03-04T13:35:39.1470008+01:00 0HLL0IMTU7UT0:00000008 [INF] Request starting HTTP/1.1 GET http://localhost/armwealth/custom-admin/components/bootstrap/js/dist/button.js   (ca22a1cb)
+2019-03-04T13:35:39.1472835+01:00 0HLL0IMTU7USV:00000008 [INF] Request starting HTTP/1.1 GET http://localhost/armwealth/custom-admin/components/bootstrap/js/dist/alert.js   (ca22a1cb)
+2019-03-04T13:35:39.1478836+01:00 0HLL0IMTU7USV:00000008 [INF] "Identity.Application" was not authenticated. Failure message: "Unprotect ticket failed" (48071232)
+2019-03-04T13:35:39.1479191+01:00 0HLL0IMTU7UT0:00000008 [INF] "Identity.Application" was not authenticated. Failure message: "Unprotect ticket failed" (48071232)
+2019-03-04T13:35:39.1480170+01:00 0HLL0IMTU7UT0:00000008 [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported cultures '["en-US", "en"]'. (70503d1b)
+2019-03-04T13:35:39.1480281+01:00 0HLL0IMTU7USV:00000008 [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported cultures '["en-US", "en"]'. (70503d1b)
+2019-03-04T13:35:39.1480645+01:00 0HLL0IMTU7UT0:00000008 [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported UI Cultures '["en-US", "en"]'. (31a7522c)
+2019-03-04T13:35:39.1481021+01:00 0HLL0IMTU7USV:00000008 [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported UI Cultures '["en-US", "en"]'. (31a7522c)
+2019-03-04T13:35:39.1481692+01:00 0HLL0IMTU7UT0:00000008 [INF] Request finished in 1.1841ms 404  (791a596a)
+2019-03-04T13:35:39.1481834+01:00 0HLL0IMTU7USV:00000008 [INF] Request finished in 0.9459ms 404  (791a596a)
+2019-03-04T13:35:39.1597753+01:00 0HLL0IMTU7USU:0000000C [INF] Request starting HTTP/1.1 GET http://localhost/armwealth/custom-admin/components/popper.js/dist/umd/popper.min.js   (ca22a1cb)
+2019-03-04T13:35:39.1598019+01:00 0HLL0IMTU7UT1:00000008 [INF] Request starting HTTP/1.1 GET http://localhost/armwealth/custom-admin/components/bootstrap/js/dist/carousel.js   (ca22a1cb)
+2019-03-04T13:35:39.1598215+01:00 0HLL0IMTU7USV:00000009 [INF] Request starting HTTP/1.1 GET http://localhost/armwealth/custom-admin/components/bootstrap/js/dist/collapse.js   (ca22a1cb)
+2019-03-04T13:35:39.1602706+01:00 0HLL0IMTU7UT1:00000008 [INF] "Identity.Application" was not authenticated. Failure message: "Unprotect ticket failed" (48071232)
+2019-03-04T13:35:39.1602949+01:00 0HLL0IMTU7USU:0000000C [INF] "Identity.Application" was not authenticated. Failure message: "Unprotect ticket failed" (48071232)
+2019-03-04T13:35:39.1604053+01:00 0HLL0IMTU7USV:00000009 [INF] "Identity.Application" was not authenticated. Failure message: "Unprotect ticket failed" (48071232)
+2019-03-04T13:35:39.1604023+01:00 0HLL0IMTU7UT1:00000008 [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported cultures '["en-US", "en"]'. (70503d1b)
+2019-03-04T13:35:39.1604476+01:00 0HLL0IMTU7UT1:00000008 [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported UI Cultures '["en-US", "en"]'. (31a7522c)
+2019-03-04T13:35:39.1604801+01:00 0HLL0IMTU7USV:00000009 [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported cultures '["en-US", "en"]'. (70503d1b)
+2019-03-04T13:35:39.1605109+01:00 0HLL0IMTU7USV:00000009 [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported UI Cultures '["en-US", "en"]'. (31a7522c)
+2019-03-04T13:35:39.1605366+01:00 0HLL0IMTU7UT1:00000008 [INF] Request finished in 0.7723ms 404  (791a596a)
+2019-03-04T13:35:39.1605515+01:00 0HLL0IMTU7USU:0000000C [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported cultures '["en-US", "en"]'. (70503d1b)
+2019-03-04T13:35:39.1605913+01:00 0HLL0IMTU7USV:00000009 [INF] Request finished in 0.8133ms 404  (791a596a)
+2019-03-04T13:35:39.1606191+01:00 0HLL0IMTU7USU:0000000C [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported UI Cultures '["en-US", "en"]'. (31a7522c)
+2019-03-04T13:35:39.1606871+01:00 0HLL0IMTU7USU:0000000C [INF] Request finished in 0.9639ms 404  (791a596a)
+2019-03-04T13:35:39.1686290+01:00 0HLL0IMTU7UT0:00000009 [INF] Request starting HTTP/1.1 GET http://localhost/armwealth/custom-admin/components/bootstrap/js/dist/dropdown.js   (ca22a1cb)
+2019-03-04T13:35:39.1691602+01:00 0HLL0IMTU7UT0:00000009 [INF] "Identity.Application" was not authenticated. Failure message: "Unprotect ticket failed" (48071232)
+2019-03-04T13:35:39.1693022+01:00 0HLL0IMTU7UT0:00000009 [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported cultures '["en-US", "en"]'. (70503d1b)
+2019-03-04T13:35:39.1693531+01:00 0HLL0IMTU7UT0:00000009 [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported UI Cultures '["en-US", "en"]'. (31a7522c)
+2019-03-04T13:35:39.1694625+01:00 0HLL0IMTU7UT0:00000009 [INF] Request finished in 0.8758ms 404  (791a596a)
+2019-03-04T13:35:39.1792930+01:00 0HLL0IMTU7UT1:00000009 [INF] Request starting HTTP/1.1 GET http://localhost/armwealth/custom-admin/components/bootstrap/js/dist/tab.js   (ca22a1cb)
+2019-03-04T13:35:39.1794166+01:00 0HLL0IMTU7USV:0000000A [INF] Request starting HTTP/1.1 GET http://localhost/armwealth/custom-admin/components/bootstrap/js/dist/modal.js   (ca22a1cb)
+2019-03-04T13:35:39.1798041+01:00 0HLL0IMTU7USV:0000000A [INF] "Identity.Application" was not authenticated. Failure message: "Unprotect ticket failed" (48071232)
+2019-03-04T13:35:39.1798143+01:00 0HLL0IMTU7UT1:00000009 [INF] "Identity.Application" was not authenticated. Failure message: "Unprotect ticket failed" (48071232)
+2019-03-04T13:35:39.1799576+01:00 0HLL0IMTU7USV:0000000A [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported cultures '["en-US", "en"]'. (70503d1b)
+2019-03-04T13:35:39.1799636+01:00 0HLL0IMTU7UT1:00000009 [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported cultures '["en-US", "en"]'. (70503d1b)
+2019-03-04T13:35:39.1800414+01:00 0HLL0IMTU7USV:0000000A [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported UI Cultures '["en-US", "en"]'. (31a7522c)
+2019-03-04T13:35:39.1800761+01:00 0HLL0IMTU7UT1:00000009 [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported UI Cultures '["en-US", "en"]'. (31a7522c)
+2019-03-04T13:35:39.1801466+01:00 0HLL0IMTU7USV:0000000A [INF] Request finished in 0.7595ms 404  (791a596a)
+2019-03-04T13:35:39.1801565+01:00 0HLL0IMTU7UT1:00000009 [INF] Request finished in 1.0965ms 404  (791a596a)
+2019-03-04T13:35:39.1852071+01:00 0HLL0IMTU7USU:0000000D [INF] Request starting HTTP/1.1 GET http://localhost/armwealth/custom-admin/components/bootstrap/js/dist/tooltip.js   (ca22a1cb)
+2019-03-04T13:35:39.1860081+01:00 0HLL0IMTU7UT0:0000000A [INF] Request starting HTTP/1.1 GET http://localhost/armwealth/custom-admin/js/chart-loader.js   (ca22a1cb)
+2019-03-04T13:35:39.1861068+01:00 0HLL0IMTU7USU:0000000D [INF] "Identity.Application" was not authenticated. Failure message: "Unprotect ticket failed" (48071232)
+2019-03-04T13:35:39.1862249+01:00 0HLL0IMTU7USU:0000000D [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported cultures '["en-US", "en"]'. (70503d1b)
+2019-03-04T13:35:39.1862723+01:00 0HLL0IMTU7USU:0000000D [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported UI Cultures '["en-US", "en"]'. (31a7522c)
+2019-03-04T13:35:39.1863570+01:00 0HLL0IMTU7USU:0000000D [INF] Request finished in 1.2842ms 404  (791a596a)
+2019-03-04T13:35:39.1863934+01:00 0HLL0IMTU7UT0:0000000A [INF] "Identity.Application" was not authenticated. Failure message: "Unprotect ticket failed" (48071232)
+2019-03-04T13:35:39.1864862+01:00 0HLL0IMTU7UT0:0000000A [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported cultures '["en-US", "en"]'. (70503d1b)
+2019-03-04T13:35:39.1865563+01:00 0HLL0IMTU7UT0:0000000A [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported UI Cultures '["en-US", "en"]'. (31a7522c)
+2019-03-04T13:35:39.1865597+01:00 0HLL0IMTU7USV:0000000B [INF] Request starting HTTP/1.1 GET http://localhost/armwealth/custom-admin/components/bootstrap/js/dist/popover.js   (ca22a1cb)
+2019-03-04T13:35:39.1866153+01:00 0HLL0IMTU7UT0:0000000A [INF] Request finished in 0.7034ms 404  (791a596a)
+2019-03-04T13:35:39.1873407+01:00 0HLL0IMTU7USV:0000000B [INF] "Identity.Application" was not authenticated. Failure message: "Unprotect ticket failed" (48071232)
+2019-03-04T13:35:39.1874788+01:00 0HLL0IMTU7USV:0000000B [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported cultures '["en-US", "en"]'. (70503d1b)
+2019-03-04T13:35:39.1875160+01:00 0HLL0IMTU7USV:0000000B [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported UI Cultures '["en-US", "en"]'. (31a7522c)
+2019-03-04T13:35:39.1878620+01:00 0HLL0IMTU7USV:0000000B [INF] Request finished in 1.1409ms 404  (791a596a)
+2019-03-04T13:35:39.1894422+01:00 0HLL0IMTU7UT1:0000000A [INF] Request starting HTTP/1.1 GET http://localhost/armwealth/custom-admin/components/moment/moment.js   (ca22a1cb)
+2019-03-04T13:35:39.1904784+01:00 0HLL0IMTU7UT1:0000000A [INF] "Identity.Application" was not authenticated. Failure message: "Unprotect ticket failed" (48071232)
+2019-03-04T13:35:39.1909782+01:00 0HLL0IMTU7UT1:0000000A [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported cultures '["en-US", "en"]'. (70503d1b)
+2019-03-04T13:35:39.1914893+01:00 0HLL0IMTU7UT1:0000000A [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported UI Cultures '["en-US", "en"]'. (31a7522c)
+2019-03-04T13:35:39.1921607+01:00 0HLL0IMTU7UT1:0000000A [INF] Request finished in 2.719ms 404  (791a596a)
+2019-03-04T13:35:39.1987762+01:00 0HLL0IMTU7USU:0000000E [INF] Request starting HTTP/1.1 GET http://localhost/armwealth/custom-admin/js/main.js?version=4.4.0   (ca22a1cb)
+2019-03-04T13:35:39.1993997+01:00 0HLL0IMTU7USU:0000000E [INF] "Identity.Application" was not authenticated. Failure message: "Unprotect ticket failed" (48071232)
+2019-03-04T13:35:39.1995870+01:00 0HLL0IMTU7USU:0000000E [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported cultures '["en-US", "en"]'. (70503d1b)
+2019-03-04T13:35:39.1996708+01:00 0HLL0IMTU7USU:0000000E [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported UI Cultures '["en-US", "en"]'. (31a7522c)
+2019-03-04T13:35:39.1998889+01:00 0HLL0IMTU7USU:0000000E [INF] Request finished in 1.2722ms 404  (791a596a)
+2019-03-04T13:35:39.2066599+01:00 0HLL0IMTU7UT0:0000000B [INF] Request starting HTTP/1.1 GET http://localhost/armwealth/custom-admin/components/chart.js/dist/Chart.min.js   (ca22a1cb)
+2019-03-04T13:35:39.2072266+01:00 0HLL0IMTU7UT0:0000000B [INF] "Identity.Application" was not authenticated. Failure message: "Unprotect ticket failed" (48071232)
+2019-03-04T13:35:39.2073921+01:00 0HLL0IMTU7UT0:0000000B [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported cultures '["en-US", "en"]'. (70503d1b)
+2019-03-04T13:35:39.2074443+01:00 0HLL0IMTU7UT0:0000000B [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported UI Cultures '["en-US", "en"]'. (31a7522c)
+2019-03-04T13:35:39.2075507+01:00 0HLL0IMTU7UT0:0000000B [INF] Request finished in 0.9664ms 404  (791a596a)
+2019-03-04T13:35:39.2150454+01:00 0HLL0IMTU7USV:0000000C [INF] Request starting HTTP/1.1 GET http://localhost/armwealth/custom-admin/components/select2/dist/js/select2.full.min.js   (ca22a1cb)
+2019-03-04T13:35:39.2155885+01:00 0HLL0IMTU7USV:0000000C [INF] "Identity.Application" was not authenticated. Failure message: "Unprotect ticket failed" (48071232)
+2019-03-04T13:35:39.2157219+01:00 0HLL0IMTU7USV:0000000C [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported cultures '["en-US", "en"]'. (70503d1b)
+2019-03-04T13:35:39.2158242+01:00 0HLL0IMTU7USV:0000000C [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported UI Cultures '["en-US", "en"]'. (31a7522c)
+2019-03-04T13:35:39.2159289+01:00 0HLL0IMTU7USV:0000000C [INF] Request finished in 0.9254ms 404  (791a596a)
+2019-03-04T13:35:39.2241848+01:00 0HLL0IMTU7UT1:0000000B [INF] Request starting HTTP/1.1 GET http://localhost/armwealth/custom-admin/components/jquery-bar-rating/dist/jquery.barrating.min.js   (ca22a1cb)
+2019-03-04T13:35:39.2247706+01:00 0HLL0IMTU7UT1:0000000B [INF] "Identity.Application" was not authenticated. Failure message: "Unprotect ticket failed" (48071232)
+2019-03-04T13:35:39.2248951+01:00 0HLL0IMTU7UT1:0000000B [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported cultures '["en-US", "en"]'. (70503d1b)
+2019-03-04T13:35:39.2249652+01:00 0HLL0IMTU7UT1:0000000B [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported UI Cultures '["en-US", "en"]'. (31a7522c)
+2019-03-04T13:35:39.2250858+01:00 0HLL0IMTU7UT1:0000000B [INF] Request finished in 0.9836ms 404  (791a596a)
+2019-03-04T13:35:39.2327797+01:00 0HLL0IMTU7USU:0000000F [INF] Request starting HTTP/1.1 GET http://localhost/armwealth/custom-admin/components/ckeditor/ckeditor.js   (ca22a1cb)
+2019-03-04T13:35:39.2333352+01:00 0HLL0IMTU7USU:0000000F [INF] "Identity.Application" was not authenticated. Failure message: "Unprotect ticket failed" (48071232)
+2019-03-04T13:35:39.2334781+01:00 0HLL0IMTU7USU:0000000F [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported cultures '["en-US", "en"]'. (70503d1b)
+2019-03-04T13:35:39.2336111+01:00 0HLL0IMTU7USU:0000000F [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported UI Cultures '["en-US", "en"]'. (31a7522c)
+2019-03-04T13:35:39.2338823+01:00 0HLL0IMTU7USU:0000000F [INF] Request finished in 1.0126ms 404  (791a596a)
+2019-03-04T13:35:39.2400772+01:00 0HLL0IMTU7UT0:0000000C [INF] Request starting HTTP/1.1 GET http://localhost/armwealth/custom-admin/components/bootstrap-validator/dist/validator.min.js   (ca22a1cb)
+2019-03-04T13:35:39.2405981+01:00 0HLL0IMTU7UT0:0000000C [INF] "Identity.Application" was not authenticated. Failure message: "Unprotect ticket failed" (48071232)
+2019-03-04T13:35:39.2407341+01:00 0HLL0IMTU7UT0:0000000C [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported cultures '["en-US", "en"]'. (70503d1b)
+2019-03-04T13:35:39.2409223+01:00 0HLL0IMTU7UT0:0000000C [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported UI Cultures '["en-US", "en"]'. (31a7522c)
+2019-03-04T13:35:39.2410168+01:00 0HLL0IMTU7UT0:0000000C [INF] Request finished in 1.0161ms 404  (791a596a)
+2019-03-04T13:35:39.2486761+01:00 0HLL0IMTU7USV:0000000D [INF] Request starting HTTP/1.1 GET http://localhost/armwealth/custom-admin/components/bootstrap-daterangepicker/daterangepicker.js   (ca22a1cb)
+2019-03-04T13:35:39.2492586+01:00 0HLL0IMTU7USV:0000000D [INF] "Identity.Application" was not authenticated. Failure message: "Unprotect ticket failed" (48071232)
+2019-03-04T13:35:39.2493903+01:00 0HLL0IMTU7USV:0000000D [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported cultures '["en-US", "en"]'. (70503d1b)
+2019-03-04T13:35:39.2494587+01:00 0HLL0IMTU7USV:0000000D [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported UI Cultures '["en-US", "en"]'. (31a7522c)
+2019-03-04T13:35:39.2496037+01:00 0HLL0IMTU7USV:0000000D [INF] Request finished in 0.9639ms 404  (791a596a)
+2019-03-04T13:35:39.2555963+01:00 0HLL0IMTU7UT1:0000000C [INF] Request starting HTTP/1.1 GET http://localhost/armwealth/custom-admin/components/ion.rangeSlider/js/ion.rangeSlider.min.js   (ca22a1cb)
+2019-03-04T13:35:39.2561224+01:00 0HLL0IMTU7UT1:0000000C [INF] "Identity.Application" was not authenticated. Failure message: "Unprotect ticket failed" (48071232)
+2019-03-04T13:35:39.2562836+01:00 0HLL0IMTU7UT1:0000000C [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported cultures '["en-US", "en"]'. (70503d1b)
+2019-03-04T13:35:39.2563551+01:00 0HLL0IMTU7UT1:0000000C [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported UI Cultures '["en-US", "en"]'. (31a7522c)
+2019-03-04T13:35:39.2564474+01:00 0HLL0IMTU7UT1:0000000C [INF] Request finished in 0.9348ms 404  (791a596a)
+2019-03-04T13:35:39.2633082+01:00 0HLL0IMTU7USU:00000010 [INF] Request starting HTTP/1.1 GET http://localhost/armwealth/custom-admin/components/dropzone/dist/dropzone.js   (ca22a1cb)
+2019-03-04T13:35:39.2640456+01:00 0HLL0IMTU7USU:00000010 [INF] "Identity.Application" was not authenticated. Failure message: "Unprotect ticket failed" (48071232)
+2019-03-04T13:35:39.2642932+01:00 0HLL0IMTU7USU:00000010 [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported cultures '["en-US", "en"]'. (70503d1b)
+2019-03-04T13:35:39.2644570+01:00 0HLL0IMTU7USU:00000010 [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported UI Cultures '["en-US", "en"]'. (31a7522c)
+2019-03-04T13:35:39.2645664+01:00 0HLL0IMTU7USU:00000010 [INF] Request finished in 1.2799ms 404  (791a596a)
+2019-03-04T13:35:39.2708812+01:00 0HLL0IMTU7UT0:0000000D [INF] Request starting HTTP/1.1 GET http://localhost/armwealth/custom-admin/components/editable-table/mindmup-editabletable.js   (ca22a1cb)
+2019-03-04T13:35:39.2713683+01:00 0HLL0IMTU7UT0:0000000D [INF] "Identity.Application" was not authenticated. Failure message: "Unprotect ticket failed" (48071232)
+2019-03-04T13:35:39.2715273+01:00 0HLL0IMTU7UT0:0000000D [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported cultures '["en-US", "en"]'. (70503d1b)
+2019-03-04T13:35:39.2716223+01:00 0HLL0IMTU7UT0:0000000D [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported UI Cultures '["en-US", "en"]'. (31a7522c)
+2019-03-04T13:35:39.2717360+01:00 0HLL0IMTU7UT0:0000000D [INF] Request finished in 1.0233ms 404  (791a596a)
+2019-03-04T13:35:39.2787868+01:00 0HLL0IMTU7USV:0000000E [INF] Request starting HTTP/1.1 GET http://localhost/armwealth/custom-admin/components/datatables.net/js/jquery.dataTables.min.js   (ca22a1cb)
+2019-03-04T13:35:39.2792440+01:00 0HLL0IMTU7USV:0000000E [INF] "Identity.Application" was not authenticated. Failure message: "Unprotect ticket failed" (48071232)
+2019-03-04T13:35:39.2793676+01:00 0HLL0IMTU7USV:0000000E [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported cultures '["en-US", "en"]'. (70503d1b)
+2019-03-04T13:35:39.2794266+01:00 0HLL0IMTU7USV:0000000E [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported UI Cultures '["en-US", "en"]'. (31a7522c)
+2019-03-04T13:35:39.2795185+01:00 0HLL0IMTU7USV:0000000E [INF] Request finished in 0.8189ms 404  (791a596a)
+2019-03-04T13:35:39.2862442+01:00 0HLL0IMTU7UT1:0000000D [INF] Request starting HTTP/1.1 GET http://localhost/armwealth/custom-admin/components/datatables.net-bs/js/dataTables.bootstrap.min.js   (ca22a1cb)
+2019-03-04T13:35:39.2870046+01:00 0HLL0IMTU7UT1:0000000D [INF] "Identity.Application" was not authenticated. Failure message: "Unprotect ticket failed" (48071232)
+2019-03-04T13:35:39.2871521+01:00 0HLL0IMTU7UT1:0000000D [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported cultures '["en-US", "en"]'. (70503d1b)
+2019-03-04T13:35:39.2872270+01:00 0HLL0IMTU7UT1:0000000D [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported UI Cultures '["en-US", "en"]'. (31a7522c)
+2019-03-04T13:35:39.2873446+01:00 0HLL0IMTU7UT1:0000000D [INF] Request finished in 1.1627ms 404  (791a596a)
+2019-03-04T13:35:39.2943277+01:00 0HLL0IMTU7USU:00000011 [INF] Request starting HTTP/1.1 GET http://localhost/armwealth/custom-admin/components/fullcalendar/dist/fullcalendar.min.js   (ca22a1cb)
+2019-03-04T13:35:39.2948636+01:00 0HLL0IMTU7USU:00000011 [INF] "Identity.Application" was not authenticated. Failure message: "Unprotect ticket failed" (48071232)
+2019-03-04T13:35:39.2950000+01:00 0HLL0IMTU7USU:00000011 [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported cultures '["en-US", "en"]'. (70503d1b)
+2019-03-04T13:35:39.2950620+01:00 0HLL0IMTU7USU:00000011 [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported UI Cultures '["en-US", "en"]'. (31a7522c)
+2019-03-04T13:35:39.2951959+01:00 0HLL0IMTU7USU:00000011 [INF] Request finished in 0.9553ms 404  (791a596a)
+2019-03-04T13:35:39.3015512+01:00 0HLL0IMTU7UT0:0000000E [INF] Request starting HTTP/1.1 GET http://localhost/armwealth/custom-admin/components/perfect-scrollbar/js/perfect-scrollbar.jquery.min.js   (ca22a1cb)
+2019-03-04T13:35:39.3020872+01:00 0HLL0IMTU7UT0:0000000E [INF] "Identity.Application" was not authenticated. Failure message: "Unprotect ticket failed" (48071232)
+2019-03-04T13:35:39.3022552+01:00 0HLL0IMTU7UT0:0000000E [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported cultures '["en-US", "en"]'. (70503d1b)
+2019-03-04T13:35:39.3023566+01:00 0HLL0IMTU7UT0:0000000E [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported UI Cultures '["en-US", "en"]'. (31a7522c)
+2019-03-04T13:35:39.3025208+01:00 0HLL0IMTU7UT0:0000000E [INF] Request finished in 1.0101ms 404  (791a596a)
+2019-03-04T13:35:39.3088013+01:00 0HLL0IMTU7USV:0000000F [INF] Request starting HTTP/1.1 GET http://localhost/armwealth/custom-admin/components/tether/dist/js/tether.min.js   (ca22a1cb)
+2019-03-04T13:35:39.3093739+01:00 0HLL0IMTU7USV:0000000F [INF] "Identity.Application" was not authenticated. Failure message: "Unprotect ticket failed" (48071232)
+2019-03-04T13:35:39.3095052+01:00 0HLL0IMTU7USV:0000000F [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported cultures '["en-US", "en"]'. (70503d1b)
+2019-03-04T13:35:39.3095625+01:00 0HLL0IMTU7USV:0000000F [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported UI Cultures '["en-US", "en"]'. (31a7522c)
+2019-03-04T13:35:39.3098589+01:00 0HLL0IMTU7USV:0000000F [INF] Request finished in 0.9335ms 404  (791a596a)
+2019-03-04T13:35:39.3164451+01:00 0HLL0IMTU7UT1:0000000E [INF] Request starting HTTP/1.1 GET http://localhost/armwealth/custom-admin/components/slick-carousel/slick/slick.min.js   (ca22a1cb)
+2019-03-04T13:35:39.3169776+01:00 0HLL0IMTU7UT1:0000000E [INF] "Identity.Application" was not authenticated. Failure message: "Unprotect ticket failed" (48071232)
+2019-03-04T13:35:39.3171289+01:00 0HLL0IMTU7UT1:0000000E [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported cultures '["en-US", "en"]'. (70503d1b)
+2019-03-04T13:35:39.3171901+01:00 0HLL0IMTU7UT1:0000000E [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported UI Cultures '["en-US", "en"]'. (31a7522c)
+2019-03-04T13:35:39.3172812+01:00 0HLL0IMTU7UT1:0000000E [INF] Request finished in 0.9113ms 404  (791a596a)
+2019-03-04T13:35:39.3238397+01:00 0HLL0IMTU7USU:00000012 [INF] Request starting HTTP/1.1 GET http://localhost/armwealth/custom-admin/components/bootstrap/js/dist/util.js   (ca22a1cb)
+2019-03-04T13:35:39.3244808+01:00 0HLL0IMTU7USU:00000012 [INF] "Identity.Application" was not authenticated. Failure message: "Unprotect ticket failed" (48071232)
+2019-03-04T13:35:39.3245847+01:00 0HLL0IMTU7USU:00000012 [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported cultures '["en-US", "en"]'. (70503d1b)
+2019-03-04T13:35:39.3246253+01:00 0HLL0IMTU7USU:00000012 [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported UI Cultures '["en-US", "en"]'. (31a7522c)
+2019-03-04T13:35:39.3247083+01:00 0HLL0IMTU7USU:00000012 [INF] Request finished in 0.9361ms 404  (791a596a)
+2019-03-04T13:35:39.3324873+01:00 0HLL0IMTU7UT0:0000000F [INF] Request starting HTTP/1.1 GET http://localhost/armwealth/custom-admin/components/bootstrap/js/dist/alert.js   (ca22a1cb)
+2019-03-04T13:35:39.3329795+01:00 0HLL0IMTU7UT0:0000000F [INF] "Identity.Application" was not authenticated. Failure message: "Unprotect ticket failed" (48071232)
+2019-03-04T13:35:39.3331515+01:00 0HLL0IMTU7UT0:0000000F [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported cultures '["en-US", "en"]'. (70503d1b)
+2019-03-04T13:35:39.3332289+01:00 0HLL0IMTU7UT0:0000000F [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported UI Cultures '["en-US", "en"]'. (31a7522c)
+2019-03-04T13:35:39.3333212+01:00 0HLL0IMTU7UT0:0000000F [INF] Request finished in 0.8801ms 404  (791a596a)
+2019-03-04T13:35:39.3393884+01:00 0HLL0IMTU7USV:00000010 [INF] Request starting HTTP/1.1 GET http://localhost/armwealth/custom-admin/components/bootstrap/js/dist/button.js   (ca22a1cb)
+2019-03-04T13:35:39.3399871+01:00 0HLL0IMTU7USV:00000010 [INF] "Identity.Application" was not authenticated. Failure message: "Unprotect ticket failed" (48071232)
+2019-03-04T13:35:39.3401872+01:00 0HLL0IMTU7USV:00000010 [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported cultures '["en-US", "en"]'. (70503d1b)
+2019-03-04T13:35:39.3402723+01:00 0HLL0IMTU7USV:00000010 [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported UI Cultures '["en-US", "en"]'. (31a7522c)
+2019-03-04T13:35:39.3404011+01:00 0HLL0IMTU7USV:00000010 [INF] Request finished in 1.0802ms 404  (791a596a)
+2019-03-04T13:35:39.3482156+01:00 0HLL0IMTU7UT1:0000000F [INF] Request starting HTTP/1.1 GET http://localhost/armwealth/custom-admin/components/bootstrap/js/dist/carousel.js   (ca22a1cb)
+2019-03-04T13:35:39.3486326+01:00 0HLL0IMTU7UT1:0000000F [INF] "Identity.Application" was not authenticated. Failure message: "Unprotect ticket failed" (48071232)
+2019-03-04T13:35:39.3487635+01:00 0HLL0IMTU7UT1:0000000F [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported cultures '["en-US", "en"]'. (70503d1b)
+2019-03-04T13:35:39.3488306+01:00 0HLL0IMTU7UT1:0000000F [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported UI Cultures '["en-US", "en"]'. (31a7522c)
+2019-03-04T13:35:39.3489208+01:00 0HLL0IMTU7UT1:0000000F [INF] Request finished in 0.7646ms 404  (791a596a)
+2019-03-04T13:35:39.3546082+01:00 0HLL0IMTU7USU:00000013 [INF] Request starting HTTP/1.1 GET http://localhost/armwealth/custom-admin/components/bootstrap/js/dist/collapse.js   (ca22a1cb)
+2019-03-04T13:35:39.3550983+01:00 0HLL0IMTU7USU:00000013 [INF] "Identity.Application" was not authenticated. Failure message: "Unprotect ticket failed" (48071232)
+2019-03-04T13:35:39.3553125+01:00 0HLL0IMTU7USU:00000013 [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported cultures '["en-US", "en"]'. (70503d1b)
+2019-03-04T13:35:39.3554002+01:00 0HLL0IMTU7USU:00000013 [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported UI Cultures '["en-US", "en"]'. (31a7522c)
+2019-03-04T13:35:39.3555187+01:00 0HLL0IMTU7USU:00000013 [INF] Request finished in 0.9344ms 404  (791a596a)
+2019-03-04T13:35:39.3613878+01:00 0HLL0IMTU7UT0:00000010 [INF] Request starting HTTP/1.1 GET http://localhost/armwealth/custom-admin/components/bootstrap/js/dist/dropdown.js   (ca22a1cb)
+2019-03-04T13:35:39.3619262+01:00 0HLL0IMTU7UT0:00000010 [INF] "Identity.Application" was not authenticated. Failure message: "Unprotect ticket failed" (48071232)
+2019-03-04T13:35:39.3620536+01:00 0HLL0IMTU7UT0:00000010 [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported cultures '["en-US", "en"]'. (70503d1b)
+2019-03-04T13:35:39.3621088+01:00 0HLL0IMTU7UT0:00000010 [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported UI Cultures '["en-US", "en"]'. (31a7522c)
+2019-03-04T13:35:39.3622088+01:00 0HLL0IMTU7UT0:00000010 [INF] Request finished in 0.8784ms 404  (791a596a)
+2019-03-04T13:35:39.3668758+01:00 0HLL0IMTU7USV:00000011 [INF] Request starting HTTP/1.1 GET http://localhost/armwealth/custom-admin/components/bootstrap/js/dist/modal.js   (ca22a1cb)
+2019-03-04T13:35:39.3672641+01:00 0HLL0IMTU7USV:00000011 [INF] "Identity.Application" was not authenticated. Failure message: "Unprotect ticket failed" (48071232)
+2019-03-04T13:35:39.3673616+01:00 0HLL0IMTU7USV:00000011 [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported cultures '["en-US", "en"]'. (70503d1b)
+2019-03-04T13:35:39.3673993+01:00 0HLL0IMTU7USV:00000011 [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported UI Cultures '["en-US", "en"]'. (31a7522c)
+2019-03-04T13:35:39.3676910+01:00 0HLL0IMTU7USV:00000011 [INF] Request finished in 0.6401ms 404  (791a596a)
+2019-03-04T13:35:39.3736229+01:00 0HLL0IMTU7UT1:00000010 [INF] Request starting HTTP/1.1 GET http://localhost/armwealth/custom-admin/components/bootstrap/js/dist/tab.js   (ca22a1cb)
+2019-03-04T13:35:39.3744398+01:00 0HLL0IMTU7UT1:00000010 [INF] "Identity.Application" was not authenticated. Failure message: "Unprotect ticket failed" (48071232)
+2019-03-04T13:35:39.3747609+01:00 0HLL0IMTU7UT1:00000010 [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported cultures '["en-US", "en"]'. (70503d1b)
+2019-03-04T13:35:39.3749068+01:00 0HLL0IMTU7UT1:00000010 [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported UI Cultures '["en-US", "en"]'. (31a7522c)
+2019-03-04T13:35:39.3750064+01:00 0HLL0IMTU7UT1:00000010 [INF] Request finished in 1.4138ms 404  (791a596a)
+2019-03-04T13:35:39.3827316+01:00 0HLL0IMTU7USU:00000014 [INF] Request starting HTTP/1.1 GET http://localhost/armwealth/custom-admin/components/bootstrap/js/dist/tooltip.js   (ca22a1cb)
+2019-03-04T13:35:39.3833534+01:00 0HLL0IMTU7USU:00000014 [INF] "Identity.Application" was not authenticated. Failure message: "Unprotect ticket failed" (48071232)
+2019-03-04T13:35:39.3835308+01:00 0HLL0IMTU7USU:00000014 [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported cultures '["en-US", "en"]'. (70503d1b)
+2019-03-04T13:35:39.3836767+01:00 0HLL0IMTU7USU:00000014 [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported UI Cultures '["en-US", "en"]'. (31a7522c)
+2019-03-04T13:35:39.3837998+01:00 0HLL0IMTU7USU:00000014 [INF] Request finished in 1.179ms 404  (791a596a)
+2019-03-04T13:35:39.3914578+01:00 0HLL0IMTU7UT0:00000011 [INF] Request starting HTTP/1.1 GET http://localhost/armwealth/custom-admin/components/bootstrap/js/dist/popover.js   (ca22a1cb)
+2019-03-04T13:35:39.3919796+01:00 0HLL0IMTU7UT0:00000011 [INF] "Identity.Application" was not authenticated. Failure message: "Unprotect ticket failed" (48071232)
+2019-03-04T13:35:39.3921643+01:00 0HLL0IMTU7UT0:00000011 [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported cultures '["en-US", "en"]'. (70503d1b)
+2019-03-04T13:35:39.3922563+01:00 0HLL0IMTU7UT0:00000011 [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported UI Cultures '["en-US", "en"]'. (31a7522c)
+2019-03-04T13:35:39.3924013+01:00 0HLL0IMTU7UT0:00000011 [INF] Request finished in 0.9865ms 404  (791a596a)
+2019-03-04T13:35:39.3998959+01:00 0HLL0IMTU7USV:00000012 [INF] Request starting HTTP/1.1 GET http://localhost/armwealth/custom-admin/js/chart-loader.js   (ca22a1cb)
+2019-03-04T13:35:39.4003642+01:00 0HLL0IMTU7USV:00000012 [INF] "Identity.Application" was not authenticated. Failure message: "Unprotect ticket failed" (48071232)
+2019-03-04T13:35:39.4004951+01:00 0HLL0IMTU7USV:00000012 [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported cultures '["en-US", "en"]'. (70503d1b)
+2019-03-04T13:35:39.4005622+01:00 0HLL0IMTU7USV:00000012 [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported UI Cultures '["en-US", "en"]'. (31a7522c)
+2019-03-04T13:35:39.4008462+01:00 0HLL0IMTU7USV:00000012 [INF] Request finished in 0.7988ms 404  (791a596a)
+2019-03-04T13:35:39.4066921+01:00 0HLL0IMTU7UT1:00000011 [INF] Request starting HTTP/1.1 GET http://localhost/armwealth/custom-admin/js/main.js?version=4.4.0   (ca22a1cb)
+2019-03-04T13:35:39.4071561+01:00 0HLL0IMTU7UT1:00000011 [INF] "Identity.Application" was not authenticated. Failure message: "Unprotect ticket failed" (48071232)
+2019-03-04T13:35:39.4073156+01:00 0HLL0IMTU7UT1:00000011 [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported cultures '["en-US", "en"]'. (70503d1b)
+2019-03-04T13:35:39.4073785+01:00 0HLL0IMTU7UT1:00000011 [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported UI Cultures '["en-US", "en"]'. (31a7522c)
+2019-03-04T13:35:39.4074760+01:00 0HLL0IMTU7UT1:00000011 [INF] Request finished in 0.8133ms 404  (791a596a)
+2019-03-04T13:35:40.9109200+01:00 0HLL0IMTU7USU:00000015 [INF] Request starting HTTP/1.1 GET http://localhost/armwealth/custom-admin/img/arm-favicon.jpg   (ca22a1cb)
+2019-03-04T13:35:40.9130839+01:00 0HLL0IMTU7USU:00000015 [INF] "Identity.Application" was not authenticated. Failure message: "Unprotect ticket failed" (48071232)
+2019-03-04T13:35:40.9133991+01:00 0HLL0IMTU7USU:00000015 [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported cultures '["en-US", "en"]'. (70503d1b)
+2019-03-04T13:35:40.9135347+01:00 0HLL0IMTU7USU:00000015 [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported UI Cultures '["en-US", "en"]'. (31a7522c)
+2019-03-04T13:35:40.9137434+01:00 0HLL0IMTU7USU:00000015 [INF] Request finished in 2.9443ms 404  (791a596a)
+2019-03-04T13:35:53.4931467+01:00 0HLL0IMTU7UT0:00000012 [INF] Request starting HTTP/1.1 GET http://localhost/armwealth/Registration   (ca22a1cb)
+2019-03-04T13:35:53.4938066+01:00 0HLL0IMTU7UT0:00000012 [INF] "Identity.Application" was not authenticated. Failure message: "Unprotect ticket failed" (48071232)
+2019-03-04T13:35:53.4939781+01:00 0HLL0IMTU7UT0:00000012 [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported cultures '["en-US", "en"]'. (70503d1b)
+2019-03-04T13:35:53.4942048+01:00 0HLL0IMTU7UT0:00000012 [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported UI Cultures '["en-US", "en"]'. (31a7522c)
+2019-03-04T13:35:53.4942787+01:00 0HLL0IMTU7UT0:00000012 [INF] Executing endpoint '"Portal.Controllers.RegistrationController.Index (Portal)"' (500cc934)
+2019-03-04T13:35:53.5000410+01:00 0HLL0IMTU7UT0:00000012 [INF] Route matched with "{action = \"Index\", controller = \"Registration\", area = \"\"}". Executing action "Portal.Controllers.RegistrationController.Index (Portal)" (a44c0341)
+2019-03-04T13:35:53.5012286+01:00 0HLL0IMTU7UT0:00000012 [INF] Executing action method "Portal.Controllers.RegistrationController.Index (Portal)" - Validation state: Valid (dad538d7)
+2019-03-04T13:35:53.5016828+01:00 0HLL0IMTU7UT0:00000012 [INF] Executed action method "Portal.Controllers.RegistrationController.Index (Portal)", returned result "Microsoft.AspNetCore.Mvc.ViewResult" in 0.2959ms. (50a9e262)
+2019-03-04T13:35:53.5166172+01:00 0HLL0IMTU7UT0:00000012 [INF] Executing ViewResult, running view "Index". (c83d0e25)
+2019-03-04T13:35:53.5639787+01:00 0HLL0IMTU7UT0:00000012 [INF] Executed ViewResult - view "Index" executed in 62.0432ms. (f66409e9)
+2019-03-04T13:35:53.5642007+01:00 0HLL0IMTU7UT0:00000012 [INF] Executed action "Portal.Controllers.RegistrationController.Index (Portal)" in 64.0536ms (afa2e885)
+2019-03-04T13:35:53.5642494+01:00 0HLL0IMTU7UT0:00000012 [INF] Executed endpoint '"Portal.Controllers.RegistrationController.Index (Portal)"' (99874f2b)
+2019-03-04T13:35:53.5643969+01:00 0HLL0IMTU7UT0:00000012 [INF] Request finished in 71.3117ms 200 text/html; charset=utf-8 (791a596a)
+2019-03-04T13:35:53.7734805+01:00 0HLL0IMTU7USV:00000013 [INF] Request starting HTTP/1.1 GET http://localhost/armwealth/liber/Store/css/components/portfolio-masonry-2.css   (ca22a1cb)
+2019-03-04T13:35:53.7753621+01:00 0HLL0IMTU7USV:00000013 [INF] "Identity.Application" was not authenticated. Failure message: "Unprotect ticket failed" (48071232)
+2019-03-04T13:35:53.7757834+01:00 0HLL0IMTU7USV:00000013 [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported cultures '["en-US", "en"]'. (70503d1b)
+2019-03-04T13:35:53.7758873+01:00 0HLL0IMTU7USV:00000013 [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported UI Cultures '["en-US", "en"]'. (31a7522c)
+2019-03-04T13:35:53.7759938+01:00 0HLL0IMTU7USV:00000013 [INF] Request finished in 3.369ms 404  (791a596a)
+2019-03-04T13:35:53.9335536+01:00 0HLL0IMTU7UT1:00000012 [INF] Request starting HTTP/1.1 GET http://localhost/armwealth/liber/Store/css/components/portfolio-masonry-2.css   (ca22a1cb)
+2019-03-04T13:35:53.9341394+01:00 0HLL0IMTU7UT1:00000012 [INF] "Identity.Application" was not authenticated. Failure message: "Unprotect ticket failed" (48071232)
+2019-03-04T13:35:53.9343148+01:00 0HLL0IMTU7UT1:00000012 [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported cultures '["en-US", "en"]'. (70503d1b)
+2019-03-04T13:35:53.9343703+01:00 0HLL0IMTU7UT1:00000012 [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported UI Cultures '["en-US", "en"]'. (31a7522c)
+2019-03-04T13:35:53.9344640+01:00 0HLL0IMTU7UT1:00000012 [INF] Request finished in 0.9853ms 404  (791a596a)
+2019-03-04T13:35:54.0906677+01:00 0HLL0IMTU7USU:00000016 [INF] Request starting HTTP/1.1 GET http://localhost/armwealth/liber/Store/img/sprite.png   (ca22a1cb)
+2019-03-04T13:35:54.0913178+01:00 0HLL0IMTU7USU:00000016 [INF] "Identity.Application" was not authenticated. Failure message: "Unprotect ticket failed" (48071232)
+2019-03-04T13:35:54.0915547+01:00 0HLL0IMTU7USU:00000016 [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported cultures '["en-US", "en"]'. (70503d1b)
+2019-03-04T13:35:54.0916094+01:00 0HLL0IMTU7USU:00000016 [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported UI Cultures '["en-US", "en"]'. (31a7522c)
+2019-03-04T13:35:54.0917035+01:00 0HLL0IMTU7USU:00000016 [INF] Request finished in 1.1863ms 404  (791a596a)
+2019-03-04T13:39:09.1824175+01:00 0HLL0IMTU7UT2:00000001 [INF] Request starting HTTP/1.1 GET http://localhost/armwealth/Pension   (ca22a1cb)
+2019-03-04T13:39:09.1829299+01:00 0HLL0IMTU7UT2:00000001 [INF] "Identity.Application" was not authenticated. Failure message: "Unprotect ticket failed" (48071232)
+2019-03-04T13:39:09.1830847+01:00 0HLL0IMTU7UT2:00000001 [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported cultures '["en-US", "en"]'. (70503d1b)
+2019-03-04T13:39:09.1831262+01:00 0HLL0IMTU7UT2:00000001 [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported UI Cultures '["en-US", "en"]'. (31a7522c)
+2019-03-04T13:39:09.1831924+01:00 0HLL0IMTU7UT2:00000001 [INF] Executing endpoint '"Portal.Controllers.PensionController.Index (Portal)"' (500cc934)
+2019-03-04T13:39:09.1832780+01:00 0HLL0IMTU7UT2:00000001 [INF] Route matched with "{action = \"Index\", controller = \"Pension\", area = \"\"}". Executing action "Portal.Controllers.PensionController.Index (Portal)" (a44c0341)
+2019-03-04T13:39:09.1836183+01:00 0HLL0IMTU7UT2:00000001 [INF] Executing action method "Portal.Controllers.PensionController.Index (Portal)" - Validation state: Valid (dad538d7)
+2019-03-04T13:39:09.1849783+01:00 0HLL0IMTU7UT2:00000001 [INF] Entity Framework Core "2.2.0-rtm-35687" initialized '"ApplicationDbContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None" (9958f5bb)
+2019-03-04T13:39:09.1853808+01:00 0HLL0IMTU7UT2:00000001 [INF] Executed action method "Portal.Controllers.PensionController.Index (Portal)", returned result "Microsoft.AspNetCore.Mvc.ViewResult" in 1.6858ms. (50a9e262)
+2019-03-04T13:39:09.1854898+01:00 0HLL0IMTU7UT2:00000001 [INF] Executing ViewResult, running view "Index". (c83d0e25)
+2019-03-04T13:39:09.1989527+01:00 0HLL0IMTU7UT2:00000001 [INF] Executed DbCommand ("9"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [s].[Id], [s].[Description], [s].[Image], [s].[IsActive], [s].[Name], [s].[ProductCategoryId], [s].[ProductTypes], [s].[StartFrom], [s.ProductCategory].[Id], [s.ProductCategory].[Name]
+FROM [Products] AS [s]
+INNER JOIN [ProductCategory] AS [s.ProductCategory] ON [s].[ProductCategoryId] = [s.ProductCategory].[Id]
+ORDER BY [s].[Id]" (0723d8ff)
+2019-03-04T13:39:09.2056537+01:00 0HLL0IMTU7UT2:00000001 [INF] Executed DbCommand ("6"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [s.WhatYouNeedToKNowAboutThisProducts].[Id], [s.WhatYouNeedToKNowAboutThisProducts].[Description], [s.WhatYouNeedToKNowAboutThisProducts].[Hierarchy], [s.WhatYouNeedToKNowAboutThisProducts].[OnCreated], [s.WhatYouNeedToKNowAboutThisProducts].[ProductId], [s.WhatYouNeedToKNowAboutThisProducts].[Sections], [s.WhatYouNeedToKNowAboutThisProducts].[Title]
+FROM [WhatYouNeedToKNowAboutThisProduct] AS [s.WhatYouNeedToKNowAboutThisProducts]
+INNER JOIN (
+    SELECT DISTINCT [s0].[Id]
+    FROM [Products] AS [s0]
+    INNER JOIN [ProductCategory] AS [s.ProductCategory0] ON [s0].[ProductCategoryId] = [s.ProductCategory0].[Id]
+) AS [t] ON [s.WhatYouNeedToKNowAboutThisProducts].[ProductId] = [t].[Id]
+ORDER BY [t].[Id]" (0723d8ff)
+2019-03-04T13:39:09.2108129+01:00 0HLL0IMTU7UT2:00000001 [INF] Executed DbCommand ("5"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [s.ProductInvestmentInfos].[Id], [s.ProductInvestmentInfos].[Abs], [s.ProductInvestmentInfos].[OnCreated], [s.ProductInvestmentInfos].[ProductId], [s.ProductInvestmentInfos].[RangOrCost], [s.ProductInvestmentInfos].[Sections]
+FROM [ProductInvestmentInfo] AS [s.ProductInvestmentInfos]
+INNER JOIN (
+    SELECT DISTINCT [s1].[Id]
+    FROM [Products] AS [s1]
+    INNER JOIN [ProductCategory] AS [s.ProductCategory1] ON [s1].[ProductCategoryId] = [s.ProductCategory1].[Id]
+) AS [t0] ON [s.ProductInvestmentInfos].[ProductId] = [t0].[Id]
+ORDER BY [t0].[Id]" (0723d8ff)
+2019-03-04T13:39:09.2136003+01:00 0HLL0IMTU7UT2:00000001 [INF] Executed DbCommand ("1"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [s].[Id], [s].[Description], [s].[Image], [s].[IsActive], [s].[Name], [s].[ProductCategoryId], [s].[ProductTypes], [s].[StartFrom], [s.ProductCategory].[Id], [s.ProductCategory].[Name]
+FROM [Products] AS [s]
+INNER JOIN [ProductCategory] AS [s.ProductCategory] ON [s].[ProductCategoryId] = [s.ProductCategory].[Id]
+ORDER BY [s].[Id]" (0723d8ff)
+2019-03-04T13:39:09.2153212+01:00 0HLL0IMTU7UT2:00000001 [INF] Executed DbCommand ("1"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [s.WhatYouNeedToKNowAboutThisProducts].[Id], [s.WhatYouNeedToKNowAboutThisProducts].[Description], [s.WhatYouNeedToKNowAboutThisProducts].[Hierarchy], [s.WhatYouNeedToKNowAboutThisProducts].[OnCreated], [s.WhatYouNeedToKNowAboutThisProducts].[ProductId], [s.WhatYouNeedToKNowAboutThisProducts].[Sections], [s.WhatYouNeedToKNowAboutThisProducts].[Title]
+FROM [WhatYouNeedToKNowAboutThisProduct] AS [s.WhatYouNeedToKNowAboutThisProducts]
+INNER JOIN (
+    SELECT DISTINCT [s0].[Id]
+    FROM [Products] AS [s0]
+    INNER JOIN [ProductCategory] AS [s.ProductCategory0] ON [s0].[ProductCategoryId] = [s.ProductCategory0].[Id]
+) AS [t] ON [s.WhatYouNeedToKNowAboutThisProducts].[ProductId] = [t].[Id]
+ORDER BY [t].[Id]" (0723d8ff)
+2019-03-04T13:39:09.2158930+01:00 0HLL0IMTU7UT2:00000001 [INF] Executed DbCommand ("0"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [s.ProductInvestmentInfos].[Id], [s.ProductInvestmentInfos].[Abs], [s.ProductInvestmentInfos].[OnCreated], [s.ProductInvestmentInfos].[ProductId], [s.ProductInvestmentInfos].[RangOrCost], [s.ProductInvestmentInfos].[Sections]
+FROM [ProductInvestmentInfo] AS [s.ProductInvestmentInfos]
+INNER JOIN (
+    SELECT DISTINCT [s1].[Id]
+    FROM [Products] AS [s1]
+    INNER JOIN [ProductCategory] AS [s.ProductCategory1] ON [s1].[ProductCategoryId] = [s.ProductCategory1].[Id]
+) AS [t0] ON [s.ProductInvestmentInfos].[ProductId] = [t0].[Id]
+ORDER BY [t0].[Id]" (0723d8ff)
+2019-03-04T13:39:09.2173683+01:00 0HLL0IMTU7UT2:00000001 [INF] Executed DbCommand ("0"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [s].[Id], [s].[Description], [s].[Image], [s].[IsActive], [s].[Name], [s].[ProductCategoryId], [s].[ProductTypes], [s].[StartFrom], [s.ProductCategory].[Id], [s.ProductCategory].[Name]
+FROM [Products] AS [s]
+INNER JOIN [ProductCategory] AS [s.ProductCategory] ON [s].[ProductCategoryId] = [s.ProductCategory].[Id]
+ORDER BY [s].[Id]" (0723d8ff)
+2019-03-04T13:39:09.2180402+01:00 0HLL0IMTU7UT2:00000001 [INF] Executed DbCommand ("0"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [s.WhatYouNeedToKNowAboutThisProducts].[Id], [s.WhatYouNeedToKNowAboutThisProducts].[Description], [s.WhatYouNeedToKNowAboutThisProducts].[Hierarchy], [s.WhatYouNeedToKNowAboutThisProducts].[OnCreated], [s.WhatYouNeedToKNowAboutThisProducts].[ProductId], [s.WhatYouNeedToKNowAboutThisProducts].[Sections], [s.WhatYouNeedToKNowAboutThisProducts].[Title]
+FROM [WhatYouNeedToKNowAboutThisProduct] AS [s.WhatYouNeedToKNowAboutThisProducts]
+INNER JOIN (
+    SELECT DISTINCT [s0].[Id]
+    FROM [Products] AS [s0]
+    INNER JOIN [ProductCategory] AS [s.ProductCategory0] ON [s0].[ProductCategoryId] = [s.ProductCategory0].[Id]
+) AS [t] ON [s.WhatYouNeedToKNowAboutThisProducts].[ProductId] = [t].[Id]
+ORDER BY [t].[Id]" (0723d8ff)
+2019-03-04T13:39:09.2186013+01:00 0HLL0IMTU7UT2:00000001 [INF] Executed DbCommand ("0"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [s.ProductInvestmentInfos].[Id], [s.ProductInvestmentInfos].[Abs], [s.ProductInvestmentInfos].[OnCreated], [s.ProductInvestmentInfos].[ProductId], [s.ProductInvestmentInfos].[RangOrCost], [s.ProductInvestmentInfos].[Sections]
+FROM [ProductInvestmentInfo] AS [s.ProductInvestmentInfos]
+INNER JOIN (
+    SELECT DISTINCT [s1].[Id]
+    FROM [Products] AS [s1]
+    INNER JOIN [ProductCategory] AS [s.ProductCategory1] ON [s1].[ProductCategoryId] = [s.ProductCategory1].[Id]
+) AS [t0] ON [s.ProductInvestmentInfos].[ProductId] = [t0].[Id]
+ORDER BY [t0].[Id]" (0723d8ff)
+2019-03-04T13:39:09.2198787+01:00 0HLL0IMTU7UT2:00000001 [INF] Executed DbCommand ("0"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [s].[Id], [s].[Description], [s].[Image], [s].[IsActive], [s].[Name], [s].[ProductCategoryId], [s].[ProductTypes], [s].[StartFrom], [s.ProductCategory].[Id], [s.ProductCategory].[Name]
+FROM [Products] AS [s]
+INNER JOIN [ProductCategory] AS [s.ProductCategory] ON [s].[ProductCategoryId] = [s.ProductCategory].[Id]
+ORDER BY [s].[Id]" (0723d8ff)
+2019-03-04T13:39:09.2202824+01:00 0HLL0IMTU7UT2:00000001 [INF] Executed DbCommand ("0"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [s.WhatYouNeedToKNowAboutThisProducts].[Id], [s.WhatYouNeedToKNowAboutThisProducts].[Description], [s.WhatYouNeedToKNowAboutThisProducts].[Hierarchy], [s.WhatYouNeedToKNowAboutThisProducts].[OnCreated], [s.WhatYouNeedToKNowAboutThisProducts].[ProductId], [s.WhatYouNeedToKNowAboutThisProducts].[Sections], [s.WhatYouNeedToKNowAboutThisProducts].[Title]
+FROM [WhatYouNeedToKNowAboutThisProduct] AS [s.WhatYouNeedToKNowAboutThisProducts]
+INNER JOIN (
+    SELECT DISTINCT [s0].[Id]
+    FROM [Products] AS [s0]
+    INNER JOIN [ProductCategory] AS [s.ProductCategory0] ON [s0].[ProductCategoryId] = [s.ProductCategory0].[Id]
+) AS [t] ON [s.WhatYouNeedToKNowAboutThisProducts].[ProductId] = [t].[Id]
+ORDER BY [t].[Id]" (0723d8ff)
+2019-03-04T13:39:09.2209013+01:00 0HLL0IMTU7UT2:00000001 [INF] Executed DbCommand ("0"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [s.ProductInvestmentInfos].[Id], [s.ProductInvestmentInfos].[Abs], [s.ProductInvestmentInfos].[OnCreated], [s.ProductInvestmentInfos].[ProductId], [s.ProductInvestmentInfos].[RangOrCost], [s.ProductInvestmentInfos].[Sections]
+FROM [ProductInvestmentInfo] AS [s.ProductInvestmentInfos]
+INNER JOIN (
+    SELECT DISTINCT [s1].[Id]
+    FROM [Products] AS [s1]
+    INNER JOIN [ProductCategory] AS [s.ProductCategory1] ON [s1].[ProductCategoryId] = [s.ProductCategory1].[Id]
+) AS [t0] ON [s.ProductInvestmentInfos].[ProductId] = [t0].[Id]
+ORDER BY [t0].[Id]" (0723d8ff)
+2019-03-04T13:39:09.2234963+01:00 0HLL0IMTU7UT2:00000001 [INF] Executed ViewResult - view "Index" executed in 37.994ms. (f66409e9)
+2019-03-04T13:39:09.2235874+01:00 0HLL0IMTU7UT2:00000001 [INF] Executed action "Portal.Controllers.PensionController.Index (Portal)" in 40.2567ms (afa2e885)
+2019-03-04T13:39:09.2236571+01:00 0HLL0IMTU7UT2:00000001 [INF] Executed endpoint '"Portal.Controllers.PensionController.Index (Portal)"' (99874f2b)
+2019-03-04T13:39:09.2237867+01:00 0HLL0IMTU7UT2:00000001 [INF] Request finished in 41.4863ms 200 text/html; charset=utf-8 (791a596a)
+2019-03-04T13:39:09.4500230+01:00 0HLL0IMTU7UT2:00000002 [INF] Request starting HTTP/1.1 GET http://localhost/armwealth/liber/Store/css/components/portfolio-masonry-2.css   (ca22a1cb)
+2019-03-04T13:39:09.4509766+01:00 0HLL0IMTU7UT2:00000002 [INF] "Identity.Application" was not authenticated. Failure message: "Unprotect ticket failed" (48071232)
+2019-03-04T13:39:09.4513371+01:00 0HLL0IMTU7UT2:00000002 [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported cultures '["en-US", "en"]'. (70503d1b)
+2019-03-04T13:39:09.4513897+01:00 0HLL0IMTU7UT2:00000002 [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported UI Cultures '["en-US", "en"]'. (31a7522c)
+2019-03-04T13:39:09.4515266+01:00 0HLL0IMTU7UT2:00000002 [INF] Request finished in 1.6661ms 404  (791a596a)
+2019-03-04T13:39:09.6579172+01:00 0HLL0IMTU7UT2:00000003 [INF] Request starting HTTP/1.1 GET http://localhost/armwealth/liber/Store/img/sprite.png   (ca22a1cb)
+2019-03-04T13:39:09.6595701+01:00 0HLL0IMTU7UT2:00000003 [INF] "Identity.Application" was not authenticated. Failure message: "Unprotect ticket failed" (48071232)
+2019-03-04T13:39:09.6598066+01:00 0HLL0IMTU7UT2:00000003 [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported cultures '["en-US", "en"]'. (70503d1b)
+2019-03-04T13:39:09.6598459+01:00 0HLL0IMTU7UT2:00000003 [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported UI Cultures '["en-US", "en"]'. (31a7522c)
+2019-03-04T13:39:09.6599614+01:00 0HLL0IMTU7UT2:00000003 [INF] Request finished in 2.131ms 404  (791a596a)
+2019-03-04T13:39:09.8628632+01:00 0HLL0IMTU7UT2:00000004 [INF] Request starting HTTP/1.1 GET http://localhost/armwealth/~/Liber/Store/img/alternative-banner.jpg   (ca22a1cb)
+2019-03-04T13:39:09.8641000+01:00 0HLL0IMTU7UT2:00000004 [INF] "Identity.Application" was not authenticated. Failure message: "Unprotect ticket failed" (48071232)
+2019-03-04T13:39:09.8642604+01:00 0HLL0IMTU7UT2:00000004 [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported cultures '["en-US", "en"]'. (70503d1b)
+2019-03-04T13:39:09.8643125+01:00 0HLL0IMTU7UT2:00000004 [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported UI Cultures '["en-US", "en"]'. (31a7522c)
+2019-03-04T13:39:09.8644237+01:00 0HLL0IMTU7UT2:00000004 [INF] Request finished in 1.6323ms 404  (791a596a)
+2019-03-04T13:39:10.0592009+01:00 0HLL0IMTU7UT2:00000005 [INF] Request starting HTTP/1.1 GET http://localhost/armwealth/~/Liber/Store/img/alternative-banner.jpg   (ca22a1cb)
+2019-03-04T13:39:10.0602812+01:00 0HLL0IMTU7UT2:00000005 [INF] "Identity.Application" was not authenticated. Failure message: "Unprotect ticket failed" (48071232)
+2019-03-04T13:39:10.0604369+01:00 0HLL0IMTU7UT2:00000005 [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported cultures '["en-US", "en"]'. (70503d1b)
+2019-03-04T13:39:10.0604959+01:00 0HLL0IMTU7UT2:00000005 [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported UI Cultures '["en-US", "en"]'. (31a7522c)
+2019-03-04T13:39:10.0606062+01:00 0HLL0IMTU7UT2:00000005 [INF] Request finished in 1.4882ms 404  (791a596a)
+2019-03-04T13:39:10.1769302+01:00 0HLL0IMTU7UT2:00000006 [INF] Request starting HTTP/1.1 GET http://localhost/armwealth/Liber/FileArchives/94ea0e003bd74e16a68057da1fbcb3ed.jpeg   (ca22a1cb)
+2019-03-04T13:39:10.1781285+01:00 0HLL0IMTU7UT2:00000006 [INF] "Identity.Application" was not authenticated. Failure message: "Unprotect ticket failed" (48071232)
+2019-03-04T13:39:10.1783222+01:00 0HLL0IMTU7UT2:00000006 [INF] The file "/FileArchives/94ea0e003bd74e16a68057da1fbcb3ed.jpeg" was not modified (f1f8d725)
+2019-03-04T13:39:10.1784343+01:00 0HLL0IMTU7UT2:00000006 [INF] Request finished in 1.5318ms 304 image/jpeg (791a596a)
+2019-03-04T13:39:10.1790878+01:00 0HLL0IMTU7UT3:00000001 [INF] Request starting HTTP/1.1 GET http://localhost/armwealth/Liber/FileArchives/38a76e3b749642a8a99ba4b665aae806.jpeg   (ca22a1cb)
+2019-03-04T13:39:10.1796595+01:00 0HLL0IMTU7UT3:00000001 [INF] "Identity.Application" was not authenticated. Failure message: "Unprotect ticket failed" (48071232)
+2019-03-04T13:39:10.1798618+01:00 0HLL0IMTU7UT3:00000001 [INF] The file "/FileArchives/38a76e3b749642a8a99ba4b665aae806.jpeg" was not modified (f1f8d725)
+2019-03-04T13:39:10.1799765+01:00 0HLL0IMTU7UT3:00000001 [INF] Request finished in 0.9177ms 304 image/jpeg (791a596a)
+2019-03-04T13:39:13.6512214+01:00 0HLL0IMTU7UT2:00000007 [INF] Request starting HTTP/1.1 GET http://localhost/armwealth/Pension/Details/2011   (ca22a1cb)
+2019-03-04T13:39:13.6516794+01:00 0HLL0IMTU7UT2:00000007 [INF] "Identity.Application" was not authenticated. Failure message: "Unprotect ticket failed" (48071232)
+2019-03-04T13:39:13.6518372+01:00 0HLL0IMTU7UT2:00000007 [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported cultures '["en-US", "en"]'. (70503d1b)
+2019-03-04T13:39:13.6518911+01:00 0HLL0IMTU7UT2:00000007 [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported UI Cultures '["en-US", "en"]'. (31a7522c)
+2019-03-04T13:39:13.6519621+01:00 0HLL0IMTU7UT2:00000007 [INF] Executing endpoint '"Portal.Controllers.PensionController.Details (Portal)"' (500cc934)
+2019-03-04T13:39:13.6520451+01:00 0HLL0IMTU7UT2:00000007 [INF] Route matched with "{action = \"Details\", controller = \"Pension\", area = \"\"}". Executing action "Portal.Controllers.PensionController.Details (Portal)" (a44c0341)
+2019-03-04T13:39:13.6524218+01:00 0HLL0IMTU7UT2:00000007 [INF] Executing action method "Portal.Controllers.PensionController.Details (Portal)" with arguments (["2011"]) - Validation state: Valid (4e3479ed)
+2019-03-04T13:39:13.6531317+01:00 0HLL0IMTU7UT2:00000007 [INF] Entity Framework Core "2.2.0-rtm-35687" initialized '"ApplicationDbContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None" (9958f5bb)
+2019-03-04T13:39:13.6565470+01:00 0HLL0IMTU7UT2:00000007 [INF] Executed DbCommand ("3"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [s].[Id], [s].[Description], [s].[Image], [s].[IsActive], [s].[Name], [s].[ProductCategoryId], [s].[ProductTypes], [s].[StartFrom], [s.ProductCategory].[Id], [s.ProductCategory].[Name]
+FROM [Products] AS [s]
+INNER JOIN [ProductCategory] AS [s.ProductCategory] ON [s].[ProductCategoryId] = [s.ProductCategory].[Id]
+ORDER BY [s].[Id]" (0723d8ff)
+2019-03-04T13:39:13.6603685+01:00 0HLL0IMTU7UT2:00000007 [INF] Executed DbCommand ("3"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [s.WhatYouNeedToKNowAboutThisProducts].[Id], [s.WhatYouNeedToKNowAboutThisProducts].[Description], [s.WhatYouNeedToKNowAboutThisProducts].[Hierarchy], [s.WhatYouNeedToKNowAboutThisProducts].[OnCreated], [s.WhatYouNeedToKNowAboutThisProducts].[ProductId], [s.WhatYouNeedToKNowAboutThisProducts].[Sections], [s.WhatYouNeedToKNowAboutThisProducts].[Title]
+FROM [WhatYouNeedToKNowAboutThisProduct] AS [s.WhatYouNeedToKNowAboutThisProducts]
+INNER JOIN (
+    SELECT DISTINCT [s0].[Id]
+    FROM [Products] AS [s0]
+    INNER JOIN [ProductCategory] AS [s.ProductCategory0] ON [s0].[ProductCategoryId] = [s.ProductCategory0].[Id]
+) AS [t] ON [s.WhatYouNeedToKNowAboutThisProducts].[ProductId] = [t].[Id]
+ORDER BY [t].[Id]" (0723d8ff)
+2019-03-04T13:39:13.6625298+01:00 0HLL0IMTU7UT2:00000007 [INF] Executed DbCommand ("2"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [s.ProductInvestmentInfos].[Id], [s.ProductInvestmentInfos].[Abs], [s.ProductInvestmentInfos].[OnCreated], [s.ProductInvestmentInfos].[ProductId], [s.ProductInvestmentInfos].[RangOrCost], [s.ProductInvestmentInfos].[Sections]
+FROM [ProductInvestmentInfo] AS [s.ProductInvestmentInfos]
+INNER JOIN (
+    SELECT DISTINCT [s1].[Id]
+    FROM [Products] AS [s1]
+    INNER JOIN [ProductCategory] AS [s.ProductCategory1] ON [s1].[ProductCategoryId] = [s.ProductCategory1].[Id]
+) AS [t0] ON [s.ProductInvestmentInfos].[ProductId] = [t0].[Id]
+ORDER BY [t0].[Id]" (0723d8ff)
+2019-03-04T13:39:13.6666307+01:00 0HLL0IMTU7UT2:00000007 [INF] Executed DbCommand ("1"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [s].[Id], [s].[Description], [s].[Image], [s].[IsActive], [s].[Name], [s].[ProductCategoryId], [s].[ProductTypes], [s].[StartFrom], [s.ProductCategory].[Id], [s.ProductCategory].[Name]
+FROM [Products] AS [s]
+INNER JOIN [ProductCategory] AS [s.ProductCategory] ON [s].[ProductCategoryId] = [s.ProductCategory].[Id]
+ORDER BY [s].[Id]" (0723d8ff)
+2019-03-04T13:39:13.6694121+01:00 0HLL0IMTU7UT2:00000007 [INF] Executed DbCommand ("2"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [s.WhatYouNeedToKNowAboutThisProducts].[Id], [s.WhatYouNeedToKNowAboutThisProducts].[Description], [s.WhatYouNeedToKNowAboutThisProducts].[Hierarchy], [s.WhatYouNeedToKNowAboutThisProducts].[OnCreated], [s.WhatYouNeedToKNowAboutThisProducts].[ProductId], [s.WhatYouNeedToKNowAboutThisProducts].[Sections], [s.WhatYouNeedToKNowAboutThisProducts].[Title]
+FROM [WhatYouNeedToKNowAboutThisProduct] AS [s.WhatYouNeedToKNowAboutThisProducts]
+INNER JOIN (
+    SELECT DISTINCT [s0].[Id]
+    FROM [Products] AS [s0]
+    INNER JOIN [ProductCategory] AS [s.ProductCategory0] ON [s0].[ProductCategoryId] = [s.ProductCategory0].[Id]
+) AS [t] ON [s.WhatYouNeedToKNowAboutThisProducts].[ProductId] = [t].[Id]
+ORDER BY [t].[Id]" (0723d8ff)
+2019-03-04T13:39:13.6704317+01:00 0HLL0IMTU7UT2:00000007 [INF] Executed DbCommand ("1"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [s.ProductInvestmentInfos].[Id], [s.ProductInvestmentInfos].[Abs], [s.ProductInvestmentInfos].[OnCreated], [s.ProductInvestmentInfos].[ProductId], [s.ProductInvestmentInfos].[RangOrCost], [s.ProductInvestmentInfos].[Sections]
+FROM [ProductInvestmentInfo] AS [s.ProductInvestmentInfos]
+INNER JOIN (
+    SELECT DISTINCT [s1].[Id]
+    FROM [Products] AS [s1]
+    INNER JOIN [ProductCategory] AS [s.ProductCategory1] ON [s1].[ProductCategoryId] = [s.ProductCategory1].[Id]
+) AS [t0] ON [s.ProductInvestmentInfos].[ProductId] = [t0].[Id]
+ORDER BY [t0].[Id]" (0723d8ff)
+2019-03-04T13:39:13.6709170+01:00 0HLL0IMTU7UT2:00000007 [INF] Executed action method "Portal.Controllers.PensionController.Details (Portal)", returned result "Microsoft.AspNetCore.Mvc.ViewResult" in 18.4336ms. (50a9e262)
+2019-03-04T13:39:14.1396295+01:00 0HLL0IMTU7UT2:00000007 [INF] Executing ViewResult, running view "_details". (c83d0e25)
+2019-03-04T13:39:14.1587751+01:00 0HLL0IMTU7UT2:00000007 [INF] Executed ViewResult - view "_details" executed in 487.7224ms. (f66409e9)
+2019-03-04T13:39:14.1588816+01:00 0HLL0IMTU7UT2:00000007 [INF] Executed action "Portal.Controllers.PensionController.Details (Portal)" in 506.7817ms (afa2e885)
+2019-03-04T13:39:14.1589307+01:00 0HLL0IMTU7UT2:00000007 [INF] Executed endpoint '"Portal.Controllers.PensionController.Details (Portal)"' (99874f2b)
+2019-03-04T13:39:14.1590779+01:00 0HLL0IMTU7UT2:00000007 [INF] Request finished in 509.5969ms 200 text/html; charset=utf-8 (791a596a)
+2019-03-04T13:39:14.3761303+01:00 0HLL0IMTU7UT3:00000002 [INF] Request starting HTTP/1.1 GET http://localhost/armwealth/liber/Store/css/components/portfolio-masonry-2.css   (ca22a1cb)
+2019-03-04T13:39:14.3767418+01:00 0HLL0IMTU7UT3:00000002 [INF] "Identity.Application" was not authenticated. Failure message: "Unprotect ticket failed" (48071232)
+2019-03-04T13:39:14.3771994+01:00 0HLL0IMTU7UT3:00000002 [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported cultures '["en-US", "en"]'. (70503d1b)
+2019-03-04T13:39:14.3772648+01:00 0HLL0IMTU7UT3:00000002 [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported UI Cultures '["en-US", "en"]'. (31a7522c)
+2019-03-04T13:39:14.3773786+01:00 0HLL0IMTU7UT3:00000002 [INF] Request finished in 1.7952ms 404  (791a596a)
+2019-03-04T13:39:14.3864265+01:00 0HLL0IMTU7UT2:00000008 [INF] Request starting HTTP/1.1 GET http://localhost/armwealth/Pension/Details/img/arm-investment-center-logo.png   (ca22a1cb)
+2019-03-04T13:39:14.3868970+01:00 0HLL0IMTU7UT2:00000008 [INF] "Identity.Application" was not authenticated. Failure message: "Unprotect ticket failed" (48071232)
+2019-03-04T13:39:14.3870210+01:00 0HLL0IMTU7UT2:00000008 [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported cultures '["en-US", "en"]'. (70503d1b)
+2019-03-04T13:39:14.3870659+01:00 0HLL0IMTU7UT2:00000008 [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported UI Cultures '["en-US", "en"]'. (31a7522c)
+2019-03-04T13:39:14.3871617+01:00 0HLL0IMTU7UT2:00000008 [INF] Request finished in 0.7663ms 404  (791a596a)
+2019-03-04T13:39:14.4428255+01:00 0HLL0IMTU7UT3:00000003 [INF] Request starting HTTP/1.1 GET http://localhost/armwealth/liber/Store/css/components/portfolio-masonry-2.css   (ca22a1cb)
+2019-03-04T13:39:14.4434974+01:00 0HLL0IMTU7UT3:00000003 [INF] "Identity.Application" was not authenticated. Failure message: "Unprotect ticket failed" (48071232)
+2019-03-04T13:39:14.4437540+01:00 0HLL0IMTU7UT3:00000003 [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported cultures '["en-US", "en"]'. (70503d1b)
+2019-03-04T13:39:14.4438138+01:00 0HLL0IMTU7UT3:00000003 [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported UI Cultures '["en-US", "en"]'. (31a7522c)
+2019-03-04T13:39:14.4439302+01:00 0HLL0IMTU7UT3:00000003 [INF] Request finished in 1.1841ms 404  (791a596a)
+2019-03-04T13:39:14.5472527+01:00 0HLL0IMTU7UT2:00000009 [INF] Request starting HTTP/1.1 GET http://localhost/armwealth/Pension/Details/img/arm-investment-center-logo.png   (ca22a1cb)
+2019-03-04T13:39:14.5480644+01:00 0HLL0IMTU7UT2:00000009 [INF] "Identity.Application" was not authenticated. Failure message: "Unprotect ticket failed" (48071232)
+2019-03-04T13:39:14.5482064+01:00 0HLL0IMTU7UT2:00000009 [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported cultures '["en-US", "en"]'. (70503d1b)
+2019-03-04T13:39:14.5483107+01:00 0HLL0IMTU7UT2:00000009 [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported UI Cultures '["en-US", "en"]'. (31a7522c)
+2019-03-04T13:39:14.5488457+01:00 0HLL0IMTU7UT2:00000009 [INF] Request finished in 1.6259ms 404  (791a596a)
+2019-03-04T13:39:14.5692606+01:00 0HLL0IMTU7UT3:00000004 [INF] Request starting HTTP/1.1 GET http://localhost/armwealth/liber/Store/img/sprite.png   (ca22a1cb)
+2019-03-04T13:39:14.5699350+01:00 0HLL0IMTU7UT3:00000004 [INF] "Identity.Application" was not authenticated. Failure message: "Unprotect ticket failed" (48071232)
+2019-03-04T13:39:14.5701873+01:00 0HLL0IMTU7UT3:00000004 [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported cultures '["en-US", "en"]'. (70503d1b)
+2019-03-04T13:39:14.5702545+01:00 0HLL0IMTU7UT3:00000004 [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported UI Cultures '["en-US", "en"]'. (31a7522c)
+2019-03-04T13:39:14.5703670+01:00 0HLL0IMTU7UT3:00000004 [INF] Request finished in 1.1516ms 404  (791a596a)
+2019-03-04T13:39:14.8015478+01:00 0HLL0IMTU7UT2:0000000A [INF] Request starting HTTP/1.1 GET http://localhost/armwealth/Pension/Details/Liber/Store/img/alternative-banner.jpg   (ca22a1cb)
+2019-03-04T13:39:14.8022881+01:00 0HLL0IMTU7UT2:0000000A [INF] "Identity.Application" was not authenticated. Failure message: "Unprotect ticket failed" (48071232)
+2019-03-04T13:39:14.8024177+01:00 0HLL0IMTU7UT2:0000000A [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported cultures '["en-US", "en"]'. (70503d1b)
+2019-03-04T13:39:14.8024634+01:00 0HLL0IMTU7UT2:0000000A [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported UI Cultures '["en-US", "en"]'. (31a7522c)
+2019-03-04T13:39:14.8025618+01:00 0HLL0IMTU7UT2:0000000A [INF] Request finished in 1.1965ms 404  (791a596a)
+2019-03-04T13:39:15.0844487+01:00 0HLL0IMTU7UT3:00000005 [INF] Request starting HTTP/1.1 GET http://localhost/armwealth/Pension/Details/Liber/Store/img/alternative-banner.jpg   (ca22a1cb)
+2019-03-04T13:39:15.0850949+01:00 0HLL0IMTU7UT3:00000005 [INF] "Identity.Application" was not authenticated. Failure message: "Unprotect ticket failed" (48071232)
+2019-03-04T13:39:15.0852211+01:00 0HLL0IMTU7UT3:00000005 [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported cultures '["en-US", "en"]'. (70503d1b)
+2019-03-04T13:39:15.0852788+01:00 0HLL0IMTU7UT3:00000005 [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported UI Cultures '["en-US", "en"]'. (31a7522c)
+2019-03-04T13:39:15.0853827+01:00 0HLL0IMTU7UT3:00000005 [INF] Request finished in 1.0802ms 404  (791a596a)
+2019-03-04T13:39:15.2442994+01:00 0HLL0IMTU7UT2:0000000B [INF] Request starting HTTP/1.1 GET http://localhost/armwealth/Pension/Details/js/assets/recaptcha.js   (ca22a1cb)
+2019-03-04T13:39:15.2450474+01:00 0HLL0IMTU7UT2:0000000B [INF] "Identity.Application" was not authenticated. Failure message: "Unprotect ticket failed" (48071232)
+2019-03-04T13:39:15.2451869+01:00 0HLL0IMTU7UT2:0000000B [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported cultures '["en-US", "en"]'. (70503d1b)
+2019-03-04T13:39:15.2452467+01:00 0HLL0IMTU7UT2:0000000B [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported UI Cultures '["en-US", "en"]'. (31a7522c)
+2019-03-04T13:39:15.2453660+01:00 0HLL0IMTU7UT2:0000000B [INF] Request finished in 1.0845ms 404  (791a596a)
+2019-03-04T13:39:16.2192163+01:00 0HLL0IMTU7UT3:00000006 [INF] Request starting HTTP/1.1 GET http://localhost/armwealth/Pension/Details/img/businessman.jpg   (ca22a1cb)
+2019-03-04T13:39:16.2197551+01:00 0HLL0IMTU7UT3:00000006 [INF] "Identity.Application" was not authenticated. Failure message: "Unprotect ticket failed" (48071232)
+2019-03-04T13:39:16.2198591+01:00 0HLL0IMTU7UT3:00000006 [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported cultures '["en-US", "en"]'. (70503d1b)
+2019-03-04T13:39:16.2199018+01:00 0HLL0IMTU7UT3:00000006 [WRN] "AcceptLanguageHeaderRequestCultureProvider" returned the following unsupported UI Cultures '["en-US", "en"]'. (31a7522c)
+2019-03-04T13:39:16.2199916+01:00 0HLL0IMTU7UT3:00000006 [INF] Request finished in 0.8262ms 404  (791a596a)
