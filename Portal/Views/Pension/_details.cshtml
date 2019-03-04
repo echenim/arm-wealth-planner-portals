@@ -69,17 +69,19 @@
 
                         <hr>
 
+                        <!-- Enter Expression of Interest (EOI)-->
                         <div>
-                            @if (Model.ProductsObj.ProductTypes.Equals("Enter Amount"))
-                            {
-                                <h4 class="font__family-varela-round text-uppercase font__size-20 mb-10 mt-20">Enter the Amount you wish to Invest</h4>
-                                <form class="brk-form-round brk-form-round-btn-inside-full w-100">
-                                    <input type="text" placeholder="enter amount">
-                                    <button class="btn btn-inside-out btn-lg border-radius-30 btn-shadow mx-0 my-0" data-brk-library="component__button"><span class="before">invest now</span><span class="text">invest now</span><span class="after">invest now</span></button>
-                                </form>
-                                <p class="font__family-playfair p font__weight-normal font__style-italic mt-1">Starting from as low as &#8358;@Model.ProductsObj.StartFrom</p>
-
-                            }
+                            <h5 class="text-gray-light font__family-varela-round line__height-26 font__size-18 letter-spacing-20 text-justify" data-brk-library="component__title">For inquiries or to indicate interest, please fill the form below and one of our advisors would contact you shortly.</h5>
+                            <form action="#" class="brk-form-strict pt-20 pt-xs-35 brk-subscribe-mail brk-subscribe-mail_dark z-index-3" data-brk-library="recaptcha">
+                                <div class="row">
+                                    <div class="col-12 col-md-6"><input type="text" placeholder="Full Name" name="FNAME"></div>
+                                    <div class="col-12 col-md-6"><input type="text" placeholder="Your email" name="EMAIL"></div>
+                                    <div class="col-12 col-md-6"><input type="text" placeholder="Your Phone" name="PHONE"></div>
+                                    <div class="col-12 col-md-6"><input type="text" placeholder="State of residence" name="STATE"></div>
+                                    <div class="col-12 col-md-6"><input type="text" placeholder="Product Name" name="product"></div>
+                                    <div class="col-12 col-md-6 text-center"><button class="btn-backgrounds btn-backgrounds_left-icon btn-backgrounds_white font__family-montserrat font__weight-bold text-uppercase font__size-13 mt-50">Send inquiry <span class="before line__height-15"><i class="far fa-hand-point-right font__size-15"></i></span></button></div>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
