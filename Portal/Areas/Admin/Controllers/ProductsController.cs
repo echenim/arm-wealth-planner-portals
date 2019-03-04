@@ -105,7 +105,7 @@ namespace Portal.Areas.Admin.Controllers
                     product.Image = filename;
                     var products = _product.Save(product);
 
-                    var upload = Path.Combine(Directory.GetCurrentDirectory(), "FileArchives");
+                    var upload = Path.Combine(Directory.GetCurrentDirectory(), "Liber\\FileArchives");
 
                     var filelocation = Path.Combine(upload, filename);
                     using (var filestream = new FileStream(filelocation, FileMode.Create))

@@ -10,7 +10,13 @@
         <div class="element-box element-wrapper">
             <div class="row">
                 <div class="col-md-5">
-                    <table>
+                    <table class="table-borderless table-striped table-editable ">
+                        <thead>
+                            <tr>
+                                <th colspan="2">CUSTOMER INFORMATION</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
                         <tr>
                             <td>Name</td>
                             <td>@Model.PersonObj.FullName</td>
@@ -100,13 +106,17 @@
 
                                             <td>
                                                 <div>
-                                                    @item.Product
+                                                    @item.Product.Name
                                                 </div>
                                             </td>
                                             <td>
                                                 <span>&#8358;@item.Amount</span>
                                             </td>
-                                            <td></td>
+                                            <td>
+                                                <div>
+                                                    @item.Product.ProductCategory.Name
+                                                </div>
+                                            </td>
                                         </tr>
                                     }
                                 </tbody>
