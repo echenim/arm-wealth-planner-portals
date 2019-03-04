@@ -58,41 +58,42 @@ namespace Portal.Business.StoreManagers
             //    Password = password,
             //    UserName = customerLoginResponse.MembershipKey.ToString()
             //};
-            //var dataHubAuthResponse = _clientService.Authenticate(dataHubAuthRequest); 
-            
+            //var dataHubAuthResponse = _clientService.Authenticate(dataHubAuthRequest);
+
             //get customer detail from arm one
-            var customerInfoRequest = new ArmOneCustomerDetailsRequest { Id = customerLoginResponse.EmailAddress };
-            var customerInfoResponse = _clientService.GetArmOneCustomerDetails(customerInfoRequest);            
 
-            if (customerInfoResponse != null)
-            {
-                //make datahub call for bvn and gender
-                var customerRequest = new ClientValidateRequest
-                { CustomerReference = customerInfoResponse.MembershipKey.ToString() };
-                var customerResponse = _clientService.ClientValidate(customerRequest);
+            //var customerInfoRequest = new ArmOneCustomerDetailsRequest { Id = customerLoginResponse.EmailAddress };
+            //var customerInfoResponse = _clientService.GetArmOneCustomerDetails(customerInfoRequest);
 
-                if (customerResponse != null)
-                {
-                    var customerDetail = customerResponse.CustomerDetails.FirstOrDefault();
+            //if (customerInfoResponse != null)
+            //{
+            //    //make datahub call for bvn and gender
+            //    var customerRequest = new ClientValidateRequest
+            //    { CustomerReference = customerInfoResponse.MembershipKey.ToString() };
+            //    var customerResponse = _clientService.ClientValidate(customerRequest);
 
-                    result.FirstName = customerInfoResponse.FirstName;
-                    result.LastName = customerInfoResponse.LastName;
-                    result.ResponseCode = customerInfoResponse.ResponseCode;
-                    result.ResponseDescription = customerInfoResponse.ResponseDescription;
-                    result.Email = customerInfoResponse.EmailAddress;
-                    result.IsAccountActivated = customerInfoResponse.IsAccountActivated;                    
-                    result.MembershipNumber = customerInfoResponse.MembershipKey.ToString();
-                    result.BvnNumber = customerDetail.BvnNumber;
-                    result.Gender = customerDetail.Gender;
-                }
-                
-            }
+            //    if (customerResponse != null)
+            //    {
+            //        var customerDetail = customerResponse.CustomerDetails.FirstOrDefault();
+
+            //        result.FirstName = customerInfoResponse.FirstName;
+            //        result.LastName = customerInfoResponse.LastName;
+            //        result.ResponseCode = customerInfoResponse.ResponseCode;
+            //        result.ResponseDescription = customerInfoResponse.ResponseDescription;
+            //        result.Email = customerInfoResponse.EmailAddress;
+            //        result.IsAccountActivated = customerInfoResponse.IsAccountActivated;
+            //        result.MembershipNumber = customerInfoResponse.MembershipKey.ToString();
+            //        result.BvnNumber = customerDetail.BvnNumber;
+            //        result.Gender = customerDetail.Gender;
+            //    }
+
+            //}
 
             return result;
         }
 
         public AllPriceResponse GetAllFundPrices(DateTime? date)
-        {           
+        {
             var request = new AllPriceRequest { PriceDate = date.Value };
             var response = _clientService.GetFundPrices(request);
 

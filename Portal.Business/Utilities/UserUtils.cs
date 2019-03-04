@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Portal.Business.Contracts;
 using Portal.Domain.Models;
+using Portal.Domain.ViewModels;
 
 namespace Portal.Business.Utilities
 {
@@ -14,7 +15,11 @@ namespace Portal.Business.Utilities
         public UserUtils(IPersonManager manager)
             => _manager = manager;
 
-        public Person GetUser(string email)
-            => _manager.Get(s => s.Email.ToLower().Equals(email.ToLower())).SingleOrDefault();
+        public PersonView GetUser(string email)
+        {
+            var person = new PersonView();
+            var n = _manager.Get(s => s.Email.ToLower().Equals(email.ToLower())).SingleOrDefault();
+            return person;
+        }
     }
 }

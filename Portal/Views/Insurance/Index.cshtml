@@ -1,177 +1,141 @@
-﻿@{
+﻿@model IEnumerable<Products>
+
+@{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    int min, risk, whst = 0;
 }
 
 <!--- BreadCrumb Area-->
 
-<div class="breadcrumbs__section breadcrumbs__section-dark bg__style mt-80 mb-30 pt-80 pb-80 lazyload" data-bg="img/alternative-banner.jpg" data-brk-library="component__breadcrumbs_css">
+<div class="breadcrumbs__section breadcrumbs__section-dark bg__style mt-80 mb-30 pt-80 pb-80 lazyload" data-bg="~/Liber/Store/img/alternative-banner.jpg" data-brk-library="component__breadcrumbs_css">
     <div class="brk-base-bg-6 breadcrumb-bg full__size-absolute"></div>
-    <h2 class="font__size-40 line__height-46 font__family-montserrat font__weight-ultralight text-center"><span class="font__weight-bold">Checkout</span></h2>
+    <h2 class="font__size-40 line__height-46 font__family-montserrat font__weight-ultralight text-center"><span class="font__weight-bold">Insurance</span></h2>
     <div class="breadcrumbs__wrapper">
         <div class="container">
             <ol class="breadcrumb font__family-montserrat font__weight-medium font__size-12 letter-spacing-100">
                 <li class="breadcrumb__icon"><a href="#"><i class="fas fa-home"></i></a></li>
-                <li><a href="#">Cart <i class="fas fa-arrow-right"></i></a></li>
-                <li class="active">Checkout</li>
+
+                <li class="active">Insurance</li>
             </ol>
         </div>
     </div>
 </div>
 
-<h1 class="sr-only">Checkout</h1>
-<div class="main-wrapper text-center">
-    <main class="main-container mt-150 mb-10">
+<h1 class="sr-only">Insurance</h1>
+<!---- Category intro section -->
+<section class="brk-sc-item-page-header mb-30">
+    <div class="brk-sc-item-page-header__info pt-100">
 
-        <!-- Checkout Breakdown-->
         <div class="container">
-            <div class="tabs-wrapper mb-130" data-brk-library="component__steps">
-                <div class="steps__wrapper-main steps__wrapper-checkers">
-                    <div class="steps__progress"></div>
-                    <ul class="steps__wrapper tabs" data-tabgroup="tab-group-5">
-                        <li class="complete">
-                            <a href="cart.html" class="">
-                                <span class="font__family-montserrat font__weight-bold font__size-15 steps__dot"><span class="before"></span> <span class="after"></span> 1</span>
-                                <p class="font__family-montserrat font__size-15 steps__title">Cart</p>
-                            </a>
-                        </li>
-                        <li class="complete">
-                            <a class="active">
-                                <span class="font__family-montserrat font__weight-bold font__size-15 steps__dot"><span class="before"></span> <span class="after"></span> 2</span>
-                                <p class="font__family-montserrat font__size-15 steps__title">Checkout</p>
-                            </a>
-                        </li>
-                        <li class="">
-                            <a class="">
-                                <span class="font__family-montserrat font__weight-bold font__size-15 steps__dot"><span class="before"></span> <span class="after"></span> 3</span>
-                                <p class="font__family-montserrat font__size-15 steps__title">Payment</p>
-                            </a>
-                        </li>
-                        <li class="">
-                            <a class="">
-                                <span class="font__family-montserrat font__weight-bold font__size-15 steps__dot"><span class="before"></span> <span class="after"></span> 4</span>
-                                <p class="font__family-montserrat font__size-15 steps__title">Done</p>
-                            </a>
-                        </li>
-                    </ul>
+            <div class="row">
+                <div class="col-12">
+                    <!-- Category Title and intro text -->
+
+                    <div class="mt-20 text-center">
+
+                        <h2 class="title__heading-01 font__family-montserrat font__size-50 font__weight-bold title__heading-main wow zoomIn" data-brk-library="component__title">Insurance</h2>
+                        <h4 class="title__heading-01 title__heading-sub font__family-montserrat font__size-21" data-brk-library="component__title">GET FAMILIAR WITH Insurance</h4>
+                        <hr class="title__heading-01 divider" data-brk-library="component__title">
+                    </div>
+                    <div class=" mt-30">
+                        <p class="font__family-montserrat font__size-16 line__height-26">
+                            Regardless of your risk appetite or investment goal, you’ll find a mutual fund that suits you just fine. Insurance typically pool funds from multiple investors and invest in verifiable instruments such as government
+                            bonds.
+                        </p>
+                        <p class="font__family-montserrat font__size-16 line__height-26">Although the interest rate offered on all our Insurance are not static, they are always competitive and substantial.</p>
+                        <p class="font__family-montserrat font__size-16 line__height-26 pt-10">Our range of Insurance cater to different needs and the funds have different levels of risk exposure. Compare them below:</p>
+                    </div>
                 </div>
             </div>
         </div>
-        <form action="#" class="brk-form-strict" data-brk-library="component__form">
-            <div class="container">
-                <div class="row">
-                    <!-- Personal Information-->
-                    <div class="col-md-7">
+    </div>
+</section>
+<!--- Fund Comparism table-->
+<section>
+    <div class="container">
 
-                        <!--- Sign in -->
-                        <div class="mb-40">
-                            <div class="d-flex align-items-center">
-                                <div class="container-fluid">
-                                    <div class="row">
+        <div class="brk-tables brk-tables-compare brk-tables-trend brk-styled-scroll-y brk-styled-scroll-x font__family-montserrat" data-brk-library="component__tables">
 
-                                        <div class="col-12">
-                                            <h2 class="font__family-montserrat font__size-36 font__weight-bold line__height-42 mt-40">Login</h2>
-                                            <form action="#" class="brk-form brk-form-strict maxw-570" data-brk-library="component__form">
-                                                <input type="text" placeholder="Member ID or Email Address"> <input type="password" placeholder="Password">
-                                                <div class="no-margin pl-10 pr-10 mb-30 mt-40 d-flex flex-wrap justify-content-between align-items-center">
-                                                    <div><input id="checkbox-strict-1" name="checkbox" type="checkbox" value="1" checked="checked"> <label class="brk-form-checkbox-label" for="checkbox-strict-1">Remember Me</label></div>
-                                                    <div><a class="font__size-14 line__height-24 brk-base-font-color text-decoration_underline" href="#">Forgot password?</a></div>
-                                                </div>
-                                                <div class="d-flex flex-wrap justify-content-between">
-                                                    <a href="#" class="btn-backgrounds btn-backgrounds_white btn-backgrounds_left-icon font__family-montserrat font__weight-bold text-uppercase font__size-13 z-index-2 text-center letter-spacing-20 mt-10" data-brk-library="component__button">
-                                                        <span class="text">Login Now</span> <span class="before"><i class="far fa-hand-point-right"></i></span>
-                                                    </a>
+            <table class="table-responsive">
+                <thead>
+                    <tr style="">
+                        <th scope="col "></th>
+                        @{
 
-                                                    <a href="#" class="btn-backgrounds btn-backgrounds btn-backgrounds_white font__family-montserrat font__weight-bold text-uppercase font__size-13 z-index-2 text-center letter-spacing-20 mt-10" data-brk-library="component__button"><span class="text">Sign up</span> <span class="before"><i class="fas fa-user"></i></span></a>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                            foreach (var item in Model.OrderBy(s => s.Name))
+                            {
 
-                        <!---Sign up -->
-                        <div class="row mb-40">
+                                <th scope="col ">@item.Name</th>
+                            }
+                        }
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td></td>
+                        @foreach (var item in Model.OrderBy(s => s.Name))
+                        {
+                            <td>
+                                <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="Liber/FileArchives/@item.Image" alt=" shop-item " class="lazyload">
+                            </td>
+                        }
+                    </tr>
 
-                            <div class="col-12 col-md-6 collapse" id="couponCollapse"><input type="text" placeholder="Enter your code"></div>
-                            <div class="col-12">
-                                <h2 class="font__family-montserrat font__size-36 font__weight-bold line__height-42 mt-40">Personal details</h2>
-                            </div>
-                            <div class="col-12 col-md-6"><input type="text" placeholder="First Name" required></div>
-                            <div class="col-12 col-md-6"><input type="text" placeholder="Last Name" required></div>
-                            <div class="col-12 col-md-6"><input type="text" required placeholder="Email Address"></div>
-                            <div class="col-12 col-md-6"><input type="text" required placeholder="Phone Number"></div>
-                            <div class="col-12 col-md-6"><input type="text" required placeholder="Gender"></div>
-                            <div class="col-12 col-md-6"><input type="text" placeholder="BVN Number"></div>
-                            <div class="col-12"><input type="text" required placeholder="House Address"></div>
-                            <div class="col-12 col-md-6"><input type="text" required placeholder="State"></div>
-                            <div class="col-12 col-md-6"><input type="text" required placeholder="Country"></div>
-                            <div class="col-12 col-md-6"><input type="text" required placeholder="Who were you referred by?"></div>
-                            <hr>
+                    <tr>
+                        <td>Minimum Investment</td>
 
-                            <div class="col-12 mt-70 mb-20">
-                                <h4 class="title__divider title__divider--chevron font__size-21 font__weight-bold font__family-montserrat line__height-24 text-center" data-brk-library="component__dividers">
-                                    <span class="title__divider__wrapper">Create your ARM Account <span class="line brk-base-bg-gradient-chevron-pseudo"></span></span>
-                                </h4>
-                                <div class="text-left font__family-open-sans font__size-15 line__height-24 brk-dark-font-color">
-                                    <p>Create a password to login to your ARM account.</p>
-                                </div>
-                            </div>
+                        @foreach (var item in Model.OrderBy(s => s.Name))
+                        {
 
-                            <div class="col-12 col-md-6  text-left"><label class="brk-form-label font__family-montserrat font__weight-bold" for="brk-pass-form">Account Password</label><input name="password" type="password" placeholder="Enter password"></div>
-                            <div class="col-12 col-md-6  text-left"><label class="brk-form-label font__family-montserrat font__weight-bold" for="brk-pass-form">Confirm Password</label><input name="password" type="password" placeholder="Confirm password"></div>
-                        </div>
-                    </div>
-                    <!--- Order Information -->
-                    <div class="col-md-5">
-                        <article class="brk-checkout-order" data-brk-library="component__checkout">
-                            <header class="brk-checkout-order__header d-flex align-items-center justify-content-between">
-                                <h1 class="font__family-montserrat font__size-21 line__height-24 font__weight-bold">Your order</h1><a href="#" class="btn btn-prime btn-md border-radius-25 btn-no-shadow mx-0 my-0 font__weight-bold" data-brk-library="component__button"><i class="icon-inside fas fa-sync-alt"></i> <span class="before"></span><span class="after"></span><span class="border-btn"></span>Update Cart</a>
-                            </header>
-                            <ul class="brk-checkout-order__list brk-styled-scroll-x">
-                                <li class="brk-checkout-order-item font__family-montserrat font__size-14 line__height-16" data-brk-library="component__checkout">
-                                    <img data-src="img/mmf.jpg" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="item-alt" class="lazyload brk-checkout-order-item__img">
-                                    <h2 class="font__size-14 line__height-16 font__weight-bold brk-checkout-order-item__title">ARM Money Market Fund x 1</h2>
-                                    <p class="brk-checkout-order-item__price text-left"> <span class="brk-base-font-color pl-1 font__weight-bold ">&#8358;12,000,000</span></p>
-                                </li>
-                                <li class="brk-checkout-order-item font__family-montserrat font__size-14 line__height-16" data-brk-library="component__checkout">
-                                    <img data-src="img/mmf.jpg" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="item-alt" class="lazyload brk-checkout-order-item__img">
-                                    <h2 class="font__size-14 line__height-16 font__weight-bold brk-checkout-order-item__title">ARM Money Market Fund x 1</h2>
-                                    <p class="brk-checkout-order-item__price text-left"> <span class="brk-base-font-color pl-1 font__weight-bold">&#8358;12,000,000</span></p>
-                                </li>
-                                <li class="brk-checkout-order-item font__family-montserrat font__size-14 line__height-16" data-brk-library="component__checkout">
-                                    <img data-src="img/mmf.jpg" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="item-alt" class="lazyload brk-checkout-order-item__img">
-                                    <h2 class="font__size-14 line__height-16 font__weight-bold brk-checkout-order-item__title">ARM Money Market Fund x 1</h2>
-                                    <p class="brk-checkout-order-item__price text-left"> <span class="brk-base-font-color pl-1 font__weight-bold">&#8358;12,000,000</span></p>
-                                </li>
-                            </ul>
-                            <div></div>
-                            <div class="maxw-770" data-brk-library="component__title">
-                                <div class="text-left">
+                            <td>
 
-                                    <h4 class="font__family-montserrat highlight-underline line__height-26 font__size-21 font__weight-light">
-                                        <span class="before wow fadeInUp"></span> <span class="before wow fadeInUp"></span><span>Process payment via ARMPay </span></br><span class="checkout-small-desc mt-20 text-justify">
-                                            ARMPay is ARM’s proprietary payment gateway which facilitates electronic payments on Mastercard, Visa, Verve and various debit/credit
-                                            cards in Nigeria.
-                                        </span>
-                                    </h4>
-                                    <img src="img/payment-icons.svg" class="pd-lr-20 pb-1">
-                                </div>
-                            </div>
-                            <footer class="brk-checkout-order__footer">
-                                <section class="brk-checkout-order__footer-section">
-                                    <h3 class="font__family-montserrat"><span class="font__size-14 font__weight-bold pr-2">Subtotal:</span><span class="font__size-24 font__weight-bold brk-base-font-color">&#8358;12,000,000</span></h3>
-                                </section>
-                                <section class="brk-checkout-order__footer-section">
-                                    <h3 class="font__family-montserrat"><span class="font__size-14 font__weight-bold pr-2">Total:</span><span class="font__size-24 font__weight-bold brk-base-font-color">&#8358;12,000,000</span></h3>
-                                </section>
-                            </footer><span class="brk-checkout-order__after"></span>
-                        </article>
-                        <div class="text-center translate-top-50"><a href="#" class="btn btn-inside-out btn-lg border-radius-25 btn-shadow pl-50 pr-50" data-brk-library="component__button"><span class="before">Proceed to Checkout</span><span class="text">Proceed to Checkout</span><span class="after">Proceed to Checkout</span></a></div>
-                    </div>
-                </div>
-            </div>
-        </form>
-    </main>
-</div>
+                                @foreach (var x in item.ProductInvestmentInfos.Where(s => s.Sections.Equals("Minimum Investment")))
+                                {
+
+                                    <h6>@x.Abs <span class="brk-base-font-color font__weight-bold ">&#8358;@x.RangOrCost</span></h6>
+
+                                }
+                            </td>
+                        }
+                    </tr>
+                    <tr>
+                        <td>Risk Level</td>
+                        @foreach (var item in Model.OrderBy(s => s.Name))
+                        {
+                            <td>
+                                @foreach (var x in item.ProductInvestmentInfos.Where(s => s.Sections.Equals("Risk Level")))
+                                {
+                                    <h6>@x.Abs </h6>
+                                }
+                            </td>
+                        }
+                    </tr>
+                    <tr>
+                        <td>What the Fund invests in</td>
+                        @foreach (var item in Model.OrderBy(s => s.Name))
+                        {
+                            <td>
+                                @foreach (var x in item.ProductInvestmentInfos.Where(s => s.Sections.Equals("What the Fund invests in")))
+                                {
+                                    <h6>@x.Abs: <span class="brk-base-font-color font__weight-bold ">@x.RangOrCost</span></h6>
+
+                                }
+                            </td>
+                        }
+                    </tr>
+                    <tr>
+                        <td></td>
+                        @foreach (var item in Model.OrderBy(s => s.Name))
+                        {
+                            <td>
+                                <a asp-action="Details" asp-route-Id="@item.Id" class="btn-backgrounds btn-backgrounds_left-icon btn-backgrounds_200 btn-backgrounds_md btn-backgrounds_dark-classic btn-shadow-small font__family-montserrat font__weight-semibold text-uppercase font__size-15
+                                    mb-15 " data-brk-library="component__button "><span class="text ">Invest now</span><span class="before "><i class="fas fa-coins "></i></span></a>
+                            </td>
+                        }
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>

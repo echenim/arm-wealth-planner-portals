@@ -1,9 +1,12 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using System.IO;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.FileProviders;
 using Portal.Business.Contracts;
 using Portal.Business.StoreManagers;
 using Microsoft.Extensions.Logging;
@@ -117,6 +120,12 @@ namespace Portal
             app.UseCookiePolicy();
 
             app.UseAuthentication();
+            app.UseStaticFiles(new StaticFileOptions()
+            {
+                FileProvider = new PhysicalFileProvider(
+                    Path.Combine(Directory.GetCurrentDirectory(), @"Liber")),
+                RequestPath = new PathString("/Liber")
+            });
 
             app.UseRequestLocalization();
 

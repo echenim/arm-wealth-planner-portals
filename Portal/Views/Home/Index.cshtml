@@ -1,4 +1,5 @@
-﻿@{
+﻿@model IEnumerable<Products>
+@{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout_Home.cshtml";
 }
@@ -93,42 +94,21 @@
                 {&quot;breakpoint&quot;: 768, &quot;settings&quot;: {&quot;slidesToShow&quot;: 2}},
                 {&quot;breakpoint&quot;: 480, &quot;settings&quot;: {&quot;slidesToShow&quot;: 1}}
                 ]}" data-brk-library="slider__slick">
-                            <div class="pl-15 pr-15">
-                                <div class="shop-setout text-center" data-brk-library="component__content_slider">
-                                    <div class="shop-setout__img lazyload" data-bg="img/mmf.jpg"><a href="#" class="add-cart"><i class="fas fa-info"></i><span class="shop-slider-text-hover">View More</span></a></div>
-                                    <a class="shop-setout__link" href="#">
-                                        <h3 class="font__family-montserrat font__weight-semibold font__size-16">ARM Money Market Fund</h3>
-                                    </a>
-                                    <div class="brk-base-font-color font__family-montserrat font__size-15 font__weight-semibold">Starting from <span class="font__weight-bold">&#8358;1,000</span></div>
+
+                            @foreach (var item in Model.Where(s => s.ProductCategory.Name.Equals("Mutual Funds")))
+                            {
+                                <div class="pl-15 pr-15">
+                                    <div class="shop-setout text-center" data-brk-library="component__content_slider">
+                                        <div class="shop-setout__img lazyload" data-bg="http://localhost/armwealth/Liber/FileArchives/@item.Image">
+                                            <a asp-controller="MutualFunds" asp-action="Details" asp-route-id="@item.Id" class="add-cart"><i class="fas fa-info"></i><span class="shop-slider-text-hover">View More</span></a>
+                                        </div>
+                                        <a class="shop-setout__link" asp-controller="MutualFunds" asp-action="Details" asp-route-id="@item.Id">
+                                            <h3 class="font__family-montserrat font__weight-semibold font__size-16">@item.Name</h3>
+                                        </a>
+                                        <div class="brk-base-font-color font__family-montserrat font__size-15 font__weight-semibold">Starting from <span class="font__weight-bold">&#8358;@item.StartFrom</span></div>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="pl-15 pr-15">
-                                <div class="shop-setout text-center" data-brk-library="component__content_slider">
-                                    <div class="shop-setout__img lazyload" data-bg="img/mmf.jpg"><a href="#" class="add-cart"><i class="fas fa-info"></i><span class="shop-slider-text-hover">View More</span></a></div>
-                                    <a href="#" class="shop-setout__link">
-                                        <h3 class="font__family-montserrat font__weight-semibold font__size-16">ARM Aggressive Fund</h3>
-                                    </a>
-                                    <div class="brk-base-font-color font__family-montserrat font__size-15 font__weight-semibold">Starting from <span class="font__weight-bold">&#8358;1,000</span></div>
-                                </div>
-                            </div>
-                            <div class="pl-15 pr-15">
-                                <div class="shop-setout text-center" data-brk-library="component__content_slider">
-                                    <div class="shop-setout__img lazyload" data-bg="img/mmf.jpg"><a href="#" class="add-cart"><i class="fas fa-info"></i><span class="shop-slider-text-hover">View More</span></a></div>
-                                    <a href="#" class="shop-setout__link">
-                                        <h3 class="font__family-montserrat font__weight-semibold font__size-16">ARM Money Market Fund</h3>
-                                    </a>
-                                    <div class="brk-base-font-color font__family-montserrat font__size-15 font__weight-semibold">Starting from <span class="font__weight-bold">&#8358;1,000</span></div>
-                                </div>
-                            </div>
-                            <div class="pl-15 pr-15">
-                                <div class="shop-setout text-center" data-brk-library="component__content_slider">
-                                    <div class="shop-setout__img lazyload" data-bg="img/mmf.jpg"><a href="#" class="add-cart"><i class="fas fa-info"></i><span class="shop-slider-text-hover">View More</span></a></div>
-                                    <a href="#" class="shop-setout__link">
-                                        <h3 class="font__family-montserrat font__weight-semibold font__size-16">ARM Ethical Fund</h3>
-                                    </a>
-                                    <div class="brk-base-font-color font__family-montserrat font__size-15 font__weight-semibold">Starting from <span class="font__weight-bold">&#8358;1,000</span></div>
-                                </div>
-                            </div>
+                            }
                         </div>
                     </div>
                 </div>

@@ -55,8 +55,9 @@ namespace Portal.Controllers
         public IActionResult Login(LoginViewModels model)
         {
             if (!ModelState.IsValid) return View(model);
-            var isValiedUser = _userManager.Users.Include(s => s.Person).SingleOrDefault(s => s.UserName.Equals(model.Username)
-                                                                       || s.Person.MembershipNo.Equals(model.Username));
+            var isValiedUser = _userManager.Users.Include(s => s.Person)
+                .SingleOrDefault(s => s.UserName.Equals(model.Username));
+            //      || s.Person.MembershipNo.Equals(model.Username));
             if (isValiedUser != null)
             {
                 if (isValiedUser.Person.IsCustomer)
