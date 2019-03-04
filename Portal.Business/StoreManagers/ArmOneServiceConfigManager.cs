@@ -5,6 +5,10 @@ namespace Portal.Business.StoreManagers
     public class ArmOneServiceConfigManager : IArmOneServiceConfigManager
     {
         public string ArmBaseUrl { get; set; }
+
+        public string ArmFundBaseUrl { get; set; }
+        public string FundPriceConnection { get; set; }
+
         public string ArmOne { get; set; }
         public string ArmOneToken { get; set; }
         public string ArmAggregatorBaseUrl { get; set; }

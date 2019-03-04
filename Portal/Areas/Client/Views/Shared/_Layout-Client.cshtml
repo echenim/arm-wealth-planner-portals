@@ -323,6 +323,33 @@
                             </div>
                         </div>
                     </li>
+
+                    <li class="has-sub-menu">
+                        <a href="javascript:void(0)">
+                            <div class="icon-w">
+                                <div class="os-icon os-icon-bar-chart-stats-up"></div>
+                            </div>
+                            <span>Calculators</span>
+                        </a>
+                        <div class="sub-menu-w">
+                            <div class="sub-menu-header">
+                                Calculators
+                            </div>
+                            <div class="sub-menu-icon">
+                                <i class="os-icon os-icon-bar-chart-stats-up"></i>
+                            </div>
+                            <div class="sub-menu-i">
+                                <ul class="sub-menu">
+                                    <li>
+                                        <a asp-area="Client" asp-controller="Calculators" asp-action="InvestmentGoalCalculator">Investment Goal Calclator</a>
+                                    </li>
+                                    <li>
+                                        <a asp-area="Client" asp-controller="Calculators" asp-action="SavingsPlanCalculator">Savings Plan Calculator</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </li>
                 </ul>
 
                 <!---- Menu ends here ----->
@@ -369,12 +396,16 @@
                                             <img alt="" src="~/custom-client/img/default-profile.svg">
                                         </div>
                                         <div class="logged-user-info-w">
-                                            <div class="logged-user-name">
-                                                @_userFullName
-                                            </div>
-                                            <div class="logged-user-role">
-                                                @_userMembershipKey
-                                            </div>
+                                            @if (User.Identity.IsAuthenticated)
+                                            {
+                                                var person = UserUtil.GetUser(User.Identity.Name);
+                                                <div class="logged-user-name">
+                                                    @string.Format("{0}", person.FullName)
+                                                </div>
+                                                <div class="logged-user-role">
+                                                    @string.Format("Member ID:  {0}", person.MembershipNo)
+                                                </div>
+                                            }
                                         </div>
                                     </div>
                                     <div class="bg-icon">
