@@ -79,9 +79,7 @@
 <div class="row">
     <div class="col-md-12 ">
         <div class="element-box element-wrapper">
-            @*<h5 class="element-header">
-                    LATEST ORDERS
-                </h5>*@
+
             <div class="element-box-tp">
                 <div class="row">
                     <div class="col-md-6">
@@ -91,8 +89,6 @@
                                     Find by CartID: <input type="text" name="SearchString" value="@ViewData["currentFilter"]" />
                                     <input type="submit" value="Search" class="btn btn-default" /> |
                                     <a asp-action="Index">Back to Full List</a>
-                                    Checkbox:
-                                <p id="text"></p>
                                 </p>
                             </div>
                         </form>
@@ -171,9 +167,7 @@
                                     </td>
 
                                     <td>
-                                        <div>
-                                            <span>@item.Customer</span>
-                                        </div>
+                                        <a asp-controller="Customers" asp-action="Detail" asp-route-id="@item.CustomerId">@item.Customer</a>
                                     </td>
                                     <td>
                                         <div>

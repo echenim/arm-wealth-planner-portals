@@ -33,8 +33,8 @@ namespace Portal.Business.StoreManagers
                 : _context.PurchaseOrders.Include(s => s.Product).Count();
 
         public int GetCustomers(Func<ApplicationUser, bool> predicate = null)
-            => predicate != null ? _context.Users.Where(predicate).Count()
-                : _context.Users.Count();
+            => predicate != null ? _context.Users.Where(predicate).Where(s => s.Person.IsCustomer == true).Count()
+                : _context.Users.Where(s => s.Person.IsCustomer == true).Count();
 
         public IQueryable<PurchaseOrderViewModel> GetRecentOrders(Func<PurchaseOrders, bool> predicate = null)
         {

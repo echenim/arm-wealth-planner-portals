@@ -148,17 +148,14 @@ namespace Portal.Areas.Admin.Controllers
         /// <returns></returns>
         private int ReturnCustomer(string searchString)
             => !String.IsNullOrEmpty(searchString) && searchString.Equals("This Month") ?
-                _manager.GetCustomers(s => s.Person.IsCustomer == true
-                                                      && s.Person.OnCreated.Date.ToString("MM/yyyy")
+                _manager.GetCustomers(s => s.Person.OnCreated.Date.ToString("MM/yyyy")
                                                           .Equals(DateTime.Now.Date.ToString("MM/yyyy")))
                 : !String.IsNullOrEmpty(searchString) && searchString.Equals("Last Month") ?
-                    _manager.GetCustomers(s => s.Person.IsCustomer == true
-                                                          && s.Person.OnCreated.Date.ToString("MM/yyyy")
+                    _manager.GetCustomers(s => s.Person.OnCreated.Date.ToString("MM/yyyy")
                                                               .Equals(DateTime.Now.Date.AddMonths(-1).ToString("MM/yyyy")))
                     : !String.IsNullOrEmpty(searchString) && searchString.Equals("This year") ?
-                        _manager.GetCustomers(s => s.Person.IsCustomer == true
-                                                              && s.Person.OnCreated.Date.ToString("yyyy")
+                        _manager.GetCustomers(s => s.Person.OnCreated.Date.ToString("yyyy")
                                                                   .Equals(DateTime.Now.Date.ToString("yyyy")))
-                        : _manager.GetCustomers(s => s.Person.IsCustomer == true);
+                        : _manager.GetCustomers();
     }
 }

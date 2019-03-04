@@ -30,6 +30,12 @@ namespace Portal.Business.StoreManagers
                     .Include(s => s.Product).Include(s => s.Product.ProductCategory)
                     .AsQueryable();
 
+        public IQueryable<PurchaseOrders> PersonBuyHistory(long personId)
+            => _context.PurchaseOrders
+                .Include(s => s.Product).Include(s => s.Product.ProductCategory)
+                .Where(s => s.CustomerId.Equals(personId))
+                .AsQueryable();
+
         public IQueryable<PurchaseOrders> Sales(Func<PurchaseOrders, bool> predicate = null)
             => (predicate != null
                 ? _context.PurchaseOrders

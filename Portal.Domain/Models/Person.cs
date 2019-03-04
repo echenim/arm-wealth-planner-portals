@@ -41,6 +41,8 @@ namespace Portal.Domain.Models
         [MaxLength(10)]
         public bool IsCustomer { get; set; }
 
+        public string MemberShipNo { get; set; }
+
         public string PortalOnBoarding { get; set; }
 
         [Required]
@@ -50,6 +52,6 @@ namespace Portal.Domain.Models
         [NotMapped]
         public string FullName => $"{FirstName} {LastName}";
 
-        public virtual ICollection<MemberShip> MemberShips { get; set; }
+        public ICollection<PurchaseOrders> PurchaseOrderses { get; set; }
     }
 }

@@ -18,6 +18,7 @@ namespace Portal.Services
 
         //test
         private readonly IArmOneServiceConfigManager _configSettingManager;
+
         public TestArmClientServices _clientService;
 
         public ClientRepository(IArmOneServiceConfigManager configManager, string contentRootPath)
@@ -81,8 +82,8 @@ namespace Portal.Services
             return totalBalanceResponse;
         }
 
-        public List<LastTransactions> LoadLastTransactions(AuthenticateResponse user, 
-                                                            SummaryResponse accounts, 
+        public List<LastTransactions> LoadLastTransactions(AuthenticateResponse user,
+                                                            SummaryResponse accounts,
                                                             int count = 2, string type = "")
         {
             var transactions = new List<LastTransactions>();
@@ -108,7 +109,7 @@ namespace Portal.Services
             return transactions;
         }
 
-        public StatementResponse GetClientTransactions(AuthenticateResponse user, 
+        public StatementResponse GetClientTransactions(AuthenticateResponse user,
                                                         AccountStatementViewModel model)
         {
             var response = new StatementResponse();
@@ -136,7 +137,7 @@ namespace Portal.Services
             return response;
         }
 
-        //currently api can't pull from test db as endpoint has not been written. 
+        //currently api can't pull from test db as endpoint has not been written.
         //pulling directly from the tesdb.
         public PriceHistoryResponse GetFundPriceHistory(string fundcode)
         {
@@ -150,23 +151,23 @@ namespace Portal.Services
             return response;
         }
 
-        //until the endpoint for the above method has been created,
-        //this is what would be used to spool data for fund prices
-        public FundPrices GetFundPrices(string fundcode)
-        {
-            var response = new FundPrices();
-            var settings = _configSettingManager.FundPriceConnection;
+        ////until the endpoint for the above method has been created,
+        ////this is what would be used to spool data for fund prices
+        //public FundPrices GetFundPrices(string fundcode)
+        //{
+        //    var response = new FundPrices();
+        //    var settings = _configSettingManager.FundPriceConnection;
 
-            var sql = $@"SELECT * FROM dw.FactFundPrice
-                         WHERE ProductCode = '{fundcode}'";
+        //    var sql = $@"SELECT * FROM dw.FactFundPrice
+        //                 WHERE ProductCode = '{fundcode}'";
 
-            using (var connection = new SqlConnection(settings))
-            {
-                response.FundPrice = connection.Query<FactFundPrice>(sql).ToList();
-            }
+        //    using (var connection = new SqlConnection(settings))
+        //    {
+        //        response.FundPrice = connection.Query<FactFundPrice>(sql).ToList();
+        //    }
 
-            return response;
-        }
+        //    return response;
+        //}
 
         public YieldHistoryResponse GetYieldHistory(string fundcode)
         {
@@ -181,7 +182,7 @@ namespace Portal.Services
             return response;
         }
 
-        public EmbassyLetterResponse SendEmbassyLetter(EmbassyLetterViewModel model, 
+        public EmbassyLetterResponse SendEmbassyLetter(EmbassyLetterViewModel model,
                                                         AuthenticateResponse user)
         {
             var embassyLetter = new EmbassyLetterRequest
@@ -232,6 +233,5 @@ namespace Portal.Services
 
             return sb.ToString();
         }
-
     }
 }

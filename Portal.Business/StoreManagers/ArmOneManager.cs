@@ -85,31 +85,31 @@ namespace Portal.Business.StoreManagers
             return result;
         }
 
-        public ArmOneRegisterResponse OnboardNewUsers(Person model, string username, string password)
-        {
-            var response = new ArmOneRegisterResponse();
+        //public ArmOneRegisterResponse OnboardNewUsers(Person model, string username, string password)
+        //{
+        //    var response = new ArmOneRegisterResponse();
 
-            //onboard on datahub API
+        //    //onboard on datahub API
 
-            //onboard on ArmOne
-            var armRequest = new ArmOneRegisterRequest
-            {
-                Membershipkey = Convert.ToInt32(model.MembershipNo),
-                Password = password,
-                EmailAddress = model.Email,
-                MobileNumber = "",
-                SecurityQuestion = "",
-                SecurityAnswer = "",
-                SecurtiyQuestion2 = String.Empty,
-                SecurityAnswer2 = String.Empty,
-                FirstName = model.FirstName,
-                LastName = model.LastName,
-                Channel = "CLient_Portal"
-            };
-            response = _clientService.ArmOneRegister(armRequest);
+        //    //onboard on ArmOne
+        //    var armRequest = new ArmOneRegisterRequest
+        //    {
+        //        Membershipkey = Convert.ToInt32(model.MembershipNo),
+        //        Password = password,
+        //        EmailAddress = model.Email,
+        //        MobileNumber = "",
+        //        SecurityQuestion = "",
+        //        SecurityAnswer = "",
+        //        SecurtiyQuestion2 = String.Empty,
+        //        SecurityAnswer2 = String.Empty,
+        //        FirstName = model.FirstName,
+        //        LastName = model.LastName,
+        //        Channel = "CLient_Portal"
+        //    };
+        //    response = _clientService.ArmOneRegister(armRequest);
 
-            return response;
-        }
+        //    return response;
+        //}
 
         public ArmOneRegisterResponse OnboardOldUsers(string username, string password)
         {
@@ -117,7 +117,7 @@ namespace Portal.Business.StoreManagers
             var response = new ArmOneRegisterResponse();
 
             //make call to datahub API
-            var dataHubAuthRequest = new AuthenticateRequest{ Password = password, UserName = username };
+            var dataHubAuthRequest = new AuthenticateRequest { Password = password, UserName = username };
             var dataHubAuthResponse = _clientService.Authenticate(dataHubAuthRequest);
 
             if (dataHubAuthResponse != null && dataHubAuthResponse.IsActive == true)
