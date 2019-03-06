@@ -149,11 +149,11 @@
                                 var selectList = new SelectList(
                                     new List<SelectListItem>
                                     {
-                                                                        new SelectListItem {Text = "Complaints", Value = "Complaints"},
-                                                                        new SelectListItem {Text = "Embassy Letter", Value = "Embassy Letter"},
-                                                                        new SelectListItem {Text = "Assistance", Value = "Assistance"},
-                                                                        new SelectListItem {Text = "Enquiry", Value = "Enquiry"},
-                                                                        new SelectListItem {Text = "Other", Value = "Other"},
+                                        new SelectListItem {Text = "Complaints", Value = "Complaints"},
+                                        new SelectListItem {Text = "Embassy Letter", Value = "Embassy Letter"},
+                                        new SelectListItem {Text = "Assistance", Value = "Assistance"},
+                                        new SelectListItem {Text = "Enquiry", Value = "Enquiry"},
+                                        new SelectListItem {Text = "Other", Value = "Other"},
                                     }, "Value", "Text");
                             }
                             @Html.DropDownListFor(model => model.SelfService.RequestType, selectList, new { @class = "form-control selectpicker" })
