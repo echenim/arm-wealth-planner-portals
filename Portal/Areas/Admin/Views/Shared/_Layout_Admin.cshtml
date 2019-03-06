@@ -22,13 +22,7 @@
         <link href="~/liber/admin/components/slick-carousel/slick/slick.css" rel="stylesheet">
         <link href="~/liber/admin/css/main.css?version=4.4.0" rel="stylesheet" />
     </environment>
-    <environment exclude="Development">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css"
-              asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
-              asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute"
-              crossorigin="anonymous"
-              integrity="sha256-eSi1q2PG6J7g7ib17yAaWMcrr5GrtohYChqibrV7PBE=" />
-    </environment>
+
     <link href="~/liber/admin/css/main.css?version=4.4.0" rel="stylesheet" />
 </head>
 <body class="menu-position-side menu-side-left full-screen">
@@ -41,7 +35,7 @@
             -------------------->
             <div class="menu-mobile menu-activated-on-click color-scheme-dark">
                 <div class="mm-logo-buttons-w">
-                    <a asp-area="Admin" asp-controller="Dashboard" asp-action="Index">img src="~/liber/admin/img/arm-logo.png"></a>
+                    <a asp-area="Admin" asp-controller="Dashboard" asp-action="Index"><img src="~/liber/admin/img/arm-logo.png" /></a>
                     <div class="mm-buttons">
                         <div class="mobile-menu-trigger">
                             <div class="os-icon os-icon-hamburger-menu-1"></div>

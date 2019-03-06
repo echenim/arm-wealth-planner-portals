@@ -57,21 +57,14 @@ namespace Portal.Controllers
             if (!ModelState.IsValid) return View(model);
             var isValiedUser = _userManager.Users.Include(s => s.Person)
                 .SingleOrDefault(s => s.UserName.Equals(model.Username));
-            //      || s.Person.MembershipNo.Equals(model.Username));
             if (isValiedUser != null)
             {
-                if (isValiedUser.Person.IsCustomer)
+                var resultCustomer = _signInManager.PasswordSignInAsync(isValiedUser, model.Password, true, true).Result;
+                if (resultCustomer.Succeeded)
                 {
-                    var resultCustomer = _signInManager.PasswordSignInAsync(isValiedUser, "102Solutionx$#@", true, true).Result;
-                    if (resultCustomer.Succeeded)
-                    {
-                        return RedirectToAction("Index", "Dashboard", new { area = "Client" });
-                    }
-                }
-                var resultStaff = _signInManager.PasswordSignInAsync(isValiedUser, model.Password, true, true).Result;
-                if (resultStaff.Succeeded)
-                {
-                    return RedirectToAction("Index", "Dashboard", new { area = "Admin" });
+                    return isValiedUser.Person.IsCustomer
+                        ? RedirectToAction("Index", "Home")
+                        : RedirectToAction("Index", "Dashboard", new { area = "Admin" });
                 }
             }
             else

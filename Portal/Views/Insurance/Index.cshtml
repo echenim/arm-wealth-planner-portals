@@ -83,48 +83,6 @@
                     </tr>
 
                     <tr>
-                        <td>Minimum Investment</td>
-
-                        @foreach (var item in Model.OrderBy(s => s.Name))
-                        {
-
-                            <td>
-
-                                @foreach (var x in item.ProductInvestmentInfos.Where(s => s.Sections.Equals("Minimum Investment")))
-                                {
-
-                                    <h6>@x.Abs <span class="brk-base-font-color font__weight-bold ">&#8358;@x.RangOrCost</span></h6>
-
-                                }
-                            </td>
-                        }
-                    </tr>
-                    <tr>
-                        <td>Risk Level</td>
-                        @foreach (var item in Model.OrderBy(s => s.Name))
-                        {
-                            <td>
-                                @foreach (var x in item.ProductInvestmentInfos.Where(s => s.Sections.Equals("Risk Level")))
-                                {
-                                    <h6>@x.Abs </h6>
-                                }
-                            </td>
-                        }
-                    </tr>
-                    <tr>
-                        <td>What the Fund invests in</td>
-                        @foreach (var item in Model.OrderBy(s => s.Name))
-                        {
-                            <td>
-                                @foreach (var x in item.ProductInvestmentInfos.Where(s => s.Sections.Equals("What the Fund invests in")))
-                                {
-                                    <h6>@x.Abs: <span class="brk-base-font-color font__weight-bold ">@x.RangOrCost</span></h6>
-
-                                }
-                            </td>
-                        }
-                    </tr>
-                    <tr>
                         <td></td>
                         @foreach (var item in Model.OrderBy(s => s.Name))
                         {

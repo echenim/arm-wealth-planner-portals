@@ -1,4 +1,5 @@
 ﻿@using Portal.Business.Utilities
+@using Portal.Domain.ViewModels
 @inject UserUtils UserUtil
 
 <!DOCTYPE html>
@@ -50,7 +51,9 @@
                     <div class="row align-items-center">
                         <div class="col-lg-5 align-self-lg-stretch text-left">
                             <div class="brk-header__element brk-header__element_skin-2 brk-header__item"><a href="tel:88002003040" class="brk-header__element--wrap"><i class="fa fa-phone"></i> <span class="brk-header__element--label font__weight-semibold">0 800 200 30 40</span></a></div>
-                            <div class="brk-header__element brk-header__element_skin-2 brk-header__item"><a href="#" class="brk-header__element--wrap"><i class="fa fa-envelope"></i> <span class="brk-header__element--label font__weight-medium">hello@arminvestmentcenter.com</span></a></div>
+                            <div class="brk-header__element brk-header__element_skin-2 brk-header__item">
+                                <a href="#" class="brk-header__element--wrap"><i class="fa fa-envelope"></i> <span class="brk-header__element--label font__weight-medium">hello@arminvestmentcenter.com</span></a>
+                            </div>
                         </div>
                         <!-- Logo Area -->
                         <div class="col-lg-2 align-self-lg-center d-none d-lg-block ">
@@ -102,13 +105,11 @@
 
                             @if (User.Identity.IsAuthenticated)
                             {
-                                var person = UserUtil.GetUser(User.Identity.Name);
-                                <div class="brk-header__element brk-header__element_skin-2  brk-header__item">
+
+                                <div class="brk-header__element brk-header__element_skin-2 brk-header__item">
                                     <a href="#" class="brk-header__element--wrap">
-                                        <i class="fa fa-user"></i>
-                                        <span class="brk-header__element--label font__weight-medium">
-                                            @string.Format("{0}", person.FullName)
-                                        </span>
+
+                                        <span class="brk-header__element--label font__weight-medium">@User.Identity.Name</span>
                                     </a>
                                 </div>
 
@@ -134,6 +135,11 @@
                         <div class="col-lg align-self-lg-stretch">
                             <nav class="brk-nav brk-header__item">
                                 <ul class="brk-nav__menu">
+                                    @if (User.Identity.IsAuthenticated)
+                                    {
+                                        <li class="brk-nav__drop-down-effect"><a asp-controller="Dashboard" asp-action="Index" asp-area="Client"><span>Client Portal</span></a></li>
+
+                                    }
                                     <li class="brk-nav__drop-down-effect"><a asp-controller="MutualFunds" asp-action="Index"><span>Mutual Funds</span></a></li>
                                     <li class="brk-nav__drop-down-effect"><a asp-controller="Pension" asp-action="Index"><span>Pensions</span></a></li>
                                     <li class="brk-nav__drop-down-effect"><a asp-controller="Insurance" asp-action="Index"><span>Insurance</span></a></li>
