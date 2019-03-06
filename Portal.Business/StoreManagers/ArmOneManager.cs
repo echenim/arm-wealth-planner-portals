@@ -85,33 +85,54 @@ namespace Portal.Business.StoreManagers
             return result;
         }
 
-        //public ArmOneRegisterResponse OnboardNewUsers(Person model)
-        //{
-        //    var response = new ArmOneRegisterResponse();
+        public ArmOneRegisterResponse OnboardNewUsers(Person model, string password)
+        {
+            var response = new ArmOneRegisterResponse();
+            var snResponse = new SalesNewCustomerResponse();
 
-        //onboard on datahub API
+            //onboard on datahub API
+            //first, on sales/prospect
+            var spRequest = new SalesProspectRequest
+            {
+                Surname = model.LastName,
+                FirstName = model.FirstName,
+                EmailAddress = model.Email,
+                MobileNumber = model.Tel,
+                Sex = model.Gender,
+                Address = model.Address,
+                BvnNumber = model.BioetricVerificationNumber
+            };
+            var spResponse = _clientService.AddNewCustomerStageOne(spRequest);
 
-        //    //onboard on datahub API
+            //then, on sales/newcustomer
+            if (spResponse != null)
+            {
+                var snRequest = new SalesNewCustomerRequest { ProspectCode = spResponse.ProspectCode };
+                snResponse = _clientService.AddNewCustomerStageTwo(snRequest);
+            }
 
-        //    //onboard on ArmOne
-        //    var armRequest = new ArmOneRegisterRequest
-        //    {
-        //        Membershipkey = Convert.ToInt32(model.MembershipNo),
-        //        Password = password,
-        //        EmailAddress = model.Email,
-        //        MobileNumber = "",
-        //        SecurityQuestion = "",
-        //        SecurityAnswer = "",
-        //        SecurtiyQuestion2 = String.Empty,
-        //        SecurityAnswer2 = String.Empty,
-        //        FirstName = model.FirstName,
-        //        LastName = model.LastName,
-        //        Channel = "CLient_Portal"
-        //    };
-        //    response = _clientService.ArmOneRegister(armRequest);
+            //onboard on ArmOne
+            if (snResponse != null)
+            {
+                var armRequest = new ArmOneRegisterRequest
+                {
+                    Membershipkey = snResponse.MembershipNumber,
+                    Password = password,
+                    EmailAddress = model.Email,
+                    MobileNumber = model.Tel,
+                    SecurityQuestion = "",
+                    SecurityAnswer = "",
+                    SecurtiyQuestion2 = String.Empty,
+                    SecurityAnswer2 = String.Empty,
+                    FirstName = model.FirstName,
+                    LastName = model.LastName,
+                    Channel = "CLient_Portal"
+                };
+                response = _clientService.ArmOneRegister(armRequest);
+            }
 
-        //    return response;
-        //}
+            return response;
+        }
 
         public ArmOneRegisterResponse OnboardOldUsers(string username, string password)
         {
@@ -149,109 +170,139 @@ namespace Portal.Business.StoreManagers
         }
 
         public CustomerDetail GetUserProfile(int membershipKey)
-        {
-            var customerRequest = new ClientValidateRequest
             {
-                CustomerReference = membershipKey.ToString()
-            };
-            var customerResponse = _clientService.ClientValidate(customerRequest);
-            if (customerResponse != null)
-            {
-                return customerResponse.CustomerDetails.FirstOrDefault();
-            }
-            return null;
-        }
-
-        public AllPriceResponse GetAllFundPrices(DateTime? date)
-        {
-            var request = new AllPriceRequest { PriceDate = date.Value };
-            var response = _clientService.GetFundPrices(request);
-
-            return response;
-        }
-
-        public AllPriceResponse GetAllFundPrices()
-        {
-            var request = new AllPriceRequest();
-            var response = _clientService.GetFundPrices(request);
-
-            return response;
-        }
-
-        public CustomerInformationView GetCustomerInformation(string username)
-        {
-            var result = new CustomerInformationView();
-
-            #region service calling for customer information
-
-            var configSetting = _configSettingManager;
-
-            #endregion service calling for customer information
-
-            var customerInfoRequest = new ArmOneCustomerDetailsRequest { Id = username };
-            var customerInfoResponse = _clientService.GetArmOneCustomerDetails(customerInfoRequest);
-
-            if (customerInfoResponse != null)
-            {
-                result.FirstName = customerInfoResponse.FirstName;
-                result.LastName = customerInfoResponse.LastName;
-                result.ResponseCode = customerInfoResponse.ResponseCode;
-                result.ResponseDescription = customerInfoResponse.ResponseDescription;
-                result.Email = customerInfoResponse.EmailAddress;
-                result.IsAccountActivated = customerInfoResponse.IsAccountActivated;
+                var customerRequest = new ClientValidateRequest
+                {
+                    CustomerReference = membershipKey.ToString()
+                };
+                var customerResponse = _clientService.ClientValidate(customerRequest);
+                if (customerResponse != null)
+                {
+                    return customerResponse.CustomerDetails.FirstOrDefault();
+                }
+                return null;
             }
 
-            return result;
-        }
+            public AllPriceResponse GetAllFundPrices(DateTime? date)
+            {
+                var request = new AllPriceRequest { PriceDate = date.Value };
+                var response = _clientService.GetFundPrices(request);
 
-        public AdditionalInvResponse AddSales(InvestmentRequest request)
-        {
-            var response = _clientService.AddSales(request);
-            return response;
-        }
+                return response;
+            }
 
-        /// <summary>
-        /// send a single email of a customer that their kyc statsu need to be verify
-        /// </summary>
-        /// <param name="customerEmail">email of customer</param>
-        /// <returns>single customer kyc status</returns>
-        public KycStatus GetKycStatus(string customerEmail)
-        {
-            var kyc = new KycStatus();
+            public AllPriceResponse GetAllFundPrices()
+            {
+                var request = new AllPriceRequest();
+                var response = _clientService.GetFundPrices(request);
 
-            return kyc;
-        }
+                return response;
+            }
 
-        /// <summary>
-        /// get the kyc status of customer whose email is included in  list of customers
-        /// </summary>
-        /// <param name="customerEmail">list of email</param>
-        /// <returns>the kyc status of each memeber in the list</returns>
-        public List<KycStatus> GetKycStatus(List<string> customerEmail)
-        {
-            var kyc = new List<KycStatus>();
+            public CustomerInformationView GetCustomerInformation(string username)
+            {
+                var result = new CustomerInformationView();
 
-            return kyc;
-        }
+                #region service calling for customer information
 
-        public bool UnLockAccount(string securityanswer)
-        {
-            var state = false;
+                var configSetting = _configSettingManager;
 
-            #region service callingfor security question
+                #endregion service calling for customer information
 
-            var configSetting = _configSettingManager;
+                var customerInfoRequest = new ArmOneCustomerDetailsRequest { Id = username };
+                var customerInfoResponse = _clientService.GetArmOneCustomerDetails(customerInfoRequest);
 
-            #endregion service callingfor security question
+                if (customerInfoResponse != null)
+                {
+                    result.FirstName = customerInfoResponse.FirstName;
+                    result.LastName = customerInfoResponse.LastName;
+                    result.ResponseCode = customerInfoResponse.ResponseCode;
+                    result.ResponseDescription = customerInfoResponse.ResponseDescription;
+                    result.Email = customerInfoResponse.EmailAddress;
+                    result.IsAccountActivated = customerInfoResponse.IsAccountActivated;
+                }
 
-            return state;
-        }
+                return result;
+            }
 
-        public static bool IsValidEmailAddress(string s)
-        {
-            var regex = new Regex(@"[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*
+            public AdditionalInvResponse AddSales(InvestmentRequest request)
+            {
+                var response = _clientService.AddSales(request);
+                return response;
+            }
+
+            /// <summary>
+            /// send a single email of a customer that their kyc statsu need to be verify
+            /// </summary>
+            /// <param name="customerEmail">email of customer</param>
+            /// <returns>single customer kyc status</returns>
+            public KycStatus GetKycStatus(string customerEmail)
+            {
+                var kyc = new KycStatus();
+
+                return kyc;
+            }
+
+            /// <summary>
+            /// get the kyc status of customer whose email is included in  list of customers
+            /// </summary>
+            /// <param name="customerEmail">list of email</param>
+            /// <returns>the kyc status of each memeber in the list</returns>
+            public List<KycStatus> GetKycStatus(List<string> customerEmail)
+            {
+                var kyc = new List<KycStatus>();
+
+                return kyc;
+            }
+
+            public bool UnLockAccount(string securityanswer)
+            {
+                var state = false;
+
+                #region service callingfor security question
+
+                var configSetting = _configSettingManager;
+
+                #endregion service callingfor security question
+
+                return state;
+            }
+
+            public static bool IsValidEmailAddress(string s)
+            {
+                var regex = new Regex(@"[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*
                                     @(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?");
-            return regex.IsMatch(s);
-        }
+                return regex.IsMatch(s);
+            }
+
+        //public CustomerInformationView GetCustomerInformation(string username)
+        //{
+        //    throw new NotImplementedException();
+        //}
+
+        //public AllPriceResponse GetAllFundPrices(DateTime? date)
+        //{
+        //    throw new NotImplementedException();
+        //}
+
+        //public AllPriceResponse GetAllFundPrices()
+        //{
+        //    throw new NotImplementedException();
+        //}
+
+        //public KycStatus GetKycStatus(string customerEmail)
+        //{
+        //    throw new NotImplementedException();
+        //}
+
+        //public List<KycStatus> GetKycStatus(List<string> customerEmail)
+        //{
+        //    throw new NotImplementedException();
+        //}
+
+        //public bool UnLockAccount(string securityanswer)
+        //{
+        //    throw new NotImplementedException();
+        //}
     }
 }

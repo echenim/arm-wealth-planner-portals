@@ -262,24 +262,21 @@
 
 
                         <div class="tab-content" ng-app="chartApp" ng-controller="amChartsController" ng-init="init()">
-                            <div class="tab-pane active" id="ARMMMF">
+                            <div class="tab-pane active" id="ARMMMF" style="height:500px;">
 
-                                @*MMF PERFORMANCE*@
                             </div>
 
-                            <div class="tab-pane" id="ARMDF">
+                            <div class="tab-pane" id="ARMDF" style="height:500px;">
 
-                                @*Discovery Fund PERFORMANCE*@
                             </div>
 
-                            <div class="tab-pane" id="AGF">
+                            <div class="tab-pane" id="AGF" style="height:500px;">
 
-                                @*Aggressive Fund PERFORMANCE*@
                             </div>
 
-                            <div class="tab-pane" id="ARMEF">
+                            <div class="tab-pane" id="ARMEF" style="height:500px;">
 
-                                @*Ethical Fund PERFORMANCE*@
+
                             </div>
                         </div>
 
@@ -310,9 +307,9 @@
             .controller('amChartsController', function ($scope, $http, $filter) {
                 $scope.init = function () {
                     plotYield();
-                    //loadPrice('ARMDF');
-                    //loadPrice('AGF');
-                    //loadPrice('ARMEF');
+                    loadPrice('ARMDF');
+                    loadPrice('AGF');
+                    loadPrice('ARMEF');
                 }
 
                 function GraphData(data) {
@@ -323,8 +320,7 @@
                     var url = '@Url.Action("FundPriceHistory", "Dashboard")' + '?fundCode=' + fund_code;
                     $http.get(url)
                         .success(function (data, status, headers, config) {
-                            console.log("Fund Price \n" + data.fundPrice.reverse());
-                            var graphData = new GraphData(data.fundPrice.reverse());
+                            var graphData = new GraphData(data.FundPrice.reverse());
                             var plotter = new FundPlotter(fund_code, graphData.data);
                             plotter.plot();
                         })
@@ -343,7 +339,7 @@
                             "precision": 2,
                             "valueAxes": [{
                                 "id": "v1",
-                                "title": "price",
+                                "title": "Price",
                                 "position": "left",
                                 "gridAlpha": 0.2,
                                 "dashLength": 0,
@@ -360,7 +356,7 @@
                                 "type": "line",
                                 "title": "Bid Price",
                                 "useLineColorForBulletBorder": true,
-                                "valueField": "bidPrice",
+                                "valueField": "BidPrice",
                                 "balloonText": "[[title]]<br /><b style='font-size: 130%'>₦[[value]]</b>"
                             }, {
                                 "id": "g4",
@@ -370,7 +366,7 @@
                                 "fillAlphas": 0.5,
                                 "type": "column",
                                 "title": "Offer Price",
-                                "valueField": "offerPrice",
+                                "valueField": "OfferPrice",
                                 "clustered": false,
                                 "columnWidth": 0.5,
                                 "legendValueText": "₦[[value]]",
@@ -398,7 +394,7 @@
                                 "cursorAlpha": 0,
                                 "valueLineAlpha": 0.2
                             },
-                            "categoryField": 'priceDate',
+                            "categoryField": 'PriceDate',
                             "categoryAxis": {
                                 "dashLength": 1,
                                 "minorGridEnabled": true,
@@ -424,9 +420,13 @@
                     var url = '@Url.Action("FundYieldHistory", "Dashboard")';
                     $http.get(url)
                         .success(function (data, status, headers, config) {
-                            console.log("Yield History \n" + data.yields.reverse());
-                            var graphData = new GraphData(data.yields.reverse());
-                            this.plot(graphData.data);
+                            //console.log(data.yields.reverse());
+                            //var graphData = new GraphData(data.yields.reverse());
+
+                            var res = data.Yields.reverse();                          
+                            console.log(res);
+                            //this.plot(graphData.data);
+                            this.plot(res);
                         })
                         .error(function (data, status, header, config) {
                         });

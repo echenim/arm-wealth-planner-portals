@@ -179,8 +179,8 @@ namespace Portal.Areas.Client.Controllers
             try
             {
                 //var fHistoryResponse = _client.GetFundPriceHistory(fundCode);
-                //var fHistoryResponse = _client.GetFundPrices(fundCode);
-                //return Json(fHistoryResponse);
+                var fHistoryResponse = _client.GetFundPrices(fundCode);
+                return Json(fHistoryResponse);
             }
             catch (Exception ex)
             {

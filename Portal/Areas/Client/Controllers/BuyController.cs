@@ -507,7 +507,7 @@ namespace Portal.Areas.Client.Controllers
                         ArmDdAmt = amount,
                         ArmStartDate = startdate,
                         ArmFrequency = frequency,
-                        ArmDdNotiUrl = string.Format("{0}://{1}{2}", Request.Scheme, Request.Host.ToUriComponent(), Request.PathBase.ToUriComponent()) + "/DebitStatus?au=" + userprofile,
+                        ArmDdNotiUrl = string.Format("{0}://{1}{2}", Request.Scheme, Request.Host.ToUriComponent(), Request.PathBase.ToUriComponent()) + "/Client/Buy/DebitStatus?au=" + userprofile,
                         ArmPaymentParams = TransactionReference,
                         ArmXmlData = XmlData
                     };
@@ -521,7 +521,7 @@ namespace Portal.Areas.Client.Controllers
                     transactionDebit.ArmHash = ArmHash;
 
                     DirectDebitTransactions debit = new DirectDebitTransactions();
-                    debit.Action = _configSettingManager.ArmAggregatorBaseUrl + "/Aggregator2/DirectDebit/";
+                    debit.Action = _configSettingManager.ArmAggregatorBaseUrl + "/Aggregator/DirectDebit/";
                     debit.ArmVendorUsername = transactionDebit.ArmVendorUserName;
                     debit.ArmCustomerId = transactionDebit.ArmCustomerID.ToString();
                     debit.ArmCustomerName = transactionDebit.ArmCustomerName;

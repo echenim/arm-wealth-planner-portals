@@ -839,7 +839,7 @@ $(function() {
         return false;
     });
 
-    //$('.ae-list').perfectScrollbar({ wheelPropagation: true });
+    $('.ae-list').perfectScrollbar({ wheelPropagation: true });
 
     $('.ae-list .ae-item').on('click', function() {
         $('.ae-item.active').removeClass('active');
