@@ -24,14 +24,18 @@ namespace Portal.AddMigration
 
         public DbSet<Person> Person { get; set; }
         public DbSet<ProductCategory> ProductCategory { get; set; }
+
         public DbSet<Products> Products { get; set; }
-        public DbSet<ProductFeatures> ProductFeatures { get; set; }
-        public DbSet<ProductKeyBenefit> ProductKeyBenefit { get; set; }
-        public DbSet<ProductPerformance> ProductPerformance { get; set; }
+        public DbSet<WhatYouNeedToKNowAboutThisProduct> WhatYouNeedToKNowAboutThisProduct { get; set; }
+        public DbSet<ProductInvestmentInfo> ProductInvestmentInfo { get; set; }
         public DbSet<PurchaseOrders> PurchaseOrders { get; set; }
+        public DbSet<Referrer> Referrer { get; set; }
+
+        public DbSet<MemberShip> MemberShip { get; set; }
 
         //client portal
         public DbSet<DDebit> DDebit { get; set; }
+
         public DbSet<ClientUpdate> ClientUpdate { get; set; }
         public DbSet<ClientUpdateTemp> ClientUpdateTemps { get; set; }
         public DbSet<DirectDebit> DirectDebit { get; set; }
@@ -43,6 +47,15 @@ namespace Portal.AddMigration
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
+
+            #region apply uniqueness contraints on table  columm
+
+            builder.Entity<Person>().HasIndex(s => s.Email).IsUnique();
+            builder.Entity<ProductCategory>().HasIndex(s => s.Name).IsUnique();
+            builder.Entity<Products>().HasIndex(s => s.Name).IsUnique();
+            builder.Entity<MemberShip>().HasIndex(s => s.Number).IsUnique();
+
+            #endregion apply uniqueness contraints on table  columm
 
             #region approval process model
 

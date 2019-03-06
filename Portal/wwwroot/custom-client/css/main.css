@@ -11509,7 +11509,7 @@ a.text-dark:focus {
 
 .text-muted,
 .invoice-body .invoice-desc .desc-value {
-    color: #636c72 !important;
+    color: #bbbbbb !important;
 }
 
 .text-hide {
@@ -14277,6 +14277,7 @@ body.menu-side-right .layout-w {
     background-repeat: no-repeat;
     background-position: 20px 50px;
     vertical-align: top;
+    padding-bottom: 2rem;
 }
 
 .content-box {
@@ -15114,6 +15115,7 @@ body.menu-side-right .layout-w {
     border-right-color: rgba(255, 255, 255, 0.05);
     -webkit-box-shadow: 0px 5px 15px rgba(22, 22, 35, 0.1);
     box-shadow: 0px 5px 15px rgba(22, 22, 35, 0.1);
+    z-index: 20;
 }
 
     .menu-w.color-scheme-dark .messages-notifications,
@@ -17302,7 +17304,7 @@ body.menu-side-right .layout-w {
 }
 
 .menu-mobile ul.main-menu > li .icon-w {
-    color: #78184a;
+    color: #06a93c;
     font-size: 27px;
     display: block;
     padding: 1rem;
@@ -19457,7 +19459,7 @@ a.el-tablo {
     }
 
     .cta-w .cta-content {
-        padding: 12% 3%;
+        padding: 12% 8%;
     }
 
         .cta-w .cta-content.extra-padded {
@@ -19471,7 +19473,7 @@ a.el-tablo {
 
     .cta-w.cta-with-media .cta-content {
         padding-right: 0px;
-        width: 100%;
+        width: 75%;
     }
 
     .cta-w.cta-with-media .cta-media {
@@ -22678,6 +22680,13 @@ Chat Styles
                 color: green;
             }
 
+            .projects-list .project-head .project-title h6 {
+                margin-bottom: 0;
+                font-size: 1.5rem;
+                text-align: left;
+                color: #293144;
+            }
+
         .projects-list .project-head .project-users {
             -webkit-box-flex: 0;
             -ms-flex: 0 0 220px;
@@ -23276,7 +23285,7 @@ Pricing Plans Styles
     }
 
     .pricing-plan .plan-image img {
-        width: 80px;
+        width: 64px;
     }
 
     .pricing-plan .plan-head {
@@ -26505,8 +26514,10 @@ body.rentals-wrapper .select2-container--default .select2-results__option[aria-s
     font-weight: 300;
     z-index: 2;
     overflow: hidden;
-    position: relative;
+    /* position: relative; */
     bottom: 0px;
+    width: 100%;
+    position: fixed;
 }
 
     .footer-w .logo-element {
@@ -26591,7 +26602,7 @@ body.rentals-wrapper .select2-container--default .select2-results__option[aria-s
 
     .footer-w .deep-footer {
         text-align: center;
-        padding: 20px;
+        padding: 10px;
         font-size: 0.72rem;
         margin-top: 0px;
         border-top: 1px solid rgba(0, 0, 0, 0.1);
@@ -30940,6 +30951,7 @@ Contents:
     .menu-mobile {
         width: 70px;
         display: table-cell;
+        margin-left: 0.5rem;
     }
 
         .menu-mobile .menu-and-user {
@@ -31736,6 +31748,7 @@ Contents:
 
     .content-i {
         display: block;
+        padding-bottom: 4rem !important;
     }
 
         .content-i .content-box {
@@ -32088,6 +32101,82 @@ Contents:
     flex-wrap: wrap;
 }
 
+.pend-red a {
+    font-size: 0.9rem;
+    color: red;
+    text-decoration: underline;
+}
+
+.custom-file-label {
+    border-color: transparent;
+}
+
+    .custom-file-label::after {
+        display: none !important;
+    }
+
+.img-uplad-height {
+    height: calc(11rem + 4px);
+}
+
+.upload-prof {
+    width: 100% !important;
+}
+
+.br-zero {
+    border-radius: 0 !important;
+}
+
+.upload-valid-img {
+    width: 200px !important;
+}
+
+.border-nun {
+    border: none !important;
+}
+
+.date-timestamp {
+    font-size: 0.8rem;
+    text-align: right;
+}
+
+@media (min-width: 1024px) {
+    .cent-content-pad {
+        margin: 2rem 10rem;
+    }
+}
+
+@media (min-width: 1024px) {
+    .redem-card-h {
+        min-height: 22.85rem;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+    .redem-card-h {
+        min-height: 30.8rem;
+    }
+}
+
+.break-word {
+    word-break: break-word;
+}
+
+.contact-icons-card {
+    font-size: 2.5rem;
+    color: green;
+    margin-bottom: 1rem;
+}
+
+.table.table-padded tbody .fat-table-height td {
+    padding: 1.5rem 1.1rem;
+    background-color: #fff;
+    border: none;
+    border-right: 1px solid rgba(0, 0, 0, 0.03);
+}
+
+
+//additional css
 .arm-btn-inactive {
     color: #aaaaaa !important;
     background-color: #dddddd !important;
@@ -32106,6 +32195,24 @@ Contents:
     padding: 30px;
 }
 
+#processing-form {
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+    max-width: 660px;
+    padding: 30px;
+}
+
+.processing-frm {
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+    max-width: 660px;
+    padding: 30px;
+}
+
 .notif {
     font-size: 16px;
     text-align: center !important;
@@ -32116,3 +32223,117 @@ Contents:
         font-size: 12px !important;
         text-align: center !important;
     }
+
+tr.spacer > td {
+    padding-bottom: 1em;
+}
+
+.smaller_text {
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: rgba(0, 0, 0, 0.4);
+    transition: all 0.25s ease;
+}
+
+.danger_text {
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: orangered;
+    transition: all 0.25s ease;
+}
+
+.point :last {
+    margin: 0 !important;
+}
+
+.point {
+    background: #DDD;
+    border-radius: 2px;
+    display: inline-block;
+    height: 5px;
+    margin-right: 1px;
+    width: 20px;
+}
+
+.pwStrength {
+    font-family: "Varela Round", "Rubik", -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-size: 0.81rem;
+    font-weight: 400;
+    text-transform: inherit;
+    color: #bbbbbb;
+}
+
+/**input file, custom.*/
+
+input[type='file'] {
+    display: none;
+}
+
+.file-info {
+    font-size: 0.9em;
+}
+
+.browse-btn {
+    background: #29BF2F;
+    color: #fff;
+    min-height: 30px;
+    padding: 6px;
+    border: none;
+    border-top-left-radius: 3px;
+    border-bottom-left-radius: 3px;
+}
+
+.input-container {
+    max-width: 300px;
+    background-color: #EDEDED;
+    border: 1px solid #DFDFDF;
+}
+
+    .browse-btn:hover {
+        background: #267b2a;
+    }
+
+@media (max-width: 300px) {
+    button {
+        width: 100%;
+        border-top-right-radius: 5px;
+        border-bottom-left-radius: 0;
+    }
+
+    .file-info {
+        display: block;
+        margin: 10px 5px;
+    }
+}
+
+.centered {
+    /*position: fixed;*/
+    top: 50%;
+    left: 50%;
+    /*margin-top: -50px;*/
+    margin-left: -21px;
+}
+
+/**my investments*/
+.products-content {
+    padding-right: 12% 8%;
+    width: 100% !important;
+}
+
+.products-header {
+    color: #293145;
+    margin-bottom: 0.5rem !important;
+    text-shadow: 0px 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.newbalance {
+    float: left !important;
+    margin-top: 4px;
+}
+
+.element_header_redemption
+{
+    padding-bottom: 0rem !important;
+}

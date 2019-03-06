@@ -8,32 +8,35 @@
 <div class="row">
     <div class="col-md-12 ">
         <div class="element-box element-wrapper">
-            <h5 class="element-header">
-                SALES
-            </h5>
+
             <div class="element-box-tp">
                 <div class="os-tabs-w">
                     <div class="os-tabs-controls">
                         <ul class="nav nav-tabs upper">
                             <li class="nav-item">
-                                <a asp-area="Admin" asp-controller="Sales" asp-action="AllTime" class="nav-link  active">ALL TIME</a>
+                                <a asp-area="Admin" asp-controller="Orders" asp-action="AllTime" class="nav-link  active">ALL TIME</a>
                             </li>
                             <li class="nav-item">
-                                <a asp-area="Admin" asp-controller="Sales" asp-action="LastYear" class="nav-link">LAST YEAR </a>
+                                <a asp-area="Admin" asp-controller="Orders" asp-action="LastYear" class="nav-link">LAST YEAR </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" asp-area="Admin" asp-controller="Sales" asp-action="LastMonth">LAST MONTH </a>
+                                <a class="nav-link" asp-area="Admin" asp-controller="Orders" asp-action="LastMonth">LAST MONTH </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" asp-area="Admin" asp-controller="Sales" asp-action="LastSevenDays">LAST 7 DAYS </a>
+                                <a class="nav-link" asp-area="Admin" asp-controller="Orders" asp-action="LastSevenDays">LAST 7 DAYS </a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" asp-area="Admin" asp-controller="Sales" asp-action="SelectedPeriod">
-                                    <div class="form-inline">
-                                        <label for="" class=""><p>SELECT PERIOD </p></label><input class="multi-daterange form-control m-t-neg-1" type="text" value="">
-                                    </div>
-                                </a>
-                            </li>
+                            @*<li class="nav-item">
+                                    <form asp-action="SelectedPeriod" method="get">
+                                        <div class="form-inline">
+
+                                            <label for="" class="">
+                                                <p>SELECT PERIOD </p>
+                                            </label>
+                                            <input name="selectedPeriodValues" class="multi-daterange form-control m-t-neg-1" type="text" value="">
+                                            <input type="submit" value="Export To Excel" class="btn btn-primary" />
+                                        </div>
+                                    </form>
+                                </li>*@
                         </ul>
                     </div>
                     <div class="tab-pane active" id="all_time">
@@ -77,7 +80,7 @@
                                 </div>
                             </div>
                             <div class="col-md-4">
-                                <h5 class=" form-group mt-2"> Total Sales: &#8358; @ViewData["Totals"]</h5>
+                                <h5 class=" form-group mt-2"> Total Orders:@ViewData["Totals"]</h5>
                             </div>
                             <div class="col-md-2">
                                 <div class="btn-group float-right">

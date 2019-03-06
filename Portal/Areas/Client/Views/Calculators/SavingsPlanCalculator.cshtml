@@ -1,0 +1,309 @@
+﻿
+@{
+    ViewData["Title"] = "Investment Goal Calculator";
+}
+
+<!---- Page Title & Date --->
+<div class="row">
+    <div class="element-wrapper col-md-12 pb-0">
+        <h6 class="element-header">
+            Savings Plan Calculator
+            @{
+                var now = DateTime.Now;
+                var time = now.ToString("HH:mm tt");
+                var date = now.ToString("MMM dd yyyy");
+            }
+            <span class="date-timestamp float-right">@date, @time</span>
+        </h6>
+    </div>
+</div>
+<!---- Filter Parameters --->
+
+<div class="row">
+
+    <div class="col-lg-7 col-sm-12">
+        <div class="element-box">
+            <form id="savings" class="split AppForm calculator savings">
+                <fieldset class="form-group">
+
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label for="">Initial Deposit</label>
+                                <input type="text" name="initialdeposit" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label for="">Monthly Deposit</label>
+                                <input type="text" name="monthlydeposit" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label for="">Duration</label>
+                                <select class="form-control" name='numyears'>
+                                    <option value="-1" selected="selected">&nbsp;- Year -&nbsp;</option>
+                                    <option value="1">1 Year</option>
+                                    <option value="2">2 Years</option>
+                                    <option value="3">3 Years</option>
+                                    <option value="4">4 Years</option>
+                                    <option value="5">5 Years</option>
+                                    <option value="6">6 Years</option>
+                                    <option value="7">7 Years</option>
+                                    <option value="8">8 Years</option>
+                                    <option value="9">9 Years</option>
+                                    <option value="10">10 Years</option>
+                                    <option value="11">11 Years</option>
+                                    <option value="12">12 Years</option>
+                                    <option value="13">13 Years</option>
+                                    <option value="14">14 Years</option>
+                                    <option value="15">15 Years</option>
+                                    <option value="16">16 Years</option>
+                                    <option value="17">17 Years</option>
+                                    <option value="18">18 Years</option>
+                                    <option value="19">19 Years</option>
+                                    <option value="20">20 Years</option>
+                                    <option value="21">21 Years</option>
+                                    <option value="22">22 Years</option>
+                                    <option value="23">23 Years</option>
+                                    <option value="24">24 Years</option>
+                                    <option value="25">25 Years</option>
+                                    <option value="26">26 Years</option>
+                                    <option value="27">27 Years</option>
+                                    <option value="28">28 Years</option>
+                                    <option value="29">29 Years</option>
+                                    <option value="30">30 Years</option>
+                                    <option value="31">31 Years</option>
+                                    <option value="32">32 Years</option>
+                                    <option value="33">33 Years</option>
+                                    <option value="34">34 Years</option>
+                                    <option value="35">35 Years</option>
+                                    <option value="36">36 Years</option>
+                                    <option value="37">37 Years</option>
+                                    <option value="38">38 Years</option>
+                                    <option value="39">39 Years</option>
+                                    <option value="40">40 Years</option>
+                                    <option value="41">41 Years</option>
+                                    <option value="42">42 Years</option>
+                                    <option value="43">43 Years</option>
+                                    <option value="44">44 Years</option>
+                                    <option value="45">45 Years</option>
+                                    <option value="46">46 Years</option>
+                                    <option value="47">47 Years</option>
+                                    <option value="48">48 Years</option>
+                                    <option value="49">49 Years</option>
+                                    <option value="50">50 Years</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label for="">Interest Rate</label>
+                                <input type="text" name="interestrate" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+
+                </fieldset>
+
+                <div class="form-buttons-w">
+                    <button type="button" class="btn btn-primary" onClick="return(Calculate(document.forms['savings']))">Calculate</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="col-lg-5 col-sm-12">
+        <div class="element-box element-wrapper">
+            <h5 class="element-header">
+                Savings based on your inputed numbers.
+            </h5>
+
+            <div class="form-group">
+                <label for="">Total Investment (₦)</label>
+                <input type="text" name="annualamount" id="annualamount" onfocus="reFocus()" disabled="disabled" class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <label for="">Annual savings (₦) assuming annual interest</label>
+                <input type="text" name="result" id="result" onfocus="reFocus()" disabled="disabled" class="form-control" />
+            </div>
+
+        </div>
+
+
+        <div class="element-box">
+            <form>
+                <h5 class="element-box-header">
+                    Ad Banner
+                </h5>
+                <div class="form-desc">
+
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts{
+    <script type="text/javascript">
+        function Calculate(formObj) {
+            document.forms["savings"].monthlydeposit.value = document.forms["savings"].monthlydeposit.value == 0 ? 0 : (parseFloat(document.forms["savings"].monthlydeposit.value) ? parseFloat(document.forms["savings"].monthlydeposit.value) : '');
+            document.forms["savings"].initialdeposit.value = document.forms["savings"].initialdeposit.value == 0 ? 0 : (parseFloat(document.forms["savings"].initialdeposit.value) ? parseFloat(document.forms["savings"].initialdeposit.value) : '');
+
+            var savings_result = 0;
+            var yt = 0;
+            var num_years = parseInt(formObj.numyears.options[formObj.numyears.selectedIndex].value);
+            var interest_rate = parseFloat(formObj.interestrate.value);
+            var initial_deposit = parseFloat(formObj.initialdeposit.value);
+            var monthly_deposit = parseFloat(formObj.monthlydeposit.value);
+
+            if (emptyField(formObj.monthlydeposit)) {
+                alert("Please, give the monthly savings amount");
+                document.forms["savings"].monthlydeposit.focus();
+            }
+            else if (monthly_deposit < 0) {
+                alert("Please, give an amount greater than 0");
+                document.forms["savings"].monthlydeposit.focus();
+            }
+            else if (num_years < 0) {
+                alert("Please enter a valid number of years [ between 1 and 50 ]");
+                document.forms["savings"].numyears.focus();
+            }
+            else if (!isdigit(interest_rate)) {
+                alert("Please enter a valid interest rate [ between 0 and 1000 ]");
+                document.forms["savings"].interestrate.focus();
+            }
+            else if (!isdigit(monthly_deposit)) {
+                alert("Please, give a monthly savings amount.");
+                document.forms["savings"].monthlydeposit.focus();
+            }
+            else if (!isdigit(initial_deposit)) {
+                alert("Please, give a initial savings amount.");
+                document.forms["savings"].initialdeposit.focus();
+            }
+            else {
+                var mi = interest_rate / 1200;
+                var base = initial_deposit;
+                var pp = 0;
+                var yr = 0;
+                for (i = 0; i < num_years * 12; i++) {
+                    base = base * (1 + mi) + 1 * monthly_deposit;
+                    pp++
+                    if (pp == 12) {
+                        yr++
+                        if (yr < 10) {
+                            sp = " "
+                        } else {
+                            sp = ""
+                        }
+                        pp = 0;
+                    }
+                }
+
+                var aAmount = round_decimals(initial_deposit + (monthly_deposit * 12 * num_years), 2);
+                $('#annualamount').val(aAmount);
+
+                var res = round_decimals(base, 2);
+                $('#result').val(res);
+
+                formObj.monthlydeposit.focus();
+            }
+            return false;
+        }
+
+        function round_decimals(original_number, decimals) {
+            var result1 = original_number * Math.pow(10, decimals)
+            var result2 = Math.round(result1)
+            var result3 = result2 / Math.pow(10, decimals)
+            return result3;
+        }
+
+        function isdigit(c) {
+            return ((c >= '0') && (c <= '99999999999999999'));
+        }
+
+        function delimit(numObj) {
+            var arr = new Array();
+            var temp = numObj + 0;
+            var n = 0;
+            while (temp > 0) {
+                arr[n] = temp % 10;
+                temp /= 10;
+                temp = Math.floor(temp);
+                ++n;
+            }
+            arr.reverse();
+            var len = arr.length;
+            var nOD = Math.floor(len / 3);
+            var fDP = len % 3;
+            if (nOD == 0)
+                return (numObj)
+            else if ((nOD == 1) && (fDP == 0))
+                return (numObj)
+            else {
+                if (fDP == 0) {
+                    fDP = 3;
+                    --nOD;
+                }
+                var p1 = 0, p2 = 0;
+                var res = new Array();
+                for (var i = 0; i < fDP; ++i)
+                    res[p2++] = arr[p1++] + "";
+                res[p2++] = ",";
+                --nOD;
+                while (nOD >= 0) {
+                    for (var j = 0; j < 3; ++j) {
+                        res[p2++] = arr[p1++] + "";
+                    }
+                    res[p2++] = ",";
+                    --nOD;
+                }
+                res[--p2] = "";
+                var str = "";
+                for (var m = 0; m < res.length; ++m) {
+                    str += res[m];
+                }
+                return (str)
+            }
+        }
+
+        function clearFnc(formObj) {
+            for (var z = 0; z < formObj.length; ++z) {
+                if (formObj[z].type == "text")
+                    formObj[z].value = "";
+                else
+                    formObj[z].selectedIndex = 0;
+            }
+            formObj.amountsaved.focus();
+            return false;
+        }
+
+        function emptyField(textObj) {
+            if (textObj.value.length == 0)
+                return true;
+            for (var i = 0; i < textObj.value.length; ++i) {
+                var ch = textObj.value.charAt(i);
+                if (ch != ' ' && ch != '\t')
+                    return false;
+            }
+            return true;
+        }
+
+        function reFocus() {
+            setTimeout("document.forms['savings'].amountsaved.focus()", 1);
+        }
+    </script>
+}

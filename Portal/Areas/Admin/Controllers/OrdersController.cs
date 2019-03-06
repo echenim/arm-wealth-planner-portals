@@ -53,9 +53,9 @@ namespace Portal.Areas.Admin.Controllers
 
             var orders = !String.IsNullOrEmpty(searchString) ?
                 _ordersAndSalesService.Get(s => s.CartNumber.Equals(searchString))
-                .OrderByDescending(s => s.AddToCartDate).ThenBy(s => s.Customer)
+                .OrderByDescending(s => s.AddToCartDate).ThenBy(s => s.Person.FullName)
                 : _ordersAndSalesService.Get()
-                    .OrderByDescending(s => s.AddToCartDate).ThenBy(s => s.Customer);
+                    .OrderByDescending(s => s.AddToCartDate).ThenBy(s => s.Person.FullName);
 
             var list = new List<OrdersView>();
             foreach (var item in orders)
@@ -65,10 +65,11 @@ namespace Portal.Areas.Admin.Controllers
                     Id = (int)item.Id,
                     Product = item.Product.Name,
                     Category = item.Product.ProductCategory.Name,
-                    Customer = item.Customer.FullName,
-                    CustNo = item.Customer.MembershipNumber,
+                    Customer = item.Person.FullName,
+                    CustomerId = item.Person.Id,
+                    CustNo = item.Person.MemberShipNo,
                     Amount = TransfromerManager.DecimalHumanizedX(item.Amount),
-                    TransactionDate = item.OrderDate.ToString(),
+                    TransactionDate = TransfromerManager.DateHumanized(item.AddToCartDate),
                     CartNumber = item.CartNumber,
                     TransactionNumber = item.PaymentTransactionNumber,
                     TransactionStatus = item.TransactionStatus,
@@ -96,6 +97,18 @@ namespace Portal.Areas.Admin.Controllers
             int pageSize = 20;
 
             return View(PaginatedList<OrdersView>.Create(list.AsQueryable(), page ?? 1, pageSize));
+        }
+
+        public IActionResult OnCorrection(string transactionId)
+        {
+            if (!string.IsNullOrEmpty(transactionId))
+            {
+                // var resultsets = _ordersAndSalesService.Get(s => s.CartNumber.Equals(transactionId));
+                _ordersAndSalesService.Edit(transactionId);
+                return RedirectToAction("Index");
+            }
+
+            return RedirectToAction("Index");
         }
 
         public IActionResult Interest(
@@ -126,17 +139,17 @@ namespace Portal.Areas.Admin.Controllers
             var orders = !String.IsNullOrEmpty(searchString) ?
                 _ordersAndSalesService.Get(s => s.Product.ProductTypes.Equals("Expression of Interest")
                                                 && s.CartNumber.Equals(searchString))
-                .OrderByDescending(s => s.AddToCartDate).ThenBy(s => s.Customer)
+                .OrderByDescending(s => s.AddToCartDate).ThenBy(s => s.Person.FullName)
                 : _ordersAndSalesService.Get(s => s.Product.ProductTypes.Equals("Expression of Interest"))
-                    .OrderByDescending(s => s.AddToCartDate).ThenBy(s => s.Customer);
+                    .OrderByDescending(s => s.AddToCartDate).ThenBy(s => s.Person.FullName);
 
             var list = orders.Select(item => new OrdersView
             {
                 Id = (int)item.Id,
                 Product = item.Product.Name,
                 Category = item.Product.ProductCategory.Name,
-                Customer = item.Customer.FullName,
-                CustNo = item.Customer.MembershipNumber,
+                Customer = item.Person.FullName,
+                //CustNo = item.Person.MembershipNo,
                 Amount = TransfromerManager.DecimalHumanizedX(item.Amount),
                 AddToCartDate = TransfromerManager.DateHumanized(item.AddToCartDate),
             })
@@ -174,22 +187,25 @@ namespace Portal.Areas.Admin.Controllers
 
             var orders = !String.IsNullOrEmpty(searchString) ?
                 _ordersAndSalesService.Get(s => s.CartNumber.Equals(searchString))
-                .OrderByDescending(s => s.AddToCartDate).ThenBy(s => s.Customer)
+                .OrderByDescending(s => s.AddToCartDate).ThenBy(s => s.Person.FullName)
                 : _ordersAndSalesService.Get()
-                    .OrderByDescending(s => s.AddToCartDate).ThenBy(s => s.Customer);
+                    .OrderByDescending(s => s.AddToCartDate).ThenBy(s => s.Person.FullName);
 
             var totalIn = orders.Count();
             ViewData["Totals"] = TransfromerManager.IntegerHuamanized(totalIn);
+
+            ViewData["Product"] = orders.Select(s => s.Product.Name).Distinct();
+            ViewData["ProductCategory"] = orders.Select(s => s.Product.ProductCategory.Name).Distinct();
 
             var list = orders.Select(item => new OrdersView
             {
                 Id = (int)item.Id,
                 Product = item.Product.Name,
                 Category = item.Product.ProductCategory.Name,
-                Customer = item.Customer.FullName,
-                CustNo = item.Customer.MembershipNumber,
+                Customer = item.Person.FullName,
+                // CustNo = item.Person.MembershipNo,
                 Amount = TransfromerManager.DecimalHumanizedX(item.Amount),
-                TransactionDate = item.OrderDate.ToString(),
+                TransactionDate = item.AddToCartDate.ToString(),
                 CartNumber = item.CartNumber,
                 TransactionNumber = item.PaymentTransactionNumber,
                 TransactionStatus = item.TransactionStatus,
@@ -230,22 +246,24 @@ namespace Portal.Areas.Admin.Controllers
             var orders = !String.IsNullOrEmpty(searchString) ?
                 _ordersAndSalesService.Get(s => s.AddToCartDate.Date.ToString("yyyy").Equals(DateTime.Now.Date.AddYears(-1).ToString("yyyy"))
                                                 && s.CartNumber.Equals(searchString))
-                .OrderByDescending(s => s.AddToCartDate).ThenBy(s => s.Customer)
+                .OrderByDescending(s => s.AddToCartDate).ThenBy(s => s.Person.FullName)
                 : _ordersAndSalesService.Get(s => s.AddToCartDate.Date.ToString("yyyy").Equals(DateTime.Now.Date.AddYears(-1).ToString("yyyy")))
-                    .OrderByDescending(s => s.AddToCartDate).ThenBy(s => s.Customer);
+                    .OrderByDescending(s => s.AddToCartDate).ThenBy(s => s.Person.FullName);
 
             var totalIn = orders.Count();
             ViewData["Totals"] = TransfromerManager.IntegerHuamanized(totalIn);
+            ViewData["Product"] = orders.Select(s => s.Product.Name).Distinct();
+            ViewData["ProductCategory"] = orders.Select(s => s.Product.ProductCategory.Name).Distinct();
 
             var list = orders.Select(item => new OrdersView
             {
                 Id = (int)item.Id,
                 Product = item.Product.Name,
                 Category = item.Product.ProductCategory.Name,
-                Customer = item.Customer.FullName,
-                CustNo = item.Customer.MembershipNumber,
+                Customer = item.Person.FullName,
+                // CustNo = item.Person.MembershipNo,
                 Amount = TransfromerManager.DecimalHumanizedX(item.Amount),
-                TransactionDate = item.OrderDate.ToString(),
+                TransactionDate = item.AddToCartDate.ToString(),
                 CartNumber = item.CartNumber,
                 TransactionNumber = item.PaymentTransactionNumber,
                 TransactionStatus = item.TransactionStatus,
@@ -286,22 +304,24 @@ namespace Portal.Areas.Admin.Controllers
             var orders = !String.IsNullOrEmpty(searchString) ?
                 _ordersAndSalesService.Get(s => s.AddToCartDate.Date.ToString("MM/yyyy").Equals(DateTime.Now.Date.AddMonths(-1).ToString("MM/yyyy"))
                                                 && s.CartNumber.Equals(searchString))
-                .OrderByDescending(s => s.AddToCartDate).ThenBy(s => s.Customer)
+                .OrderByDescending(s => s.AddToCartDate).ThenBy(s => s.Person.FullName)
                 : _ordersAndSalesService.Get(s => s.AddToCartDate.Date.ToString("MM/yyyy").Equals(DateTime.Now.Date.AddMonths(-1).ToString("MM/yyyy")))
-                    .OrderByDescending(s => s.AddToCartDate).ThenBy(s => s.Customer);
+                    .OrderByDescending(s => s.AddToCartDate).ThenBy(s => s.Person.FullName);
 
             var totalIn = orders.Count();
             ViewData["Totals"] = TransfromerManager.IntegerHuamanized(totalIn);
+            ViewData["Product"] = orders.Select(s => s.Product.Name).Distinct();
+            ViewData["ProductCategory"] = orders.Select(s => s.Product.ProductCategory.Name).Distinct();
 
             var list = orders.Select(item => new OrdersView
             {
                 Id = (int)item.Id,
                 Product = item.Product.Name,
                 Category = item.Product.ProductCategory.Name,
-                Customer = item.Customer.FullName,
-                CustNo = item.Customer.MembershipNumber,
+                Customer = item.Person.FullName,
+                //  CustNo = item.Person.MembershipNo,
                 Amount = TransfromerManager.DecimalHumanizedX(item.Amount),
-                TransactionDate = item.OrderDate.ToString(),
+                TransactionDate = item.AddToCartDate.ToString(),
                 CartNumber = item.CartNumber,
                 TransactionNumber = item.PaymentTransactionNumber,
                 TransactionStatus = item.TransactionStatus,
@@ -342,22 +362,24 @@ namespace Portal.Areas.Admin.Controllers
             var orders = !String.IsNullOrEmpty(searchString) ?
                 _ordersAndSalesService.Get(s => s.AddToCartDate.Date > DateTime.Now.Date.AddDays(-8)
                                                 && s.CartNumber.Equals(searchString))
-                .OrderByDescending(s => s.AddToCartDate).ThenBy(s => s.Customer)
+                .OrderByDescending(s => s.AddToCartDate).ThenBy(s => s.Person.FullName)
                 : _ordersAndSalesService.Get(s => s.AddToCartDate.Date > DateTime.Now.Date.AddDays(-8))
-                    .OrderByDescending(s => s.AddToCartDate).ThenBy(s => s.Customer);
+                    .OrderByDescending(s => s.AddToCartDate).ThenBy(s => s.Person.FullName);
 
             var totalIn = orders.Count();
             ViewData["Totals"] = TransfromerManager.IntegerHuamanized(totalIn);
+            ViewData["Product"] = orders.Select(s => s.Product.Name).Distinct();
+            ViewData["ProductCategory"] = orders.Select(s => s.Product.ProductCategory.Name).Distinct();
 
             var list = orders.Select(item => new OrdersView
             {
                 Id = (int)item.Id,
                 Product = item.Product.Name,
                 Category = item.Product.ProductCategory.Name,
-                Customer = item.Customer.FullName,
-                CustNo = item.Customer.MembershipNumber,
+                Customer = item.Person.FullName,
+                // CustNo = item.Person.MembershipNo,
                 Amount = TransfromerManager.DecimalHumanizedX(item.Amount),
-                TransactionDate = item.OrderDate.ToString(),
+                TransactionDate = item.AddToCartDate.ToString(),
                 CartNumber = item.CartNumber,
                 TransactionNumber = item.PaymentTransactionNumber,
                 TransactionStatus = item.TransactionStatus,
@@ -374,7 +396,8 @@ namespace Portal.Areas.Admin.Controllers
         public IActionResult SelectedPeriod(
            string sortOrder,
            string currentFilter,
-           string searchString,
+           //string searchString,
+           string selectedPeriodValues,
            int? page
            )
         {
@@ -385,36 +408,39 @@ namespace Portal.Areas.Admin.Controllers
             ViewData["NameSortParm"] = string.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
             ViewData["NumberOfUserSortParm"] = sortOrder == "NumberOfUser" ? "numberOfUser" : "NumberOfUser";
 
-            if (searchString != null)
-            {
-                page = 1;
-            }
-            else
-            {
-                searchString = currentFilter;
-            }
+            //if (searchString != null)
+            //{
+            //    page = 1;
+            //}
+            //else
+            //{
+            //    searchString = currentFilter;
+            //}
 
-            ViewData["CurrentFilter"] = searchString;
+            var k = selectedPeriodValues;
+            //   ViewData["CurrentFilter"] = searchString;
 
-            var orders = !String.IsNullOrEmpty(searchString) ?
+            var orders = !String.IsNullOrEmpty(currentFilter) ?
                 _ordersAndSalesService.Get(s => !s.Product.ProductTypes.Equals("Expression of Interest")
-                                                && s.CartNumber.Equals(searchString))
-                .OrderByDescending(s => s.AddToCartDate).ThenBy(s => s.Customer)
+                                                && s.CartNumber.Equals(currentFilter))
+                .OrderByDescending(s => s.AddToCartDate).ThenBy(s => s.Person.FullName)
                 : _ordersAndSalesService.Get(s => !s.Product.ProductTypes.Equals("Expression of Interest"))
-                    .OrderByDescending(s => s.AddToCartDate).ThenBy(s => s.Customer);
+                    .OrderByDescending(s => s.AddToCartDate).ThenBy(s => s.Person.FullName);
 
             var totalIn = orders.Count();
             ViewData["Totals"] = TransfromerManager.IntegerHuamanized(totalIn);
+            ViewData["Product"] = orders.Select(s => s.Product.Name).Distinct();
+            ViewData["ProductCategory"] = orders.Select(s => s.Product.ProductCategory.Name).Distinct();
 
             var list = orders.Select(item => new OrdersView
             {
                 Id = (int)item.Id,
                 Product = item.Product.Name,
                 Category = item.Product.ProductCategory.Name,
-                Customer = item.Customer.FullName,
-                CustNo = item.Customer.MembershipNumber,
+                Customer = item.Person.FullName,
+                CustNo = item.Person.MemberShipNo,
                 Amount = TransfromerManager.DecimalHumanizedX(item.Amount),
-                TransactionDate = item.OrderDate.ToString(),
+                TransactionDate = item.AddToCartDate.ToString(),
                 CartNumber = item.CartNumber,
                 TransactionNumber = item.PaymentTransactionNumber,
                 TransactionStatus = item.TransactionStatus,
@@ -466,7 +492,7 @@ namespace Portal.Areas.Admin.Controllers
                     row.CreateCell(0).SetCellValue(item.TransactionStatus);
                     row.CreateCell(1).SetCellValue(item.AddToCartDate);
                     row.CreateCell(2).SetCellValue(item.CartNumber);
-                    row.CreateCell(3).SetCellValue(item.Customer.FullName);
+                    row.CreateCell(3).SetCellValue(item.Person.FullName);
                     row.CreateCell(4).SetCellValue(item.Product.Name);
                     row.CreateCell(5).SetCellValue(item.Product.ProductCategory.Name);
                     row.CreateCell(6).SetCellValue(item.Amount.ToString());
@@ -513,19 +539,19 @@ namespace Portal.Areas.Admin.Controllers
         private IQueryable<PurchaseOrders> AllTime(Func<PurchaseOrders, bool> predicate)
         {
             return _ordersAndSalesService.Sales(predicate)
-                    .OrderByDescending(s => s.AddToCartDate).ThenBy(s => s.Customer);
+                    .OrderByDescending(s => s.AddToCartDate).ThenBy(s => s.Person.FullName);
         }
 
         private IQueryable<PurchaseOrders> AllTime()
         {
             return _ordersAndSalesService.Sales(s => s.TransactionStatus.Equals("Succeed"))
-                    .OrderByDescending(s => s.AddToCartDate).ThenBy(s => s.Customer);
+                    .OrderByDescending(s => s.AddToCartDate).ThenBy(s => s.Person.FullName);
         }
 
         private IQueryable<PurchaseOrders> LastYear(Func<PurchaseOrders, bool> predicate)
         {
             return _ordersAndSalesService.Sales(predicate)
-                    .OrderByDescending(s => s.AddToCartDate).ThenBy(s => s.Customer);
+                    .OrderByDescending(s => s.AddToCartDate).ThenBy(s => s.Person.FullName);
         }
 
         private IQueryable<PurchaseOrders> LastYear()
@@ -533,13 +559,13 @@ namespace Portal.Areas.Admin.Controllers
             return _ordersAndSalesService.Sales(s =>
                     s.AddToCartDate.Date.ToString("yyyy")
                            .Equals(DateTime.Now.Date.AddYears(-1).ToString("yyyy")))
-                    .OrderByDescending(s => s.AddToCartDate).ThenBy(s => s.Customer);
+                    .OrderByDescending(s => s.AddToCartDate).ThenBy(s => s.Person.FullName);
         }
 
         private IQueryable<PurchaseOrders> LastMonth(Func<PurchaseOrders, bool> predicate)
         {
             return _ordersAndSalesService.Sales(predicate)
-                .OrderByDescending(s => s.AddToCartDate).ThenBy(s => s.Customer);
+                .OrderByDescending(s => s.AddToCartDate).ThenBy(s => s.Person.FullName);
         }
 
         private IQueryable<PurchaseOrders> LastMonth()
@@ -547,14 +573,14 @@ namespace Portal.Areas.Admin.Controllers
             return _ordersAndSalesService.Sales(s =>
                      s.AddToCartDate.Date.ToString("MM/yyyy")
                             .Equals(DateTime.Now.Date.AddMonths(-1).ToString("MM/yyyy")))
-                    .OrderByDescending(s => s.AddToCartDate).ThenBy(s => s.Customer);
+                    .OrderByDescending(s => s.AddToCartDate).ThenBy(s => s.Person.FullName);
         }
 
         private IQueryable<PurchaseOrders> LastSevenDays(Func<PurchaseOrders, bool> predicate)
         {
             return _ordersAndSalesService
                     .Sales(predicate)
-                    .OrderByDescending(s => s.AddToCartDate).ThenBy(s => s.Customer);
+                    .OrderByDescending(s => s.AddToCartDate).ThenBy(s => s.Person.FullName);
         }
 
         private IQueryable<PurchaseOrders> LastSevenDays()
@@ -562,7 +588,7 @@ namespace Portal.Areas.Admin.Controllers
             return _ordersAndSalesService
                     .Sales(s =>
                                 s.AddToCartDate.Date > DateTime.Now.Date.AddDays(-8))
-                    .OrderByDescending(s => s.AddToCartDate).ThenBy(s => s.Customer);
+                    .OrderByDescending(s => s.AddToCartDate).ThenBy(s => s.Person.FullName);
         }
 
         #endregion sales filtered report

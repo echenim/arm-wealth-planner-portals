@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+
 //using Portal.Areas.Client.ViewModels;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -23,14 +24,18 @@ namespace Portal.Areas.Client.Controllers
         public string _webRootPath;
         public string _contentRootPath;
         public readonly IHostingEnvironment _hostingEnvironment;
+
         //public readonly AppSettings _appSettings;
         public JsonSerializerSettings _jsonSetting = new JsonSerializerSettings() { NullValueHandling = NullValueHandling.Ignore };
+
         //public ArmClientServices _clientService;
         public readonly ILogger<DashboardController> _logger;
+
         public readonly IConfiguration _configuration;
 
         //test
         private readonly IArmOneServiceConfigManager _configSettingManager;
+
         public TestArmClientServices _clientService;
 
         public ApplicationDbContext db;
@@ -65,11 +70,11 @@ namespace Portal.Areas.Client.Controllers
             //_user is expected to contain client details. mock data for model.
             var _user = new AuthenticateResponse
             {
-                MembershipKey = 1007435,
-                EmailAddress = "gbadebo.ayan@gmail.com",
-                FirstName = "Funmilayo",
-                LastName = "Adeyemi",
-                FullName = "Funmilayo Ruth Adeyemi",
+                MembershipKey = 1006979,//1007435,
+                EmailAddress = "tolu.olusakin@gmail.com",//"gbadebo.ayan@gmail.com",
+                FirstName = "Tolulope",
+                LastName = "Olusakin",
+                FullName = "Olusakin Tolulope S"//"Funmilayo Ruth Adeyemi",
             };
 
             try
@@ -167,6 +172,39 @@ namespace Portal.Areas.Client.Controllers
                 _logger.LogError(null, ex, ex.Message);
             }
             return View(model);
+        }
+
+        public IActionResult FundPriceHistory(string fundCode)
+        {
+            try
+            {
+                //var fHistoryResponse = _client.GetFundPriceHistory(fundCode);
+                var fHistoryResponse = _client.GetFundPrices(fundCode);
+                return Json(fHistoryResponse);
+            }
+            catch (Exception ex)
+            {
+                TempData["message"] = ViewBag.Message = ex.Message;
+                Utilities.ProcessError(ex, _contentRootPath);
+                _logger.LogError(null, ex, ex.Message);
+            }
+            return View();
+        }
+
+        public IActionResult FundYieldHistory(string fundCode = "ARMMMF")
+        {
+            try
+            {
+                var yieldResponse = _client.GetYieldHistory(fundCode);
+                return Json(yieldResponse);
+            }
+            catch (Exception ex)
+            {
+                TempData["message"] = ViewBag.Message = ex.Message;
+                Utilities.ProcessError(ex, _contentRootPath);
+                _logger.LogError(null, ex, ex.Message);
+            }
+            return View();
         }
     }
 }

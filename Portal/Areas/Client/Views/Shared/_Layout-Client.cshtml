@@ -1,10 +1,13 @@
-﻿@*@model Portal.Areas.Client.ViewModels.AccountStatementViewModel*@
+﻿@using Portal.Business.Utilities
+@inject UserUtils UserUtil
+@*@model Portal.Areas.Client.ViewModels.AccountStatementViewModel*@
 @{
     //var _user = new AuthenticateResponse();
     var _userMembershipKey = 1007435;
     var _userFullName = "Funmilayo Ruth Adeyemi";
 
 }
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -29,8 +32,6 @@
         <link href="~/custom-client/components/slick-carousel/slick/slick.css" rel="stylesheet">
         <link href="~/custom-client/css/magnific-popup.css" rel="stylesheet" />
         <link href="~/custom-client/css/main.css?version=4.4.0" rel="stylesheet">
-
-
     </environment>
     <environment exclude="Development">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css"
@@ -69,7 +70,6 @@
                                 </div>
                                 <span>Dashboard</span>
                             </a>
-
                         </li>
 
                         <li class="has-sub-menu">
@@ -87,7 +87,6 @@
                                     <a href="transaction-history.html">Transaction History</a>
                                 </li>
                             </ul>
-
                         </li>
                         <li class="has-sub-menu">
                             <a href="javascript:void(0)">
@@ -100,7 +99,6 @@
                                 <li>
                                     <a href="initiate-redemption.html">Initiate a Redemption</a>
                                 </li>
-
                             </ul>
                         </li>
                         <li class="has-sub-menu">
@@ -117,7 +115,6 @@
                                 <li>
                                     <a href="manage-mandate.html">Manage Mandates</a>
                                 </li>
-
                             </ul>
                         </li>
 
@@ -141,7 +138,6 @@
                                 <li>
                                     <a href="track-service-request.html">Track Service Request</a>
                                 </li>
-
                             </ul>
                         </li>
                         <li class="has-sub-menu">
@@ -158,10 +154,8 @@
                                 <li>
                                     <a href="contact-us.html">Contact Us</a>
                                 </li>
-
                             </ul>
                         </li>
-
                     </ul>
                     <!--------------------
                     END - Mobile Menu List
@@ -178,7 +172,6 @@
                 <div class="logo-w">
                     <a class="logo" href="Dashboard.html">
                         <img src="~/custom-client/img/arm-logo.png">
-
                     </a>
                 </div>
                 <!---- Menu starts here ----->
@@ -191,7 +184,6 @@
                             </div>
                             <span>Dashboard</span>
                         </a>
-
                     </li>
 
                     <li class="has-sub-menu ">
@@ -211,10 +203,19 @@
                             <div class="sub-menu-i">
                                 <ul class="sub-menu">
                                     <li>
-                                        <a href="my-investments.html">My Investments</a>
+                                        <a asp-area="Client" asp-controller="Portfolio" asp-action="MyInvestments">My Investments</a>
                                     </li>
                                     <li>
-                                        <a href="transaction-history.html">Transaction History</a>
+                                        <a asp-area="Client" asp-controller="Portfolio" asp-action="AccountStatement">Account Statement</a>
+                                    </li>
+                                    <li>
+                                        <a asp-area="Client" asp-controller="Portfolio" asp-action="FamilyAccounts">Family Accounts</a>
+                                    </li>
+                                    <li>
+                                        <a asp-area="Client" asp-controller="Portfolio" asp-action="AddQuestion">Add Security Question</a>
+                                    </li>
+                                    <li>
+                                        <a asp-area="Client" asp-controller="Portfolio" asp-action="ForgotPassword">Forgot Password</a>
                                     </li>
                                 </ul>
                             </div>
@@ -238,14 +239,12 @@
                             <div class="sub-menu-i">
                                 <ul class="sub-menu">
                                     <li>
-                                        <a href="initiate-redemption.html">Initiate a Redemption</a>
+                                        <a asp-area="Client" asp-controller="Redemption" asp-action="Initiate">Initiate a Redemption</a>
                                     </li>
-
                                 </ul>
                             </div>
                         </div>
                     </li>
-
 
                     <li class="has-sub-menu">
                         <a href="javascript:void(0)">
@@ -267,14 +266,12 @@
                                         <a asp-area="Client" asp-controller="Mandate" asp-action="Setup">Setup Mandate</a>
                                     </li>
                                     <li>
-                                        <a href="manage-mandate.html">Manage Mandates</a>
+                                        <a asp-area="Client" asp-controller="Mandate" asp-action="Manage">Manage Mandates</a>
                                     </li>
-
                                 </ul>
                             </div>
                         </div>
                     </li>
-
 
                     <li class="has-sub-menu">
                         <a href="javascript:void(0)">
@@ -293,18 +290,14 @@
                             <div class="sub-menu-i">
                                 <ul class="sub-menu">
                                     <li>
-                                        <a href="account-information.html">Account Information</a>
+                                        <a asp-area="Client" asp-controller="SelfService" asp-action="AccountInformation">Account Information</a>
                                     </li>
                                     <li>
-                                        <a href="account-validation.html">Account Validation</a>
+                                        <a asp-area="Client" asp-controller="SelfService" asp-action="AccountValidation">Account Validation</a>
                                     </li>
                                     <li>
-                                        <a href="embassy-letter.html">Embassy Letter</a>
+                                        <a asp-area="Client" asp-controller="SelfService" asp-action="EmbassyLetter">Embassy Letter</a>
                                     </li>
-                                    <li>
-                                        <a href="track-service-request.html">Track Service Request</a>
-                                    </li>
-
                                 </ul>
                             </div>
                         </div>
@@ -327,21 +320,45 @@
                             <div class="sub-menu-i">
                                 <ul class="sub-menu">
                                     <li>
-                                        <a href="find-investment-centers.html">Find an Investment Center</a>
+                                        <a asp-area="Client" asp-controller="Contact" asp-action="FindInvestmentCenter">Find an Investment Center</a>
                                     </li>
                                     <li>
-                                        <a href="contact-us.html">Contact Us</a>
+                                        <a asp-area="Client" asp-controller="Contact" asp-action="Location">Contact Us</a>
                                     </li>
-
                                 </ul>
                             </div>
                         </div>
                     </li>
 
+                    <li class="has-sub-menu">
+                        <a href="javascript:void(0)">
+                            <div class="icon-w">
+                                <div class="os-icon os-icon-bar-chart-stats-up"></div>
+                            </div>
+                            <span>Calculators</span>
+                        </a>
+                        <div class="sub-menu-w">
+                            <div class="sub-menu-header">
+                                Calculators
+                            </div>
+                            <div class="sub-menu-icon">
+                                <i class="os-icon os-icon-bar-chart-stats-up"></i>
+                            </div>
+                            <div class="sub-menu-i">
+                                <ul class="sub-menu">
+                                    <li>
+                                        <a asp-area="Client" asp-controller="Calculators" asp-action="InvestmentGoalCalculator">Investment Goal Calclator</a>
+                                    </li>
+                                    <li>
+                                        <a asp-area="Client" asp-controller="Calculators" asp-action="SavingsPlanCalculator">Savings Plan Calculator</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </li>
                 </ul>
 
                 <!---- Menu ends here ----->
-
             </div>
             <!--------------------
             END - Main Menu
@@ -351,7 +368,6 @@
                 START - Top Bar
                 -------------------->
                 <div class="top-bar color-scheme-bright">
-
 
                     <!--------------------
                     START - Top Menu Controls
@@ -365,12 +381,16 @@
 
                             <div class="logged-user-i">
                                 <div class="logged-user-info-w top-personal-info">
-                                    <div class="logged-user-name">
-                                        @_userFullName
-                                    </div>
-                                    <div class="logged-user-role">
-                                        Member ID: @_userMembershipKey
-                                    </div>
+                                    @if (User.Identity.IsAuthenticated)
+                                    {
+                                        var person = UserUtil.GetUser(User.Identity.Name);
+                                        <div class="logged-user-name">
+                                            @string.Format("{0}", person.FullName)
+                                        </div>
+                                        <div class="logged-user-role">
+                                            @string.Format("Member ID:  {0}", person.MembershipNo)
+                                        </div>
+                                    }
                                 </div>
                                 <div class="avatar-w">
                                     <img alt="" src="~/custom-client/img/default-profile.svg">
@@ -382,12 +402,16 @@
                                             <img alt="" src="~/custom-client/img/default-profile.svg">
                                         </div>
                                         <div class="logged-user-info-w">
-                                            <div class="logged-user-name">
-                                                @_userFullName
-                                            </div>
-                                            <div class="logged-user-role">
-                                                @_userMembershipKey
-                                            </div>
+                                            @if (User.Identity.IsAuthenticated)
+                                            {
+                                                var person = UserUtil.GetUser(User.Identity.Name);
+                                                <div class="logged-user-name">
+                                                    @string.Format("{0}", person.FullName)
+                                                </div>
+                                                <div class="logged-user-role">
+                                                    @string.Format("Member ID:  {0}", person.MembershipNo)
+                                                </div>
+                                            }
                                         </div>
                                     </div>
                                     <div class="bg-icon">
@@ -396,7 +420,9 @@
                                     <ul>
 
                                         <li>
-                                            <a href="profile.html"><i class="os-icon os-icon-user-male-circle2"></i><span>My Account</span></a>
+                                            <a asp-area="Client" asp-controller="SelfService" asp-action="AccountInformation">
+                                                <i class="os-icon os-icon-user-male-circle2"></i><span>My Account</span>
+                                            </a>
                                         </li>
                                         <li>
                                             <a href="#"><i class="os-icon os-icon-signs-11"></i><span>Logout</span></a>
@@ -427,9 +453,7 @@
                     <div class="content-box">
 
                         @RenderBody()
-
                     </div>
-
                 </div>
                 <div class="footer-w">
                     <div class="deep-footer">

@@ -18,7 +18,7 @@ namespace Portal.Business.Utilities
         public ClientPortalUtilities(IArmOneServiceConfigManager configManager)
         {
             _configSettingManager = configManager;
-        }
+        }       
 
         public string ARMOneToken()
         {

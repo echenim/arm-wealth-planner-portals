@@ -1,0 +1,165 @@
+﻿@model Portal.Business.ViewModels.BuyViewModel
+
+@{
+    ViewData["Title"] = "Manage Mandate";
+}
+
+<!---- Page Title & Date --->
+<div class="row">
+    <div class="element-wrapper col-md-12 pb-0">
+        <h6 class="element-header">
+            Manage Mandates
+            @{
+                var now = DateTime.Now;
+                var time = now.ToString("HH:mm tt");
+                var date = now.ToString("MMM dd yyyy");
+            }
+            <span class="date-timestamp float-right">@date, @time</span>
+        </h6>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="element-box element-wrapper errMsgDiv" style="display: none;">
+            <p class="errmsg"></p>
+        </div>
+
+        <div class="element-box element-wrapper msgDiv" style="display: none;">
+            <p class="msg"></p>
+        </div>
+    </div>    
+</div>
+
+<div class="row" ng-app='armApp' ng-controller='AppController' ng-init="loadOnRefesh()">
+    <!---- Personal Information --->
+    <div class="col-md-12">
+        <div class=" element-wrapper element-box">
+            <div class="element-box-tp">
+                @if (Model.GetDirectDebit != null && Model.GetDirectDebit.Count > 0)
+                {
+                    <div class="table-responsive">
+                        <table class="table table-padded">
+                            <thead>
+                                <tr class="fat-table-height">
+                                    <th>Card Mask</th>
+                                    <th>Card Type</th>
+                                    <th>Setup Date</th>
+                                    <th>Amount</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var data in Model.GetDirectDebit)
+                                {
+                                    <tr class="fat-table-height">
+                                        <td>@data.CardMask</td>
+                                        <td>@data.CardType</td>
+                                        <td>@data.CreatedOn</td>
+                                        <td>₦@data.DebitAmount</td>
+                                        <td>
+                                            <button class="btn btn-primary" ng-click="cancelDirectDebit(@data.Id)">Suspend</button>
+                                            @*<div>
+                                                <label class="switch swaller">
+                                                    <input type="checkbox" ng-checked="cancelDirectDebit(@data.Id)" class="success">
+                                                    <span class="slider round smallder"></span>
+                                                </label>
+                                            </div>*@
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                }
+                else
+                {
+                    <div class="">
+                        <h2>There Are Currently No Direct Debit Mandates </h2>
+                    </div>
+                }
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+@section Scripts{
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.0-rc.0/angular.js"></script>
+    <script>
+        angular.module('armApp', []).config(function ($interpolateProvider) {
+            $interpolateProvider.startSymbol('{[{').endSymbol('}]}');
+        })
+                .controller('AppController', function ($scope, $window, $http, $rootScope, $filter, $sce) {
+                    $scope.trustSrc = function (src) {
+                        return $sce.trustAsResourceUrl(src);
+                    }
+
+                    $scope.loadOnRefesh = function () {
+                        if (document.cookie.indexOf('firstReload') == -1) {
+                            console.log("cookie exists");
+                        }
+                        else {
+                            console.log("cookie does not exist");
+                            localStorage.clear();
+                        }
+                    };
+
+                    if (localStorage.getItem("Status")) {
+                        var storage = localStorage.getItem("Status");
+                        $('.msg').text(storage);
+                        $('.msgDiv').show();
+                    }
+
+                    if (localStorage.getItem("Error")) {
+                        var error = localStorage.getItem("Error");
+                        $('.errmsg').text(error);
+                        $('.errMsgDiv').show();
+                    }
+
+                    $scope.cancelDirectDebit = function (id) {
+                        console.log("button is clicked");
+                        localStorage.clear();
+                        var data = {'orders': $scope.myCart,
+                            'totalAmount': $scope.cartTotal
+                        };
+                        $scope.loading = true;
+
+                        var url = "@Url.Action("CancelDirectDebit","Buy")/" + id;
+                        $http.get(url)
+                                .success(function (data, status, headers, config) {
+                                    var response = data;
+                                    $scope.loading = false;
+                                    sessionStorage.reloadAfterPageLoad = true;
+
+                                    if (response.arm_dd_status_code == '0' || response.arm_dd_status_code == '00') {
+                                        var successMessage = "Direct debit mandate deleted successfully.";
+                                        localStorage.setItem("Status", successMessage);
+
+                                        document.cookie = 'firstReload';
+
+                                        location.reload();
+                                    }
+
+                                    if (response.arm_dd_status_code == 'Z2') {
+                                        var errorMessage = "The Direct Debit Was Not Found.";
+                                        localStorage.setItem("Error", errorMessage);
+
+                                        document.cookie = 'firstReload';
+
+                                        location.reload();
+                                    }
+
+                                })
+                                .error(function (data, status, header, config) {
+                                    alert("There was an error processing your request. please contact administrator.");
+                                    $scope.loading = false;
+                                });
+                        return false;
+                    }
+
+                })
+
+    </script>
+}

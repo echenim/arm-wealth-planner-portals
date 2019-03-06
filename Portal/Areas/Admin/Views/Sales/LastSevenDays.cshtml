@@ -22,18 +22,18 @@
                                 <a asp-area="Admin" asp-controller="Sales" asp-action="LastYear" class="nav-link">LAST YEAR </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" asp-area="Admin" asp-controller="Sales" asp-action="LastMonth">LAST MONTH </a>
+                                <a class="nav-link  active" asp-area="Admin" asp-controller="Sales" asp-action="LastMonth">LAST MONTH </a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link   active" asp-area="Admin" asp-controller="Sales" asp-action="LastSevenDays">LAST 7 DAYS </a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" asp-area="Admin" asp-controller="Sales" asp-action="SelectedPeriod">
-                                    <div class="form-inline">
-                                        <label for="" class=""><p>SELECT PERIOD </p></label><input class="multi-daterange form-control m-t-neg-1" type="text" value="">
-                                    </div>
-                                </a>
-                            </li>
+                            @*<li class="nav-item">
+                                    <a class="nav-link" asp-area="Admin" asp-controller="Sales" asp-action="SelectedPeriod">
+                                        <div class="form-inline">
+                                            <label for="" class=""><p>SELECT PERIOD </p></label><input class="multi-daterange form-control m-t-neg-1" type="text" value="">
+                                        </div>
+                                    </a>
+                                </li>*@
                         </ul>
                     </div>
                     <div class="tab-pane active" id="all_time">
@@ -78,6 +78,7 @@
                             </div>
                             <div class="col-md-4">
                                 <h5 class=" form-group mt-2"> Total Sales: &#8358; @ViewData["Totals"]</h5>
+                                <h5 class=" form-group mt-2"> Count Sales:  @ViewData["Counts"]</h5>
                             </div>
                             <div class="col-md-2">
                                 <div class="btn-group float-right">
@@ -100,9 +101,11 @@
                             <table class="table table-striped b-b">
                                 <thead>
                                     <tr>
-
                                         <th>
                                             Date
+                                        </th>
+                                        <th>
+                                            TransId
                                         </th>
 
                                         <th>
@@ -127,8 +130,12 @@
                                         foreach (var items in item.SoldItems)
                                         {
                                             <tr>
+
                                                 <td>
                                                     @TransfromerManager.DateHumanized(item.TransactionDate)
+                                                </td>
+                                                <td>
+                                                    @item.CartNumber
                                                 </td>
                                                 <td>@item.Customer</td>
                                                 <td>
@@ -147,20 +154,6 @@
                                                 </td>
                                             </tr>
                                         }
-                                        <tr>
-
-                                            <td colspan="4" class="icon-text-align-left text-primary">
-                                                Total
-                                            </td>
-
-                                            <td class="text-center">
-                                                <h4 class="display-type">
-                                                    <strong>
-                                                        <span class="text-lg-center text-primary">&#8358;@item.TotalAmount</span>
-                                                    </strong>
-                                                </h4>
-                                            </td>
-                                        </tr>
 
                                     }
                                 </tbody>

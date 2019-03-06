@@ -1,41 +1,351 @@
-﻿<!DOCTYPE html>
+﻿@using Portal.Business.Utilities
+@inject UserUtils UserUtil
+<!DOCTYPE html>
 <html>
 <head>
-    <title>Dashboard - ARM Investment Center</title>
+    <title>ARM Money Market Fund - ARM Investment Center</title>
     <meta charset="utf-8">
-    <meta content="ie=edge" http-equiv="x-ua-compatible">
-    <meta content="Investment Portfolio" name="keywords">
-    <meta content="ARM Investment Center Management Portal" name="description">
-    <meta content="width=device-width, initial-scale=1" name="viewport">
-    <link href="~/custom-admin/img/arm-favicon.jpg" rel="shortcut icon">
-    <link href="~/custom-admin/img/arm-favicon.jpg" rel="apple-touch-icon">
-
+    <meta name="viewport" content="width=device-width,height=device-height,initial-scale=1,maximum-scale=1">
+    <meta name="format-detection" content="telephone=no">
+    <link href="~/img/arm-favicon.jpg" rel="shortcut icon">
+    <link href="~/img/arm-favicon.jpg" rel="apple-touch-icon">
+    <meta name="theme-color" content="#06a93c">
+    <meta name="keywords" content="Mutual funds ...">
+    <meta name="description" content="arm investment center ...">
     <environment include="Development">
+
+        <link rel="preload" as="font" href="https://fonts.googleapis.com/css?family=Varela+Round:300,400,500" type="text/css">
         <link href="https://fonts.googleapis.com/css?family=Varela+Round:300,400,500" rel="stylesheet" type="text/css">
-        <link href="~/custom-admin/components/select2/dist/css/select2.min.css" rel="stylesheet">
-        <link href="~/custom-admin/components/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
-        <link href="~/custom-admin/components/dropzone/dist/dropzone.css" rel="stylesheet">
-        <link href="~/custom-admin/components/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
-        <link href="~/custom-admin/components/fullcalendar/dist/fullcalendar.min.css" rel="stylesheet">
-        <link href="~/custom-admin/components/perfect-scrollbar/css/perfect-scrollbar.min.css" rel="stylesheet">
-        <link href="~/custom-admin/components/slick-carousel/slick/slick.css" rel="stylesheet">
-        <link href="~/custom-admin/css/main.css?version=4.4.0" rel="stylesheet">
-    </environment>
-    <environment exclude="Development">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css"
-              asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
-              asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute"
-              crossorigin="anonymous"
-              integrity="sha256-eSi1q2PG6J7g7ib17yAaWMcrr5GrtohYChqibrV7PBE=" />
+        <link rel="stylesheet" id="brk-direction-bootstrap" href="~/liber/Store/css/assets/bootstrap.css">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+        <link rel="stylesheet" id="brk-skin-color" href="~/liber/Store/css/skins/brk-green.css">
+        <link id="brk-base-color" rel="stylesheet" href="~/liber/Store/css/skins/brk-base-color.css">
+        <link rel="stylesheet" id="brk-direction-offsets" href="~/liber/Store/css/assets/offsets.css">
+
+        <link rel="stylesheet" href="~/liber/Store/css/assets/brk-header-elements.css">
+        <link rel="stylesheet" href="~/liber/Store/css/components/theme-options.css">
+        <link rel="stylesheet" href="~/liber/Store/css/components/accordions.css">
+        <link rel="stylesheet" href="~/liber/Store/css/components/tabs.css">
+        <link rel="stylesheet" href="~/liber/Store/css/components/buttons.css">
+        <link rel="stylesheet" href="~/liber/Store/css/components/pricing-tables.css">
+        <link rel="stylesheet" href="~/liber/Store/css/components/testimonials.css">
+        <link rel="stylesheet" href="~/liber/Store/css/components/CFA.css">
+        <link rel="stylesheet" href="~/liber/Store/css/components/form-controls.css">
+        <link rel="stylesheet" href="~/liber/Store/css/components/flip-boxes.css">
+        <link rel="stylesheet" href="~/liber/Store/css/components/elements.css">
+        <link rel="stylesheet" href="~/liber/Store/css/components/titles.css">
+        <link rel="stylesheet" href="~/liber/Store/vendor/fancybox/css/jquery.fancybox.min.css">
+
+        <link rel="stylesheet" href="~/liber/Store/vendor/pe-icon-7-stroke/css/pe-icon-7-stroke.css">
+        <link rel="stylesheet" href="~/liber/Store/vendor/swiper/css/swiper.min.css">
+        <link rel="stylesheet" href="~/liber/Store/vendor/slickCarousel/css/slick.css">,
+        <link rel="stylesheet" href="~/liber/Store/css/components/sliders.css">
+        <link rel="stylesheet" href="~/liber/Store/vendor/jquery.scrollbar/css/jquery.scrollbar.css">
+        <link rel="stylesheet" href="~/liber/Store/vendor/fancybox/css/jquery.fancybox.min.css">
+        <link rel="stylesheet" href="~/liber/Store/vendor/jqueryAutocomplete/css/jquery-ui.css">
+        <link rel="stylesheet" href="~/liber/Store/css/components/theme-options.css">
+        <link rel="stylesheet" href="~/liber/Store/css/components/social-links.css">
+        <link rel="stylesheet" href="~/liber/Store/css/components/breadcrumbs.css">
+        <link rel="stylesheet" href="~/liber/Store/css/components/accordions.css">
+        <link rel="stylesheet" href="~/liber/Store/css/components/sliders.css">
+        <link rel="stylesheet" href="~/liber/Store/css/components/content-sliders.css">
+        <link rel="stylesheet" href="~/liber/Store/css/components/team.css">
+        <link rel="stylesheet" href="~/liber/Store/css/components/social.css">
+        <link rel="stylesheet" href="~/liber/Store/css/components/flip-boxes.css">
+        <link rel="stylesheet" href="~/liber/Store/css/components/titles.css">
+        <link rel="stylesheet" href="~/liber/Store/css/components/typing-rotator.css">
+        <link rel="stylesheet" href="~/liber/Store/css/components/dividers.css">
+        <link rel="stylesheet" href="~/liber/Store/css/components/progress-circles.css">
+        <link rel="stylesheet" href="~/liber/Store/css/components/counter.css">
+        <link rel="stylesheet" href="~/liber/Store/css/components/buttons.css">
+        <link rel="stylesheet" href="~/liber/Store/css/components/alerts.css">
+        <link rel="stylesheet" href="~/liber/Store/css/components/form-controls.css">
+        <link rel="stylesheet" href="~/liber/Store/css/components/forum-post.css">
+        <link rel="stylesheet" href="~/liber/Store/css/components/forum-main.css">
+        <link rel="stylesheet" href="~/liber/Store/css/components/forum-author.css">
+        <link rel="stylesheet" href="~/liber/Store/css/components/countdown.css">
+        <link rel="stylesheet" href="~/liber/Store/css/components/image-frames.css">
+        <link rel="stylesheet" href="~/liber/Store/css/components/info-box.css">
+        <link rel="stylesheet" href="~/liber/Store/css/components/CFA.css">
+        <link rel="stylesheet" href="~/liber/Store/css/components/lists.css">
+        <link rel="stylesheet" href="~/liber/Store/css/components/panels.css">
+        <link rel="stylesheet" href="~/liber/Store/css/components/pricing-tables.css">
+        <link rel="stylesheet" href="~/liber/Store/css/components/pricing-tables.css">
+        <link rel="stylesheet" href="~/liber/Store/css/components/blog.css">
+        <link rel="stylesheet" href="~/liber/Store/css/components/blog-grid.css">
+        <link rel="stylesheet" href="~/liber/Store/css/components/blog-page.css">
+        <link rel="stylesheet" href="~/liber/Store/css/components/cta.css">
+        <link rel="stylesheet" href="~/liber/Store/css/components/widgets.css">
+        <link rel="stylesheet" href="~/liber/Store/css/components/winter.css">
+        <link rel="stylesheet" href="~/liber/Store/css/components/media-embeds.css">
+        <link rel="stylesheet" href="~/liber/Store/css/components/pagination.css">
+        <link rel="stylesheet" href="~/liber/Store/css/components/index.css">
+        <link rel="stylesheet" href="~/liber/Store/css/components/team-member.css">
+        <link rel="stylesheet" href="~/liber/Store/css/components/portfolio-page.css">
+        <link rel="stylesheet" href="~/liber/Store/css/components/portfolio-list.css">
+        <link rel="stylesheet" href="~/liber/Store/css/components/portfolio-grid.css">
+        <link rel="stylesheet" href="~/liber/Store/css/components/portfolio-rows.css">
+        <link rel="stylesheet" href="~/liber/Store/css/components/portfolio-isotope.css">
+        <link rel="stylesheet" href="~/liber/Store/css/components/portfolio-categories.css">
+        <link rel="stylesheet" href="~/liber/Store/css/components/portfolio-galleries.css">
+        <link rel="stylesheet" href="~/liber/Store/css/components/portfolio-masonry.css">
+        <link rel="stylesheet" href="~/liber/Store/css/components/portfolio-masonry-2.css">
+        <link rel="stylesheet" href="~/liber/Store/css/components/progress-bars.css">
+        <link rel="stylesheet" href="~/liber/Store/css/components/promo.css">
+        <link rel="stylesheet" href="~/liber/Store/css/components/sequence.css">
+        <link rel="stylesheet" href="~/liber/Store/css/components/services.css">
+        <link rel="stylesheet" href="~/liber/Store/css/components/shape-box.css">
+        <link rel="stylesheet" href="~/liber/Store/css/components/steps.css">
+        <link rel="stylesheet" href="~/liber/Store/css/components/tabs.css">
+        <link rel="stylesheet" href="~/liber/Store/css/components/tabbed-contents.css">
+        <link rel="stylesheet" href="~/liber/Store/css/components/testimonials.css">
+        <link rel="stylesheet" href="~/liber/Store/css/components/tiles.css">
+        <link rel="stylesheet" href="~/liber/Store/css/components/icons.css">
+        <link rel="stylesheet" href="~/liber/Store/css/components/section-titles.css">
+        <link rel="stylesheet" href="~/liber/Store/css/components/delimiters.css">
+        <link rel="stylesheet" href="~/liber/Store/css/components/backgrounds.css">
+        <link rel="stylesheet" href="~/liber/Store/css/components/image-caption-parallax.css">
+        <link rel="stylesheet" href="~/liber/Store/css/components/tags.css">
+        <link rel="stylesheet" href="~/liber/Store/css/components/timelines.css">
+        <link rel="stylesheet" href="~/liber/Store/css/components/gallery-sliders.css">
+        <link rel="stylesheet" href="~/liber/Store/css/components/tables.css">
+        <link rel="stylesheet" href="~/liber/Store/css/components/shop-components-row.css">
+        <link rel="stylesheet" href="~/liber/Store/css/components/shop-components-tiles.css">
+        <link rel="stylesheet" href="~/liber/Store/css/components/shop-components-masonry.css">
+        <link rel="stylesheet" href="~/liber/Store/css/components/shop-components-grid-filter.css">
+        <link rel="stylesheet" href="~/liber/Store/css/components/shop-components-honeycomb.css">
+        <link rel="stylesheet" href="~/liber/Store/css/components/shop-components-row.css">
+        <link rel="stylesheet" href="~/liber/Store/css/components/shop-components-cards.css">
+        <link rel="stylesheet" href="~/liber/Store/css/components/shop-components-flip.css">
+        <link rel="stylesheet" href="~/liber/Store/css/components/elements.css">
+        <link rel="stylesheet" href="~/liber/Store/css/components/shop-components-item-sidebar.css">
+        <link rel="stylesheet" href="~/liber/Store/css/assets/brk-header-elements.css">
+        <link rel="stylesheet" href="~/liber/Store/css/components/footer.css">
+        <link rel="stylesheet" href="~/liber/Store/css/components/svg-pattern.css">
+        <link rel="stylesheet" href="~/liber/Store/css/components/gallery-cols.css">
+        <link rel="stylesheet" href="~/liber/Store/css/assets/image-map-pro.css">
+        <link rel="stylesheet" href="~/liber/Store/css/components/image-map.css">
+        <link rel="stylesheet" href="~/liber/Store/css/components/parallax.css">
+        <link rel="stylesheet" href="~/liber/Store/vendor/jqueryMbYT_player/css/jquery.mb.YTPlayer.min.css">
+        <link rel="stylesheet" href="~/liber/Store/vendor/jqueryMbVimeo_player/css/jquery.mb.vimeo_player.min.css">
+        <link rel="stylesheet" href="~/liber/Store/css/components/parallax-video.css">
+        <link rel="stylesheet" href="~/liber/Store/css/components/cart.css">
+        <link rel="stylesheet" href="~/liber/Store/css/components/checkout.css">
+        <link rel="stylesheet" href="~/liber/Store/css/components/google-maps.css">
+
+        <link id="brk-css-min" rel="stylesheet" href="~/liber/Store/css/styles.css">
+        <link id="brk-css-min" rel="stylesheet" href="~/liber/Store/css/custom.css">
     </environment>
 </head>
-<body class="auth-wrapper login-with-image">
+<body>
+    <div class="main-page">
+        <div class="brk-header-mobile">
+            <div class="brk-header-mobile__open"><span></span></div>
+            <div class="brk-header-mobile__logo">
+                <a href="#">
+                    <img src="img/arm-investment-center-logo.png"
+                         class="brk-header-mobile__logo-1 lazyload"
+                         style="margin: 0.25rem auto;" alt="ARM Investment Center Logo" />
+                    <img src="img/arm-investment-center-logo.png"
+                         class="brk-header-mobile__logo-2 lazyload"
+                         style="margin: 0.25rem auto;" alt="ARM Investment Center Logo" />
+                </a>
+            </div>
+            <div class="right-account-icon"><span><i class="fa fa-user font__size-24"></i> </span></div>
+        </div>
+        <!---- Top Bar -->
+        <header class="brk-header brk-header_style-1 brk-header_color-dark brk-header_skin-1 position-fixed d-flex flex-column" data-logo-src="~/store/img/arm-investment-center-logo.png" data-bg-mobile="img/brk-bg-mobile-menu.jpg" data-brk-library="component__header">
+            <div class="brk-header__top-bar order-lg-1 order-2 font__family-varela-round brk-header__top-bar_scroll" style="height: 64px;">
+                <div class="brk-header__title font__family-varela-round font__weight-bold">Contact Us</div>
+                <!-- Top Header -->
+                <div class="container-fluid" style="background-color: #fff;">
+                    <div class="row align-items-center">
+                        <div class="col-lg-5 align-self-lg-stretch text-left">
+                            <div class="brk-header__element brk-header__element_skin-2 brk-header__item"><a href="tel:88002003040" class="brk-header__element--wrap"><i class="fa fa-phone"></i> <span class="brk-header__element--label font__weight-semibold">0 800 200 30 40</span></a></div>
+                            <div class="brk-header__element brk-header__element_skin-2 brk-header__item"><a href="#" class="brk-header__element--wrap"><i class="fa fa-envelope"></i> <span class="brk-header__element--label font__weight-medium">hello@arminvestmentcenter.com</span></a></div>
+                        </div>
+                        <!-- Logo Area -->
+                        <div class="col-lg-2 align-self-lg-center d-none d-lg-block ">
+                            <a href="/" class="brk-header__logo brk-header__item @@modifier">
 
-    @RenderBody()
+                                <img src="~/store/img/ARM-investment-center-logo.png"
+                                     class="brk-header__logo-2 lazyload centering-img"
+                                     style="margin: 0.25rem auto;" alt="ARM Investment Center Logo" />
+                                <img src="~/store/img/arm-investment-center-logo.png"
+                                     class="brk-header__logo-1 lazyload centering-img"
+                                     style="margin: 0.25rem auto;" alt="ARM Investment Center Logo" />
+                            </a>
+                        </div>
 
+                        <!-- Cart -->
+                        <div class="col-lg-5 align-self-lg-stretch text-left text-lg-right">
+                            <div class="brk-mini-cart brk-header__item">
+                                <a href="cart.html" class="brk-mini-cart__open d-flex"><i class="fa fa-shopping-basket" aria-hidden="true"></i> <span class="brk-mini-cart__label font__family-varela-round font__weight-medium text-uppercase letter-spacing-60 font__size-10 opacity-80">My cart</span> <span class="brk-mini-cart__title">Shopping Cart</span> <span class="brk-mini-cart__count brk-mini-cart__count_skin-1 brk-mini-cart__count_white">4</span></a>
+                                <div class="brk-mini-cart__menu">
+                                    <!-- Cart Dropdown-->
+                                    <div class="brk-mini-cart__header"><span class="font__family-varela-round font__weight-bold font__size-18">My Cart</span></div>
+                                    <div class="brk-mini-cart__products">
+                                        <div class="brk-mini-cart__product">
+                                            <div class="brk-mini-cart__product--img"><img class="lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="img/businessman.jpg" alt="alt"></div>
+                                            <div class="brk-mini-cart__product--title-price">
+                                                <a href="#">
+                                                    <h4 class="font__family-varela-round font__size-16 line__height-21 font__weight-semibold ">ARM Money Market Fund</h4>
+                                                </a><span class="brk-mini-cart__product--price font__family-varela-round">&#8358;260,000.00</span>
+                                            </div>
+                                            <div class="brk-quantity"><span class="brk-quantity__arrows minus"></span> <input class="brk-quantity__value" name="quantity" type="text" value="2"> <span class="brk-quantity__arrows plus"></span></div>
+                                            <a href="#" class="brk-mini-cart__product--remove remove"><i class="fa fa-times-circle" aria-hidden="true"></i></a>
+                                        </div>
+                                        <div class="brk-mini-cart__product">
+                                            <div class="brk-mini-cart__product--img"><img class="lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="img/businessman.jpg" alt="alt"></div>
+                                            <div class="brk-mini-cart__product--title-price">
+                                                <a href="#">
+                                                    <h4 class="font__family-varela-round font__size-16 line__height-21 font__weight-semibold text-truncate">ARM Ethical Fund</h4>
+                                                </a> <span class="brk-mini-cart__product--price font__family-varela-round">&#8358;12,200,00.00</span>
+                                            </div>
+                                            <div class="brk-quantity"><span class="brk-quantity__arrows minus"></span> <input class="brk-quantity__value" name="quantity" type="text" value="2"> <span class="brk-quantity__arrows plus"></span></div>
+                                            <a href="#" class="brk-mini-cart__product--remove remove"><i class="fa fa-times-circle" aria-hidden="true"></i></a>
+                                        </div>
+                                    </div>
+                                    <div class="brk-mini-cart__links">
+                                        <div class="brk-mini-cart__links--wrap"><a class="brk-mini-cart__links--cart" href="cart.html"><i class="fa fa-shopping-basket"></i> Cart</a> <a class="brk-mini-cart__links--checkout" href="checkout.html">Proceed to checkout <i class="far fa-arrow-right"></i></a></div>
+                                    </div>
+                                </div>
+                            </div>
+                            @if (User.Identity.IsAuthenticated)
+                            {
+                                var person = UserUtil.GetUser(User.Identity.Name);
+                                <div class="brk-header__element brk-header__element_skin-2  brk-header__item">
+                                    <a href="#" class="brk-header__element--wrap">
+                                        <i class="fa fa-user"></i>
+                                        <span class="brk-header__element--label font__weight-medium">
+                                            @string.Format("{0}", person.FullName)
+                                        </span>
+                                    </a>
+                                </div>
+
+                            }
+                            else
+                            {
+                                <div class="brk-header__element brk-header__element_skin-2  brk-header__item">
+                                    <a asp-controller="Account" asp-action="Login" class="brk-header__element--wrap"><i class="fa fa-user"></i> <span class="brk-header__element--label font__weight-medium">Login</span></a>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Categories Header Menu -->
+            <div class="brk-header__main-bar brk-header_border-top-dark order-lg-2 order-1 menu-header-style" style="height: 48px;">
+                <div class="container-fluid">
+                    <div class="row align-items-center text-lg-center">
+
+                        <div class="col-lg-1">
+                        </div>
+
+                        <div class="col-lg align-self-lg-stretch">
+                            <nav class="brk-nav brk-header__item">
+                                <ul class="brk-nav__menu">
+                                    @if (User.Identity.IsAuthenticated)
+                                    {
+                                        <li class="brk-nav__drop-down-effect"><a asp-controller="Dashboard" asp-action="Index" asp-area="Client"><span>Client Portal</span></a></li>
+
+                                    }
+                                    <li class="brk-nav__drop-down-effect"><a asp-controller="MutualFunds" asp-action="Index"><span>Mutual Funds</span></a></li>
+                                    <li class="brk-nav__drop-down-effect"><a asp-controller="Pension" asp-action="Index"><span>Pensions</span></a></li>
+                                    <li class="brk-nav__drop-down-effect"><a asp-controller="Insurance" asp-action="Index"><span>Insurance</span></a></li>
+                                    <li class="brk-nav__drop-down-effect"><a asp-controller="Trust" asp-action="Index"><span>Trustees</span></a></li>
+                                    <li class="brk-nav__drop-down-effect"><a asp-controller="Securities" asp-action="Index"><span>Securities</span></a></li>
+                                    <li class="brk-nav__drop-down-effect"><a asp-controller="RealEstate" asp-action="Index"><span>Real Estate</span></a></li>
+                                </ul>
+                            </nav>
+                        </div>
+                        <!-- Search Icon Area -->
+                        <div class="col-lg-1 align-self-lg-stretch text-lg-right">
+                            <div class="brk-header__title font__family-varela-round font__weight-bold">Info</div>
+                            <div class="brk-search brk-header__item">
+                                <div class="brk-search__open ">
+                                    <i class="fal fa-search" aria-hidden="true"></i>
+                                    <div class="brk-search__title">Search ARM Investment Center</div>
+                                </div>
+                                <div class="brk-search__block">
+                                    <div class="brk-search__header"><span class="font__family-varela-round font__weight-bold font__size-18">Search</span></div>
+                                    <form class="brk-search__form" role="search" method="get" action="#"><input name="s" maxlength="50" type="search" value="" placeholder="Enter search text"> <button type="submit"><i class="fas fa-search"></i></button></form><span class="brk-search__close font__family-varela-round font__weight-medium">Close <i class="fas fa-times"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        @RenderBody()
+    </div>
+    @*<!-- Footer -->
+        <footer class="brk-footer dark-footer-bg brk-footer-1 position-relative" id="contact" data-brk-library="component__footer,twitter_init">
+            <div class="brk-footer__wrapper brk-footer__wrapper_shadow">
+
+                <div class="pt-60 border-bottom-3 brk-border-color-dark brk-shadow-light">
+                    <div class="container">
+                        <!-- Footer Area
+                        <div class="brk-dashed-logo mb-20"><span class="brk-dashed-logo__line"></span>
+                            <a class="brk-dashed-logo__link ml-25 mr-25"><img src="img/arm-investment-center-logo.jpg" height="31" width="170" alt="logo"> </a><span class="brk-dashed-logo__line"></span></div>
+                        -->
+                        <!-- Copyright Area -->
+                        <div class="brk-footer__rights pt-15 pb-20 text-center">
+                            <p class="font__family-open-sans font__size-14 font__weight-normal line__height-14">&#xA9; 2019 ARM Investment Center. All rights reserved</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>*@
+
+    <a href="#top" id="toTop "></a>
     <environment include="Development">
-        <script src="~/lib/jquery/dist/jquery.js"></script>
-        <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.js"></script>
+
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.3.0/codemirror.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.3.0/mode/xml/xml.min.js"></script>
+
+        <script src="~/liber/Store/vendor/waypoints/js/jquery.waypoints.min.js"></script>
+        <script src="~/liber/Store/vendor/swiper/js/swiper.min.js"></script>,
+        <script src="~/liber/Store/js/assets/swiper-skin.js"></script>
+        <script src="~/liber/Store/vendor/slickCarousel/js/slick.min.js"></script>
+        <script src="~/liber/Store/js/assets/sliders-skin.js"></script>
+        <script src="~/liber/Store/js/assets/rotation-slider.js"></script>
+        <script src="~/liber/Store/vendor/jquerySlider/js/jquery-ui.min.js"></script>
+        <script src="~/liber/Store/vendor/isotope/js/isotope.pkgd.min.js"></script>
+        <script src="~/liber/Store/vendor/datatables/js/jquery.dataTables.min.js"></script>
+        <script src="~/liber/Store/vendor/jquery.scrollbar/js/jquery.scrollbar.min.js"></script>
+        <script src="~/liber/Store/js/assets/jquery.particleground.min.js"></script>
+        <script src="~/liber/Store/js/assets/fss.min.js"></script>
+        <script src="~/liber/Store/js/assets/skrollr.min.js"></script>
+        <script src="~/liber/Store/vendor/paper/js/paper-full.js"></script>
+        <script src="~/liber/Store/vendor/animejs/js/anime.min.js"></script>
+        <script src="~/liber/Store/js/assets/brk-hover3d.js"></script>
+        <script src="~/liber/Store/vendor/fancybox/js/jquery.fancybox.min.js"></script>
+        <script src="~/liber/Store/vendor/odometer/js/odometer.min.js"></script>
+
+        <script src="~/liber/Store/vendor/jqueryAutocomplete/js/jquery-ui.min.js"></script>
+        <script src="~/liber/Store/js/assets/typing-rotator.js"></script>
+        <script src="~/liber/Store/js/assets/brk-customizer.js"></script>
+        <script src="~/liber/Store/js/assets/flexmenu.js"></script>
+        <script src="~/liber/Store/vendor/formStyler/js/jquery.formstyler.min.js"></script>
+        <script src="~/liber/Store/vendor/jqueryCountdown/js/jquery.countdown.min.js"></script>
+        <script src="~/liber/Store/vendor/underscore/js/underscore-min.js"></script>
+
+        <script src="~/liber/Store/js/assets/brk-customizer.js"></script>
+        <script src="~/liber/Store/js/assets/brk-header.js"></script>
+        <script src="~/liber/Store/js/components/accordions.js"></script>
+        <script src="~/liber/Store/js/components/tabs.js"></script>
+        <script src="~/liber/Store/js/components/buttons.js"></script>
+        <script src="~/liber/Store/js/components/form-controls.js"></script>
+        <script src="~/liber/Store/vendor/formStyler/js/jquery.formstyler.min.js"></script>
+
+        <script src="~/liber/Store/js/assets/brk-header.js"></script>
+        <script src="~/liber/Store/js/assets/image-map-pro.min.js"></script>
+        <script src="~/liber/Store/vendor/paraxify/js/paraxify.min.js"></script>
+        <script src="~/liber/Store/vendor/jqueryMbYT_player/js/jquery.mb.YTPlayer.min.js"></script>
+        <script src="~/liber/Store/vendor/jqueryMbVimeo_player/js/jquery.mb.vimeo_player.min.js"></script>
+        <script src="~/liber/Store/js/scripts.js"></script>
     </environment>
     <environment exclude="Development">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"
@@ -51,7 +361,6 @@
                 integrity="sha256-E/V4cWE4qvAeO5MOhjtGtqDzPndRO1LBk8lJ/PR7CA4=">
         </script>
     </environment>
-    <script src="~/js/site.js" asp-append-version="true"></script>
 
     @RenderSection("Scripts", required: false)
 </body>

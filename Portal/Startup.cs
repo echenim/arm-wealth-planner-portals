@@ -1,12 +1,16 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using System.IO;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.FileProviders;
 using Portal.Business.Contracts;
 using Portal.Business.StoreManagers;
 using Microsoft.Extensions.Logging;
+using Portal.Business.Utilities;
 using Portal.Domain;
 using Portal.Domain.Models.Identity;
 
@@ -67,14 +71,14 @@ namespace Portal
 
             services.AddTransient<IProductCategoryManager, ProductCategoryManager>();
             services.AddTransient<IProductManager, ProductManager>();
-            services.AddTransient<IProductFeatureManager, ProductFeatureManager>();
-            services.AddTransient<IProductKeyBenefitManager, ProductKeyBenefitManager>();
-            services.AddTransient<IProductPerformanceManager, ProductPerformanceManager>();
+            services.AddTransient<IPersonManager, PersonManager>();
             services.AddTransient<IOrdersAndSalesManager, OrdersAndSalesManager>();
             services.AddTransient<IUserService, UserManagers>();
             services.AddTransient<IDashBoardManager, DashBoardManager>();
             services.AddTransient<IApplicationGroupManager, ApplicationGroupManager>();
             services.AddTransient<IArmOneManager, ArmOneManager>();
+
+            services.AddTransient<UserUtils>();
 
             #endregion service register
 
@@ -86,7 +90,7 @@ namespace Portal
 
             services.AddTransient<IArmOneManager, ArmOneManager>();
 
-            #endregion register configuration_settings & ErmOneAPI
+            #endregion register configuration_settings & ArmOneAPI
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -116,6 +120,12 @@ namespace Portal
             app.UseCookiePolicy();
 
             app.UseAuthentication();
+            app.UseStaticFiles(new StaticFileOptions()
+            {
+                FileProvider = new PhysicalFileProvider(
+                    Path.Combine(Directory.GetCurrentDirectory(), @"Liber")),
+                RequestPath = new PathString("/Liber")
+            });
 
             app.UseRequestLocalization();
 
@@ -131,10 +141,15 @@ namespace Portal
                     template: "{area:exists}/PaymentStatus/{au?}",
                     defaults: new { controller = "Buy", action = "PaymentStatus" });
 
-                routes.MapRoute(
+                //routes.MapRoute(
+                //    name: "DebitStatus",
+                //    template: "{area:exists}/{controller=Buy}/{action=DebitStatus}/{au?}",
+                //    defaults: new { area = "Client", controller = "Buy", action = "DebitStatus" });
+
+                routes.MapAreaRoute(
                     name: "DebitStatus",
-                    template: "{area:exists}/DebitStatus/{au?}",
-                    defaults: new { controller = "Buy", action = "DebitStatus" });
+                    areaName: "Client",
+                    template: "Client/{controller=Buy}/{action=DebitStatus}/{au?}");
 
                 routes.MapRoute(
                     name: "default",

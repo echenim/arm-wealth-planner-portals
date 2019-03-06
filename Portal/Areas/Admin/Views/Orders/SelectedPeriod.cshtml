@@ -8,69 +8,90 @@
 <div class="row">
     <div class="col-md-12 ">
         <div class="element-box element-wrapper">
-            <h5 class="element-header">
-                SALES
-            </h5>
+
             <div class="element-box-tp">
                 <div class="os-tabs-w">
                     <div class="os-tabs-controls">
                         <ul class="nav nav-tabs upper">
                             <li class="nav-item">
-                                <a asp-area="Admin" asp-controller="Sales" asp-action="AllTime" class="nav-link">ALL TIME</a>
+                                <a asp-area="Admin" asp-controller="Orders" asp-action="AllTime" class="nav-link  active">ALL TIME</a>
                             </li>
                             <li class="nav-item">
-                                <a asp-area="Admin" asp-controller="Sales" asp-action="LastYear" class="nav-link">LAST YEAR </a>
+                                <a asp-area="Admin" asp-controller="Orders" asp-action="LastYear" class="nav-link">LAST YEAR </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" asp-area="Admin" asp-controller="Sales" asp-action="LastMonth">LAST MONTH </a>
+                                <a class="nav-link" asp-area="Admin" asp-controller="Orders" asp-action="LastMonth">LAST MONTH </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" asp-area="Admin" asp-controller="Sales" asp-action="LastSevenDays">LAST 7 DAYS </a>
+                                <a class="nav-link" asp-area="Admin" asp-controller="Orders" asp-action="LastSevenDays">LAST 7 DAYS </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" asp-area="Admin" asp-controller="Sales" asp-action="SelectedPeriod">
+                                <a class="nav-link" asp-area="Admin" asp-controller="Orders" asp-action="SelectedPeriod">
                                     <div class="form-inline">
-                                        <label for="" class=""><p>SELECT PERIOD </p></label><input class="multi-daterange form-control m-t-neg-1" type="text" value="">
+                                        <label for="" class=""><p>SELECT PERIOD </p></label>
+                                        <input type="text" name="birthday" value="10/24/1984" />
+                                        <input class="multi-daterange form-control m-t-neg-1" type="text" value="">
                                     </div>
                                 </a>
                             </li>
                         </ul>
                     </div>
                     <div class="tab-pane active" id="all_time">
+
                         <div class="row b-b">
                             <div class="col-md-6">
                                 <div class="form-group row">
                                     <label class="col-form-label col-sm-4" for=""> <h5>Select Product</h5></label>
-                                    <div class="col-sm-8">
-                                        <select class="form-control">
+                                    <div class="col-sm-4">
+                                        <select class="form-control" onchange=selectProductCategory(this)>
+                                            <option>
+                                                select
+                                            </option>
+                                            <option>
+                                                All Categories
+                                            </option>
+                                            @foreach (var s in (IEnumerable<string>)ViewData["ProductCategory"])
+                                            {
+                                                <option>
+                                                    @s
+                                                </option>
+                                            }
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <select class="form-control" onchange=selectProduct(this)>
+                                            <option>
+                                                select
+                                            </option>
                                             <option>
                                                 All Products
                                             </option>
-                                            <option>
-                                                Money Market Fund
-                                            </option>
-                                            <option>
-                                                Ethical Fund
-                                            </option>
-                                            <option>
-                                                Aggressive Fund
-                                            </option>
+                                            @foreach (var s in (IEnumerable<string>)ViewData["Product"])
+                                            {
+                                                <option>
+                                                    @s
+                                                </option>
+                                            }
                                         </select>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-4">
-                                <h5 class=" form-group mt-2"> Total Sales: &#8358; @ViewData["Totals"]</h5>
+                                <h5 class=" form-group mt-2"> Total Orders:@ViewData["Totals"]</h5>
                             </div>
                             <div class="col-md-2">
                                 <div class="btn-group float-right">
-                                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <i class="os-icon os-icon-download"></i>  Export Report
-                                    </button>
-                                    <div class="dropdown-menu">
-                                        <a class="dropdown-item" href="#">Export CSV</a>
-                                        <a class="dropdown-item" href="#">Export PDF</a>
-                                    </div>
+
+                                    <form asp-action="OnPostExport" method="get">
+                                        <div>
+                                            <p>
+                                                <input type="hidden" id="productCategoryName" name="productCategoryName" />
+                                                <input type="hidden" id="productName" name="productName" />
+                                                <input type="hidden" id="searchPeriod" name="searchPeriod" value="AllTime" />
+                                                <input type="submit" value="Export To Excel" class="btn btn-primary" />
+                                            </p>
+                                        </div>
+                                    </form>
                                 </div>
                             </div>
                         </div>
@@ -152,14 +173,14 @@
                                     var nextDisabled = !Model.HasNextPage ? "disabled" : "";
                                 }
 
-                                <a asp-action="Index"
+                                <a asp-action="AllTime"
                                    asp-route-sortOrder="@ViewData["CurrentSort"]"
                                    asp-route-page="@(Model.PageIndex - 1)"
                                    asp-route-currentFilter="@ViewData["CurrentFilter"]"
                                    class="btn btn-lg btn-primary @prevDisabled">
                                     Previous
                                 </a>
-                                <a asp-action="Index"
+                                <a asp-action="AllTime"
                                    asp-route-sortOrder="@ViewData["CurrentSort"]"
                                    asp-route-page="@(Model.PageIndex + 1)"
                                    asp-route-currentFilter="@ViewData["CurrentFilter"]"
@@ -174,3 +195,14 @@
         </div>
     </div>
 </div>
+<script language="javascript">
+    function selectProductCategory(sel) {
+        document.getElementById("productCategoryName").value = sel.options[sel.selectedIndex].text;
+        document.getElementById("searchPeriod").value = "AllTime";
+    }
+
+    function selectProduct(sel) {
+        document.getElementById("productName").value = sel.options[sel.selectedIndex].text;
+        document.getElementById("searchPeriod").value = "AllTime";
+    }
+</script>

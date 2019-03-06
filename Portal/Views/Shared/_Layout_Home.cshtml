@@ -1,0 +1,243 @@
+﻿@using Portal.Business.Utilities
+@using Portal.Domain.ViewModels
+@inject UserUtils UserUtil
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ARM Money Market Fund - ARM Investment Center</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,height=device-height,initial-scale=1,maximum-scale=1">
+    <meta name="format-detection" content="telephone=no">
+    <link href="~/img/arm-favicon.jpg" rel="shortcut icon">
+    <link href="~/img/arm-favicon.jpg" rel="apple-touch-icon">
+    <meta name="theme-color" content="#06a93c">
+    <meta name="keywords" content="Mutual funds ...">
+    <meta name="description" content="arm investment center ...">
+    <environment include="Development">
+        <link rel="preload" as="font" href="https://fonts.googleapis.com/css?family=Varela+Round:300,400,500" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Varela+Round:300,400,500" rel="stylesheet" type="text/css">
+        <link rel="stylesheet" id="brk-direction-bootstrap" href="~/css/assets/bootstrap.css">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+        <link rel="stylesheet" id="brk-skin-color" href="~/css/skins/brk-green.css">
+        <link id="brk-base-color" rel="stylesheet" href="~/css/skins/brk-base-color.css">
+        <link rel="stylesheet" id="brk-direction-offsets" href="~/css/assets/offsets.css">
+        <link id="brk-css-min" rel="stylesheet" href="~/css/styles.css">
+        <link id="brk-css-min" rel="stylesheet" href="~/css/custom.css">
+    </environment>
+</head>
+<body>
+    <div class="main-page">
+        <div class="brk-header-mobile">
+            <div class="brk-header-mobile__open"><span></span></div>
+            <div class="brk-header-mobile__logo">
+                <a href="#">
+                    <img src="~/store/img/arm-investment-center-logo.png"
+                         class="brk-header-mobile__logo-1 lazyload"
+                         style="margin: 0.25rem auto;" alt="ARM Investment Center Logo" />
+                    <img src="~/store/img/arm-investment-center-logo.png"
+                         class="brk-header-mobile__logo-2 lazyload"
+                         style="margin: 0.25rem auto;" alt="ARM Investment Center Logo" />
+                </a>
+            </div>
+            <div class="right-account-icon"><span><i class="fa fa-user font__size-24"></i> </span></div>
+        </div>
+        <!---- Top Bar -->
+        <header class="brk-header brk-header_style-1 brk-header_color-dark brk-header_skin-1 position-fixed d-flex flex-column" data-logo-src="~/store/img/arm-investment-center-logo.png" data-bg-mobile="img/brk-bg-mobile-menu.jpg" data-brk-library="component__header">
+            <div class="brk-header__top-bar order-lg-1 order-2 font__family-varela-round brk-header__top-bar_scroll" style="height: 64px;">
+                <div class="brk-header__title font__family-varela-round font__weight-bold">Contact Us</div>
+                <!-- Top Header -->
+                <div class="container-fluid" style="background-color: #fff;">
+                    <div class="row align-items-center">
+                        <div class="col-lg-5 align-self-lg-stretch text-left">
+                            <div class="brk-header__element brk-header__element_skin-2 brk-header__item"><a href="tel:88002003040" class="brk-header__element--wrap"><i class="fa fa-phone"></i> <span class="brk-header__element--label font__weight-semibold">0 800 200 30 40</span></a></div>
+                            <div class="brk-header__element brk-header__element_skin-2 brk-header__item">
+                                <a href="#" class="brk-header__element--wrap"><i class="fa fa-envelope"></i> <span class="brk-header__element--label font__weight-medium">hello@arminvestmentcenter.com</span></a>
+                            </div>
+                        </div>
+                        <!-- Logo Area -->
+                        <div class="col-lg-2 align-self-lg-center d-none d-lg-block ">
+                            <a href="/" class="brk-header__logo brk-header__item @@modifier">
+
+                                <img src="~/store/img/ARM-investment-center-logo.png"
+                                     class="brk-header__logo-2 lazyload centering-img"
+                                     style="margin: 0.25rem auto;" alt="ARM Investment Center Logo" />
+                                <img src="~/store/img/arm-investment-center-logo.png"
+                                     class="brk-header__logo-1 lazyload centering-img"
+                                     style="margin: 0.25rem auto;" alt="ARM Investment Center Logo" />
+                            </a>
+                        </div>
+
+                        <!-- Cart -->
+                        <div class="col-lg-5 align-self-lg-stretch text-left text-lg-right">
+                            <div class="brk-mini-cart brk-header__item">
+                                <a href="cart.html" class="brk-mini-cart__open d-flex"><i class="fa fa-shopping-basket" aria-hidden="true"></i> <span class="brk-mini-cart__label font__family-varela-round font__weight-medium text-uppercase letter-spacing-60 font__size-10 opacity-80">My cart</span> <span class="brk-mini-cart__title">Shopping Cart</span> <span class="brk-mini-cart__count brk-mini-cart__count_skin-1 brk-mini-cart__count_white">4</span></a>
+                                <div class="brk-mini-cart__menu">
+                                    <!-- Cart Dropdown-->
+                                    <div class="brk-mini-cart__header"><span class="font__family-varela-round font__weight-bold font__size-18">My Cart</span></div>
+                                    <div class="brk-mini-cart__products">
+                                        <div class="brk-mini-cart__product">
+                                            <div class="brk-mini-cart__product--img"><img class="lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="img/businessman.jpg" alt="alt"></div>
+                                            <div class="brk-mini-cart__product--title-price">
+                                                <a href="#">
+                                                    <h4 class="font__family-varela-round font__size-16 line__height-21 font__weight-semibold ">ARM Money Market Fund</h4>
+                                                </a><span class="brk-mini-cart__product--price font__family-varela-round">&#8358;260,000.00</span>
+                                            </div>
+                                            <div class="brk-quantity"><span class="brk-quantity__arrows minus"></span> <input class="brk-quantity__value" name="quantity" type="text" value="2"> <span class="brk-quantity__arrows plus"></span></div>
+                                            <a href="#" class="brk-mini-cart__product--remove remove"><i class="fa fa-times-circle" aria-hidden="true"></i></a>
+                                        </div>
+                                        <div class="brk-mini-cart__product">
+                                            <div class="brk-mini-cart__product--img"><img class="lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="img/businessman.jpg" alt="alt"></div>
+                                            <div class="brk-mini-cart__product--title-price">
+                                                <a href="#">
+                                                    <h4 class="font__family-varela-round font__size-16 line__height-21 font__weight-semibold text-truncate">ARM Ethical Fund</h4>
+                                                </a> <span class="brk-mini-cart__product--price font__family-varela-round">&#8358;12,200,00.00</span>
+                                            </div>
+                                            <div class="brk-quantity"><span class="brk-quantity__arrows minus"></span> <input class="brk-quantity__value" name="quantity" type="text" value="2"> <span class="brk-quantity__arrows plus"></span></div>
+                                            <a href="#" class="brk-mini-cart__product--remove remove"><i class="fa fa-times-circle" aria-hidden="true"></i></a>
+                                        </div>
+                                    </div>
+                                    <div class="brk-mini-cart__links">
+                                        <div class="brk-mini-cart__links--wrap"><a class="brk-mini-cart__links--cart" href="cart.html"><i class="fa fa-shopping-basket"></i> Cart</a> <a class="brk-mini-cart__links--checkout" href="checkout.html">Proceed to checkout <i class="far fa-arrow-right"></i></a></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            @if (User.Identity.IsAuthenticated)
+                            {
+
+                                <div class="brk-header__element brk-header__element_skin-2 brk-header__item">
+                                    <a href="#" class="brk-header__element--wrap">
+
+                                        <span class="brk-header__element--label font__weight-medium">@User.Identity.Name</span>
+                                    </a>
+                                </div>
+
+                            }
+                            else
+                            {
+                                <div class="brk-header__element brk-header__element_skin-2  brk-header__item">
+                                    <a asp-controller="Account" asp-action="Login" class="brk-header__element--wrap"><i class="fa fa-user"></i> <span class="brk-header__element--label font__weight-medium">Login</span></a>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Categories Header Menu -->
+            <div class="brk-header__main-bar brk-header_border-top-dark order-lg-2 order-1 menu-header-style" style="height: 48px;">
+                <div class="container-fluid">
+                    <div class="row align-items-center text-lg-center">
+
+                        <div class="col-lg-1">
+                        </div>
+
+                        <div class="col-lg align-self-lg-stretch">
+                            <nav class="brk-nav brk-header__item">
+                                <ul class="brk-nav__menu">
+                                    @if (User.Identity.IsAuthenticated)
+                                    {
+                                        <li class="brk-nav__drop-down-effect"><a asp-controller="Dashboard" asp-action="Index" asp-area="Client"><span>Client Portal</span></a></li>
+
+                                    }
+                                    <li class="brk-nav__drop-down-effect"><a asp-controller="MutualFunds" asp-action="Index"><span>Mutual Funds</span></a></li>
+                                    <li class="brk-nav__drop-down-effect"><a asp-controller="Pension" asp-action="Index"><span>Pensions</span></a></li>
+                                    <li class="brk-nav__drop-down-effect"><a asp-controller="Insurance" asp-action="Index"><span>Insurance</span></a></li>
+                                    <li class="brk-nav__drop-down-effect"><a asp-controller="Trust" asp-action="Index"><span>Trustees</span></a></li>
+                                    <li class="brk-nav__drop-down-effect"><a asp-controller="Securities" asp-action="Index"><span>Securities</span></a></li>
+                                    <li class="brk-nav__drop-down-effect"><a asp-controller="RealEstate" asp-action="Index"><span>Real Estate</span></a></li>
+                                </ul>
+                            </nav>
+                        </div>
+                        <!-- Search Icon Area -->
+                        <div class="col-lg-1 align-self-lg-stretch text-lg-right">
+                            <div class="brk-header__title font__family-varela-round font__weight-bold">Info</div>
+                            <div class="brk-search brk-header__item">
+                                <div class="brk-search__open ">
+                                    <i class="fal fa-search" aria-hidden="true"></i>
+                                    <div class="brk-search__title">Search ARM Investment Center</div>
+                                </div>
+                                <div class="brk-search__block">
+                                    <div class="brk-search__header"><span class="font__family-varela-round font__weight-bold font__size-18">Search</span></div>
+                                    <form class="brk-search__form" role="search" method="get" action="#"><input name="s" maxlength="50" type="search" value="" placeholder="Enter search text"> <button type="submit"><i class="fas fa-search"></i></button></form><span class="brk-search__close font__family-varela-round font__weight-medium">Close <i class="fas fa-times"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        @RenderBody()
+
+        <!-- Footer -->
+        <footer class="brk-footer dark-footer-bg brk-footer-1 position-relative " id="contact " data-brk-library="component__footer,twitter_init ">
+            <div class="brk-footer__wrapper brk-footer__wrapper_shadow ">
+                <div class="brk-footer__bg-container pt-80 pb-50 ">
+                    <span class="brk-footer__bg-left brk-footer__bg-left_footer-5 "></span> <span class="brk-footer__bg-right brk-footer__bg-right_footer-5 "></span>
+                    <div class="container ">
+                        <div class="row ">
+                            <div class="col-12 col-lg-6 ">
+                                <a class="mb-30 d-sm-inline-block d-block text-center "><img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src=" img/armim.png " class="lazyload " alt="ARM Logo "></a>
+                                <p class="brk-dark-font-color-3 font__family-roboto font__size-15 font__weight-normal line__height-28 mb-20 mr-80 mr-xs-0 text-sm-left text-center ">
+                                    Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur,
+                                    adipisci velit.
+                                </p>
+
+                                <form action="# " class="brk-subscribe-mail brk-form_footer-5 d-inline-block mb-60 " data-brk-library="recaptcha ">
+                                    <input type="text " placeholder="E-mail address " name="EMAIL " class="font__family-roboto font__size-15 font__weight-light
+                                    "> <button type="submit " class="d-flex align-items-center justify-content-center font__family-montserrat font__size-12 font__weight-bold text-uppercase ">Subscribe</button>
+                                </form>
+                            </div>
+                            <div class="col-12 col-lg-6 ">
+                                <div class="ml-lg-70 h-50 d-flex flex-column ">
+                                    <h6 class="brk-white-font-color font__family-montserrat font__size-12 font__weight-semibold line__height-28 text-uppercase letter-spacing-100 mb-10 ">Navigation</h6>
+
+                                    <nav class="d-flex flex-wrap justify-content-sm-start justify-content-around mb-xs-20 mt-auto ">
+                                        <ul class="mr-200 mr-xs-20 font__family-montserrat font__size-15 font__weight-normal brk-dark-font-color-3 ">
+                                            <li><a href="# ">About</a></li>
+                                            <li><a href="# ">Support</a></li>
+                                            <li><a href="# ">Contacts</a></li>
+                                            <li><a href="# ">Terms</a></li>
+                                        </ul>
+                                        <ul class="font__family-montserrat font__size-15 font__weight-normal brk-dark-font-color-3 ">
+                                            <li><a href="# ">Privacy</a></li>
+                                            <li><a href="# ">Downloads</a></li>
+                                            <li><a href="# ">Resources</a></li>
+                                            <li><a href="# ">Contact</a></li>
+                                        </ul>
+                                    </nav>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Copyright Area -->
+                        <div class="brk-footer__rights pt-15 pb-20 text-center ">
+                            <p class="font__family-open-sans font__size-14 font__weight-normal line__height-14 ">&#xA9; 2019 ARM Investment Center. All rights reserved</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+    <a href="#top" id="toTop "></a>
+    <environment include="Development">
+        @*<script src="~/store/js/components/sliders.js"></script>*@
+        <script src="~/js/scripts.js"></script>
+    </environment>
+    <environment exclude="Development">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"
+                asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
+                asp-fallback-test="window.jQuery"
+                crossorigin="anonymous"
+                integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=">
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/js/bootstrap.bundle.min.js"
+                asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"
+                asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
+                crossorigin="anonymous"
+                integrity="sha256-E/V4cWE4qvAeO5MOhjtGtqDzPndRO1LBk8lJ/PR7CA4=">
+        </script>
+    </environment>
+
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

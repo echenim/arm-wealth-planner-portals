@@ -1,0 +1,141 @@
+﻿@model IEnumerable<Products>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    int min, risk, whst = 0;
+}
+
+<!--- BreadCrumb Area-->
+
+<div class="breadcrumbs__section breadcrumbs__section-dark bg__style mt-80 mb-30 pt-80 pb-80 lazyload" data-bg="~/Liber/Store/img/alternative-banner.jpg" data-brk-library="component__breadcrumbs_css">
+    <div class="brk-base-bg-6 breadcrumb-bg full__size-absolute"></div>
+    <h2 class="font__size-40 line__height-46 font__family-montserrat font__weight-ultralight text-center"><span class="font__weight-bold">Securities</span></h2>
+    <div class="breadcrumbs__wrapper">
+        <div class="container">
+            <ol class="breadcrumb font__family-montserrat font__weight-medium font__size-12 letter-spacing-100">
+                <li class="breadcrumb__icon"><a href="#"><i class="fas fa-home"></i></a></li>
+
+                <li class="active">Securities</li>
+            </ol>
+        </div>
+    </div>
+</div>
+
+<h1 class="sr-only">Securities</h1>
+<!---- Category intro section -->
+<section class="brk-sc-item-page-header mb-30">
+    <div class="brk-sc-item-page-header__info pt-100">
+
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <!-- Category Title and intro text -->
+
+                    <div class="mt-20 text-center">
+
+                        <h2 class="title__heading-01 font__family-montserrat font__size-50 font__weight-bold title__heading-main wow zoomIn" data-brk-library="component__title">Securities</h2>
+                        <h4 class="title__heading-01 title__heading-sub font__family-montserrat font__size-21" data-brk-library="component__title">GET FAMILIAR WITH Securities</h4>
+                        <hr class="title__heading-01 divider" data-brk-library="component__title">
+                    </div>
+                    <div class=" mt-30">
+                        <p class="font__family-montserrat font__size-16 line__height-26">
+                            Regardless of your risk appetite or investment goal, you’ll find a mutual fund that suits you just fine. Securities typically pool funds from multiple investors and invest in verifiable instruments such as government
+                            bonds.
+                        </p>
+                        <p class="font__family-montserrat font__size-16 line__height-26">Although the interest rate offered on all our Securities are not static, they are always competitive and substantial.</p>
+                        <p class="font__family-montserrat font__size-16 line__height-26 pt-10">Our range of Securities cater to different needs and the funds have different levels of risk exposure. Compare them below:</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--- Fund Comparism table-->
+<section>
+    <div class="container">
+
+        <div class="brk-tables brk-tables-compare brk-tables-trend brk-styled-scroll-y brk-styled-scroll-x font__family-montserrat" data-brk-library="component__tables">
+
+            <table class="table-responsive">
+                <thead>
+                    <tr style="">
+                        <th scope="col "></th>
+                        @{
+
+                            foreach (var item in Model.OrderBy(s => s.Name))
+                            {
+
+                                <th scope="col ">@item.Name</th>
+                            }
+                        }
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td></td>
+                        @foreach (var item in Model.OrderBy(s => s.Name))
+                        {
+                            <td>
+                                <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="Liber/FileArchives/@item.Image" alt=" shop-item " class="lazyload">
+                            </td>
+                        }
+                    </tr>
+
+                    <tr>
+                        <td>Minimum Investment</td>
+
+                        @foreach (var item in Model.OrderBy(s => s.Name))
+                        {
+
+                            <td>
+
+                                @foreach (var x in item.ProductInvestmentInfos.Where(s => s.Sections.Equals("Minimum Investment")))
+                                {
+
+                                    <h6>@x.Abs <span class="brk-base-font-color font__weight-bold ">&#8358;@x.RangOrCost</span></h6>
+
+                                }
+                            </td>
+                        }
+                    </tr>
+                    <tr>
+                        <td>Risk Level</td>
+                        @foreach (var item in Model.OrderBy(s => s.Name))
+                        {
+                            <td>
+                                @foreach (var x in item.ProductInvestmentInfos.Where(s => s.Sections.Equals("Risk Level")))
+                                {
+                                    <h6>@x.Abs </h6>
+                                }
+                            </td>
+                        }
+                    </tr>
+                    <tr>
+                        <td>What the Fund invests in</td>
+                        @foreach (var item in Model.OrderBy(s => s.Name))
+                        {
+                            <td>
+                                @foreach (var x in item.ProductInvestmentInfos.Where(s => s.Sections.Equals("What the Fund invests in")))
+                                {
+                                    <h6>@x.Abs: <span class="brk-base-font-color font__weight-bold ">@x.RangOrCost</span></h6>
+
+                                }
+                            </td>
+                        }
+                    </tr>
+                    <tr>
+                        <td></td>
+                        @foreach (var item in Model.OrderBy(s => s.Name))
+                        {
+                            <td>
+                                <a asp-action="Details" asp-route-Id="@item.Id" class="btn-backgrounds btn-backgrounds_left-icon btn-backgrounds_200 btn-backgrounds_md btn-backgrounds_dark-classic btn-shadow-small font__family-montserrat font__weight-semibold text-uppercase font__size-15
+                                    mb-15 " data-brk-library="component__button "><span class="text ">Invest now</span><span class="before "><i class="fas fa-coins "></i></span></a>
+                            </td>
+                        }
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>

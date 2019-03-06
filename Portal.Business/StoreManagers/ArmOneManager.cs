@@ -4,6 +4,10 @@ using Portal.Business.ViewModels;
 using Portal.Business.TestServices;
 using Microsoft.AspNetCore.Hosting;
 using System.Text.RegularExpressions;
+using System.Collections.Generic;
+using System.Linq;
+using System;
+using Portal.Domain.Models;
 
 namespace Portal.Business.StoreManagers
 {
@@ -29,13 +33,14 @@ namespace Portal.Business.StoreManagers
             #region service calling for customer information
 
             var configSetting = _configSettingManager;
-            
+
             var absoluteUrl = new UriBuilder()
             {
                 Path = "Dashboard/Index",
                 Host = "localhost",
                 Port = 5000
             };
+
             #endregion service calling for customer information
 
             //authenticate user
@@ -48,31 +53,150 @@ namespace Portal.Business.StoreManagers
             };
             var customerLoginResponse = _clientService.ArmOneAuthenticate(customerLoginRequest);
 
-            ////make call to datahub API
-            //var dataHubAuthRequest = new AuthenticateRequest
-            //{
-            //    Password = password,
-            //    UserName = customerLoginResponse.MembershipKey.ToString()
-            //};
-            //  var dataHubAuthResponse = _clientService.Authenticate(dataHubAuthRequest);
-
             //get customer detail from arm one
-            var customerInfoRequest = new ArmOneCustomerDetailsRequest { Id = customerLoginResponse.EmailAddress };
-            var customerInfoResponse = _clientService.GetArmOneCustomerDetails(customerInfoRequest);
 
-            if (customerInfoResponse != null)
-            {
-                result.FirstName = customerInfoResponse.FirstName;
-                result.LastName = customerInfoResponse.LastName;
-                result.ResponseCode = customerInfoResponse.ResponseCode;
-                result.ResponseDescription = customerInfoResponse.ResponseDescription;
-                result.Email = customerInfoResponse.EmailAddress;
-                result.IsAccountActivated = customerInfoResponse.IsAccountActivated;
-                result.AltUsername = "";  //dataHubAuthResponse.AltUsername;
-                result.MembershipNumber = customerInfoResponse.MembershipKey.ToString();
-            }
+            //var customerInfoRequest = new ArmOneCustomerDetailsRequest { Id = customerLoginResponse.EmailAddress };
+            //var customerInfoResponse = _clientService.GetArmOneCustomerDetails(customerInfoRequest);
+
+            //if (customerInfoResponse != null)
+            //{
+            //    //make datahub call for bvn and gender
+            //    var customerRequest = new ClientValidateRequest
+            //    { CustomerReference = customerInfoResponse.MembershipKey.ToString() };
+            //    var customerResponse = _clientService.ClientValidate(customerRequest);
+
+            //    if (customerResponse != null)
+            //    {
+            //        var customerDetail = customerResponse.CustomerDetails.FirstOrDefault();
+
+            //        result.FirstName = customerInfoResponse.FirstName;
+            //        result.LastName = customerInfoResponse.LastName;
+            //        result.ResponseCode = customerInfoResponse.ResponseCode;
+            //        result.ResponseDescription = customerInfoResponse.ResponseDescription;
+            //        result.Email = customerInfoResponse.EmailAddress;
+            //        result.IsAccountActivated = customerInfoResponse.IsAccountActivated;
+            //        result.MembershipNumber = customerInfoResponse.MembershipKey.ToString();
+            //        result.BvnNumber = customerDetail.BvnNumber;
+            //        result.Gender = customerDetail.Gender;
+            //    }
+
+            //}
 
             return result;
+        }
+
+        public ArmOneRegisterResponse OnboardNewUsers(Person model, string password)
+        {
+            var response = new ArmOneRegisterResponse();
+            var snResponse = new SalesNewCustomerResponse();
+
+            //onboard on datahub API
+            //first, on sales/prospect
+            var spRequest = new SalesProspectRequest
+            {
+                Surname = model.LastName,
+                FirstName = model.FirstName,
+                EmailAddress = model.Email,
+                MobileNumber = model.Tel,
+                Sex = model.Gender,
+                Address = model.Address,
+                BvnNumber = model.BioetricVerificationNumber
+            };
+            var spResponse = _clientService.AddNewCustomerStageOne(spRequest);
+
+            //then, on sales/newcustomer
+            if (spResponse != null)
+            {
+                var snRequest = new SalesNewCustomerRequest { ProspectCode = spResponse.ProspectCode };
+                snResponse = _clientService.AddNewCustomerStageTwo(snRequest);
+            }
+
+            //onboard on ArmOne
+            if (snResponse != null)
+            {
+                var armRequest = new ArmOneRegisterRequest
+                {
+                    Membershipkey = snResponse.MembershipNumber,
+                    Password = password,
+                    EmailAddress = model.Email,
+                    MobileNumber = model.Tel,
+                    SecurityQuestion = "",
+                    SecurityAnswer = "",
+                    SecurtiyQuestion2 = String.Empty,
+                    SecurityAnswer2 = String.Empty,
+                    FirstName = model.FirstName,
+                    LastName = model.LastName,
+                    Channel = "CLient_Portal"
+                };
+                response = _clientService.ArmOneRegister(armRequest);
+            }
+
+            return response;
+        }
+
+        public ArmOneRegisterResponse OnboardOldUsers(string username, string password)
+        {
+            var customer = new CustomerDetail();
+            var response = new ArmOneRegisterResponse();
+
+            //make call to datahub API
+            var dataHubAuthRequest = new AuthenticateRequest { Password = password, UserName = username };
+            var dataHubAuthResponse = _clientService.Authenticate(dataHubAuthRequest);
+
+            if (dataHubAuthResponse != null && dataHubAuthResponse.IsActive == true)
+            {
+                //get customer details
+                customer = GetUserProfile(dataHubAuthResponse.MembershipKey);
+
+                //register user on ArmOne
+                var request = new ArmOneRegisterRequest
+                {
+                    Membershipkey = customer.MembershipNumber,
+                    Password = password,
+                    EmailAddress = customer.EmailAddress,
+                    MobileNumber = customer.MobileNumber,
+                    SecurityQuestion = dataHubAuthResponse.SecurityQuestion,
+                    SecurityAnswer = dataHubAuthResponse.SecurityAnswer,
+                    SecurtiyQuestion2 = String.Empty,
+                    SecurityAnswer2 = String.Empty,
+                    FirstName = customer.FirstName,
+                    LastName = customer.LastName,
+                    Channel = "CLient_Portal"
+                };
+                response = _clientService.ArmOneRegister(request);
+            }
+
+            return response;
+        }
+
+        public CustomerDetail GetUserProfile(int membershipKey)
+        {
+            var customerRequest = new ClientValidateRequest
+            {
+                CustomerReference = membershipKey.ToString()
+            };
+            var customerResponse = _clientService.ClientValidate(customerRequest);
+            if (customerResponse != null)
+            {
+                return customerResponse.CustomerDetails.FirstOrDefault();
+            }
+            return null;
+        }
+
+        public AllPriceResponse GetAllFundPrices(DateTime? date)
+        {
+            var request = new AllPriceRequest { PriceDate = date.Value };
+            var response = _clientService.GetFundPrices(request);
+
+            return response;
+        }
+
+        public AllPriceResponse GetAllFundPrices()
+        {
+            var request = new AllPriceRequest();
+            var response = _clientService.GetFundPrices(request);
+
+            return response;
         }
 
         public CustomerInformationView GetCustomerInformation(string username)
@@ -99,6 +223,36 @@ namespace Portal.Business.StoreManagers
             }
 
             return result;
+        }
+
+        public AdditionalInvResponse AddSales(InvestmentRequest request)
+        {
+            var response = _clientService.AddSales(request);
+            return response;
+        }
+
+        /// <summary>
+        /// send a single email of a customer that their kyc statsu need to be verify
+        /// </summary>
+        /// <param name="customerEmail">email of customer</param>
+        /// <returns>single customer kyc status</returns>
+        public KycStatus GetKycStatus(string customerEmail)
+        {
+            var kyc = new KycStatus();
+
+            return kyc;
+        }
+
+        /// <summary>
+        /// get the kyc status of customer whose email is included in  list of customers
+        /// </summary>
+        /// <param name="customerEmail">list of email</param>
+        /// <returns>the kyc status of each memeber in the list</returns>
+        public List<KycStatus> GetKycStatus(List<string> customerEmail)
+        {
+            var kyc = new List<KycStatus>();
+
+            return kyc;
         }
 
         public bool UnLockAccount(string securityanswer)

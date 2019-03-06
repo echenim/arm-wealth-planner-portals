@@ -66,11 +66,16 @@ namespace Portal.Areas.Client.Controllers
             var model = new AccountStatementViewModel();
             var _user = new AuthenticateResponse
             {
-                MembershipKey = 1007435,
-                EmailAddress = "gbadebo.ayan@gmail.com",
-                FirstName = "Funmilayo",
-                LastName = "Adeyemi",
-                FullName = "Funmilayo Ruth Adeyemi",
+                MembershipKey = 1006979,//1007435,
+                EmailAddress = "tolu.olusakin@gmail.com",//"gbadebo.ayan@gmail.com",
+                FirstName = "Tolulope",
+                LastName = "Olusakin",
+                FullName = "Olusakin Tolulope S"//"Funmilayo Ruth Adeyemi",
+                //MembershipKey = 1007435,
+                //EmailAddress = "gbadebo.ayan@gmail.com",
+                //FirstName = "Funmilayo",
+                //LastName = "Adeyemi",
+                //FullName = "Funmilayo Ruth Adeyemi",
             };
 
             try
@@ -115,11 +120,16 @@ namespace Portal.Areas.Client.Controllers
             var model = new AccountStatementViewModel();
             var _user = new AuthenticateResponse
             {
-                MembershipKey = 1007435,
-                EmailAddress = "gbadebo.ayan@gmail.com",
-                FirstName = "Funmilayo",
-                LastName = "Adeyemi",
-                FullName = "Funmilayo Ruth Adeyemi",
+                MembershipKey = 1006979,//1007435,
+                EmailAddress = "tolu.olusakin@gmail.com",//"gbadebo.ayan@gmail.com",
+                FirstName = "Tolulope",
+                LastName = "Olusakin",
+                FullName = "Olusakin Tolulope S"//"Funmilayo Ruth Adeyemi",
+                //MembershipKey = 1007435,
+                //EmailAddress = "gbadebo.ayan@gmail.com",
+                //FirstName = "Funmilayo",
+                //LastName = "Adeyemi",
+                //FullName = "Funmilayo Ruth Adeyemi",
             };
 
             try
@@ -185,11 +195,16 @@ namespace Portal.Areas.Client.Controllers
             //var _user = HttpContext.Session.Get<AuthenticateResponse>("ArmUser");
             var _user = new AuthenticateResponse
             {
-                MembershipKey = 1007435,
-                EmailAddress = "gbadebo.ayan@gmail.com",
-                FirstName = "Funmilayo",
-                LastName = "Adeyemi",
-                FullName = "Funmilayo Ruth Adeyemi",
+                MembershipKey = 1006979,//1007435,
+                EmailAddress = "tolu.olusakin@gmail.com",//"gbadebo.ayan@gmail.com",
+                FirstName = "Tolulope",
+                LastName = "Olusakin",
+                FullName = "Olusakin Tolulope S"//"Funmilayo Ruth Adeyemi",
+                //MembershipKey = 1007435,
+                //EmailAddress = "gbadebo.ayan@gmail.com",
+                //FirstName = "Funmilayo",
+                //LastName = "Adeyemi",
+                //FullName = "Funmilayo Ruth Adeyemi",
             };
 
             try
@@ -431,17 +446,22 @@ namespace Portal.Areas.Client.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        //[ValidateAntiForgeryToken]
         public IActionResult ProcessDirectDebit([FromBody]SetUp model)
         {
             ////var _user = HttpContext.Session.Get<AuthenticateResponse>("ArmUser");
             var _user = new AuthenticateResponse
             {
-                MembershipKey = 1007435,
-                EmailAddress = "gbadebo.ayan@gmail.com",
-                FirstName = "Funmilayo",
-                LastName = "Adeyemi",
-                FullName = "Funmilayo Ruth Adeyemi",
+                MembershipKey = 1006979,//1007435,
+                EmailAddress = "tolu.olusakin@gmail.com",//"gbadebo.ayan@gmail.com",
+                FirstName = "Tolulope",
+                LastName = "Olusakin",
+                FullName = "Olusakin Tolulope S"//"Funmilayo Ruth Adeyemi",
+                //MembershipKey = 1007435,
+                //EmailAddress = "gbadebo.ayan@gmail.com",
+                //FirstName = "Funmilayo",
+                //LastName = "Adeyemi",
+                //FullName = "Funmilayo Ruth Adeyemi",
             };
 
             try
@@ -487,7 +507,7 @@ namespace Portal.Areas.Client.Controllers
                         ArmDdAmt = amount,
                         ArmStartDate = startdate,
                         ArmFrequency = frequency,
-                        ArmDdNotiUrl = string.Format("{0}://{1}{2}", Request.Scheme, Request.Host.ToUriComponent(), Request.PathBase.ToUriComponent()) + "/DebitStatus?au=" + userprofile,
+                        ArmDdNotiUrl = string.Format("{0}://{1}{2}", Request.Scheme, Request.Host.ToUriComponent(), Request.PathBase.ToUriComponent()) + "/Client/Buy/DebitStatus?au=" + userprofile,
                         ArmPaymentParams = TransactionReference,
                         ArmXmlData = XmlData
                     };
@@ -501,7 +521,7 @@ namespace Portal.Areas.Client.Controllers
                     transactionDebit.ArmHash = ArmHash;
 
                     DirectDebitTransactions debit = new DirectDebitTransactions();
-                    debit.Action = _configSettingManager.ArmAggregatorBaseUrl + "/Aggregator2/DirectDebit/";
+                    debit.Action = _configSettingManager.ArmAggregatorBaseUrl + "/Aggregator/DirectDebit/";
                     debit.ArmVendorUsername = transactionDebit.ArmVendorUserName;
                     debit.ArmCustomerId = transactionDebit.ArmCustomerID.ToString();
                     debit.ArmCustomerName = transactionDebit.ArmCustomerName;
@@ -521,7 +541,6 @@ namespace Portal.Areas.Client.Controllers
             }
             catch (Exception ex)
             {
-                HttpContext.Session.Set("error", ex.Message);
                 TempData["message"] = ViewBag.Message = ex.Message;
                 Utilities.ProcessError(ex, _contentRootPath);
                 _logger.LogError(null, ex, ex.Message);
@@ -614,7 +633,20 @@ namespace Portal.Areas.Client.Controllers
         {
             var decrypt = new SecureCredentials();
 
-            var _user = HttpContext.Session.Get<AuthenticateResponse>("ArmUser");
+            //var _user = HttpContext.Session.Get<AuthenticateResponse>("ArmUser");
+            var _user = new AuthenticateResponse
+            {
+                MembershipKey = 1006979,//1007435,
+                EmailAddress = "tolu.olusakin@gmail.com",//"gbadebo.ayan@gmail.com",
+                FirstName = "Tolulope",
+                LastName = "Olusakin",
+                FullName = "Olusakin Tolulope S"//"Funmilayo Ruth Adeyemi",
+                //MembershipKey = 1007435,
+                //EmailAddress = "gbadebo.ayan@gmail.com",
+                //FirstName = "Funmilayo",
+                //LastName = "Adeyemi",
+                //FullName = "Funmilayo Ruth Adeyemi",
+            };
             var vendorUserName = decrypt.DecryptCredentials(_configSettingManager.ArmServiceUsername);
             var mackey = _configSettingManager.ArmMacKey;
             try

@@ -25,17 +25,16 @@ namespace Portal.Domain
         public DbSet<Person> Person { get; set; }
         public DbSet<ProductCategory> ProductCategory { get; set; }
         public DbSet<Products> Products { get; set; }
-        public DbSet<ProductFeatures> ProductFeatures { get; set; }
-        public DbSet<ProductKeyBenefit> ProductKeyBenefit { get; set; }
-        public DbSet<ProductPerformance> ProductPerformance { get; set; }
+        public DbSet<WhatYouNeedToKNowAboutThisProduct> WhatYouNeedToKNowAboutThisProduct { get; set; }
 
         public DbSet<PurchaseOrders> PurchaseOrders { get; set; }
-
         public DbSet<ApplicationRoleClaim> ApplicationRoleClaim { get; set; }
-
         public DbSet<ApplicationGroup> ApplicationGroup { get; set; }
         public DbSet<ApplicationUserGroup> ApplicationUserGroup { get; set; }
         public DbSet<ApplicationGroupRole> ApplicationGroupRoles { get; set; }
+        public DbSet<Referrer> Referrer { get; set; }
+        public DbSet<MemberShip> MemberShip { get; set; }
+        public DbSet<ProductInvestmentInfo> ProductInvestmentInfo { get; set; }
 
         //client portal
         public DbSet<DDebit> DDebit { get; set; }
@@ -51,6 +50,15 @@ namespace Portal.Domain
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
+
+            #region apply uniqueness contraints on table  columm
+
+            builder.Entity<Person>().HasIndex(s => s.Email).IsUnique();
+            builder.Entity<ProductCategory>().HasIndex(s => s.Name).IsUnique();
+            builder.Entity<Products>().HasIndex(s => s.Name).IsUnique();
+            builder.Entity<MemberShip>().HasIndex(s => s.Number).IsUnique();
+
+            #endregion apply uniqueness contraints on table  columm
 
             #region approval process model
 

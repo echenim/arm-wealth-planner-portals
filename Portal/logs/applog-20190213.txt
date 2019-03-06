@@ -24,3 +24,23 @@
    at Newtonsoft.Json.JsonConvert.DeserializeObject(String value, Type type, JsonSerializerSettings settings) in /_/Src/Newtonsoft.Json/JsonConvert.cs:line 828
    at Newtonsoft.Json.JsonConvert.DeserializeObject[T](String value, JsonSerializerSettings settings) in /_/Src/Newtonsoft.Json/JsonConvert.cs:line 786
    at Portal.Business.TestServices.RestActions.CallRestAction[R,T](T model, String url) in D:\WorkSpace\wealth-planner\Portal.Business\TestServices\RestActions.cs:line 25
+2019-02-13 2:22:PM Newtonsoft.Json.JsonReaderException: Unexpected character encountered while parsing value: <. Path '', line 0, position 0.
+   at Newtonsoft.Json.JsonTextReader.ParseValue() in /_/Src/Newtonsoft.Json/JsonTextReader.cs:line 1772
+   at Newtonsoft.Json.JsonReader.ReadForType(JsonContract contract, Boolean hasConverter) in /_/Src/Newtonsoft.Json/JsonReader.cs:line 1195
+   at Newtonsoft.Json.Serialization.JsonSerializerInternalReader.Deserialize(JsonReader reader, Type objectType, Boolean checkAdditionalContent) in /_/Src/Newtonsoft.Json/Serialization/JsonSerializerInternalReader.cs:line 149
+   at Newtonsoft.Json.JsonSerializer.DeserializeInternal(JsonReader reader, Type objectType) in /_/Src/Newtonsoft.Json/JsonSerializer.cs:line 907
+   at Newtonsoft.Json.JsonConvert.DeserializeObject(String value, Type type, JsonSerializerSettings settings) in /_/Src/Newtonsoft.Json/JsonConvert.cs:line 828
+   at Newtonsoft.Json.JsonConvert.DeserializeObject[T](String value, JsonSerializerSettings settings) in /_/Src/Newtonsoft.Json/JsonConvert.cs:line 786
+   at Portal.Business.TestServices.RestActions.CallRestAction[R,T](T model, String url) in C:\WorkSpace\arm-wealth-planner-portals\Portal.Business\TestServices\RestActions.cs:line 25
+2019-02-13 2:22:PM System.NullReferenceException: Object reference not set to an instance of an object.
+   at Portal.Areas.Client.Controllers.DashboardController.Index() in C:\WorkSpace\arm-wealth-planner-portals\Portal\Areas\Client\Controllers\DashBoardController.cs:line 146
+2019-02-13 2:23:PM Newtonsoft.Json.JsonReaderException: Unexpected character encountered while parsing value: <. Path '', line 0, position 0.
+   at Newtonsoft.Json.JsonTextReader.ParseValue() in /_/Src/Newtonsoft.Json/JsonTextReader.cs:line 1772
+   at Newtonsoft.Json.JsonReader.ReadForType(JsonContract contract, Boolean hasConverter) in /_/Src/Newtonsoft.Json/JsonReader.cs:line 1195
+   at Newtonsoft.Json.Serialization.JsonSerializerInternalReader.Deserialize(JsonReader reader, Type objectType, Boolean checkAdditionalContent) in /_/Src/Newtonsoft.Json/Serialization/JsonSerializerInternalReader.cs:line 149
+   at Newtonsoft.Json.JsonSerializer.DeserializeInternal(JsonReader reader, Type objectType) in /_/Src/Newtonsoft.Json/JsonSerializer.cs:line 907
+   at Newtonsoft.Json.JsonConvert.DeserializeObject(String value, Type type, JsonSerializerSettings settings) in /_/Src/Newtonsoft.Json/JsonConvert.cs:line 828
+   at Newtonsoft.Json.JsonConvert.DeserializeObject[T](String value, JsonSerializerSettings settings) in /_/Src/Newtonsoft.Json/JsonConvert.cs:line 786
+   at Portal.Business.TestServices.RestActions.CallRestAction[R,T](T model, String url) in C:\WorkSpace\arm-wealth-planner-portals\Portal.Business\TestServices\RestActions.cs:line 25
+2019-02-13 2:23:PM System.NullReferenceException: Object reference not set to an instance of an object.
+   at Portal.Areas.Client.Controllers.DashboardController.Index() in C:\WorkSpace\arm-wealth-planner-portals\Portal\Areas\Client\Controllers\DashBoardController.cs:line 146

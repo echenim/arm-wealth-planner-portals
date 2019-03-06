@@ -5,10 +5,25 @@
     Layout = "~/Areas/Client/Views/Shared/_Layout-Client.cshtml";
 }
 
+<!---- Page Title & Date --->
 <div class="row">
-    <div class="col-12">
+    <div class="element-wrapper col-md-12 pb-0">
+        <h6 class="element-header">
+            Direct Debit
+            @{
+                var now = DateTime.Now;
+                var time = now.ToString("HH:mm tt");
+                var date = now.ToString("MMM dd yyyy");
+            }
+            <span class="date-timestamp float-right">@date, @time</span>
+        </h6>
+    </div>
+</div>
 
-        <div class="element-box" style="margin: 2rem 10rem;" ng-app='armApp' ng-controller='AppController'>
+<div class="row">
+    <div class="col-lg-8 col-sm-12">
+
+        <div class="element-box" ng-app='armApp' ng-controller='AppController'>
             <form name="ddForm" action="#" method="post">
                 @Html.AntiForgeryToken()
                 <h5 class="form-header">
@@ -20,7 +35,7 @@
 
                 <div class="form-group">
                     <label for=""> Select Fund Type to Invest in</label>
-                    <select class="form-control">
+                    <select name='product' class="form-control" ng-model='debit.ProductCode' required>
                         <option>
                             Select Fund Type
                         </option>
@@ -48,7 +63,7 @@
                     <label for=""> Select the Date you wish to start</label>
                     <div class="date-input">
                         @*<input class="single-daterange form-control" placeholder="Date of birth" type="text" value="04/12/1978">*@
-                        @Html.TextBoxFor(model => model.StartDate, new { @placeholder = "Date Of Birth", @name = "date", @class = "single-daterange datepicker form-control", @ng_model = "debit.StartDate", @ng_focus = "getDate()", @required = "required" })
+                        @Html.TextBoxFor(model => model.StartDate, new { @placeholder = "Start Date", @name = "date", @class = "single-daterange datepicker form-control", @ng_model = "debit.StartDate", @ng_focus = "getDate()", @required = "required" })
                     </div>
                 </div>
 
@@ -58,12 +73,11 @@
                         var selectList = new SelectList(
                         new List<SelectListItem>
                         {
-                           new SelectListItem {Text = "Daily", Value = "Daily"},
-                           new SelectListItem {Text = "Weekly", Value = "Weekly"},
-                           new SelectListItem {Text = "Monthly", Value = "Monthly"},
-                           new SelectListItem {Text = "Quarterly", Value = "Quarterly"},
-                           new SelectListItem {Text = "Bi-Annually", Value = "Bi-Annually"},
-                           new SelectListItem {Text = "Annually", Value = "Annually"},
+                            new SelectListItem {Text = "Weekly", Value = "Weekly"},
+                            new SelectListItem {Text = "Monthly", Value = "Monthly"},
+                            new SelectListItem {Text = "Quarterly", Value = "Quarterly"},
+                            new SelectListItem {Text = "Bi-Annually", Value = "Bi-Annually"},
+                            new SelectListItem {Text = "Annually", Value = "Annually"},
                         }, "Value", "Text");
                     }
                     @Html.DropDownListFor(model => model.Frequency, selectList, new { @class = "form-control", @name = "frequency", @ng_model = "debit.Frequency", @required = "required" })
@@ -83,27 +97,47 @@
 
             <!--hidden form with response from api call-->
             <div class="test-form-wrap" id="pop-demo">
-                <div class="element-box" style="margin: 2rem 10rem;">
-                    <div class="notif">
-                        ₦{[{debit.Amount}]} will be credited to your {[{debit.ProductCode}]} account {[{debit.Frequency}]}.<br>
-                        <span>You will be taken to the payment gateway to finalize the direct debit set up.</span>
-                        <form id="paymentform" name="submit2aggregator_form" action="{[{trustSrc(transactionData.action)}]}" target="_self" method="post">
-                            <input type="hidden" name="arm_vendor_username" value="{[{transactionData.armVendorUsername}]}" />
-                            <input type="hidden" name="arm_cust_id" value="{[{transactionData.armCustomerId}]}" />
-                            <input type="hidden" name="arm_cust_name" value="{[{transactionData.armCustomerName}]}" />
-                            <input type="hidden" name="arm_dd_amt" value="{[{transactionData.armDdAmt}]}" />
-                            <input type="hidden" name="arm_dd_noti_url" value="{[{transactionData.armDdNotiUrl}]}" />
-                            <input type="hidden" name="arm_xml_data" value="{[{transactionData.armXmlData}]}" />
-                            <input type="hidden" name="arm_hash" value="{[{transactionData.armHash}]}" />
-                            <input type="hidden" name="arm_frequency" value="{[{transactionData.armFrequency}]}" />
-                            <input type="hidden" name="arm_start_date" value="{[{transactionData.armStartDate}]}" />
-                            <div class="def-button"><button ng-disabled="loading">Continue to Payment</button></div>
-                        </form>
+                <div id="test-form">
+                    @*<div class="element-box">
 
+                    </div>*@
+                    <div class="element-box" style="margin: 2rem 10rem;">
+                        <div class="notif">
+                            ₦{[{debit.Amount}]} will be credited to your {[{debit.ProductCode}]} account {[{debit.Frequency}]}.<br>
+                            <span>You will be taken to the payment gateway to finalize the direct debit set up.</span>
+                            <form id="paymentform" name="submit2aggregator_form" action="{[{trustSrc(transactionData.action)}]}" target="_self" method="post">
+                                <input type="hidden" name="arm_vendor_username" value="{[{transactionData.armVendorUsername}]}" />
+                                <input type="hidden" name="arm_cust_id" value="{[{transactionData.armCustomerId}]}" />
+                                <input type="hidden" name="arm_cust_name" value="{[{transactionData.armCustomerName}]}" />
+                                <input type="hidden" name="arm_dd_amt" value="{[{transactionData.armDdAmt}]}" />
+                                <input type="hidden" name="arm_dd_noti_url" value="{[{transactionData.armDdNotiUrl}]}" />
+                                <input type="hidden" name="arm_xml_data" value="{[{transactionData.armXmlData}]}" />
+                                <input type="hidden" name="arm_hash" value="{[{transactionData.armHash}]}" />
+                                <input type="hidden" name="arm_frequency" value="{[{transactionData.armFrequency}]}" />
+                                <input type="hidden" name="arm_start_date" value="{[{transactionData.armStartDate}]}" />
+                                <div class="def-button"><button class="btn btn-primary" ng-disabled="loading">Continue to Payment</button></div>
+                            </form>
+
+                        </div>
                     </div>
-                </div>
+                </div>                
             </div>
 
+        </div>
+    </div>
+
+    <div class="col-lg-4 col-sm-12">
+
+        <div class="element-box">
+            <form>
+                <h5 class="element-box-header">
+                    Ad Banner
+                </h5>
+                <div class="form-desc">
+
+                </div>
+
+            </form>
         </div>
     </div>
 

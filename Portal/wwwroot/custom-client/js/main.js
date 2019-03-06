@@ -84,18 +84,20 @@ $(function() {
         return false;
     });
 
-    $('.message-input').on('keypress', function(e) {
-        if (e.which === 13) {
-            $('.chat-messages').append('<div class="message self"><div class="message-content">' + $(this).val() + '</div></div>');
-            $(this).val('');
-            var $messages_w = $('.floated-chat-w .chat-messages');
-            $messages_w.scrollTop($messages_w.prop("scrollHeight"));
-            $messages_w.perfectScrollbar('update');
-            return false;
-        }
-    });
+    //$('.floated-chat-w .chat-messages').perfectScrollbar();
 
-    $('.floated-chat-w .chat-messages').perfectScrollbar();
+    //$('.message-input').on('keypress', function(e) {
+    //    if (e.which === 13) {
+    //        $('.chat-messages').append('<div class="message self"><div class="message-content">' + $(this).val() + '</div></div>');
+    //        $(this).val('');
+    //        var $messages_w = $('.floated-chat-w .chat-messages');
+    //        $messages_w.scrollTop($messages_w.prop("scrollHeight"));
+    //        $messages_w.perfectScrollbar('update');
+    //        return false;
+    //    }
+    //});
+
+    
 
     // #2. CALENDAR INIT
 
@@ -158,8 +160,8 @@ $(function() {
 
     // #4. DATE RANGE PICKER
 
-    $('input.single-daterange').daterangepicker({ "singleDatePicker": true });
-    $('input.multi-daterange').daterangepicker({ "startDate": "03/28/2017", "endDate": "04/06/2017" });
+    //$('input.single-daterange').daterangepicker({ "singleDatePicker": true });
+    //$('input.multi-daterange').daterangepicker({ "startDate": "03/28/2017", "endDate": "04/06/2017" });
 
     // #5. DATATABLES
 

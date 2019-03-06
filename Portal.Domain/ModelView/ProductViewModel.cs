@@ -27,9 +27,7 @@ namespace Portal.Domain.ModelView
         [Required]
         public string ProductTypes { get; set; }
 
-        public string Benefit { get; set; }
-        public string Feature { get; set; }
-        public  bool IsActive { get; set; }
+        public bool IsActive { get; set; }
 
         public List<SelectListItem> AvailableCategories { get; set; }
     }

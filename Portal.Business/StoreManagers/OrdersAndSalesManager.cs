@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Portal.Domain;
 using Portal.Domain.Models;
@@ -19,24 +21,30 @@ namespace Portal.Business.StoreManagers
         public IQueryable<PurchaseOrders> Get(Func<PurchaseOrders, bool> predicate = null)
             => predicate != null
                 ? _context.PurchaseOrders
-                    .Include(s => s.Customer)
+                    .Include(s => s.Person)
                     .Include(s => s.Product).Include(s => s.Product.ProductCategory)
                     .Where(predicate: predicate)
                     .AsQueryable()
                 : _context.PurchaseOrders
-                    .Include(s => s.Customer)
+                    .Include(s => s.Person)
                     .Include(s => s.Product).Include(s => s.Product.ProductCategory)
                     .AsQueryable();
+
+        public IQueryable<PurchaseOrders> PersonBuyHistory(long personId)
+            => _context.PurchaseOrders
+                .Include(s => s.Product).Include(s => s.Product.ProductCategory)
+                .Where(s => s.CustomerId.Equals(personId))
+                .AsQueryable();
 
         public IQueryable<PurchaseOrders> Sales(Func<PurchaseOrders, bool> predicate = null)
             => (predicate != null
                 ? _context.PurchaseOrders
-                    .Include(s => s.Customer)
+                    .Include(s => s.Person)
                     .Include(s => s.Product).Include(s => s.Product.ProductCategory)
                     .Where(predicate: predicate)
                     .AsQueryable()
                 : _context.PurchaseOrders
-                    .Include(s => s.Customer)
+                    .Include(s => s.Person)
                     .Include(s => s.Product).Include(s => s.Product.ProductCategory)
                     .AsQueryable()).Where(s => s.OrderDate != null
                                                && s.TransactionStatus.Equals("Succeed"));
@@ -49,6 +57,12 @@ namespace Portal.Business.StoreManagers
             _context.PurchaseOrders.Add(model);
             model.Id = _context.SaveChanges();
             return model;
+        }
+
+        public async void Edit(string cartId)
+        {
+            var sql = $"UPDATE PurchaseOrders SET TransactionStatus='Succeed' WHERE CartNumber={cartId}";
+            await _context.Database.ExecuteSqlCommandAsync(sql: sql);
         }
     }
 }
