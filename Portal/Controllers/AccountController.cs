@@ -125,6 +125,48 @@ namespace Portal.Controllers
             return View();
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Registration(RegistrationViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var onboardToArm = _armOneManager.OnboardNewUsers(model, model.Password);
+
+                if (onboardToArm.ResponseCode.Equals(""))
+                {
+                    var isPersonResult = _personManager.Save(model);
+                    if (isPersonResult.Succeed)
+                    {
+                        var user = new ApplicationUser
+                        {
+                            UserName = isPersonResult.TObj.Email,
+                            Email = isPersonResult.TObj.Email,
+                            PersonId = isPersonResult.TObj.Id
+                        };
+                        var rs = _userManager.CreateAsync(user, model.Password).Result;
+                        if (rs.Succeeded)
+                        {
+                            var isSignInSuccessful =
+                                _signInManager.PasswordSignInAsync(user, model.Password, true, true).Result;
+                            if (isSignInSuccessful.Succeeded)
+                            {
+                                return RedirectToAction("Index", "Home");
+                            }
+                            else
+                            {
+                                return RedirectToAction("Login", "Account");
+                            }
+                        }
+
+                        //}
+                    }
+                }
+            }
+
+            return View(model);
+        }
+
         private ApplicationUser IfMemberShipNumberIsEmptyUpdateRecord(ApplicationUser user, string membershipnumber)
         {
             var userObj = _userManager.FindByEmailAsync(user.Email).Result;

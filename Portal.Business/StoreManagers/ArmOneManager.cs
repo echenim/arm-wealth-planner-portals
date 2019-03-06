@@ -170,139 +170,109 @@ namespace Portal.Business.StoreManagers
         }
 
         public CustomerDetail GetUserProfile(int membershipKey)
+        {
+            var customerRequest = new ClientValidateRequest
             {
-                var customerRequest = new ClientValidateRequest
-                {
-                    CustomerReference = membershipKey.ToString()
-                };
-                var customerResponse = _clientService.ClientValidate(customerRequest);
-                if (customerResponse != null)
-                {
-                    return customerResponse.CustomerDetails.FirstOrDefault();
-                }
-                return null;
+                CustomerReference = membershipKey.ToString()
+            };
+            var customerResponse = _clientService.ClientValidate(customerRequest);
+            if (customerResponse != null)
+            {
+                return customerResponse.CustomerDetails.FirstOrDefault();
+            }
+            return null;
+        }
+
+        public AllPriceResponse GetAllFundPrices(DateTime? date)
+        {
+            var request = new AllPriceRequest { PriceDate = date.Value };
+            var response = _clientService.GetFundPrices(request);
+
+            return response;
+        }
+
+        public AllPriceResponse GetAllFundPrices()
+        {
+            var request = new AllPriceRequest();
+            var response = _clientService.GetFundPrices(request);
+
+            return response;
+        }
+
+        public CustomerInformationView GetCustomerInformation(string username)
+        {
+            var result = new CustomerInformationView();
+
+            #region service calling for customer information
+
+            var configSetting = _configSettingManager;
+
+            #endregion service calling for customer information
+
+            var customerInfoRequest = new ArmOneCustomerDetailsRequest { Id = username };
+            var customerInfoResponse = _clientService.GetArmOneCustomerDetails(customerInfoRequest);
+
+            if (customerInfoResponse != null)
+            {
+                result.FirstName = customerInfoResponse.FirstName;
+                result.LastName = customerInfoResponse.LastName;
+                result.ResponseCode = customerInfoResponse.ResponseCode;
+                result.ResponseDescription = customerInfoResponse.ResponseDescription;
+                result.Email = customerInfoResponse.EmailAddress;
+                result.IsAccountActivated = customerInfoResponse.IsAccountActivated;
             }
 
-            public AllPriceResponse GetAllFundPrices(DateTime? date)
-            {
-                var request = new AllPriceRequest { PriceDate = date.Value };
-                var response = _clientService.GetFundPrices(request);
+            return result;
+        }
 
-                return response;
-            }
+        public AdditionalInvResponse AddSales(InvestmentRequest request)
+        {
+            var response = _clientService.AddSales(request);
+            return response;
+        }
 
-            public AllPriceResponse GetAllFundPrices()
-            {
-                var request = new AllPriceRequest();
-                var response = _clientService.GetFundPrices(request);
+        /// <summary>
+        /// send a single email of a customer that their kyc statsu need to be verify
+        /// </summary>
+        /// <param name="customerEmail">email of customer</param>
+        /// <returns>single customer kyc status</returns>
+        public KycStatus GetKycStatus(string customerEmail)
+        {
+            var kyc = new KycStatus();
 
-                return response;
-            }
+            return kyc;
+        }
 
-            public CustomerInformationView GetCustomerInformation(string username)
-            {
-                var result = new CustomerInformationView();
+        /// <summary>
+        /// get the kyc status of customer whose email is included in  list of customers
+        /// </summary>
+        /// <param name="customerEmail">list of email</param>
+        /// <returns>the kyc status of each memeber in the list</returns>
+        public List<KycStatus> GetKycStatus(List<string> customerEmail)
+        {
+            var kyc = new List<KycStatus>();
 
-                #region service calling for customer information
+            return kyc;
+        }
 
-                var configSetting = _configSettingManager;
+        public bool UnLockAccount(string securityanswer)
+        {
+            var state = false;
 
-                #endregion service calling for customer information
+            #region service callingfor security question
 
-                var customerInfoRequest = new ArmOneCustomerDetailsRequest { Id = username };
-                var customerInfoResponse = _clientService.GetArmOneCustomerDetails(customerInfoRequest);
+            var configSetting = _configSettingManager;
 
-                if (customerInfoResponse != null)
-                {
-                    result.FirstName = customerInfoResponse.FirstName;
-                    result.LastName = customerInfoResponse.LastName;
-                    result.ResponseCode = customerInfoResponse.ResponseCode;
-                    result.ResponseDescription = customerInfoResponse.ResponseDescription;
-                    result.Email = customerInfoResponse.EmailAddress;
-                    result.IsAccountActivated = customerInfoResponse.IsAccountActivated;
-                }
+            #endregion service callingfor security question
 
-                return result;
-            }
+            return state;
+        }
 
-            public AdditionalInvResponse AddSales(InvestmentRequest request)
-            {
-                var response = _clientService.AddSales(request);
-                return response;
-            }
-
-            /// <summary>
-            /// send a single email of a customer that their kyc statsu need to be verify
-            /// </summary>
-            /// <param name="customerEmail">email of customer</param>
-            /// <returns>single customer kyc status</returns>
-            public KycStatus GetKycStatus(string customerEmail)
-            {
-                var kyc = new KycStatus();
-
-                return kyc;
-            }
-
-            /// <summary>
-            /// get the kyc status of customer whose email is included in  list of customers
-            /// </summary>
-            /// <param name="customerEmail">list of email</param>
-            /// <returns>the kyc status of each memeber in the list</returns>
-            public List<KycStatus> GetKycStatus(List<string> customerEmail)
-            {
-                var kyc = new List<KycStatus>();
-
-                return kyc;
-            }
-
-            public bool UnLockAccount(string securityanswer)
-            {
-                var state = false;
-
-                #region service callingfor security question
-
-                var configSetting = _configSettingManager;
-
-                #endregion service callingfor security question
-
-                return state;
-            }
-
-            public static bool IsValidEmailAddress(string s)
-            {
-                var regex = new Regex(@"[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*
+        public static bool IsValidEmailAddress(string s)
+        {
+            var regex = new Regex(@"[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*
                                     @(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?");
-                return regex.IsMatch(s);
-            }
-
-        //public CustomerInformationView GetCustomerInformation(string username)
-        //{
-        //    throw new NotImplementedException();
-        //}
-
-        //public AllPriceResponse GetAllFundPrices(DateTime? date)
-        //{
-        //    throw new NotImplementedException();
-        //}
-
-        //public AllPriceResponse GetAllFundPrices()
-        //{
-        //    throw new NotImplementedException();
-        //}
-
-        //public KycStatus GetKycStatus(string customerEmail)
-        //{
-        //    throw new NotImplementedException();
-        //}
-
-        //public List<KycStatus> GetKycStatus(List<string> customerEmail)
-        //{
-        //    throw new NotImplementedException();
-        //}
-
-        //public bool UnLockAccount(string securityanswer)
-        //{
-        //    throw new NotImplementedException();
-        //}
+            return regex.IsMatch(s);
+        }
     }
 }

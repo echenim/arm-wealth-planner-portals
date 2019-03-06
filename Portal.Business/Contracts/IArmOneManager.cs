@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Portal.Business.ViewModels;
+using Portal.Domain.Models;
 using Portal.Domain.ViewModels;
 
 namespace Portal.Business.Contracts
@@ -20,5 +21,9 @@ namespace Portal.Business.Contracts
         List<KycStatus> GetKycStatus(List<string> customerEmail);
 
         bool UnLockAccount(string securityanswer);
+
+        ArmOneRegisterResponse OnboardNewUsers(Person model, string password);
+
+        ArmOneRegisterResponse OnboardOldUsers(string username, string password);
     }
 }
