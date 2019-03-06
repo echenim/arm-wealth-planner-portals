@@ -144,6 +144,128 @@ namespace Portal.Areas.Client.Controllers
             return View(model);
         }
 
+        public IActionResult AddQuestion()
+        {
+            var _user = new AuthenticateResponse
+            {
+                MembershipKey = 1006979,//1007435,
+                EmailAddress = "tolu.olusakin@gmail.com",//"gbadebo.ayan@gmail.com",
+                FirstName = "Tolulope",
+                LastName = "Olusakin",
+                FullName = "Olusakin Tolulope S"//"Funmilayo Ruth Adeyemi",
+            };
+
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult AddQuestion(AddQuestionViewModel model)
+        {
+            var _user = new AuthenticateResponse
+            {
+                MembershipKey = 1006979,//1007435,
+                EmailAddress = "tolu.olusakin@gmail.com",//"gbadebo.ayan@gmail.com",
+                FirstName = "Tolulope",
+                LastName = "Olusakin",
+                FullName = "Olusakin Tolulope S"//"Funmilayo Ruth Adeyemi",
+            };
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    ViewBag.message = "Error! Incorrect form details.";
+                    return View(model);
+                }
+
+                var armSeqRequest = new ArmOneSecurityQuestionRequest
+                {
+                    UserId = _user.EmailAddress,
+                    SecurityQuestion = model.NewQuestion,
+                    SecurityQuestion2 = String.Empty,
+                    SecurityAnswer = model.NewAnswer,
+                    SecurityAnswer2 = String.Empty,
+                    Channel = "Client_Portal"
+                };
+                var armSeqResponse = _clientService.ArmOneSecurityQuestion(armSeqRequest);
+
+                var cpRequest = new AddSecurityQuestionRequest
+                {
+                    MembershipNumber = _user.MembershipKey,
+                    SecurityQuestion = model.NewQuestion,
+                    SecurityAnswer = model.NewAnswer
+                };
+                var cpResponse = _clientService.AddSecurityQuestion(cpRequest);
+
+                var armoneres = (armSeqResponse != null && (armSeqResponse.ResponseCode == "00")) ? true : false;
+                var cpres = (cpResponse != null && (cpResponse.Status == "00" || cpResponse.Status == "0")) ? true : false;
+
+                if (cpres && armoneres)
+                {
+                    _user.SecurityQuestion = model.NewQuestion;
+                    var msg = "Success: " + cpResponse.StatusMessage;
+                    ViewBag.message = msg;
+                }
+                else
+                {
+                    ViewBag.message = cpResponse.StatusMessage;
+                }
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Message = ex.Message;
+                Utilities.ProcessError(ex, _contentRootPath);
+                _logger.LogError(null, ex, ex.Message);
+            }
+            return View(model);
+        }
+
+        public IActionResult ForgotPassword()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult ForgotPassword(ForgotPasswordViewModel model)
+        {
+            var _user = new AuthenticateResponse
+            {
+                MembershipKey = 1006979,//1007435,
+                EmailAddress = "tolu.olusakin@gmail.com",//"gbadebo.ayan@gmail.com",
+                FirstName = "Tolulope",
+                LastName = "Olusakin",
+                FullName = "Olusakin Tolulope S"//"Funmilayo Ruth Adeyemi",
+            };
+            ResetPasswordResponse response = new ResetPasswordResponse();
+
+            try
+            {
+                var resetRequest = new ResetPasswordRequest
+                {
+                    Username = model.Username,
+                    EmailAddress = model.EmailAddress
+                };
+                response = _clientService.ResetPassword(resetRequest);
+
+                if (response.ResponseCode == "00" || response.ResponseCode == "0")
+                {
+                    var msg = "Success: " + response.ResponseMessage;
+                    ViewBag.message = msg;
+                    return View(model);
+                }
+                else
+                {
+                    ViewBag.message = response.ResponseMessage;
+                }
+            }
+            catch (Exception ex)
+            {
+                ViewBag.message = ex.Message;
+                Utilities.ProcessError(ex, _contentRootPath);
+                _logger.LogError(null, ex, ex.Message);
+            }
+            return View(model);
+        }
+
         public IActionResult AccountStatement(string code)
         {
             var model = new AccountStatementViewModel();

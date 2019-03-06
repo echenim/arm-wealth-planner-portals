@@ -151,23 +151,23 @@ namespace Portal.Services
             return response;
         }
 
-        ////until the endpoint for the above method has been created,
-        ////this is what would be used to spool data for fund prices
-        //public FundPrices GetFundPrices(string fundcode)
-        //{
-        //    var response = new FundPrices();
-        //    var settings = _configSettingManager.FundPriceConnection;
+        //until the endpoint for the above method has been created,
+        //this is what would be used to spool data for fund prices
+        public FundPrices GetFundPrices(string fundcode)
+        {
+            var response = new FundPrices();
+            var settings = _configSettingManager.FundPriceConnection;
 
-        //    var sql = $@"SELECT * FROM dw.FactFundPrice
-        //                 WHERE ProductCode = '{fundcode}'";
+            var sql = $@"SELECT * FROM dw.FactFundPrice
+                         WHERE ProductCode = '{fundcode}'";
 
-        //    using (var connection = new SqlConnection(settings))
-        //    {
-        //        response.FundPrice = connection.Query<FactFundPrice>(sql).ToList();
-        //    }
+            using (var connection = new SqlConnection(settings))
+            {
+                response.FundPrice = connection.Query<FactFundPrice>(sql).ToList();
+            }
 
-        //    return response;
-        //}
+            return response;
+        }
 
         public YieldHistoryResponse GetYieldHistory(string fundcode)
         {

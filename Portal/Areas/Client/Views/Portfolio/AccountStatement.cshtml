@@ -53,7 +53,7 @@
                                     var transactionType = new SelectList(
                                     new List<SelectListItem>
                                     {
-                                        new SelectListItem {Text = "All", Value = "All"},
+                                        new SelectListItem {Text = "All", Value = ""},
                                         new SelectListItem {Text = "Redemption", Value = "Redemption"},
                                         new SelectListItem {Text = "Subscription", Value = "Subscription"},
                                     }, "Value", "Text");
@@ -144,7 +144,7 @@
                                         {
                                             <td class="text-center">
                                                 <span class="text-success">
-                                                    +₦@String.Format("{0:#,##0.##}", data.Amount)
+                                                    ₦@String.Format("{0:#,##0.##}", data.Amount)
                                                 </span>
                                             </td>
                                         }
@@ -152,7 +152,7 @@
                                         {
                                             <td class="text-center">
                                                 <span class="text-danger">
-                                                    -₦@String.Format("{0:#,##0.##}", (data.Amount * -1))
+                                                    ₦@String.Format("{0:#,##0.##}", (data.Amount * -1))
                                                 </span>
                                             </td>
                                         }
@@ -180,7 +180,7 @@
                                         {
                                             <td class="text-center">
                                                 <span class="text-success">
-                                                    +₦@String.Format("{0:#,##0.##}", data.MarketValue)
+                                                    ₦@String.Format("{0:#,##0.##}", data.MarketValue)
                                                 </span>
                                             </td>
                                         }
@@ -188,7 +188,7 @@
                                         {
                                             <td class="text-center">
                                                 <span class="text-danger">
-                                                    -₦@String.Format("{0:#,##0.##}", (data.MarketValue * -1))
+                                                    ₦@String.Format("{0:#,##0.##}", (data.MarketValue * -1))
                                                 </span>
                                             </td>
                                         }

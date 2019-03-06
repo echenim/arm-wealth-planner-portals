@@ -141,10 +141,15 @@ namespace Portal
                     template: "{area:exists}/PaymentStatus/{au?}",
                     defaults: new { controller = "Buy", action = "PaymentStatus" });
 
-                routes.MapRoute(
+                //routes.MapRoute(
+                //    name: "DebitStatus",
+                //    template: "{area:exists}/{controller=Buy}/{action=DebitStatus}/{au?}",
+                //    defaults: new { area = "Client", controller = "Buy", action = "DebitStatus" });
+
+                routes.MapAreaRoute(
                     name: "DebitStatus",
-                    template: "{area:exists}/DebitStatus/{au?}",
-                    defaults: new { controller = "Buy", action = "DebitStatus" });
+                    areaName: "Client",
+                    template: "Client/{controller=Buy}/{action=DebitStatus}/{au?}");
 
                 routes.MapRoute(
                     name: "default",
