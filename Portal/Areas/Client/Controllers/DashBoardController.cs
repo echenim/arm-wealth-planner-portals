@@ -14,6 +14,8 @@ using Portal.Services;
 using Portal.Business.Contracts;
 using Portal.Business.TestServices;
 using Portal.Business.ViewModels;
+using Microsoft.Extensions.Caching.Memory;
+using Portal.Domain.ViewModels;
 
 namespace Portal.Areas.Client.Controllers
 {
@@ -41,9 +43,11 @@ namespace Portal.Areas.Client.Controllers
         public ApplicationDbContext db;
         public ClientRepository _client;
 
+        private readonly IMemoryCache _cache;
+
         public DashboardController(IHostingEnvironment hostingEnvironment,
                                     ILogger<DashboardController> logger, IConfiguration configuration,
-                                    IDistributedCache cache, ApplicationDbContext _db, IArmOneServiceConfigManager configManager)
+                                    IMemoryCache cache, ApplicationDbContext _db, IArmOneServiceConfigManager configManager)
         {
             _hostingEnvironment = hostingEnvironment;
             _webRootPath = _hostingEnvironment.WebRootPath;
@@ -60,6 +64,7 @@ namespace Portal.Areas.Client.Controllers
             _client = new ClientRepository(_configSettingManager, _contentRootPath);
 
             db = _db;
+            _cache = cache;
         }
 
         [HttpGet]
@@ -68,14 +73,16 @@ namespace Portal.Areas.Client.Controllers
             var model = new AccountStatementViewModel();
 
             //_user is expected to contain client details. mock data for model.
-            var _user = new AuthenticateResponse
-            {
-                MembershipKey = 1006979,//1007435,
-                EmailAddress = "tolu.olusakin@gmail.com",//"gbadebo.ayan@gmail.com",
-                FirstName = "Tolulope",
-                LastName = "Olusakin",
-                FullName = "Olusakin Tolulope S"//"Funmilayo Ruth Adeyemi",
-            };
+            //var _user = new AuthenticateResponse
+            //{
+            //    MembershipKey = 1006979,//1007435,
+            //    EmailAddress = "tolu.olusakin@gmail.com",//"gbadebo.ayan@gmail.com",
+            //    FirstName = "Tolulope",
+            //    LastName = "Olusakin",
+            //    FullName = "Olusakin Tolulope S"//"Funmilayo Ruth Adeyemi",
+            //};
+
+            var _user = _cache.Get<AuthenticateResponse>("ArmUser");
 
             try
             {
@@ -112,6 +119,7 @@ namespace Portal.Areas.Client.Controllers
                 }
 
                 //get last transactions
+
                 var transactions = _client.LoadLastTransactions(_user, accountsResponse, 6);
 
                 List<ProductTransactions> getTransactions = new List<ProductTransactions>();

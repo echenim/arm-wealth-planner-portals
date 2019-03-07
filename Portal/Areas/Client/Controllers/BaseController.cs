@@ -8,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Portal.Business.Contracts;
 using Portal.Business.TestServices;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace Portal.Areas.Client.Controllers
 {
@@ -23,6 +24,7 @@ namespace Portal.Areas.Client.Controllers
         public readonly IConfiguration _configuration;
 
         public readonly IDistributedCache _cache;
+        public readonly IMemoryCache _persist;
         public readonly DistributedCacheEntryOptions _cacheEntryOptions;
 
         public ApplicationDbContext db;
@@ -32,7 +34,7 @@ namespace Portal.Areas.Client.Controllers
         public TestArmClientServices _clientService;
 
         public BaseController(IHostingEnvironment hostingEnvironment, ILogger<BaseController> logger, IConfiguration configuration, 
-                              IDistributedCache cache, ApplicationDbContext _db, IArmOneServiceConfigManager configManager)
+                              IDistributedCache cache, ApplicationDbContext _db, IArmOneServiceConfigManager configManager, IMemoryCache persist)
         {
             _hostingEnvironment = hostingEnvironment;
             _webRootPath = _hostingEnvironment.WebRootPath;
@@ -41,6 +43,7 @@ namespace Portal.Areas.Client.Controllers
             _logger = logger;
             _configuration = configuration;
             _cache = cache;
+            _persist = persist;
 
             _cacheEntryOptions = new DistributedCacheEntryOptions()
                 .SetSlidingExpiration(TimeSpan.FromMinutes(30))

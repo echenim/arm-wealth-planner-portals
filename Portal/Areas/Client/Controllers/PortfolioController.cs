@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Distributed;
+using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
@@ -14,6 +15,7 @@ using Portal.Business.Contracts;
 using Portal.Business.TestServices;
 using Portal.Business.ViewModels;
 using Portal.Domain;
+using Portal.Domain.ViewModels;
 using Portal.Services;
 using WkWrap.Core;
 
@@ -36,9 +38,11 @@ namespace Portal.Areas.Client.Controllers
         public ApplicationDbContext db;
         public ClientRepository _client;
 
+        private readonly IMemoryCache _cache;
+
         public PortfolioController(IHostingEnvironment hostingEnvironment, IArmOneServiceConfigManager configManager,
                                     ILogger<PortfolioController> logger, IConfiguration configuration,
-                                    IDistributedCache cache, ApplicationDbContext _db)
+                                    IMemoryCache cache, ApplicationDbContext _db)
         {
             _hostingEnvironment = hostingEnvironment;
             _webRootPath = _hostingEnvironment.WebRootPath;
@@ -53,6 +57,7 @@ namespace Portal.Areas.Client.Controllers
             _client = new ClientRepository(_configSettingManager, _contentRootPath);
 
             db = _db;
+            _cache = cache;
         }
 
         public IActionResult FamilyAccounts()
@@ -66,6 +71,7 @@ namespace Portal.Areas.Client.Controllers
                 LastName = "Olusakin",
                 FullName = "Olusakin Tolulope S"//"Funmilayo Ruth Adeyemi",
             };
+
 
             try
             {
@@ -88,24 +94,25 @@ namespace Portal.Areas.Client.Controllers
         public IActionResult MyInvestments()
         {
             var model = new AccountStatementViewModel();
-            var _user = new AuthenticateResponse
-            {
-                MembershipKey = 1006979,//1007435,
-                EmailAddress = "tolu.olusakin@gmail.com",//"gbadebo.ayan@gmail.com",
-                FirstName = "Tolulope",
-                LastName = "Olusakin",
-                FullName = "Olusakin Tolulope S"//"Funmilayo Ruth Adeyemi",
-            };
+            //var _user = new AuthenticateResponse
+            //{
+            //    MembershipKey = 1006979,//1007435,
+            //    EmailAddress = "tolu.olusakin@gmail.com",//"gbadebo.ayan@gmail.com",
+            //    FirstName = "Tolulope",
+            //    LastName = "Olusakin",
+            //    FullName = "Olusakin Tolulope S"//"Funmilayo Ruth Adeyemi",
+            //};
+            var _user = _cache.Get<CustomerInformationView>("ArmUser"); 
 
             try
             {
-                var customer = _client.GetUserProfile(_user.MembershipKey);
+                var customer = _client.GetUserProfile(Convert.ToInt32(_user.MembershipNumber));
 
                 List<ProductDetails> getSummaries = new List<ProductDetails>();
                 List<decimal> sumOfAccruedInterests = new List<decimal>();
 
                 //get account summary
-                var accountsResponse = _client.GetAccountSummary(_user.MembershipKey);
+                var accountsResponse = _client.GetAccountSummary(Convert.ToInt32(_user.MembershipNumber));
                 if (accountsResponse != null)
                 {
                     foreach (var item in accountsResponse.Summaries)
@@ -126,7 +133,7 @@ namespace Portal.Areas.Client.Controllers
                 }
 
                 //get total balance
-                var totalBalanceResponse = _client.GetTotalAccountBalance(_user.MembershipKey);
+                var totalBalanceResponse = _client.GetTotalAccountBalance(Convert.ToInt32(_user.MembershipNumber));
                 if (totalBalanceResponse != null)
                 {
                     model.TotalBalance = totalBalanceResponse.TotalBalance;

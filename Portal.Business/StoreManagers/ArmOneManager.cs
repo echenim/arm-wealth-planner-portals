@@ -53,36 +53,51 @@ namespace Portal.Business.StoreManagers
             };
             var customerLoginResponse = _clientService.ArmOneAuthenticate(customerLoginRequest);
 
+            //if the client is on armone, get customer detail from armone
+            //else authenticate on datahub and onboard on armone
+
+            if (customerLoginResponse == null)
+            {
+                var registerOnArmOne = OnboardOldUsers(username, password);
+            }
+
             //get customer detail from arm one
+            var customerInfoRequest = new ArmOneCustomerDetailsRequest { Id = customerLoginResponse.EmailAddress };
+            var customerInfoResponse = _clientService.GetArmOneCustomerDetails(customerInfoRequest);
 
-            //var customerInfoRequest = new ArmOneCustomerDetailsRequest { Id = customerLoginResponse.EmailAddress };
-            //var customerInfoResponse = _clientService.GetArmOneCustomerDetails(customerInfoRequest);
+            if (customerInfoResponse != null)
+            {
+                //make datahub call for bvn and gender
+                var customerRequest = new ClientValidateRequest
+                { CustomerReference = customerInfoResponse.MembershipKey.ToString() };
+                var customerResponse = _clientService.ClientValidate(customerRequest);
 
-            //if (customerInfoResponse != null)
-            //{
-            //    //make datahub call for bvn and gender
-            //    var customerRequest = new ClientValidateRequest
-            //    { CustomerReference = customerInfoResponse.MembershipKey.ToString() };
-            //    var customerResponse = _clientService.ClientValidate(customerRequest);
+                if (customerResponse != null)
+                {
+                    var customerDetail = customerResponse.CustomerDetails.FirstOrDefault();
 
-            //    if (customerResponse != null)
-            //    {
-            //        var customerDetail = customerResponse.CustomerDetails.FirstOrDefault();
+                    result.FirstName = customerInfoResponse.FirstName;
+                    result.LastName = customerInfoResponse.LastName;
+                    result.ResponseCode = customerInfoResponse.ResponseCode;
+                    result.ResponseDescription = customerInfoResponse.ResponseDescription;
+                    result.Email = customerInfoResponse.EmailAddress;
+                    result.IsAccountActivated = customerInfoResponse.IsAccountActivated;
+                    result.MembershipNumber = customerInfoResponse.MembershipKey.ToString();
+                    result.BvnNumber = customerDetail.BvnNumber;
+                    result.Gender = customerDetail.Gender;
+                }
 
-            //        result.FirstName = customerInfoResponse.FirstName;
-            //        result.LastName = customerInfoResponse.LastName;
-            //        result.ResponseCode = customerInfoResponse.ResponseCode;
-            //        result.ResponseDescription = customerInfoResponse.ResponseDescription;
-            //        result.Email = customerInfoResponse.EmailAddress;
-            //        result.IsAccountActivated = customerInfoResponse.IsAccountActivated;
-            //        result.MembershipNumber = customerInfoResponse.MembershipKey.ToString();
-            //        result.BvnNumber = customerDetail.BvnNumber;
-            //        result.Gender = customerDetail.Gender;
-            //    }
-
-            //}
+            }
 
             return result;
+        }
+
+        public AuthenticateResponse DataHubClientInfo(string membershipnumber, string password)
+        {
+            var request = new AuthenticateRequest { Password = password, UserName = membershipnumber };
+            var response = _clientService.Authenticate(request);
+
+            return response;
         }
 
         public ArmOneRegisterResponse OnboardNewUsers(Person model, string password)
@@ -134,12 +149,16 @@ namespace Portal.Business.StoreManagers
             return response;
         }
 
+        //this method is intended for clients
+        //who have accounts on datahub but not on armone
+        //it is intended to take response from authentication
+        //on datahub and use it to register them on armone
         public ArmOneRegisterResponse OnboardOldUsers(string username, string password)
         {
             var customer = new CustomerDetail();
             var response = new ArmOneRegisterResponse();
 
-            //make call to datahub API
+            //make call to datahub API and authenticate user
             var dataHubAuthRequest = new AuthenticateRequest { Password = password, UserName = username };
             var dataHubAuthResponse = _clientService.Authenticate(dataHubAuthRequest);
 
@@ -161,7 +180,7 @@ namespace Portal.Business.StoreManagers
                     SecurityAnswer2 = String.Empty,
                     FirstName = customer.FirstName,
                     LastName = customer.LastName,
-                    Channel = "CLient_Portal"
+                    Channel = "Client_Portal"
                 };
                 response = _clientService.ArmOneRegister(request);
             }
