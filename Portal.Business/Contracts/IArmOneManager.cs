@@ -25,5 +25,7 @@ namespace Portal.Business.Contracts
         ArmOneRegisterResponse OnboardNewUsers(Person model, string password);
 
         ArmOneRegisterResponse OnboardOldUsers(string username, string password);
+
+        AuthenticateResponse DataHubClientInfo(string membershipKey, string password);
     }
 }

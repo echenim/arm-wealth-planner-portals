@@ -1,11 +1,10 @@
 ﻿@using Portal.Business.Utilities
 @inject UserUtils UserUtil
-@*@model Portal.Areas.Client.ViewModels.AccountStatementViewModel*@
-@{
-    //var _user = new AuthenticateResponse();
-    var _userMembershipKey = 1007435;
-    var _userFullName = "Funmilayo Ruth Adeyemi";
 
+@{
+    var _user = UserUtil.GetDataHubUser();
+    var membershipKey = _user.MembershipKey;
+    var fullName = _user.FullName;
 }
 
 <!DOCTYPE html>
@@ -391,6 +390,15 @@
                                             @string.Format("Member ID:  {0}", person.MembershipNo)
                                         </div>
                                     }
+                                    else
+                                    {
+                                        <div class="logged-user-name">
+                                            @string.Format("{0}", fullName)
+                                        </div>
+                                        <div class="logged-user-role">
+                                            @string.Format("Member ID:  {0}", membershipKey)
+                                        </div>
+                                    }
                                 </div>
                                 <div class="avatar-w">
                                     <img alt="" src="~/custom-client/img/default-profile.svg">
@@ -412,6 +420,15 @@
                                                     @string.Format("Member ID:  {0}", person.MembershipNo)
                                                 </div>
                                             }
+                                            else
+                                            {
+                                                <div class="logged-user-name">
+                                                    @string.Format("{0}", fullName)
+                                                </div>
+                                                <div class="logged-user-role">
+                                                    @string.Format("Member ID:  {0}", membershipKey)
+                                                </div>
+                                            }
                                         </div>
                                     </div>
                                     <div class="bg-icon">
@@ -425,7 +442,7 @@
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="#"><i class="os-icon os-icon-signs-11"></i><span>Logout</span></a>
+                                            <a asp-controller="Account" asp-action="Logout"><i class="os-icon os-icon-signs-11"></i><span>Logout</span></a>
                                         </li>
                                     </ul>
                                 </div>

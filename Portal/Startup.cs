@@ -13,6 +13,9 @@ using Microsoft.Extensions.Logging;
 using Portal.Business.Utilities;
 using Portal.Domain;
 using Portal.Domain.Models.Identity;
+using System;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication;
 
 namespace Portal
 {
@@ -43,6 +46,35 @@ namespace Portal
             //});
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+            #region session to persist state over specific time
+
+            services.AddDistributedMemoryCache();
+            services.AddSession(options =>
+            {
+                // Set a short timeout for easy testing.
+                options.Cookie.Name = ".ClientPortal.Session";
+                options.IdleTimeout = TimeSpan.FromMinutes(30);
+                options.Cookie.HttpOnly = true;
+            });
+
+            services.AddAuthentication(options =>
+            {
+                options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+            })
+            .AddCookie(options =>
+            {
+                options.LoginPath = new PathString("/Account/Login/");
+                options.LogoutPath = new PathString("/Account/Logoff");
+                options.AccessDeniedPath = new PathString("/Guest/Index");
+            });
+
+            services.AddMemoryCache(options =>
+            {
+                options.ExpirationScanFrequency = TimeSpan.FromMinutes(5);
+            });
+
+            #endregion
 
             #region register database connectionstring
 
@@ -119,6 +151,7 @@ namespace Portal
             app.UseStaticFiles();
             app.UseCookiePolicy();
 
+            app.UseSession();
             app.UseAuthentication();
             app.UseStaticFiles(new StaticFileOptions()
             {

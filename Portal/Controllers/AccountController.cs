@@ -10,6 +10,9 @@ using Portal.Business.Contracts;
 using Portal.Business.Utilities;
 using Portal.Domain.Models;
 using Portal.Domain.Models.Identity;
+using Microsoft.Extensions.Caching.Memory;
+using Portal.Domain.ViewModels;
+using Portal.Business.ViewModels;
 
 namespace Portal.Controllers
 {
@@ -24,6 +27,9 @@ namespace Portal.Controllers
         private readonly IArmOneManager _armOneManager;
         private readonly IPersonManager _personManager;
 
+        //caching to persist user data
+        private readonly IMemoryCache _cache;
+
         public AccountController(
             IUserService userService,
             UserManager<ApplicationUser> userManager,
@@ -32,7 +38,8 @@ namespace Portal.Controllers
             IPasswordHasher<ApplicationUser> passwordHasher,
             IHostingEnvironment hostingEnvironment,
             IArmOneManager armOneManager,
-            IPersonManager personManager
+            IPersonManager personManager,
+            IMemoryCache cache
             )
         {
             _signInManager = signInManager;
@@ -43,6 +50,8 @@ namespace Portal.Controllers
             _userService = userService;
             _armOneManager = armOneManager;
             _personManager = personManager;
+
+            _cache = cache;
         }
 
         public IActionResult Login()
@@ -72,6 +81,8 @@ namespace Portal.Controllers
                 var armOneObj = _armOneManager.GetCustomerInformation(model.Username, model.Password);
                 if (armOneObj != null)
                 {
+                    var dataHubObj = _armOneManager.DataHubClientInfo(armOneObj.MembershipNumber, model.Password);
+
                     var person = new Person
                     {
                         FirstName = armOneObj.FirstName,
@@ -103,10 +114,16 @@ namespace Portal.Controllers
                                 var signInResult = _signInManager.PasswordSignInAsync(valiedUser, "102Solutionx$#@", true, true).Result;
                                 if (signInResult.Succeeded)
                                 {
+                                    _cache.Set<CustomerInformationView>("ArmOneUser", armOneObj);
+                                    _cache.Set<AuthenticateResponse>("ArmUser", dataHubObj);
                                     return RedirectToAction("Index", "Dashboard", new { area = "Client" });
                                 }
                             }
                         }
+
+                        _cache.Set<CustomerInformationView>("ArmOneUser", armOneObj);
+                        _cache.Set<AuthenticateResponse>("ArmUser", dataHubObj);
+                        return RedirectToAction("Index", "Dashboard", new { area = "Client" });
                     }
                 }
             }
@@ -117,7 +134,9 @@ namespace Portal.Controllers
         public async Task<IActionResult> LogOut()
         {
             await _signInManager.SignOutAsync();
-            return RedirectToAction("Index", "Home");
+            _cache.Remove("ArmUser");
+            _cache.Remove("ArmOneUser");
+            return RedirectToAction("Index", "Home", new { area = "" });
         }
 
         public IActionResult Registration()
