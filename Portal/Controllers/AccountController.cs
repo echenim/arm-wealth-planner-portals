@@ -133,7 +133,7 @@ namespace Portal.Controllers
             {
                 var onboardToArm = _armOneManager.OnboardNewUsers(model, model.Password);
 
-                if (onboardToArm.ResponseCode.Equals(""))
+                if (onboardToArm.ResponseCode.Equals("00"))
                 {
                     var isPersonResult = _personManager.Save(model);
                     if (isPersonResult.Succeed)
@@ -166,6 +166,50 @@ namespace Portal.Controllers
 
             return View(model);
         }
+
+        #region test
+
+        public IActionResult Tregistration()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Tregistration(RegistrationViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var isPersonResult = _personManager.Save(model);
+                if (isPersonResult.Succeed)
+                {
+                    var user = new ApplicationUser
+                    {
+                        UserName = isPersonResult.TObj.Email,
+                        Email = isPersonResult.TObj.Email,
+                        PersonId = isPersonResult.TObj.Id
+                    };
+                    var rs = _userManager.CreateAsync(user, model.Password).Result;
+                    if (rs.Succeeded)
+                    {
+                        var isSignInSuccessful =
+                            _signInManager.PasswordSignInAsync(user, model.Password, true, true).Result;
+                        if (isSignInSuccessful.Succeeded)
+                        {
+                            return RedirectToAction("Index", "Home");
+                        }
+                        else
+                        {
+                            return RedirectToAction("Login", "Account");
+                        }
+                    }
+                }
+            }
+
+            return View(model);
+        }
+
+        #endregion test
 
         private ApplicationUser IfMemberShipNumberIsEmptyUpdateRecord(ApplicationUser user, string membershipnumber)
         {

@@ -24,14 +24,18 @@ namespace Portal.AddMigration
 
         public DbSet<Person> Person { get; set; }
         public DbSet<ProductCategory> ProductCategory { get; set; }
-
         public DbSet<Products> Products { get; set; }
         public DbSet<WhatYouNeedToKNowAboutThisProduct> WhatYouNeedToKNowAboutThisProduct { get; set; }
-        public DbSet<ProductInvestmentInfo> ProductInvestmentInfo { get; set; }
-        public DbSet<PurchaseOrders> PurchaseOrders { get; set; }
-        public DbSet<Referrer> Referrer { get; set; }
 
+        public DbSet<PurchaseOrders> PurchaseOrders { get; set; }
+        public DbSet<ApplicationRoleClaim> ApplicationRoleClaim { get; set; }
+        public DbSet<ApplicationGroup> ApplicationGroup { get; set; }
+        public DbSet<ApplicationUserGroup> ApplicationUserGroup { get; set; }
+        public DbSet<ApplicationGroupRole> ApplicationGroupRoles { get; set; }
+        public DbSet<Referrer> Referrer { get; set; }
         public DbSet<MemberShip> MemberShip { get; set; }
+        public DbSet<ProductInvestmentInfo> ProductInvestmentInfo { get; set; }
+        public DbSet<Carts> Carts { get; set; }
 
         //client portal
         public DbSet<DDebit> DDebit { get; set; }

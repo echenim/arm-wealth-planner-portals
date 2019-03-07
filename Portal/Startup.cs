@@ -132,28 +132,28 @@ namespace Portal
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
+                    name: "default",
+                    template: "{controller=Home}/{action=Index}/{id?}");
+
+                routes.MapRoute(
                     name: "areas",
                     template: "{area:exists}/{controller=Dashboard}/{action=Index}/{id?}"
                 );
 
-                routes.MapRoute(
-                    name: "PaymentStatus",
-                    template: "{area:exists}/PaymentStatus/{au?}",
-                    defaults: new { controller = "Buy", action = "PaymentStatus" });
+                //routes.MapRoute(
+                //    name: "PaymentStatus",
+                //    template: "{area:exists}/PaymentStatus/{au?}",
+                //    defaults: new { controller = "Buy", action = "PaymentStatus" });
 
                 //routes.MapRoute(
                 //    name: "DebitStatus",
                 //    template: "{area:exists}/{controller=Buy}/{action=DebitStatus}/{au?}",
                 //    defaults: new { area = "Client", controller = "Buy", action = "DebitStatus" });
 
-                routes.MapAreaRoute(
-                    name: "DebitStatus",
-                    areaName: "Client",
-                    template: "Client/{controller=Buy}/{action=DebitStatus}/{au?}");
-
-                routes.MapRoute(
-                    name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                //routes.MapAreaRoute(
+                //    name: "DebitStatus",
+                //    areaName: "Client",
+                //    template: "Client/{controller=Buy}/{action=DebitStatus}/{au?}");
             });
         }
     }
