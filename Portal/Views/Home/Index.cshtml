@@ -52,8 +52,10 @@
                 @if (!User.Identity.IsAuthenticated)
                 {
                     <div>
-                        <a asp-controller="Account" asp-action="Registration" class="btn btn-inside-out btn-md btn-icon-abs border-radius-25 font__family-open-sans font__weight-bold m-0 mr-10 mb-20" data-brk-library="component__button"><span class="before">sign up</span><span class="text">sign up</span><span class="after">sign up</span> </a>
-                        <a asp-controller="Account" asp-action="Login" class="btn btn-inside-out btn-md btn-icon btn-inside-out_dark border-radius-25 font__family-open-sans font__weight-bold m-0 mb-20" data-brk-library="component__button"><i class="far fa-file-pdf icon-inside"></i> <span class="before">login</span><span class="text">login</span><span class="after">login</span></a>
+                        <a asp-area="" asp-controller="Account" asp-action="Registration" class="btn btn-inside-out btn-md btn-icon-abs border-radius-25 font__family-open-sans font__weight-bold m-0 mr-10 mb-20" data-brk-library="component__button">
+                            <span class="before">sign up</span><span class="text">sign up</span><span class="after">sign up</span>
+                        </a>
+                        <a asp-area=""  asp-controller="Account" asp-action="Login" class="btn btn-inside-out btn-md btn-icon btn-inside-out_dark border-radius-25 font__family-open-sans font__weight-bold m-0 mb-20" data-brk-library="component__button"><i class="far fa-file-pdf icon-inside"></i> <span class="before">login</span><span class="text">login</span><span class="after">login</span></a>
                     </div>
                 }
             </div>
