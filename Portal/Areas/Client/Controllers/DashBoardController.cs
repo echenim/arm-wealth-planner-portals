@@ -56,10 +56,8 @@ namespace Portal.Areas.Client.Controllers
             _logger = logger;
             _configuration = configuration;
 
-            //_appSettings = appSettings.Value;
             _configSettingManager = configManager;
 
-            //_clientService = new ArmClientServices(_appSettings, _contentRootPath, _configuration);
             _clientService = new TestArmClientServices(_configSettingManager, _contentRootPath);
             _client = new ClientRepository(_configSettingManager, _contentRootPath);
 
@@ -71,18 +69,14 @@ namespace Portal.Areas.Client.Controllers
         public IActionResult Index()
         {
             var model = new AccountStatementViewModel();
-
-            //_user is expected to contain client details. mock data for model.
-            //var _user = new AuthenticateResponse
-            //{
-            //    MembershipKey = 1006979,//1007435,
-            //    EmailAddress = "tolu.olusakin@gmail.com",//"gbadebo.ayan@gmail.com",
-            //    FirstName = "Tolulope",
-            //    LastName = "Olusakin",
-            //    FullName = "Olusakin Tolulope S"//"Funmilayo Ruth Adeyemi",
-            //};
-
+            
             var _user = _cache.Get<AuthenticateResponse>("ArmUser");
+            if (_user == null)
+            {
+                TempData["SessionTimeOut"] = $@"You have been logged out due to inactivity. 
+                                                Please login to gain access.";
+                return RedirectToAction("Index", "Home", new { area = "" });
+            }
 
             try
             {
@@ -91,13 +85,8 @@ namespace Portal.Areas.Client.Controllers
                 List<ProductDetails> getSummaries = new List<ProductDetails>();
                 List<decimal> sumOfAccruedInterests = new List<decimal>();
 
-                //get account summary
-                var accountsRequest = new SummaryRequest
-                {
-                    MembershipNumber = _user.MembershipKey
-                };
-                //var accountsResponse = _clientService.GetAccountSummary(accountsRequest);
-                var accountsResponse = _clientService.GetAccountSummary(accountsRequest);
+                //get account summary                
+                var accountsResponse = _client.GetAccountSummary(_user.MembershipKey);
 
                 if (accountsResponse != null)
                 {
@@ -119,7 +108,6 @@ namespace Portal.Areas.Client.Controllers
                 }
 
                 //get last transactions
-
                 var transactions = _client.LoadLastTransactions(_user, accountsResponse, 6);
 
                 List<ProductTransactions> getTransactions = new List<ProductTransactions>();
@@ -174,7 +162,7 @@ namespace Portal.Areas.Client.Controllers
             }
             catch (Exception ex)
             {
-                //HttpContext.Session.Set("error", ex.Message);
+                //_cache.Set("error", ex.Message);
                 TempData["message"] = ViewBag.Message = ex.Message;
                 Utilities.ProcessError(ex, _contentRootPath);
                 _logger.LogError(null, ex, ex.Message);

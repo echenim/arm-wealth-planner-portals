@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Distributed;
+using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
@@ -33,9 +34,11 @@ namespace Portal.Areas.Client.Controllers
         public ApplicationDbContext db;
         public ClientRepository _client;
 
+        private readonly IMemoryCache _cache;
+
         public ContactController(IHostingEnvironment hostingEnvironment, IArmOneServiceConfigManager configManager,
                                     ILogger<ContactController> logger, IConfiguration configuration,
-                                    IDistributedCache cache, ApplicationDbContext _db)
+                                    IMemoryCache cache, ApplicationDbContext _db)
         {
             _hostingEnvironment = hostingEnvironment;
             _webRootPath = _hostingEnvironment.WebRootPath;
@@ -50,24 +53,18 @@ namespace Portal.Areas.Client.Controllers
             _client = new ClientRepository(_configSettingManager, _contentRootPath);
 
             db = _db;
+            _cache = cache;
         }
 
         public IActionResult Location()
         {
             var model = new FeedbackViewModel();
-            var _user = new AuthenticateResponse
-            {
-                MembershipKey = 1007435,
-                EmailAddress = "gbadebo.ayan@gmail.com",
-                FirstName = "Funmilayo",
-                LastName = "Adeyemi",
-                FullName = "Funmilayo Ruth Adeyemi",
-            }; 
-
+            var _user = _cache.Get<AuthenticateResponse>("ArmUser");
             if (_user == null)
             {
-                TempData["SessionTimeOut"] = "You have been logged out due to inactivity. Please login to gain access.";
-                return RedirectToAction("Login", "Account");
+                TempData["SessionTimeOut"] = $@"You have been logged out due to inactivity. 
+                                                Please login to gain access.";
+                return RedirectToAction("Index", "Home", new { area = "" });
             }
 
             return View(model);
@@ -75,19 +72,12 @@ namespace Portal.Areas.Client.Controllers
 
         public IActionResult FindInvestmentCenter()
         {
-            var _user = new AuthenticateResponse
-            {
-                MembershipKey = 1007435,
-                EmailAddress = "gbadebo.ayan@gmail.com",
-                FirstName = "Funmilayo",
-                LastName = "Adeyemi",
-                FullName = "Funmilayo Ruth Adeyemi",
-            };
-
+            var _user = _cache.Get<AuthenticateResponse>("ArmUser");
             if (_user == null)
             {
-                TempData["SessionTimeOut"] = "You have been logged out due to inactivity. Please login to gain access.";
-                return RedirectToAction("Login", "Account");
+                TempData["SessionTimeOut"] = $@"You have been logged out due to inactivity. 
+                                                Please login to gain access.";
+                return RedirectToAction("Index", "Home", new { area = "" });
             }
 
             return View();
@@ -95,19 +85,12 @@ namespace Portal.Areas.Client.Controllers
 
         public IActionResult Feedback()
         {
-            var _user = new AuthenticateResponse
-            {
-                MembershipKey = 1007435,
-                EmailAddress = "gbadebo.ayan@gmail.com",
-                FirstName = "Funmilayo",
-                LastName = "Adeyemi",
-                FullName = "Funmilayo Ruth Adeyemi",
-            };
-
+            var _user = _cache.Get<AuthenticateResponse>("ArmUser");
             if (_user == null)
             {
-                TempData["SessionTimeOut"] = "You have been logged out due to inactivity. Please login to gain access.";
-                return RedirectToAction("Login", "Account");
+                TempData["SessionTimeOut"] = $@"You have been logged out due to inactivity. 
+                                                Please login to gain access.";
+                return RedirectToAction("Index", "Home", new { area = "" });
             }
 
             return View();
@@ -116,14 +99,13 @@ namespace Portal.Areas.Client.Controllers
         [HttpPost]
         public IActionResult Feedback(FeedbackViewModel model)
         {
-            var _user = new AuthenticateResponse
+            var _user = _cache.Get<AuthenticateResponse>("ArmUser");
+            if (_user == null)
             {
-                MembershipKey = 1006979,//1007435,
-                EmailAddress = "tolu.olusakin@gmail.com",//"gbadebo.ayan@gmail.com",
-                FirstName = "Tolulope",
-                LastName = "Olusakin",
-                FullName = "Olusakin Tolulope S"//"Funmilayo Ruth Adeyemi",
-            };
+                TempData["SessionTimeOut"] = $@"You have been logged out due to inactivity. 
+                                                Please login to gain access.";
+                return RedirectToAction("Index", "Home", new { area = "" });
+            }
 
             try
             {
@@ -169,20 +151,14 @@ namespace Portal.Areas.Client.Controllers
         public IActionResult TrackService(FeedbackViewModel modelview)
         {
             var trackServiceStatus = new FeedbackViewModel();
-            var _user = new AuthenticateResponse
-            {
-                MembershipKey = 1006979,//1007435,
-                EmailAddress = "tolu.olusakin@gmail.com",//"gbadebo.ayan@gmail.com",
-                FirstName = "Tolulope",
-                LastName = "Olusakin",
-                FullName = "Olusakin Tolulope S"//"Funmilayo Ruth Adeyemi",
-            };
             var model = new TrackServiceViewModel();
 
+            var _user = _cache.Get<AuthenticateResponse>("ArmUser");
             if (_user == null)
             {
-                TempData["SessionTimeOut"] = "You have been logged out due to inactivity. Please login to gain access.";
-                return RedirectToAction("Login", "Account");
+                TempData["SessionTimeOut"] = $@"You have been logged out due to inactivity. 
+                                                Please login to gain access.";
+                return RedirectToAction("Index", "Home", new { area = "" });
             }
 
             try

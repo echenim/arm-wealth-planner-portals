@@ -12,6 +12,7 @@ using Portal.Services;
 using Portal.Business.Contracts;
 using Portal.Business.TestServices;
 using Portal.Business.ViewModels;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace Portal.Areas.Client.Controllers
 {
@@ -32,9 +33,11 @@ namespace Portal.Areas.Client.Controllers
         public ApplicationDbContext db;
         public ClientRepository _client;
 
+        private readonly IMemoryCache _cache;
+
         public MandateController(IHostingEnvironment hostingEnvironment, IArmOneServiceConfigManager configManager,
                                     ILogger<DashboardController> logger, IConfiguration configuration,
-                                    IDistributedCache cache, ApplicationDbContext _db)
+                                    IMemoryCache cache, ApplicationDbContext _db)
         {
             _hostingEnvironment = hostingEnvironment;
             _webRootPath = _hostingEnvironment.WebRootPath;
@@ -49,6 +52,7 @@ namespace Portal.Areas.Client.Controllers
             _client = new ClientRepository(_configSettingManager, _contentRootPath);
 
             db = _db;
+            _cache = cache;
         }
 
         public IActionResult Index()
@@ -60,35 +64,19 @@ namespace Portal.Areas.Client.Controllers
         {
             var model = new BuyViewModel();
 
-            //_user is expected to contain client details. mock data for model.
-            var _user = new AuthenticateResponse
+            var _user = _cache.Get<AuthenticateResponse>("ArmUser");
+            if (_user == null)
             {
-                MembershipKey = 1006979,//1007435,
-                EmailAddress = "tolu.olusakin@gmail.com",//"gbadebo.ayan@gmail.com",
-                FirstName = "Tolulope",
-                LastName = "Olusakin",
-                FullName = "Olusakin Tolulope S"//"Funmilayo Ruth Adeyemi",
-                //MembershipKey = 1007435,
-                //EmailAddress = "gbadebo.ayan@gmail.com",
-                //FirstName = "Funmilayo",
-                //LastName = "Adeyemi",
-                //FullName = "Funmilayo Ruth Adeyemi",
-            };
+                TempData["SessionTimeOut"] = $@"You have been logged out due to inactivity. 
+                                                Please login to gain access.";
+                return RedirectToAction("Index", "Home", new { area = "" });
+            }
 
             try
             {
                 List<ProductSummary> getSummaries = new List<ProductSummary>();
-                var accountsRequest = new SummaryRequest
-                {
-                    MembershipNumber = _user.MembershipKey
-                };
-                var accountsResponse = _clientService.GetAccountSummary(accountsRequest);
-
-                var balanceRequest = new TotalBalanceRequest
-                {
-                    MembershipNumber = _user.MembershipKey
-                };
-                var balanceResponse = _clientService.GetTotalBalance(balanceRequest);
+                var accountsResponse = _client.GetAccountSummary(_user.MembershipKey);
+                var balanceResponse = _client.GetTotalAccountBalance(_user.MembershipKey);
 
                 if (accountsResponse != null && balanceResponse != null)
                 {
@@ -122,20 +110,13 @@ namespace Portal.Areas.Client.Controllers
         {
             var model = new BuyViewModel();
 
-            //_user is expected to contain client details. mock data for model.
-            var _user = new AuthenticateResponse
+            var _user = _cache.Get<AuthenticateResponse>("ArmUser");
+            if (_user == null)
             {
-                MembershipKey = 1006979,//1007435,
-                EmailAddress = "tolu.olusakin@gmail.com",//"gbadebo.ayan@gmail.com",
-                FirstName = "Tolulope",
-                LastName = "Olusakin",
-                FullName = "Olusakin Tolulope S"//"Funmilayo Ruth Adeyemi",
-                //MembershipKey = 1007435,
-                //EmailAddress = "gbadebo.ayan@gmail.com",
-                //FirstName = "Funmilayo",
-                //LastName = "Adeyemi",
-                //FullName = "Funmilayo Ruth Adeyemi",
-            };
+                TempData["SessionTimeOut"] = $@"You have been logged out due to inactivity. 
+                                                Please login to gain access.";
+                return RedirectToAction("Index", "Home", new { area = "" });
+            }
 
             try
             {
@@ -144,17 +125,9 @@ namespace Portal.Areas.Client.Controllers
                 var listOfDebits = debitquery != null ? debitquery.ToList() : null;
 
                 List<ProductSummary> getSummaries = new List<ProductSummary>();
-                var accountsRequest = new SummaryRequest
-                {
-                    MembershipNumber = _user.MembershipKey
-                };
-                var accountsResponse = _clientService.GetAccountSummary(accountsRequest);
-
-                var balanceRequest = new TotalBalanceRequest
-                {
-                    MembershipNumber = _user.MembershipKey
-                };
-                var balanceResponse = _clientService.GetTotalBalance(balanceRequest);
+                
+                var accountsResponse = _client.GetAccountSummary(_user.MembershipKey);
+                var balanceResponse = _client.GetTotalAccountBalance(_user.MembershipKey);
 
                 if (accountsResponse != null && balanceResponse != null)
                 {

@@ -114,8 +114,14 @@ namespace Portal.Controllers
                                 var signInResult = _signInManager.PasswordSignInAsync(valiedUser, "102Solutionx$#@", true, true).Result;
                                 if (signInResult.Succeeded)
                                 {
-                                    _cache.Set<CustomerInformationView>("ArmOneUser", armOneObj);
-                                    _cache.Set<AuthenticateResponse>("ArmUser", dataHubObj);
+                                    _cache.Set<CustomerInformationView>("ArmOneUser", armOneObj, new MemoryCacheEntryOptions()
+                                                                                                .SetSlidingExpiration(TimeSpan.FromMinutes(20))
+                                                                                                .SetAbsoluteExpiration(TimeSpan.FromHours(1)));
+
+                                    _cache.Set<AuthenticateResponse>("ArmUser", dataHubObj, new MemoryCacheEntryOptions()
+                                                                                            .SetSlidingExpiration(TimeSpan.FromMinutes(20))
+                                                                                            .SetAbsoluteExpiration(TimeSpan.FromHours(1)));
+
                                     return RedirectToAction("Index", "Dashboard", new { area = "Client" });
                                 }
                             }

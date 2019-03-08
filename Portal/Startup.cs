@@ -54,7 +54,7 @@ namespace Portal
             {
                 // Set a short timeout for easy testing.
                 options.Cookie.Name = ".ClientPortal.Session";
-                options.IdleTimeout = TimeSpan.FromMinutes(30);
+                options.IdleTimeout = TimeSpan.FromMinutes(20);
                 options.Cookie.HttpOnly = true;
             });
 
@@ -69,10 +69,7 @@ namespace Portal
                 options.AccessDeniedPath = new PathString("/Guest/Index");
             });
 
-            services.AddMemoryCache(options =>
-            {
-                options.ExpirationScanFrequency = TimeSpan.FromMinutes(5);
-            });
+            services.AddMemoryCache();
 
             #endregion
 
@@ -169,20 +166,20 @@ namespace Portal
                     template: "{area:exists}/{controller=Dashboard}/{action=Index}/{id?}"
                 );
 
-                routes.MapRoute(
-                    name: "PaymentStatus",
-                    template: "{area:exists}/PaymentStatus/{au?}",
-                    defaults: new { controller = "Buy", action = "PaymentStatus" });
+                //routes.MapRoute(
+                //    name: "PaymentStatus",
+                //    template: "{area:exists}/PaymentStatus/{au?}",
+                //    defaults: new { controller = "Buy", action = "PaymentStatus" });
 
                 //routes.MapRoute(
                 //    name: "DebitStatus",
                 //    template: "{area:exists}/{controller=Buy}/{action=DebitStatus}/{au?}",
                 //    defaults: new { area = "Client", controller = "Buy", action = "DebitStatus" });
 
-                routes.MapAreaRoute(
-                    name: "DebitStatus",
-                    areaName: "Client",
-                    template: "Client/{controller=Buy}/{action=DebitStatus}/{au?}");
+                //routes.MapAreaRoute(
+                //    name: "DebitStatus",
+                //    areaName: "Client",
+                //    template: "Client/{controller=Buy}/{action=DebitStatus}/{au?}");
 
                 routes.MapRoute(
                     name: "default",
