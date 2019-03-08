@@ -35,6 +35,7 @@ namespace Portal.Domain
         public DbSet<Referrer> Referrer { get; set; }
         public DbSet<MemberShip> MemberShip { get; set; }
         public DbSet<ProductInvestmentInfo> ProductInvestmentInfo { get; set; }
+        public DbSet<Carts> Carts { get; set; }
 
         //client portal
         public DbSet<DDebit> DDebit { get; set; }

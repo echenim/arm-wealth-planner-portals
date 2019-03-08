@@ -55,7 +55,7 @@
                         <a asp-area="" asp-controller="Account" asp-action="Registration" class="btn btn-inside-out btn-md btn-icon-abs border-radius-25 font__family-open-sans font__weight-bold m-0 mr-10 mb-20" data-brk-library="component__button">
                             <span class="before">sign up</span><span class="text">sign up</span><span class="after">sign up</span>
                         </a>
-                        <a asp-area=""  asp-controller="Account" asp-action="Login" class="btn btn-inside-out btn-md btn-icon btn-inside-out_dark border-radius-25 font__family-open-sans font__weight-bold m-0 mb-20" data-brk-library="component__button"><i class="far fa-file-pdf icon-inside"></i> <span class="before">login</span><span class="text">login</span><span class="after">login</span></a>
+                        <a asp-area="" asp-controller="Account" asp-action="Login" class="btn btn-inside-out btn-md btn-icon btn-inside-out_dark border-radius-25 font__family-open-sans font__weight-bold m-0 mb-20" data-brk-library="component__button"><i class="far fa-file-pdf icon-inside"></i> <span class="before">login</span><span class="text">login</span><span class="after">login</span></a>
                     </div>
                 }
             </div>
@@ -67,203 +67,213 @@
         </div>
     </div>
 </section>
+@{
+    var productSet = Model;
+    var mutualfundCollection = productSet.Where(s => s.ProductCategory.Name.Equals("Mutual Funds"));
+    var insuranceCollection = productSet.Where(s => s.ProductCategory.Name.Equals("Insurance"));
+    var pensionCollection = productSet.Where(s => s.ProductCategory.Name.Equals("Pension"));
+    var realEstateCollection = productSet.Where(s => s.ProductCategory.Name.Equals("Real Estate"));
+    var securitiesCollection = productSet.Where(s => s.ProductCategory.Name.Equals("Securities"));
+    var trusteesCollection = productSet.Where(s => s.ProductCategory.Name.Equals("Trustees"));
 
-<!----Product Showcase -->
-<section>
-    <div class="mt-10 text-center">
-        <h2 class="title__heading-06 title__heading-sub wow zoomIn font__family-montserrat font__size-56 font__weight-bold" data-brk-library="component__title">Solutions</h2>
-        <h4 class="title__heading-01 title__heading-sub font__family-montserrat font__size-21 line-height-1-625 mt--30" data-brk-library="component__title">Explore our bouquet<br><span class="font__weight-extrabold">of investment products</span></h4>
-    </div>
-    <div class="container mb-20 pt-20">
-        <div class="brk-tabs brk-tabs-side-left" data-hash="true" data-brk-library="component__tabs">
-            <ul class="brk-tabs-nav font__family-montserrat">
-                <li class="brk-tab"><i class="far fa-gem" aria-hidden="true"></i><span>Mutual Funds</span><span class="after"></span></li>
-                <li class="brk-tab"><i class="fab fa-delicious" aria-hidden="true"></i><span>Pensions</span><span class="after"></span></li>
-                <li class="brk-tab"><i class="fab fa-gg" aria-hidden="true"></i><span>Insurance</span><span class="after"></span></li>
-                <li class="brk-tab"><i class="far fa-gem" aria-hidden="true"></i><span>Trustees</span><span class="after"></span></li>
-                <li class="brk-tab"><i class="fab fa-delicious" aria-hidden="true"></i><span>Securities</span><span class="after"></span></li>
-                <li class="brk-tab"><i class="fab fa-gg" aria-hidden="true"></i><span>Real Estate</span><span class="after"></span></li>
-            </ul>
-            <div class="brk-tabs-content">
-                <!-- Mutual Funds-->
-                <div class="brk-tab-item">
-                    <div class="container mb-140">
-                        <h4 class="title__divider title__divider--chevron font__size-21 font__weight-bold font__family-montserrat line__height-24 text-center" data-brk-library="component__dividers">
-                            <span class="title__divider__wrapper">Mutual Funds <span class="line brk-base-bg-gradient-chevron-pseudo"></span></span>
-                        </h4>
-                        <div class="default-slider slick-loading default-slider_mode arrows-classic-dark-circle brk-base-box-shadow fa-req" data-slick="{&quot;slidesToShow&quot;: 4, &quot;slidesToScroll&quot;: 1, &quot;arrows&quot;: true, &quot;responsive&quot;: [
+    <!----Product Showcase -->
+    <section>
+        <div class="mt-10 text-center">
+            <h2 class="title__heading-06 title__heading-sub wow zoomIn font__family-montserrat font__size-56 font__weight-bold" data-brk-library="component__title">Solutions</h2>
+            <h4 class="title__heading-01 title__heading-sub font__family-montserrat font__size-21 line-height-1-625 mt--30" data-brk-library="component__title">Explore our bouquet<br><span class="font__weight-extrabold">of investment products</span></h4>
+        </div>
+        <div class="container mb-20 pt-20">
+            <div class="brk-tabs brk-tabs-side-left" data-hash="true" data-brk-library="component__tabs">
+                <ul class="brk-tabs-nav font__family-montserrat">
+                    <li class="brk-tab"><i class="far fa-gem" aria-hidden="true"></i><span>Mutual Funds</span><span class="after"></span></li>
+                    <li class="brk-tab"><i class="fab fa-delicious" aria-hidden="true"></i><span>Pensions</span><span class="after"></span></li>
+                    <li class="brk-tab"><i class="fab fa-gg" aria-hidden="true"></i><span>Insurance</span><span class="after"></span></li>
+                    <li class="brk-tab"><i class="far fa-gem" aria-hidden="true"></i><span>Trustees</span><span class="after"></span></li>
+                    <li class="brk-tab"><i class="fab fa-delicious" aria-hidden="true"></i><span>Securities</span><span class="after"></span></li>
+                    <li class="brk-tab"><i class="fab fa-gg" aria-hidden="true"></i><span>Real Estate</span><span class="after"></span></li>
+                </ul>
+                <div class="brk-tabs-content">
+                    <!-- Mutual Funds-->
+                    <div class="brk-tab-item">
+                        <div class="container mb-140">
+                            <h4 class="title__divider title__divider--chevron font__size-21 font__weight-bold font__family-montserrat line__height-24 text-center" data-brk-library="component__dividers">
+                                <span class="title__divider__wrapper">Mutual Funds <span class="line brk-base-bg-gradient-chevron-pseudo"></span></span>
+                            </h4>
+                            <div class="default-slider slick-loading default-slider_mode arrows-classic-dark-circle brk-base-box-shadow fa-req" data-slick="{&quot;slidesToShow&quot;: 4, &quot;slidesToScroll&quot;: 1, &quot;arrows&quot;: true, &quot;responsive&quot;: [
                 {&quot;breakpoint&quot;: 1230, &quot;settings&quot;: {&quot;slidesToShow&quot;: 3}},
                 {&quot;breakpoint&quot;: 768, &quot;settings&quot;: {&quot;slidesToShow&quot;: 2}},
                 {&quot;breakpoint&quot;: 480, &quot;settings&quot;: {&quot;slidesToShow&quot;: 1}}
                 ]}" data-brk-library="slider__slick">
 
-                            @foreach (var item in Model.Where(s => s.ProductCategory.Name.Equals("Mutual Funds")))
-                            {
-                                <div class="pl-15 pr-15">
-                                    <div class="shop-setout text-center" data-brk-library="component__content_slider">
-                                        <div class="shop-setout__img lazyload" data-bg="http://localhost/armwealth/Liber/FileArchives/@item.Image">
-                                            <a asp-controller="MutualFunds" asp-action="Details" asp-route-id="@item.Id" class="add-cart"><i class="fas fa-info"></i><span class="shop-slider-text-hover">View More</span></a>
+                                @foreach (var item in mutualfundCollection)
+                                {
+                                    <div class="pl-15 pr-15">
+                                        <div class="shop-setout text-center" data-brk-library="component__content_slider">
+                                            <div class="shop-setout__img lazyload" data-bg="@Url.Content("~/")Liber/FileArchives/@item.Image">
+                                                <a asp-controller="MutualFunds" asp-action="Details" asp-route-id="@item.Id" class="add-cart"><i class="fas fa-info"></i><span class="shop-slider-text-hover">View More</span></a>
+                                            </div>
+                                            <a class="shop-setout__link" asp-controller="MutualFunds" asp-action="Details" asp-route-id="@item.Id">
+                                                <h3 class="font__family-montserrat font__weight-semibold font__size-16">@item.Name</h3>
+                                            </a>
+                                            <div class="brk-base-font-color font__family-montserrat font__size-15 font__weight-semibold">Starting from <span class="font__weight-bold">&#8358;@item.StartFrom</span></div>
                                         </div>
-                                        <a class="shop-setout__link" asp-controller="MutualFunds" asp-action="Details" asp-route-id="@item.Id">
-                                            <h3 class="font__family-montserrat font__weight-semibold font__size-16">@item.Name</h3>
-                                        </a>
-                                        <div class="brk-base-font-color font__family-montserrat font__size-15 font__weight-semibold">Starting from <span class="font__weight-bold">&#8358;@item.StartFrom</span></div>
                                     </div>
-                                </div>
-                            }
+                                }
+                            </div>
                         </div>
                     </div>
-                </div>
-                <!-- Pensions-->
-                <div class="brk-tab-item">
-                    <div class="container mb-140">
-                        <h4 class="title__divider title__divider--chevron font__size-21 font__weight-bold font__family-montserrat line__height-24 text-center" data-brk-library="component__dividers">
-                            <span class="title__divider__wrapper">Pensions <span class="line brk-base-bg-gradient-chevron-pseudo"></span></span>
-                        </h4>
-                        <div class="default-slider slick-loading default-slider_mode arrows-classic-dark-circle brk-base-box-shadow fa-req" data-slick="{&quot;slidesToShow&quot;: 4, &quot;slidesToScroll&quot;: 1, &quot;arrows&quot;: true, &quot;responsive&quot;: [
+                    <!-- Pensions-->
+                    <div class="brk-tab-item">
+                        <div class="container mb-140">
+                            <h4 class="title__divider title__divider--chevron font__size-21 font__weight-bold font__family-montserrat line__height-24 text-center" data-brk-library="component__dividers">
+                                <span class="title__divider__wrapper">Pensions <span class="line brk-base-bg-gradient-chevron-pseudo"></span></span>
+                            </h4>
+                            <div class="default-slider slick-loading default-slider_mode arrows-classic-dark-circle brk-base-box-shadow fa-req" data-slick="{&quot;slidesToShow&quot;: 4, &quot;slidesToScroll&quot;: 1, &quot;arrows&quot;: true, &quot;responsive&quot;: [
                         {&quot;breakpoint&quot;: 1230, &quot;settings&quot;: {&quot;slidesToShow&quot;: 3}},
                         {&quot;breakpoint&quot;: 768, &quot;settings&quot;: {&quot;slidesToShow&quot;: 2}},
                         {&quot;breakpoint&quot;: 480, &quot;settings&quot;: {&quot;slidesToShow&quot;: 1}}
                         ]}" data-brk-library="slider__slick">
 
-                            @foreach (var item in Model.Where(s => s.ProductCategory.Name.Equals("Pension")))
-                            {
-                                <div class="pl-15 pr-15">
-                                    <div class="shop-setout text-center" data-brk-library="component__content_slider">
-                                        <div class="shop-setout__img lazyload" data-bg="http://localhost/armwealth/Liber/FileArchives/@item.Image">
-                                            <a asp-controller="Pension" asp-action="Details" asp-route-id="@item.Id" class="add-cart"><i class="fas fa-info"></i><span class="shop-slider-text-hover">View More</span></a>
+                                @foreach (var item in pensionCollection)
+                                {
+                                    <div class="pl-15 pr-15">
+                                        <div class="shop-setout text-center" data-brk-library="component__content_slider">
+                                            <div class="shop-setout__img lazyload" data-bg="@Url.Content("~/")Liber/FileArchives/@item.Image">
+                                                <a asp-controller="MutualFunds" asp-action="Details" asp-route-id="@item.Id" class="add-cart"><i class="fas fa-info"></i><span class="shop-slider-text-hover">View More</span></a>
+                                            </div>
+                                            <a class="shop-setout__link" asp-controller="MutualFunds" asp-action="Details" asp-route-id="@item.Id">
+                                                <h3 class="font__family-montserrat font__weight-semibold font__size-16">@item.Name</h3>
+                                            </a>
+                                            @*<div class="brk-base-font-color font__family-montserrat font__size-15 font__weight-semibold">Starting from <span class="font__weight-bold">&#8358;@item.StartFrom</span></div>*@
                                         </div>
-                                        <a class="shop-setout__link" asp-controller="Pension" asp-action="Details" asp-route-id="@item.Id">
-                                            <h3 class="font__family-montserrat font__weight-semibold font__size-16">@item.Name</h3>
-                                        </a>
-                                        <div class="brk-base-font-color font__family-montserrat font__size-15 font__weight-semibold">Starting from <span class="font__weight-bold">&#8358;@item.StartFrom</span></div>
                                     </div>
-                                </div>
-                            }
+                                }
+                            </div>
                         </div>
                     </div>
-                </div>
-                <!-- Insurance-->
-                <div class="brk-tab-item">
-                    <div class="container mb-140">
-                        <h4 class="title__divider title__divider--chevron font__size-21 font__weight-bold font__family-montserrat line__height-24 text-center" data-brk-library="component__dividers">
-                            <span class="title__divider__wrapper">Insurance <span class="line brk-base-bg-gradient-chevron-pseudo"></span></span>
-                        </h4>
-                        <div class="default-slider slick-loading default-slider_mode arrows-classic-dark-circle brk-base-box-shadow fa-req" data-slick="{&quot;slidesToShow&quot;: 4, &quot;slidesToScroll&quot;: 1, &quot;arrows&quot;: true, &quot;responsive&quot;: [
+                    <!-- Insurance-->
+                    <div class="brk-tab-item">
+                        <div class="container mb-140">
+                            <h4 class="title__divider title__divider--chevron font__size-21 font__weight-bold font__family-montserrat line__height-24 text-center" data-brk-library="component__dividers">
+                                <span class="title__divider__wrapper">Insurance <span class="line brk-base-bg-gradient-chevron-pseudo"></span></span>
+                            </h4>
+                            <div class="default-slider slick-loading default-slider_mode arrows-classic-dark-circle brk-base-box-shadow fa-req" data-slick="{&quot;slidesToShow&quot;: 4, &quot;slidesToScroll&quot;: 1, &quot;arrows&quot;: true, &quot;responsive&quot;: [
                         {&quot;breakpoint&quot;: 1230, &quot;settings&quot;: {&quot;slidesToShow&quot;: 3}},
                         {&quot;breakpoint&quot;: 768, &quot;settings&quot;: {&quot;slidesToShow&quot;: 2}},
                         {&quot;breakpoint&quot;: 480, &quot;settings&quot;: {&quot;slidesToShow&quot;: 1}}
                         ]}" data-brk-library="slider__slick">
 
-                            @foreach (var item in Model.Where(s => s.ProductCategory.Name.Equals("Insurance")))
-                            {
-                                <div class="pl-15 pr-15">
-                                    <div class="shop-setout text-center" data-brk-library="component__content_slider">
-                                        <div class="shop-setout__img lazyload" data-bg="http://localhost/armwealth/Liber/FileArchives/@item.Image">
-                                            <a asp-controller="Insurance" asp-action="Details" asp-route-id="@item.Id" class="add-cart"><i class="fas fa-info"></i><span class="shop-slider-text-hover">View More</span></a>
+                                @foreach (var item in insuranceCollection)
+                                {
+                                    <div class="pl-15 pr-15">
+                                        <div class="shop-setout text-center" data-brk-library="component__content_slider">
+                                            <div class="shop-setout__img lazyload" data-bg="@Url.Content("~/")Liber/FileArchives/@item.Image">
+                                                <a asp-controller="MutualFunds" asp-action="Details" asp-route-id="@item.Id" class="add-cart"><i class="fas fa-info"></i><span class="shop-slider-text-hover">View More</span></a>
+                                            </div>
+                                            <a class="shop-setout__link" asp-controller="MutualFunds" asp-action="Details" asp-route-id="@item.Id">
+                                                <h3 class="font__family-montserrat font__weight-semibold font__size-16">@item.Name</h3>
+                                            </a>
+                                            @*<div class="brk-base-font-color font__family-montserrat font__size-15 font__weight-semibold">Starting from <span class="font__weight-bold">&#8358;@item.StartFrom</span></div>*@
                                         </div>
-                                        <a class="shop-setout__link" asp-controller="Insurance" asp-action="Details" asp-route-id="@item.Id">
-                                            <h3 class="font__family-montserrat font__weight-semibold font__size-16">@item.Name</h3>
-                                        </a>
-                                        <div class="brk-base-font-color font__family-montserrat font__size-15 font__weight-semibold">Starting from <span class="font__weight-bold">&#8358;@item.StartFrom</span></div>
                                     </div>
-                                </div>
-                            }
+                                }
+                            </div>
                         </div>
                     </div>
-                </div>
-                <!-- Trustees-->
-                <div class="brk-tab-item">
-                    <div class="container mb-140">
-                        <h4 class="title__divider title__divider--chevron font__size-21 font__weight-bold font__family-montserrat line__height-24 text-center" data-brk-library="component__dividers">
-                            <span class="title__divider__wrapper">Trustees <span class="line brk-base-bg-gradient-chevron-pseudo"></span></span>
-                        </h4>
-                        <div class="default-slider slick-loading default-slider_mode arrows-classic-dark-circle brk-base-box-shadow fa-req" data-slick="{&quot;slidesToShow&quot;: 4, &quot;slidesToScroll&quot;: 1, &quot;arrows&quot;: true, &quot;responsive&quot;: [
+                    <!-- Trustees-->
+                    <div class="brk-tab-item">
+                        <div class="container mb-140">
+                            <h4 class="title__divider title__divider--chevron font__size-21 font__weight-bold font__family-montserrat line__height-24 text-center" data-brk-library="component__dividers">
+                                <span class="title__divider__wrapper">Trustees <span class="line brk-base-bg-gradient-chevron-pseudo"></span></span>
+                            </h4>
+                            <div class="default-slider slick-loading default-slider_mode arrows-classic-dark-circle brk-base-box-shadow fa-req" data-slick="{&quot;slidesToShow&quot;: 4, &quot;slidesToScroll&quot;: 1, &quot;arrows&quot;: true, &quot;responsive&quot;: [
                     {&quot;breakpoint&quot;: 1230, &quot;settings&quot;: {&quot;slidesToShow&quot;: 3}},
                     {&quot;breakpoint&quot;: 768, &quot;settings&quot;: {&quot;slidesToShow&quot;: 2}},
                     {&quot;breakpoint&quot;: 480, &quot;settings&quot;: {&quot;slidesToShow&quot;: 1}}
                     ]}" data-brk-library="slider__slick">
 
-                            @foreach (var item in Model.Where(s => s.ProductCategory.Name.Equals("Trustees")))
-                            {
-                                <div class="pl-15 pr-15">
-                                    <div class="shop-setout text-center" data-brk-library="component__content_slider">
-                                        <div class="shop-setout__img lazyload" data-bg="http://localhost/armwealth/Liber/FileArchives/@item.Image">
-                                            <a asp-controller="Trust" asp-action="Details" asp-route-id="@item.Id" class="add-cart"><i class="fas fa-info"></i><span class="shop-slider-text-hover">View More</span></a>
+                                @foreach (var item in trusteesCollection)
+                                {
+                                    <div class="pl-15 pr-15">
+                                        <div class="shop-setout text-center" data-brk-library="component__content_slider">
+                                            <div class="shop-setout__img lazyload" data-bg="@Url.Content("~/")Liber/FileArchives/@item.Image">
+                                                <a asp-controller="MutualFunds" asp-action="Details" asp-route-id="@item.Id" class="add-cart"><i class="fas fa-info"></i><span class="shop-slider-text-hover">View More</span></a>
+                                            </div>
+                                            <a class="shop-setout__link" asp-controller="MutualFunds" asp-action="Details" asp-route-id="@item.Id">
+                                                <h3 class="font__family-montserrat font__weight-semibold font__size-16">@item.Name</h3>
+                                            </a>
+                                            @*<div class="brk-base-font-color font__family-montserrat font__size-15 font__weight-semibold">Starting from <span class="font__weight-bold">&#8358;@item.StartFrom</span></div>*@
                                         </div>
-                                        <a class="shop-setout__link" asp-controller="Trust" asp-action="Details" asp-route-id="@item.Id">
-                                            <h3 class="font__family-montserrat font__weight-semibold font__size-16">@item.Name</h3>
-                                        </a>
-                                        <div class="brk-base-font-color font__family-montserrat font__size-15 font__weight-semibold">Starting from <span class="font__weight-bold">&#8358;@item.StartFrom</span></div>
                                     </div>
-                                </div>
-                            }
+                                }
+                            </div>
                         </div>
                     </div>
-                </div>
-                <!-- Securities-->
-                <div class="brk-tab-item">
-                    <div class="container mb-140">
-                        <h4 class="title__divider title__divider--chevron font__size-21 font__weight-bold font__family-montserrat line__height-24 text-center" data-brk-library="component__dividers">
-                            <span class="title__divider__wrapper">Securities <span class="line brk-base-bg-gradient-chevron-pseudo"></span></span>
-                        </h4>
-                        <div class="default-slider slick-loading default-slider_mode arrows-classic-dark-circle brk-base-box-shadow fa-req" data-slick="{&quot;slidesToShow&quot;: 4, &quot;slidesToScroll&quot;: 1, &quot;arrows&quot;: true, &quot;responsive&quot;: [
+                    <!-- Securities-->
+                    <div class="brk-tab-item">
+                        <div class="container mb-140">
+                            <h4 class="title__divider title__divider--chevron font__size-21 font__weight-bold font__family-montserrat line__height-24 text-center" data-brk-library="component__dividers">
+                                <span class="title__divider__wrapper">Securities <span class="line brk-base-bg-gradient-chevron-pseudo"></span></span>
+                            </h4>
+                            <div class="default-slider slick-loading default-slider_mode arrows-classic-dark-circle brk-base-box-shadow fa-req" data-slick="{&quot;slidesToShow&quot;: 4, &quot;slidesToScroll&quot;: 1, &quot;arrows&quot;: true, &quot;responsive&quot;: [
                             {&quot;breakpoint&quot;: 1230, &quot;settings&quot;: {&quot;slidesToShow&quot;: 3}},
                             {&quot;breakpoint&quot;: 768, &quot;settings&quot;: {&quot;slidesToShow&quot;: 2}},
                             {&quot;breakpoint&quot;: 480, &quot;settings&quot;: {&quot;slidesToShow&quot;: 1}}
                             ]}" data-brk-library="slider__slick">
 
-                            @foreach (var item in Model.Where(s => s.ProductCategory.Name.Equals("Securities")))
-                            {
-                                <div class="pl-15 pr-15">
-                                    <div class="shop-setout text-center" data-brk-library="component__content_slider">
-                                        <div class="shop-setout__img lazyload" data-bg="http://localhost/armwealth/Liber/FileArchives/@item.Image">
-                                            <a asp-controller="Securities" asp-action="Details" asp-route-id="@item.Id" class="add-cart"><i class="fas fa-info"></i><span class="shop-slider-text-hover">View More</span></a>
+                                @foreach (var item in securitiesCollection)
+                                {
+                                    <div class="pl-15 pr-15">
+                                        <div class="shop-setout text-center" data-brk-library="component__content_slider">
+                                            <div class="shop-setout__img lazyload" data-bg="@Url.Content("~/")Liber/FileArchives/@item.Image">
+                                                <a asp-controller="MutualFunds" asp-action="Details" asp-route-id="@item.Id" class="add-cart"><i class="fas fa-info"></i><span class="shop-slider-text-hover">View More</span></a>
+                                            </div>
+                                            <a class="shop-setout__link" asp-controller="MutualFunds" asp-action="Details" asp-route-id="@item.Id">
+                                                <h3 class="font__family-montserrat font__weight-semibold font__size-16">@item.Name</h3>
+                                            </a>
+                                            @*<div class="brk-base-font-color font__family-montserrat font__size-15 font__weight-semibold">Starting from <span class="font__weight-bold">&#8358;@item.StartFrom</span></div>*@
                                         </div>
-                                        <a class="shop-setout__link" asp-controller="Securities" asp-action="Details" asp-route-id="@item.Id">
-                                            <h3 class="font__family-montserrat font__weight-semibold font__size-16">@item.Name</h3>
-                                        </a>
-                                        <div class="brk-base-font-color font__family-montserrat font__size-15 font__weight-semibold">Starting from <span class="font__weight-bold">&#8358;@item.StartFrom</span></div>
                                     </div>
-                                </div>
-                            }
+                                }
+                            </div>
                         </div>
                     </div>
-                </div>
-                <!-- Real Estate-->
-                <div class="brk-tab-item">
-                    <div class="container mb-140">
-                        <h4 class="title__divider title__divider--chevron font__size-21 font__weight-bold font__family-montserrat line__height-24 text-center" data-brk-library="component__dividers">
-                            <span class="title__divider__wrapper">Real Estate <span class="line brk-base-bg-gradient-chevron-pseudo"></span></span>
-                        </h4>
-                        <div class="default-slider slick-loading default-slider_mode arrows-classic-dark-circle brk-base-box-shadow fa-req" data-slick="{&quot;slidesToShow&quot;: 4, &quot;slidesToScroll&quot;: 1, &quot;arrows&quot;: true, &quot;responsive&quot;: [
+                    <!-- Real Estate-->
+                    <div class="brk-tab-item">
+                        <div class="container mb-140">
+                            <h4 class="title__divider title__divider--chevron font__size-21 font__weight-bold font__family-montserrat line__height-24 text-center" data-brk-library="component__dividers">
+                                <span class="title__divider__wrapper">Real Estate <span class="line brk-base-bg-gradient-chevron-pseudo"></span></span>
+                            </h4>
+                            <div class="default-slider slick-loading default-slider_mode arrows-classic-dark-circle brk-base-box-shadow fa-req" data-slick="{&quot;slidesToShow&quot;: 4, &quot;slidesToScroll&quot;: 1, &quot;arrows&quot;: true, &quot;responsive&quot;: [
                             {&quot;breakpoint&quot;: 1230, &quot;settings&quot;: {&quot;slidesToShow&quot;: 3}},
                             {&quot;breakpoint&quot;: 768, &quot;settings&quot;: {&quot;slidesToShow&quot;: 2}},
                             {&quot;breakpoint&quot;: 480, &quot;settings&quot;: {&quot;slidesToShow&quot;: 1}}
                             ]}" data-brk-library="slider__slick">
 
-                            @foreach (var item in Model.Where(s => s.ProductCategory.Name.Equals("Real Estate")))
-                            {
-                                <div class="pl-15 pr-15">
-                                    <div class="shop-setout text-center" data-brk-library="component__content_slider">
-                                        <div class="shop-setout__img lazyload" data-bg="http://localhost/armwealth/Liber/FileArchives/@item.Image">
-                                            <a asp-controller="RealEstate" asp-action="Details" asp-route-id="@item.Id" class="add-cart"><i class="fas fa-info"></i><span class="shop-slider-text-hover">View More</span></a>
+                                @foreach (var item in realEstateCollection)
+                                {
+                                    <div class="pl-15 pr-15">
+                                        <div class="shop-setout text-center" data-brk-library="component__content_slider">
+                                            <div class="shop-setout__img lazyload" data-bg="http://localhost/armwealth/Liber/FileArchives/@item.Image">
+                                                <a asp-controller="RealEstate" asp-action="Details" asp-route-id="@item.Id" class="add-cart"><i class="fas fa-info"></i><span class="shop-slider-text-hover">View More</span></a>
+                                            </div>
+                                            <a class="shop-setout__link" asp-controller="RealEstate" asp-action="Details" asp-route-id="@item.Id">
+                                                <h3 class="font__family-montserrat font__weight-semibold font__size-16">@item.Name</h3>
+                                            </a>
+                                            @*<div class="brk-base-font-color font__family-montserrat font__size-15 font__weight-semibold">Starting from <span class="font__weight-bold">&#8358;@item.StartFrom</span></div>*@
                                         </div>
-                                        <a class="shop-setout__link" asp-controller="RealEstate" asp-action="Details" asp-route-id="@item.Id">
-                                            <h3 class="font__family-montserrat font__weight-semibold font__size-16">@item.Name</h3>
-                                        </a>
-                                        <div class="brk-base-font-color font__family-montserrat font__size-15 font__weight-semibold">Starting from <span class="font__weight-bold">&#8358;@item.StartFrom</span></div>
                                     </div>
-                                </div>
-                            }
+                                }
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</section>
-<!----Blog/Video/Fund prices -->
+    </section>
+    <!----Blog/Video/Fund prices -->
+
+}
 
 <section></section>
 <!--- Partners -->

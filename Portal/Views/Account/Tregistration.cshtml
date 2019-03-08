@@ -25,7 +25,7 @@
 <div class="main-wrapper text-center">
     <main class="main-container mt-150 mb-10">
 
-        <form asp-action="Registration" method="post" class="brk-form-strict" data-brk-library="component__form">
+        <form asp-action="Tregistration" method="post" class="brk-form-strict" data-brk-library="component__form">
             <div class="container">
                 <div class="row">
                     <div class="col-md-1">
@@ -40,12 +40,15 @@
                             </div>
                             <div class="col-12 col-md-6">
                                 <input type="text" name="FirstName" asp-for="FirstName" placeholder="First Name" required>
+                                <span asp-validation-for="FirstName" class="text-danger"></span>
                             </div>
                             <div class="col-12 col-md-6">
                                 <input type="text" name="LastName" asp-for="LastName" placeholder="Last Name" required>
+                                <span asp-validation-for="LastName" class="text-danger"></span>
                             </div>
                             <div class="col-12 col-md-6">
                                 <input type="email" name="Email" asp-for="Email" required placeholder="Email Address">
+                                <span asp-validation-for="Email" class="text-danger"></span>
                             </div>
                             <div class="col-12 col-md-6">
                                 <input type="text" name="Tel" asp-for="Tel" required placeholder="Phone Number">
@@ -56,15 +59,19 @@
                                     <option value="Female">Female</option>
                                     <option value="Male">Male</option>
                                 </select>
+                                <span asp-validation-for="Gender" class="text-danger"></span>
                             </div>
                             <div class="col-12 col-md-6">
                                 <input type="text" name="BioetricVerificationNumber" asp-for="BioetricVerificationNumber" placeholder="BVN Number">
+                                <span asp-validation-for="BioetricVerificationNumber" class="text-danger"></span>
                             </div>
                             <div class="col-12 col-md-6">
                                 <input type="text" name="Address" asp-for="Address" placeholder="Please enter your address information">
+                                <span asp-validation-for="Address" class="text-danger"></span>
                             </div>
                             <div class="col-12 col-md-6">
                                 <input type="email" name="EmailOfReferrer" asp-for="EmailOfReferrer" placeholder="Who were you referred by?">
+                                <span asp-validation-for="EmailOfReferrer" class="text-danger"></span>
                             </div>
                             <hr>
 
@@ -80,10 +87,12 @@
                             <div class="col-12 col-md-6  text-left">
                                 <label class="brk-form-label font__family-montserrat font__weight-bold" for="brk-pass-form">Account Password</label>
                                 <input asp-for="Password" name="Password" type="password" placeholder="Enter password">
+                                <span asp-validation-for="Password" class="text-danger"></span>
                             </div>
                             <div class="col-12 col-md-6  text-left">
                                 <label class="brk-form-label font__family-montserrat font__weight-bold" for="brk-pass-form">Confirm Password</label>
                                 <input asp-for="Password" name="Password" type="password" placeholder="Confirm password">
+                                <span asp-validation-for="Password" class="text-danger"></span>
                             </div>
                             <div class="col-12 col-md-6  text-left">
                                 <button class="btn btn-inside-out btn-lg  btn-shadow mx-0 my-0" data-brk-library="component__button"><span class="before">Save</span><span class="text">Save</span><span class="after">Save</span></button>

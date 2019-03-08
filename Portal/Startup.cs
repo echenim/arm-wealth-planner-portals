@@ -162,6 +162,10 @@ namespace Portal
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
+                    name: "default",
+                    template: "{controller=Home}/{action=Index}/{id?}");
+
+                routes.MapRoute(
                     name: "areas",
                     template: "{area:exists}/{controller=Dashboard}/{action=Index}/{id?}"
                 );
@@ -180,10 +184,6 @@ namespace Portal
                 //    name: "DebitStatus",
                 //    areaName: "Client",
                 //    template: "Client/{controller=Buy}/{action=DebitStatus}/{au?}");
-
-                routes.MapRoute(
-                    name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
             });
         }
     }

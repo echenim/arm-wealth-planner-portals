@@ -22,7 +22,7 @@ namespace Portal.Controllers
 
         public IActionResult Index()
         {
-            var data = _productManager.Get(s => s.ProductCategory.Name.Equals("Mutual Funds")).OrderBy(s => s.Name);
+            var data = _productManager.Get().OrderBy(s => s.Name);
             return View(data);
         }
     }
