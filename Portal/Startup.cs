@@ -65,7 +65,7 @@ namespace Portal
             .AddCookie(options =>
             {
                 options.LoginPath = new PathString("/Account/Login/");
-                options.LogoutPath = new PathString("/Account/Logoff");
+                options.LogoutPath = new PathString("/Account/Logout");
                 options.AccessDeniedPath = new PathString("/Guest/Index");
             });
 
