@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Distributed;
+using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
@@ -35,9 +36,11 @@ namespace Portal.Areas.Client.Controllers
         public ApplicationDbContext db;
         public ClientRepository _client;
 
+        private readonly IMemoryCache _cache;
+
         public RedemptionController(IHostingEnvironment hostingEnvironment, IArmOneServiceConfigManager configManager,
                                     ILogger<RedemptionController> logger, IConfiguration configuration,
-                                    IDistributedCache cache, ApplicationDbContext _db)
+                                    IMemoryCache cache, ApplicationDbContext _db)
         {
             _hostingEnvironment = hostingEnvironment;
             _webRootPath = _hostingEnvironment.WebRootPath;
@@ -52,24 +55,19 @@ namespace Portal.Areas.Client.Controllers
             _client = new ClientRepository(_configSettingManager, _contentRootPath);
 
             db = _db;
+            _cache = cache;
         }
 
         public IActionResult Initiate()
         {
             var model = new AccountStatementViewModel();
-            var _user = new AuthenticateResponse
+            var _user = _cache.Get<AuthenticateResponse>("ArmUser");
+            if (_user == null)
             {
-                MembershipKey = 1006979,//1007435,
-                EmailAddress = "tolu.olusakin@gmail.com",//"gbadebo.ayan@gmail.com",
-                FirstName = "Tolulope",
-                LastName = "Olusakin",
-                FullName = "Olusakin Tolulope S"//"Funmilayo Ruth Adeyemi",
-                //MembershipKey = 1007435,
-                //EmailAddress = "gbadebo.ayan@gmail.com",
-                //FirstName = "Funmilayo",
-                //LastName = "Adeyemi",
-                //FullName = "Funmilayo Ruth Adeyemi",
-            };
+                TempData["SessionTimeOut"] = $@"You have been logged out due to inactivity. 
+                                                Please login to gain access.";
+                return RedirectToAction("Index", "Home", new { area = "" });
+            }
 
             try
             {
@@ -106,20 +104,17 @@ namespace Portal.Areas.Client.Controllers
         [HttpGet]
         public IActionResult AjaxSendOtp(string action)
         {
-            var _user = new AuthenticateResponse
+            var _user = _cache.Get<AuthenticateResponse>("ArmUser");
+            if (_user == null)
             {
-                MembershipKey = 1006979,//1007435,
-                EmailAddress = "tolu.olusakin@gmail.com",//"gbadebo.ayan@gmail.com",
-                FirstName = "Tolulope",
-                LastName = "Olusakin",
-                FullName = "Olusakin Tolulope S"//"Funmilayo Ruth Adeyemi",
-                //MembershipKey = 1007435,
-                //EmailAddress = "gbadebo.ayan@gmail.com",
-                //FirstName = "Funmilayo",
-                //LastName = "Adeyemi",
-                //FullName = "Funmilayo Ruth Adeyemi",
-            }; 
-            var _sessionID = "fb2e77d.47a0479900504cb3ab4a1f626d174d2d";
+                TempData["SessionTimeOut"] = $@"You have been logged out due to inactivity. 
+                                                Please login to gain access.";
+                return RedirectToAction("Index", "Home", new { area = "" });
+            }
+
+            //var _sessionID = "fb2e77d.47a0479900504cb3ab4a1f626d174d2d";
+            var _sessionID = HttpContext.Session.Id;
+
             try
             {
                 var OtpRequest = new SendOtpRequest
@@ -144,20 +139,16 @@ namespace Portal.Areas.Client.Controllers
         [HttpPost]
         public IActionResult PostRedemption([FromBody] AccountStatementViewModel model)
         {
-            var _user = new AuthenticateResponse
+            var _user = _cache.Get<AuthenticateResponse>("ArmUser");
+            if (_user == null)
             {
-                MembershipKey = 1006979,//1007435,
-                EmailAddress = "tolu.olusakin@gmail.com",//"gbadebo.ayan@gmail.com",
-                FirstName = "Tolulope",
-                LastName = "Olusakin",
-                FullName = "Olusakin Tolulope S"//"Funmilayo Ruth Adeyemi",
-                //MembershipKey = 1007435,
-                //EmailAddress = "gbadebo.ayan@gmail.com",
-                //FirstName = "Funmilayo",
-                //LastName = "Adeyemi",
-                //FullName = "Funmilayo Ruth Adeyemi",
-            };
-            var _sessionID = "fb2e77d.47a0479900504cb3ab4a1f626d174d2d";
+                TempData["SessionTimeOut"] = $@"You have been logged out due to inactivity. 
+                                                Please login to gain access.";
+                return RedirectToAction("Index", "Home", new { area = "" });
+            }
+
+            var _sessionID = HttpContext.Session.Id;
+
             try
             {
                 var redeemedProducts = "RedeemedProducts::";
@@ -180,12 +171,8 @@ namespace Portal.Areas.Client.Controllers
 
                 db.Redemptions.Add(redemption);
                 db.SaveChanges();
-
-                var accountsRequest = new SummaryRequest
-                {
-                    MembershipNumber = _user.MembershipKey
-                };
-                var accountsResponse = _clientService.GetAccountSummary(accountsRequest);
+                
+                var accountsResponse = _client.GetAccountSummary(_user.MembershipKey);
 
                 VerifyOtpRequest OtpRequest = new VerifyOtpRequest { OtpCode = model.Otp, SessionId = _sessionID.ToString() };
 

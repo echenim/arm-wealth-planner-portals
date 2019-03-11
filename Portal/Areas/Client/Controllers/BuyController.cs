@@ -17,6 +17,7 @@ using Portal.Domain.Models;
 using System.Net;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace Portal.Areas.Client.Controllers
 {
@@ -37,9 +38,11 @@ namespace Portal.Areas.Client.Controllers
         public ApplicationDbContext db;
         public ClientRepository _client;
 
+        private readonly IMemoryCache _cache;
+
         public BuyController(IHostingEnvironment hostingEnvironment, IArmOneServiceConfigManager configManager,
                                     ILogger<DashboardController> logger, IConfiguration configuration,
-                                    IDistributedCache cache, ApplicationDbContext _db)
+                                    IMemoryCache cache, ApplicationDbContext _db)
         {
             _hostingEnvironment = hostingEnvironment;
             _webRootPath = _hostingEnvironment.WebRootPath;
@@ -54,6 +57,7 @@ namespace Portal.Areas.Client.Controllers
             _client = new ClientRepository(_configSettingManager, _contentRootPath);
 
             db = _db;
+            _cache = cache;
         }
 
         public IActionResult Index()
@@ -64,19 +68,13 @@ namespace Portal.Areas.Client.Controllers
         public IActionResult AddInvestment()
         {
             var model = new AccountStatementViewModel();
-            var _user = new AuthenticateResponse
+            var _user = _cache.Get<AuthenticateResponse>("ArmUser");
+            if (_user == null)
             {
-                MembershipKey = 1006979,//1007435,
-                EmailAddress = "tolu.olusakin@gmail.com",//"gbadebo.ayan@gmail.com",
-                FirstName = "Tolulope",
-                LastName = "Olusakin",
-                FullName = "Olusakin Tolulope S"//"Funmilayo Ruth Adeyemi",
-                //MembershipKey = 1007435,
-                //EmailAddress = "gbadebo.ayan@gmail.com",
-                //FirstName = "Funmilayo",
-                //LastName = "Adeyemi",
-                //FullName = "Funmilayo Ruth Adeyemi",
-            };
+                TempData["SessionTimeOut"] = $@"You have been logged out due to inactivity. 
+                                                Please login to gain access.";
+                return RedirectToAction("Index", "Home", new { area = "" });
+            }
 
             try
             {
@@ -118,19 +116,13 @@ namespace Portal.Areas.Client.Controllers
         public IActionResult NewInvestment()
         {
             var model = new AccountStatementViewModel();
-            var _user = new AuthenticateResponse
+            var _user = _cache.Get<AuthenticateResponse>("ArmUser");
+            if (_user == null)
             {
-                MembershipKey = 1006979,//1007435,
-                EmailAddress = "tolu.olusakin@gmail.com",//"gbadebo.ayan@gmail.com",
-                FirstName = "Tolulope",
-                LastName = "Olusakin",
-                FullName = "Olusakin Tolulope S"//"Funmilayo Ruth Adeyemi",
-                //MembershipKey = 1007435,
-                //EmailAddress = "gbadebo.ayan@gmail.com",
-                //FirstName = "Funmilayo",
-                //LastName = "Adeyemi",
-                //FullName = "Funmilayo Ruth Adeyemi",
-            };
+                TempData["SessionTimeOut"] = $@"You have been logged out due to inactivity. 
+                                                Please login to gain access.";
+                return RedirectToAction("Index", "Home", new { area = "" });
+            }
 
             try
             {
@@ -192,20 +184,13 @@ namespace Portal.Areas.Client.Controllers
             model.TotalAmount = modelview.TotalAmount;
             model.Orders = modelview.Orders;
 
-            //var _user = HttpContext.Session.Get<AuthenticateResponse>("ArmUser");
-            var _user = new AuthenticateResponse
+            var _user = _cache.Get<AuthenticateResponse>("ArmUser");
+            if (_user == null)
             {
-                MembershipKey = 1006979,//1007435,
-                EmailAddress = "tolu.olusakin@gmail.com",//"gbadebo.ayan@gmail.com",
-                FirstName = "Tolulope",
-                LastName = "Olusakin",
-                FullName = "Olusakin Tolulope S"//"Funmilayo Ruth Adeyemi",
-                //MembershipKey = 1007435,
-                //EmailAddress = "gbadebo.ayan@gmail.com",
-                //FirstName = "Funmilayo",
-                //LastName = "Adeyemi",
-                //FullName = "Funmilayo Ruth Adeyemi",
-            };
+                TempData["SessionTimeOut"] = $@"You have been logged out due to inactivity. 
+                                                Please login to gain access.";
+                return RedirectToAction("Index", "Home", new { area = "" });
+            }
 
             try
             {
@@ -343,30 +328,28 @@ namespace Portal.Areas.Client.Controllers
         public IActionResult PaymentStatus(IFormCollection response, string au)
         {
             var userprofile = new AuthenticateResponse();
-            var _user = new AuthenticateResponse();
             if (!String.IsNullOrEmpty(au))
             {
                 var base64EncodedBytes = System.Convert.FromBase64String(au);
                 var decodedJson = System.Text.Encoding.UTF8.GetString(base64EncodedBytes);
 
                 userprofile = JsonConvert.DeserializeObject<AuthenticateResponse>(decodedJson);
-                _user = userprofile;
             }
 
-            //var _user = HttpContext.Session.Get<AuthenticateResponse>("ArmUser");
-            //if (_user == null)
-            //{
-            //    HttpContext.Session.Set("ArmUser", userprofile);
-            //}
-
-            
-
-            var getClientBalance = _client.GetTotalAccountBalance(_user.MembershipKey);
-
-            if (getClientBalance != null)
+            var _user = _cache.Get<AuthenticateResponse>("ArmUser");
+            if (_user == null)
             {
-                HttpContext.Session.Set("ArmClientBalance", getClientBalance);
+                _cache.Set<AuthenticateResponse>("ArmUser", userprofile, 
+                                                    new MemoryCacheEntryOptions().SetSlidingExpiration(TimeSpan.FromMinutes(20))
+                                                                                 .SetAbsoluteExpiration(TimeSpan.FromHours(1)));
             }
+            
+            //var getClientBalance = _client.GetTotalAccountBalance(_user.MembershipKey);
+
+            //if (getClientBalance != null)
+            //{
+            //    HttpContext.Session.Set("ArmClientBalance", getClientBalance);
+            //}
 
             var trResponse = response;
             var transactionRef = trResponse["arm_txnref"];
@@ -449,20 +432,13 @@ namespace Portal.Areas.Client.Controllers
         //[ValidateAntiForgeryToken]
         public IActionResult ProcessDirectDebit([FromBody]SetUp model)
         {
-            ////var _user = HttpContext.Session.Get<AuthenticateResponse>("ArmUser");
-            var _user = new AuthenticateResponse
+            var _user = _cache.Get<AuthenticateResponse>("ArmUser");
+            if (_user == null)
             {
-                MembershipKey = 1006979,//1007435,
-                EmailAddress = "tolu.olusakin@gmail.com",//"gbadebo.ayan@gmail.com",
-                FirstName = "Tolulope",
-                LastName = "Olusakin",
-                FullName = "Olusakin Tolulope S"//"Funmilayo Ruth Adeyemi",
-                //MembershipKey = 1007435,
-                //EmailAddress = "gbadebo.ayan@gmail.com",
-                //FirstName = "Funmilayo",
-                //LastName = "Adeyemi",
-                //FullName = "Funmilayo Ruth Adeyemi",
-            };
+                TempData["SessionTimeOut"] = $@"You have been logged out due to inactivity. 
+                                                Please login to gain access.";
+                return RedirectToAction("Index", "Home", new { area = "" });
+            }
 
             try
             {
@@ -554,29 +530,29 @@ namespace Portal.Areas.Client.Controllers
         public IActionResult DebitStatus(IFormCollection response, string au)
         {
             var userprofile = new AuthenticateResponse();
-            var _user = new AuthenticateResponse();
             if (!String.IsNullOrEmpty(au))
             {
                 var base64EncodedBytes = System.Convert.FromBase64String(au);
                 var decodedJson = System.Text.Encoding.UTF8.GetString(base64EncodedBytes);
 
                 userprofile = JsonConvert.DeserializeObject<AuthenticateResponse>(decodedJson);
-                _user = userprofile;
             }
 
-            //var _user = HttpContext.Session.Get<AuthenticateResponse>("ArmUser");
-            //if (_user == null)
-            //{
-            //    HttpContext.Session.Set("ArmUser", userprofile);
-            //}
-
-            var getClientBalance = _client.GetTotalAccountBalance(_user.MembershipKey);
-
-            if (getClientBalance != null)
+            var _user = _cache.Get<AuthenticateResponse>("ArmUser");
+            if (_user == null)
             {
-                //HttpContext.Session.Set("ArmClientBalance", getClientBalance);
-                //set session at this point.
+                _cache.Set<AuthenticateResponse>("ArmUser", userprofile,
+                                                            new MemoryCacheEntryOptions().SetSlidingExpiration(TimeSpan.FromMinutes(20))
+                                                                                 .SetAbsoluteExpiration(TimeSpan.FromHours(1)));
             }
+
+            //var getClientBalance = _client.GetTotalAccountBalance(_user.MembershipKey);
+
+            //if (getClientBalance != null)
+            //{
+            //HttpContext.Session.Set("ArmClientBalance", getClientBalance);
+            //set session at this point.
+            //}
 
             var ddResponse = response;
             var ddRef = ddResponse["arm_ddref"];
@@ -633,20 +609,14 @@ namespace Portal.Areas.Client.Controllers
         {
             var decrypt = new SecureCredentials();
 
-            //var _user = HttpContext.Session.Get<AuthenticateResponse>("ArmUser");
-            var _user = new AuthenticateResponse
+            var _user = _cache.Get<AuthenticateResponse>("ArmUser");
+            if (_user == null)
             {
-                MembershipKey = 1006979,//1007435,
-                EmailAddress = "tolu.olusakin@gmail.com",//"gbadebo.ayan@gmail.com",
-                FirstName = "Tolulope",
-                LastName = "Olusakin",
-                FullName = "Olusakin Tolulope S"//"Funmilayo Ruth Adeyemi",
-                //MembershipKey = 1007435,
-                //EmailAddress = "gbadebo.ayan@gmail.com",
-                //FirstName = "Funmilayo",
-                //LastName = "Adeyemi",
-                //FullName = "Funmilayo Ruth Adeyemi",
-            };
+                TempData["SessionTimeOut"] = $@"You have been logged out due to inactivity. 
+                                                Please login to gain access.";
+                return RedirectToAction("Index", "Home", new { area = "" });
+            }
+
             var vendorUserName = decrypt.DecryptCredentials(_configSettingManager.ArmServiceUsername);
             var mackey = _configSettingManager.ArmMacKey;
             try
