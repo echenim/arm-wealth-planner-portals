@@ -6,12 +6,6 @@ namespace Portal.Domain.Models
 {
     public class Products
     {
-        //public Products()
-        //{
-        //    // ProductInvestmentInfos = new HashSet<ProductInvestmentInfo>();
-        //    WhatYouNeedToKNowAboutThisProducts = new List<WhatYouNeedToKNowAboutThisProduct>();
-        //}
-
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
@@ -38,6 +32,8 @@ namespace Portal.Domain.Models
 
         [Required]
         public bool IsActive { get; set; }
+
+        public string IsVouchering { get; set; }
 
         public virtual ProductCategory ProductCategory { get; set; }
 

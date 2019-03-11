@@ -5,6 +5,7 @@ using System.Linq;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+
 using Portal.Areas.Admin.ViewModels;
 using Portal.Business.Contracts;
 using Portal.Business.Utilities;
@@ -91,7 +92,8 @@ namespace Portal.Areas.Admin.Controllers
                     Description = models.Description,
                     StartFrom = models.StartFrom,
                     ProductTypes = models.ProductTypes,
-                    IsActive = models.IsActive
+                    IsActive = models.IsActive,
+                    IsVouchering = models.IsVourcher == true ? "Yes" : "No"
                 };
 
                 #endregion product | benefit | feature
@@ -156,7 +158,8 @@ namespace Portal.Areas.Admin.Controllers
                     Description = models.Description,
                     StartFrom = models.StartFrom,
                     ProductTypes = models.ProductTypes,
-                    IsActive = models.IsActive
+                    IsActive = models.IsActive,
+                    IsVouchering = models.IsVourcher == true ? "Yes" : "No"
                 };
 
                 #endregion product | benefit | feature

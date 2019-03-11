@@ -17,6 +17,7 @@ namespace Portal.AddMigration.Migrations
             modelBuilder
                 .HasAnnotation("ProductVersion", "2.2.0-rtm-35687")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
+                .HasAnnotation("Relational:Sequence:.DBTransManagerStartFrom10000000000", "'DBTransManagerStartFrom10000000000', '', '10000000000', '1', '', '', 'Int64', 'False'")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<long>", b =>
@@ -136,16 +137,19 @@ namespace Portal.AddMigration.Migrations
                     b.Property<decimal>("Amount")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<string>("CartNoOrCustomerIdentifier")
-                        .IsRequired();
-
                     b.Property<DateTime>("OnCartDateTime");
+
+                    b.Property<string>("OwnerIdentifier")
+                        .IsRequired();
 
                     b.Property<int>("ProductId");
 
                     b.Property<string>("Status")
                         .IsRequired()
                         .HasMaxLength(8);
+
+                    b.Property<string>("TransactionNo")
+                        .IsRequired();
 
                     b.HasKey("Id");
 
@@ -645,6 +649,8 @@ namespace Portal.AddMigration.Migrations
 
                     b.Property<bool>("IsActive");
 
+                    b.Property<string>("IsVouchering");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(100);
@@ -744,6 +750,79 @@ namespace Portal.AddMigration.Migrations
                     b.HasIndex("PersonId");
 
                     b.ToTable("Referrer");
+                });
+
+            modelBuilder.Entity("Portal.Domain.Models.TransQIdenfier", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValueSql("NEXT VALUE FOR DBTransManagerStartFrom10000000000");
+
+                    b.Property<string>("Owner")
+                        .IsRequired();
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TransQIdenfier");
+                });
+
+            modelBuilder.Entity("Portal.Domain.Models.Transactional", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<decimal>("Amount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("ItemOwner")
+                        .IsRequired();
+
+                    b.Property<string>("OrderAndPurchaseStatus")
+                        .IsRequired()
+                        .HasMaxLength(15);
+
+                    b.Property<DateTime>("OrderDate");
+
+                    b.Property<int>("ProductId");
+
+                    b.Property<long>("TransactionNo");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.HasIndex("TransactionNo");
+
+                    b.ToTable("Transactional");
+                });
+
+            modelBuilder.Entity("Portal.Domain.Models.Vouchering", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<decimal>("Amount")
+                        .HasColumnType("decimal(18, 2)");
+
+                    b.Property<DateTime?>("ExpiringDate");
+
+                    b.Property<int>("ProductId");
+
+                    b.Property<string>("VoucherCode")
+                        .IsRequired()
+                        .HasMaxLength(13);
+
+                    b.Property<string>("VourcherPin")
+                        .IsRequired()
+                        .HasMaxLength(40);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("Vouchering");
                 });
 
             modelBuilder.Entity("Portal.Domain.Models.WhatYouNeedToKNowAboutThisProduct", b =>
@@ -938,6 +1017,27 @@ namespace Portal.AddMigration.Migrations
                     b.HasOne("Portal.Domain.Models.Person", "Person")
                         .WithMany()
                         .HasForeignKey("PersonId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Portal.Domain.Models.Transactional", b =>
+                {
+                    b.HasOne("Portal.Domain.Models.Products", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Portal.Domain.Models.TransQIdenfier", "TransQIdenfier")
+                        .WithMany()
+                        .HasForeignKey("TransactionNo")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Portal.Domain.Models.Vouchering", b =>
+                {
+                    b.HasOne("Portal.Domain.Models.Products", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

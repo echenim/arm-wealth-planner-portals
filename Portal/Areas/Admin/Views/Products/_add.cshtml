@@ -92,14 +92,27 @@
                                             <label> Product Description</label>
                                             <textarea name="Description" asp-for="Description" class="form-control" rows="5"></textarea>
                                         </div>
-
-                                        <div class="form-group">
-                                            Active
-                                            <label class="switch">
-                                                <input type="checkbox" class="success" name="IsActive" asp-for="IsActive">
-                                                <span class="slider round"></span>
-                                            </label>
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    Active
+                                                    <label class="switch">
+                                                        <input type="checkbox" class="success" name="IsActive" asp-for="IsActive">
+                                                        <span class="slider round"></span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    Is Vourcher Available
+                                                    <label class="switch">
+                                                        <input type="checkbox" class="success" name="IsVourcher" asp-for="IsVourcher">
+                                                        <span class="slider round"></span>
+                                                    </label>
+                                                </div>
+                                            </div>
                                         </div>
+
                                         <div class="form-buttons-w">
                                             <button class="btn btn-primary" type="submit">Save</button>
                                         </div>

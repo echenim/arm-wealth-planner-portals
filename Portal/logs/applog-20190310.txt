@@ -1,0 +1,4 @@
+2019-03-10 1:27:PM System.NullReferenceException: Object reference not set to an instance of an object.
+   at Portal.Areas.Client.Controllers.DashboardController.Index() in D:\WorkSpace\wealth-planner\Portal\Areas\Client\Controllers\DashBoardController.cs:line 89
+2019-03-10 2:00:PM System.NullReferenceException: Object reference not set to an instance of an object.
+   at Portal.Areas.Client.Controllers.DashboardController.Index() in D:\WorkSpace\wealth-planner\Portal\Areas\Client\Controllers\DashBoardController.cs:line 89

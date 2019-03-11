@@ -28,6 +28,7 @@ namespace Portal.Domain.ModelView
         public string ProductTypes { get; set; }
 
         public bool IsActive { get; set; }
+        public bool IsVourcher { get; set; }
 
         public List<SelectListItem> AvailableCategories { get; set; }
     }

@@ -72,14 +72,16 @@
                         <!-- Enter Expression of Interest (EOI)-->
                         <div>
                             <h5 class="text-gray-light font__family-varela-round line__height-26 font__size-18 letter-spacing-20 text-justify" data-brk-library="component__title">For inquiries or to indicate interest, please fill the form below and one of our advisors would contact you shortly.</h5>
-                            <form action="#" class="brk-form-strict pt-20 pt-xs-35 brk-subscribe-mail brk-subscribe-mail_dark z-index-3" data-brk-library="recaptcha">
+                            <form asp-controller="CartAndPayment" asp-action="ExpressinOfInterest" class="brk-form-strict pt-20 pt-xs-35 brk-subscribe-mail brk-subscribe-mail_dark z-index-3" data-brk-library="recaptcha">
                                 <div class="row">
-                                    <div class="col-12 col-md-6"><input type="text" placeholder="Full Name" name="FNAME"></div>
-                                    <div class="col-12 col-md-6"><input type="text" placeholder="Your email" name="EMAIL"></div>
-                                    <div class="col-12 col-md-6"><input type="text" placeholder="Your Phone" name="PHONE"></div>
-                                    <div class="col-12 col-md-6"><input type="text" placeholder="State of residence" name="STATE"></div>
-                                    <div class="col-12 col-md-6"><input type="text" placeholder="Product Name" name="product"></div>
-                                    <div class="col-12 col-md-6 text-center"><button class="btn-backgrounds btn-backgrounds_left-icon btn-backgrounds_white font__family-montserrat font__weight-bold text-uppercase font__size-13 mt-50">Send inquiry <span class="before line__height-15"><i class="far fa-hand-point-right font__size-15"></i></span></button></div>
+                                    <div class="col-12 col-md-6"><input type="text" placeholder="Full Name" asp-for="FullName" name="FullName"></div>
+                                    <div class="col-12 col-md-6"><input type="text" placeholder="Your email" asp-for="Email" name="Email"></div>
+                                    <div class="col-12 col-md-6"><input type="text" placeholder="Your Phone" asp-for="PhoneNumber" name="PhoneNumber"></div>
+                                    <div class="col-12 col-md-6"><input type="text" placeholder="State of residence" asp-for="State" name="State"></div>
+                                    <div class="col-12 col-md-6"><input type="text" placeholder="Product Name" asp-for="ProductName" name="ProductName"></div>
+                                    <div class="col-12 col-md-6 text-center">
+                                        <button class="btn-backgrounds btn-backgrounds_left-icon btn-backgrounds_white font__family-montserrat font__weight-bold text-uppercase font__size-13 mt-50">Send inquiry <span class="before line__height-15"><i class="far fa-hand-point-right font__size-15"></i></span></button>
+                                    </div>
                                 </div>
                             </form>
                         </div>

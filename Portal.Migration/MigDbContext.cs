@@ -26,8 +26,16 @@ namespace Portal.AddMigration
         public DbSet<ProductCategory> ProductCategory { get; set; }
         public DbSet<Products> Products { get; set; }
         public DbSet<WhatYouNeedToKNowAboutThisProduct> WhatYouNeedToKNowAboutThisProduct { get; set; }
+        public DbSet<TransQIdenfier> TransQIdenfier { get; set; }
+        public DbSet<Transactional> Transactional { get; set; }
 
+        #region mark for deletion
+
+        public DbSet<Carts> Carts { get; set; }
         public DbSet<PurchaseOrders> PurchaseOrders { get; set; }
+
+        #endregion mark for deletion
+
         public DbSet<ApplicationRoleClaim> ApplicationRoleClaim { get; set; }
         public DbSet<ApplicationGroup> ApplicationGroup { get; set; }
         public DbSet<ApplicationUserGroup> ApplicationUserGroup { get; set; }
@@ -35,7 +43,7 @@ namespace Portal.AddMigration
         public DbSet<Referrer> Referrer { get; set; }
         public DbSet<MemberShip> MemberShip { get; set; }
         public DbSet<ProductInvestmentInfo> ProductInvestmentInfo { get; set; }
-        public DbSet<Carts> Carts { get; set; }
+        public DbSet<Vouchering> Vouchering { get; set; }
 
         //client portal
         public DbSet<DDebit> DDebit { get; set; }
@@ -51,6 +59,18 @@ namespace Portal.AddMigration
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
+
+            #region Manager Unique Identity generator
+
+            builder.HasSequence<long>("DBTransManagerStartFrom10000000000")
+                .StartsAt(10000000000)
+                .IncrementsBy(1);
+
+            builder.Entity<TransQIdenfier>()
+                .Property(x => x.Id)
+                .HasDefaultValueSql("NEXT VALUE FOR DBTransManagerStartFrom10000000000");
+
+            #endregion Manager Unique Identity generator
 
             #region apply uniqueness contraints on table  columm
 

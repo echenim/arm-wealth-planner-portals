@@ -1,5 +1,7 @@
-﻿@using Portal.Business.Utilities
+﻿@using Portal.Areas.Admin.Controllers
+@using Portal.Business.Utilities
 @using Portal.Domain.ViewModels
+@using Microsoft.AspNetCore.Mvc.Rendering
 @inject UserUtils UserUtil
 
 <!DOCTYPE html>
@@ -32,10 +34,10 @@
             <div class="brk-header-mobile__open"><span></span></div>
             <div class="brk-header-mobile__logo">
                 <a href="#">
-                    <img src="~/store/img/arm-investment-center-logo.png"
+                    <img src="~/Liber/Store/img/arm-investment-center-logo.png"
                          class="brk-header-mobile__logo-1 lazyload"
                          style="margin: 0.25rem auto;" alt="ARM Investment Center Logo" />
-                    <img src="~/store/img/arm-investment-center-logo.png"
+                    <img src="~/Liber/Store/img/arm-investment-center-logo.png"
                          class="brk-header-mobile__logo-2 lazyload"
                          style="margin: 0.25rem auto;" alt="ARM Investment Center Logo" />
                 </a>
@@ -59,10 +61,10 @@
                         <div class="col-lg-2 align-self-lg-center d-none d-lg-block ">
                             <a href="/" class="brk-header__logo brk-header__item @@modifier">
 
-                                <img src="~/store/img/ARM-investment-center-logo.png"
+                                <img src="~/Liber/Store/img/ARM-investment-center-logo.png"
                                      class="brk-header__logo-2 lazyload centering-img"
                                      style="margin: 0.25rem auto;" alt="ARM Investment Center Logo" />
-                                <img src="~/store/img/arm-investment-center-logo.png"
+                                <img src="~/Liber/Store/img/arm-investment-center-logo.png"
                                      class="brk-header__logo-1 lazyload centering-img"
                                      style="margin: 0.25rem auto;" alt="ARM Investment Center Logo" />
                             </a>
@@ -71,34 +73,30 @@
                         <!-- Cart -->
                         <div class="col-lg-5 align-self-lg-stretch text-left text-lg-right">
                             <div class="brk-mini-cart brk-header__item">
-                                <a href="cart.html" class="brk-mini-cart__open d-flex"><i class="fa fa-shopping-basket" aria-hidden="true"></i> <span class="brk-mini-cart__label font__family-varela-round font__weight-medium text-uppercase letter-spacing-60 font__size-10 opacity-80">My cart</span> <span class="brk-mini-cart__title">Shopping Cart</span> <span class="brk-mini-cart__count brk-mini-cart__count_skin-1 brk-mini-cart__count_white">4</span></a>
+                                <a href="cart.html" class="brk-mini-cart__open d-flex"><i class="fa fa-shopping-basket" aria-hidden="true"></i> <span class="brk-mini-cart__label font__family-varela-round font__weight-medium text-uppercase letter-spacing-60 font__size-10 opacity-80">My cart</span> <span class="brk-mini-cart__title">Shopping Cart</span> <span class="brk-mini-cart__count brk-mini-cart__count_skin-1 brk-mini-cart__count_white">@ViewBag.Count</span></a>
                                 <div class="brk-mini-cart__menu">
-                                    <!-- Cart Dropdown-->
+                                    Cart Dropdown
                                     <div class="brk-mini-cart__header"><span class="font__family-varela-round font__weight-bold font__size-18">My Cart</span></div>
                                     <div class="brk-mini-cart__products">
-                                        <div class="brk-mini-cart__product">
-                                            <div class="brk-mini-cart__product--img"><img class="lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="img/businessman.jpg" alt="alt"></div>
-                                            <div class="brk-mini-cart__product--title-price">
-                                                <a href="#">
-                                                    <h4 class="font__family-varela-round font__size-16 line__height-21 font__weight-semibold ">ARM Money Market Fund</h4>
-                                                </a><span class="brk-mini-cart__product--price font__family-varela-round">&#8358;260,000.00</span>
+                                        @foreach (var item in (IQueryable<Transactional>)ViewData["cartitems"])
+                                        {
+                                            <div class="brk-mini-cart__product">
+                                                <div class="brk-mini-cart__product--img"><img class="lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="@Url.Content("~/")Liber/FileArchives/@item.Product.Image" alt="alt"></div>
+                                                <div class="brk-mini-cart__product--title-price">
+                                                    <a href="#">
+                                                        <h4 class="font__family-varela-round font__size-16 line__height-21 font__weight-semibold text-truncate">@item.Product.Name</h4>
+                                                    </a> <span class="brk-mini-cart__product--price font__family-varela-round">&#8358;@item.Amount</span>
+                                                </div>
+                                                <div class="brk-quantity"><span class="brk-quantity__arrows minus"></span> <input class="brk-quantity__value" name="quantity" type="text" value="1"></div>
+                                                <a href="#" class="brk-mini-cart__product--remove remove"><i class="fa fa-times-circle" aria-hidden="true"></i></a>
                                             </div>
-                                            <div class="brk-quantity"><span class="brk-quantity__arrows minus"></span> <input class="brk-quantity__value" name="quantity" type="text" value="2"> <span class="brk-quantity__arrows plus"></span></div>
-                                            <a href="#" class="brk-mini-cart__product--remove remove"><i class="fa fa-times-circle" aria-hidden="true"></i></a>
-                                        </div>
-                                        <div class="brk-mini-cart__product">
-                                            <div class="brk-mini-cart__product--img"><img class="lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="img/businessman.jpg" alt="alt"></div>
-                                            <div class="brk-mini-cart__product--title-price">
-                                                <a href="#">
-                                                    <h4 class="font__family-varela-round font__size-16 line__height-21 font__weight-semibold text-truncate">ARM Ethical Fund</h4>
-                                                </a> <span class="brk-mini-cart__product--price font__family-varela-round">&#8358;12,200,00.00</span>
-                                            </div>
-                                            <div class="brk-quantity"><span class="brk-quantity__arrows minus"></span> <input class="brk-quantity__value" name="quantity" type="text" value="2"> <span class="brk-quantity__arrows plus"></span></div>
-                                            <a href="#" class="brk-mini-cart__product--remove remove"><i class="fa fa-times-circle" aria-hidden="true"></i></a>
-                                        </div>
+                                        }
                                     </div>
                                     <div class="brk-mini-cart__links">
-                                        <div class="brk-mini-cart__links--wrap"><a class="brk-mini-cart__links--cart" href="cart.html"><i class="fa fa-shopping-basket"></i> Cart</a> <a class="brk-mini-cart__links--checkout" href="checkout.html">Proceed to checkout <i class="far fa-arrow-right"></i></a></div>
+                                        <div class="brk-mini-cart__links--wrap">
+                                            <a asp-controller="CartAndPayment" asp-action="Carts" class="brk-mini-cart__links--cart"><i class="fa fa-shopping-basket"></i> Cart</a>
+                                            <a asp-controller="CartAndPayment" asp-action="CheckOut" class="brk-mini-cart__links--checkout">Proceed to checkout <i class="far fa-arrow-right"></i></a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
