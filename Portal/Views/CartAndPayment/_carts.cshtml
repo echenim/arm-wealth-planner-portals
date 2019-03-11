@@ -1,0 +1,133 @@
+﻿@model CartView
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!--- BreadCrumb Area-->
+
+<div class="breadcrumbs__section breadcrumbs__section-dark bg__style mt-80 mb-30 pt-80 pb-80 lazyload" data-bg="img/alternative-banner.jpg" data-brk-library="component__breadcrumbs_css">
+    <div class="brk-base-bg-6 breadcrumb-bg full__size-absolute"></div>
+    <h2 class="font__size-40 line__height-46 font__family-montserrat font__weight-ultralight text-center"><span class="font__weight-bold">Cart</span></h2>
+    <div class="breadcrumbs__wrapper">
+        <div class="container">
+            <ol class="breadcrumb font__family-montserrat font__weight-medium font__size-12 letter-spacing-100">
+                <li class="breadcrumb__icon"><a href="#"><i class="fas fa-home"></i></a></li>
+
+                <li class="active">Cart</li>
+            </ol>
+        </div>
+    </div>
+</div>
+
+<h1 class="sr-only">Cart</h1>
+<!---- Page Heading -->
+<div class="main-wrapper text-center">
+    <main class="main-container mt-150 mb-10">
+
+        <!---- Cart Breakdown -->
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-xl-10 col-lg-11">
+                    <div class="tabs-wrapper mb-120" data-brk-library="component__steps">
+                        <div class="steps__wrapper-main steps__wrapper-checkers">
+                            <div class="steps__progress"></div>
+                            <ul class="steps__wrapper tabs" data-tabgroup="tab-group-5">
+                                <li class="complete">
+                                    <a class="active">
+                                        <span class="font__family-montserrat font__weight-bold font__size-15 steps__dot"><span class="before"></span> <span class="after"></span> 1</span>
+                                        <p class="font__family-montserrat font__size-15 steps__title">Cart</p>
+                                    </a>
+                                </li>
+                                <li class="">
+                                    <a href="checkout.html" class="">
+                                        <span class="font__family-montserrat font__weight-bold font__size-15 steps__dot"><span class="before"></span> <span class="after"></span> 2</span>
+                                        <p class="font__family-montserrat font__size-15 steps__title">Checkout</p>
+                                    </a>
+                                </li>
+                                <li class="">
+                                    <a class="">
+                                        <span class="font__family-montserrat font__weight-bold font__size-15 steps__dot"><span class="before"></span> <span class="after"></span> 3</span>
+                                        <p class="font__family-montserrat font__size-15 steps__title">Payment</p>
+                                    </a>
+                                </li>
+                                <li class="">
+                                    <a class="">
+                                        <span class="font__family-montserrat font__weight-bold font__size-15 steps__dot"><span class="before"></span> <span class="after"></span> 4</span>
+                                        <p class="font__family-montserrat font__size-15 steps__title">Done</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="brk-cart" data-brk-library="component__cart">
+                @ViewBag.Name
+                <table>
+                    <thead>
+                        <tr>
+                            <th colspan="2">Investment Product</th>
+                            <th>Price</th>
+                            <th>Qty</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.CartCollection)
+                        {
+                            <tr>
+                                <td>
+                                    <div class="d-flex flex-row justify-content-lg-start justify-content-between align-items-center">
+                                        <button class="brk-cart__remove"></button>
+                                        <img data-src="../Liber/FileArchives/@item.Product.Image" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="item-alt" class="lazyload brk-cart__img">
+                                    </div>
+                                </td>
+                                <td aria-label="Product"><a href="#" class="font__size-16 line-height-1-375 brk-cart__title">@item.Product.Name</a></td>
+                                <td aria-label="Price"><span class="font__size-16 line__height-20 font__family-montserrat font__weight-bold">&#8358;@item.Amount</span></td>
+                                <td aria-label="Qty">
+                                    <div class="brk-cart__count brk-cart__count_input"><button type="button" class="count-less"><i class="fas fa-caret-left brk-base-font-color"></i></button> <input type="number" value="1"> <button type="button" class="count-more"><i class="fas fa-caret-right brk-base-font-color"></i></button></div>
+                                </td>
+                                <td aria-label="Total"><span class="font__size-16 line-height-1-5 font__family-montserrat font__weight-bold">&#8358;@item.Amount</span></td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                <div class="brk-cart__footer">
+                    <div class="brk-cart__footer-coupon">
+                        @{
+                            var isThereVoucher = Model.CartCollection.Where(s => !string.IsNullOrEmpty(s.Product.IsVouchering) && s.Product.IsVouchering.Equals("Yes"));
+
+                            if (isThereVoucher.Any())
+                            {
+                                <form class="brk-form-round brk-form-round-btn-inside-full w-100">
+                                    <input type="text" placeholder="enter voucher"> <button class="btn btn-inside-out btn-lg border-radius-30 btn-shadow mx-0 my-0" data-brk-library="component__button"><span class="before">apply</span><span class="text">apply</span><span class="after">apply</span></button>
+                                </form>
+
+                            }
+
+                        }
+                    </div>
+                    <div class="brk-cart__footer-total">
+                        <div class="brk-cart__footer-total-item font__family-montserrat">
+                            <div class="font__size-sm-14 font__size-13 line-height-1-5">Subtotal</div>
+                            <div class="font__size-14 line-height-1-5 font__weight-bold">&#8358;@Model.SubTotal</div>
+                        </div>
+                        <div class="brk-cart__footer-total-item font__family-montserrat">
+                            <div class="font__size-sm-14 font__size-13 line-height-1-5">Discount</div>
+                            <div class="font__size-14 line-height-1-5 font__weight-bold">@Model.Discount</div>
+                        </div>
+                        <div class="brk-cart__footer-total-item font__family-montserrat">
+                            <div class="font__size-sm-14 font__size-13 line-height-1-5">Total</div>
+                            <div class="font__size-16 line-height-1-25 font__weight-bold brk-base-font-color">&#8358;@Model.Total</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-center flex-md-row flex-column pt-md-30 pt-30 pb-md-30 pb-30 pl-lg-60 pl-30 pr-30">
+                    <a asp-controller="Home" asp-action="Index" class="btn btn-inside-out btn-inside-out-invert btn-lg btn-icon border-radius-30 font__family-open-sans font__size-13 font__family-montserrat font__weight-bold pl-50 pr-50" data-brk-library="component__button"><i class="fas fa-sync-alt icon-inline"></i> <span class="before">Update cart</span><span class="text">Update cart</span><span class="after">Update cart</span> </a>
+                    <a asp-controller="CartAndPayment" asp-action="CheckOut" class="btn btn-inside-out btn-inside-out-invert btn-lg btn-icon border-radius-30 font__family-open-sans font__size-13 font__family-montserrat font__weight-bold pl-50 pr-50" data-brk-library="component__button"><i class="fas fa-sync-alt icon-inline"></i> <span class="before">CheckOut</span><span class="text">Update cart</span><span class="after">CheckOut</span> </a>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>

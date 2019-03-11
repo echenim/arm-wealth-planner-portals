@@ -14,7 +14,7 @@ namespace Portal.Domain.Models
         public long Id { get; set; }
 
         [Required]
-        public string Identifier { get; set; }
+        public string TransactionNo { get; set; }
 
         [Required]
         [ForeignKey(nameof(Products))]
@@ -30,6 +30,9 @@ namespace Portal.Domain.Models
 
         [Required]
         public DateTime OnCartDateTime { get; set; }
+
+        [Required]
+        public string OwnerIdentifier { get; set; }
 
         public virtual Products Products { get; set; }
     }
