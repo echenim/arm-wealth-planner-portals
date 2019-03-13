@@ -28,10 +28,7 @@ namespace Portal.Business.StoreManagers
 
         public CustomerInformationView GetCustomerInformation(string username, string password)
         {
-            var result = new CustomerInformationView();
-
-            #region service calling for customer information
-
+            var result = new CustomerInformationView();          
             var configSetting = _configSettingManager;
 
             var absoluteUrl = new UriBuilder()
@@ -40,9 +37,7 @@ namespace Portal.Business.StoreManagers
                 Host = "localhost",
                 Port = 5000
             };
-
-            #endregion service calling for customer information
-
+            
             //authenticate user
             var customerLoginRequest = new ArmOneAuthRequest
             {
@@ -57,9 +52,36 @@ namespace Portal.Business.StoreManagers
             //else authenticate on datahub and onboard on armone
             if (customerLoginResponse.ResponseCode == null)
             {
+                if (IsValidEmailAddress(username) == false)
+                {
+                    var dHubResponse = DataHubClientInfo(username, password);
+                    if (dHubResponse != null)
+                    {
+                        //make datahub call for bvn and gender
+                        var customerRequest = new ClientValidateRequest
+                        { CustomerReference = dHubResponse.MembershipKey.ToString() };
+                        var customerResponse = _clientService.ClientValidate(customerRequest);
+
+                        var customerDetail = customerResponse.CustomerDetails.FirstOrDefault();
+
+                        result.FirstName = dHubResponse.FirstName;
+                        result.LastName = dHubResponse.LastName;
+                        result.ResponseDescription = dHubResponse.ResponseMessage;
+                        result.ResponseCode = "00";
+                        result.Email = dHubResponse.EmailAddress;
+                        result.IsAccountActivated = dHubResponse.IsActive;
+                        result.MembershipNumber = dHubResponse.MembershipKey.ToString();
+                        result.BvnNumber = customerDetail.BvnNumber;
+                        result.Gender = customerDetail.Gender;
+
+                        return result;
+                    }
+                }
+
                 var registerOnArmOne = OnboardOldUsers(username, password);
                 if (registerOnArmOne.ResponseCode == "00")
-                    customerLoginResponse = _clientService.ArmOneAuthenticate(customerLoginRequest);
+                    customerLoginResponse = _clientService.ArmOneAuthenticate(customerLoginRequest);               
+
             }
 
             //get customer detail from arm one
@@ -96,7 +118,7 @@ namespace Portal.Business.StoreManagers
         public AuthenticateResponse DataHubClientInfo(string membershipnumber, string password)
         {
             var request = new AuthenticateRequest { Password = password, UserName = membershipnumber };
-            var response = _clientService.Authenticate(request);
+            var response = _clientService.Authenticate(request); 
 
             return response;
         }
@@ -288,7 +310,7 @@ namespace Portal.Business.StoreManagers
             return state;
         }
 
-        public static bool IsValidEmailAddress(string s)
+        public bool IsValidEmailAddress(string s)
         {
             var regex = new Regex(@"[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*
                                     @(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?");

@@ -10,5 +10,7 @@ namespace Portal.Business.Contracts
         string UserSessionManagerForTrackingActivities();
 
         CartDetailView ViewCart(string email);
+
+        string DecryptCredentials(string credentials);
     }
 }

@@ -138,7 +138,7 @@ namespace Portal.Services
         }
 
         //currently api can't pull from test db as endpoint has not been written.
-        //pulling directly from the tesdb.
+        //pulling directly from the testdb.
         public PriceHistoryResponse GetFundPriceHistory(string fundcode)
         {
             var request = new PriceHistoryRequest
