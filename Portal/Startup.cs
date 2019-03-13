@@ -49,25 +49,16 @@ namespace Portal
             services.AddDistributedMemoryCache();
             services.AddSession(s => s.IdleTimeout = TimeSpan.FromHours(2));
 
-            //services.AddDistributedMemoryCache();
-            ////services.AddSession(options =>
-            ////{
-            ////    // Set a short timeout for easy testing.
-            ////    options.Cookie.Name = ".ClientPortal.Session";
-            ////    options.IdleTimeout = TimeSpan.FromMinutes(30);
-            ////    options.Cookie.HttpOnly = true;
-            ////});
-
-            ////services.AddAuthentication(options =>
-            ////{
-            ////    options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-            ////})
-            ////.AddCookie(options =>
-            ////{
-            ////    options.LoginPath = new PathString("/Account/Login/");
-            ////    options.LogoutPath = new PathString("/Account/Logoff");
-            ////    options.AccessDeniedPath = new PathString("/Guest/Index");
-            ////});
+            services.AddAuthentication(options =>
+            {
+                options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+            })
+            .AddCookie(options =>
+            {
+                options.LoginPath = new PathString("/Account/Login/");
+                options.LogoutPath = new PathString("/Account/Logout");
+                options.AccessDeniedPath = new PathString("/Guest/Index");
+            });
 
             ////services.AddMemoryCache(options =>
             ////{

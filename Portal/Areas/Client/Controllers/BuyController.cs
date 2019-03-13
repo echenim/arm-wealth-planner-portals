@@ -656,7 +656,8 @@ namespace Portal.Areas.Client.Controllers
                     }
                     else
                     {
-                        return StatusCode((int)HttpStatusCode.ExpectationFailed, cResponse.ArmDdStatusCode + " There was a problem processing your request.");
+                        return StatusCode((int)HttpStatusCode.ExpectationFailed, 
+                                       cResponse.ArmDdStatusCode + " There was a problem processing your request.");
                     }
 
                 }

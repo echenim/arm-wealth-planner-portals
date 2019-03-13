@@ -15,8 +15,10 @@ using Portal.Domain.Models.Identity;
 using Microsoft.Extensions.Caching.Memory;
 using Portal.Domain.ViewModels;
 using Portal.Business.ViewModels;
-using Portal.Domain.ModelView;
-using Portal.Helpers;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Portal.Areas.Client.Extensions;
 
 namespace Portal.Controllers
 {
@@ -71,7 +73,7 @@ namespace Portal.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public IActionResult Login(LoginViewModels model)
+        public async Task<IActionResult> Login(LoginViewModels model)
         {
             if (!ModelState.IsValid) return View(model);
             ShowCartInformation();
@@ -140,11 +142,19 @@ namespace Portal.Controllers
                         }
                     }
 
+                    _cache.Set<AuthenticateResponse>("ArmUser", dataHubObj, new MemoryCacheEntryOptions()
+                                                                            .SetSlidingExpiration(TimeSpan.FromMinutes(20))
+                                                                            .SetAbsoluteExpiration(TimeSpan.FromHours(1)));
+
+                    //var claims = new[] { new Claim("name", armOneObj.MembershipNumber), new Claim(ClaimTypes.Role, "Client") };
+                    //var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                    //await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(identity));
+
+                    //HttpContext.Session.Set("ArmUser", dataHubObj);
+
                     return RedirectToAction("Index", "Dashboard", new { area = "Client" });
                 }
             }
-
-            return View();
         }
 
         [AllowAnonymous]
