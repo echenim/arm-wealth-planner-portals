@@ -26247,3 +26247,493 @@ INNER JOIN [ProductCategory] AS [s.Product.ProductCategory] ON [s.Product].[Prod
 2019-03-13T13:33:49.8051802+01:00 0HLL7LN16TCAQ:0000000D [INF] Request finished in 15.0666ms 404  (791a596a)
 2019-03-13T13:33:50.2628602+01:00 0HLL7LN16TCAR:00000003 [INF] Request starting HTTP/1.1 GET http://localhost/armwealth/CartAndPayment/img/alternative-banner.jpg   (ca22a1cb)
 2019-03-13T13:33:50.2686010+01:00 0HLL7LN16TCAR:00000003 [INF] Request finished in 4.7461ms 404  (791a596a)
+2019-03-13T13:53:35.1191606+01:00 0HLL7MBJNP3FB:00000001 [INF] Request starting HTTP/1.1 GET http://localhost/armwealth   (ca22a1cb)
+2019-03-13T13:53:35.1700804+01:00 0HLL7MBJNP3FB:00000001 [WRN] Failed to determine the https port for redirect. (ca76cc21)
+2019-03-13T13:53:35.2653337+01:00 0HLL7MBJNP3FB:00000001 [INF] "Identity.Application" was not authenticated. Failure message: "Unprotect ticket failed" (48071232)
+2019-03-13T13:53:35.3529851+01:00 0HLL7MBJNP3FB:00000001 [INF] Executing endpoint '"Portal.Controllers.HomeController.Index (Portal)"' (500cc934)
+2019-03-13T13:53:35.3821682+01:00 0HLL7MBJNP3FB:00000001 [INF] Route matched with "{action = \"Index\", controller = \"Home\", area = \"\"}". Executing action "Portal.Controllers.HomeController.Index (Portal)" (a44c0341)
+2019-03-13T13:53:35.8869769+01:00 0HLL7MBJNP3FB:00000001 [INF] Executing action method "Portal.Controllers.HomeController.Index (Portal)" - Validation state: Valid (dad538d7)
+2019-03-13T13:53:36.6223844+01:00 0HLL7MBJNP3FB:00000001 [WRN] No type was specified for the decimal column '"AmountApproved"' on entity type '"DDebit"'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values using 'HasColumnType()'. (3a0db05f)
+2019-03-13T13:53:36.6225414+01:00 0HLL7MBJNP3FB:00000001 [WRN] No type was specified for the decimal column '"DebitAmount"' on entity type '"DDebit"'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values using 'HasColumnType()'. (3a0db05f)
+2019-03-13T13:53:36.6226282+01:00 0HLL7MBJNP3FB:00000001 [WRN] No type was specified for the decimal column '"ArmDdAmt"' on entity type '"DirectDebitTransactions"'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values using 'HasColumnType()'. (3a0db05f)
+2019-03-13T13:53:36.6227599+01:00 0HLL7MBJNP3FB:00000001 [WRN] No type was specified for the decimal column '"TransactionAmount"' on entity type '"PaymentTransactionStatus"'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values using 'HasColumnType()'. (3a0db05f)
+2019-03-13T13:53:36.6228638+01:00 0HLL7MBJNP3FB:00000001 [WRN] No type was specified for the decimal column '"Amount"' on entity type '"PurchaseOrders"'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values using 'HasColumnType()'. (3a0db05f)
+2019-03-13T13:53:36.6229173+01:00 0HLL7MBJNP3FB:00000001 [WRN] No type was specified for the decimal column '"Amount"' on entity type '"Redemption"'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values using 'HasColumnType()'. (3a0db05f)
+2019-03-13T13:53:36.7393558+01:00 0HLL7MBJNP3FB:00000001 [INF] Entity Framework Core "2.2.0-rtm-35687" initialized '"ApplicationDbContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None" (9958f5bb)
+2019-03-13T13:53:53.1798138+01:00 0HLL7MBJNP3FB:00000001 [ERR] An error occurred using the connection to database '"ArmWealthPlanner"' on server '"L-ARMHQ-IT37\SQLEXPRESS"'. (5fc3407c)
+System.Data.SqlClient.SqlException (0x80131904): A network-related or instance-specific error occurred while establishing a connection to SQL Server. The server was not found or was not accessible. Verify that the instance name is correct and that SQL Server is configured to allow remote connections. (provider: SQL Network Interfaces, error: 26 - Error Locating Server/Instance Specified)
+   at System.Data.SqlClient.SqlInternalConnectionTds..ctor(DbConnectionPoolIdentity identity, SqlConnectionString connectionOptions, SqlCredential credential, Object providerInfo, String newPassword, SecureString newSecurePassword, Boolean redirectedUserInstance, SqlConnectionString userConnectionOptions, SessionData reconnectSessionData, Boolean applyTransientFaultHandling, String accessToken)
+   at System.Data.SqlClient.SqlConnectionFactory.CreateConnection(DbConnectionOptions options, DbConnectionPoolKey poolKey, Object poolGroupProviderInfo, DbConnectionPool pool, DbConnection owningConnection, DbConnectionOptions userOptions)
+   at System.Data.ProviderBase.DbConnectionFactory.CreatePooledConnection(DbConnectionPool pool, DbConnection owningObject, DbConnectionOptions options, DbConnectionPoolKey poolKey, DbConnectionOptions userOptions)
+   at System.Data.ProviderBase.DbConnectionPool.CreateObject(DbConnection owningObject, DbConnectionOptions userOptions, DbConnectionInternal oldConnection)
+   at System.Data.ProviderBase.DbConnectionPool.UserCreateRequest(DbConnection owningObject, DbConnectionOptions userOptions, DbConnectionInternal oldConnection)
+   at System.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, UInt32 waitForMultipleObjectsTimeout, Boolean allowCreate, Boolean onlyOneCheckConnection, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   at System.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, TaskCompletionSource`1 retry, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   at System.Data.ProviderBase.DbConnectionFactory.TryGetConnection(DbConnection owningConnection, TaskCompletionSource`1 retry, DbConnectionOptions userOptions, DbConnectionInternal oldConnection, DbConnectionInternal& connection)
+   at System.Data.ProviderBase.DbConnectionInternal.TryOpenConnectionInternal(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at System.Data.ProviderBase.DbConnectionClosed.TryOpenConnection(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at System.Data.SqlClient.SqlConnection.TryOpen(TaskCompletionSource`1 retry)
+   at System.Data.SqlClient.SqlConnection.Open()
+   at Microsoft.EntityFrameworkCore.Storage.RelationalConnection.OpenDbConnection(Boolean errorsExpected)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalConnection.Open(Boolean errorsExpected)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalConnection.BeginTransaction(IsolationLevel isolationLevel)
+ClientConnectionId:00000000-0000-0000-0000-000000000000
+Error Number:-1,State:0,Class:20
+2019-03-13T13:53:53.2035053+01:00 0HLL7MBJNP3FB:00000001 [ERR] An exception occurred in the database while saving changes for context type '"Portal.Domain.ApplicationDbContext"'."
+""System.Data.SqlClient.SqlException (0x80131904): A network-related or instance-specific error occurred while establishing a connection to SQL Server. The server was not found or was not accessible. Verify that the instance name is correct and that SQL Server is configured to allow remote connections. (provider: SQL Network Interfaces, error: 26 - Error Locating Server/Instance Specified)
+   at System.Data.SqlClient.SqlInternalConnectionTds..ctor(DbConnectionPoolIdentity identity, SqlConnectionString connectionOptions, SqlCredential credential, Object providerInfo, String newPassword, SecureString newSecurePassword, Boolean redirectedUserInstance, SqlConnectionString userConnectionOptions, SessionData reconnectSessionData, Boolean applyTransientFaultHandling, String accessToken)
+   at System.Data.SqlClient.SqlConnectionFactory.CreateConnection(DbConnectionOptions options, DbConnectionPoolKey poolKey, Object poolGroupProviderInfo, DbConnectionPool pool, DbConnection owningConnection, DbConnectionOptions userOptions)
+   at System.Data.ProviderBase.DbConnectionFactory.CreatePooledConnection(DbConnectionPool pool, DbConnection owningObject, DbConnectionOptions options, DbConnectionPoolKey poolKey, DbConnectionOptions userOptions)
+   at System.Data.ProviderBase.DbConnectionPool.CreateObject(DbConnection owningObject, DbConnectionOptions userOptions, DbConnectionInternal oldConnection)
+   at System.Data.ProviderBase.DbConnectionPool.UserCreateRequest(DbConnection owningObject, DbConnectionOptions userOptions, DbConnectionInternal oldConnection)
+   at System.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, UInt32 waitForMultipleObjectsTimeout, Boolean allowCreate, Boolean onlyOneCheckConnection, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   at System.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, TaskCompletionSource`1 retry, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   at System.Data.ProviderBase.DbConnectionFactory.TryGetConnection(DbConnection owningConnection, TaskCompletionSource`1 retry, DbConnectionOptions userOptions, DbConnectionInternal oldConnection, DbConnectionInternal& connection)
+   at System.Data.ProviderBase.DbConnectionInternal.TryOpenConnectionInternal(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at System.Data.ProviderBase.DbConnectionClosed.TryOpenConnection(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at System.Data.SqlClient.SqlConnection.TryOpen(TaskCompletionSource`1 retry)
+   at System.Data.SqlClient.SqlConnection.Open()
+   at Microsoft.EntityFrameworkCore.Storage.RelationalConnection.OpenDbConnection(Boolean errorsExpected)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalConnection.Open(Boolean errorsExpected)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalConnection.BeginTransaction(IsolationLevel isolationLevel)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalConnection.BeginTransaction()
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.Execute(DbContext _, ValueTuple`2 parameters)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.Execute[TState,TResult](TState state, Func`3 operation, Func`3 verifySucceeded)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.Execute(IEnumerable`1 commandBatches, IRelationalConnection connection)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalDatabase.SaveChanges(IReadOnlyList`1 entries)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChanges(IReadOnlyList`1 entriesToSave)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChanges(Boolean acceptAllChangesOnSuccess)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChanges(Boolean acceptAllChangesOnSuccess)
+ClientConnectionId:00000000-0000-0000-0000-000000000000
+Error Number:-1,State:0,Class:20" (170f029e)
+System.Data.SqlClient.SqlException (0x80131904): A network-related or instance-specific error occurred while establishing a connection to SQL Server. The server was not found or was not accessible. Verify that the instance name is correct and that SQL Server is configured to allow remote connections. (provider: SQL Network Interfaces, error: 26 - Error Locating Server/Instance Specified)
+   at System.Data.SqlClient.SqlInternalConnectionTds..ctor(DbConnectionPoolIdentity identity, SqlConnectionString connectionOptions, SqlCredential credential, Object providerInfo, String newPassword, SecureString newSecurePassword, Boolean redirectedUserInstance, SqlConnectionString userConnectionOptions, SessionData reconnectSessionData, Boolean applyTransientFaultHandling, String accessToken)
+   at System.Data.SqlClient.SqlConnectionFactory.CreateConnection(DbConnectionOptions options, DbConnectionPoolKey poolKey, Object poolGroupProviderInfo, DbConnectionPool pool, DbConnection owningConnection, DbConnectionOptions userOptions)
+   at System.Data.ProviderBase.DbConnectionFactory.CreatePooledConnection(DbConnectionPool pool, DbConnection owningObject, DbConnectionOptions options, DbConnectionPoolKey poolKey, DbConnectionOptions userOptions)
+   at System.Data.ProviderBase.DbConnectionPool.CreateObject(DbConnection owningObject, DbConnectionOptions userOptions, DbConnectionInternal oldConnection)
+   at System.Data.ProviderBase.DbConnectionPool.UserCreateRequest(DbConnection owningObject, DbConnectionOptions userOptions, DbConnectionInternal oldConnection)
+   at System.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, UInt32 waitForMultipleObjectsTimeout, Boolean allowCreate, Boolean onlyOneCheckConnection, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   at System.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, TaskCompletionSource`1 retry, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   at System.Data.ProviderBase.DbConnectionFactory.TryGetConnection(DbConnection owningConnection, TaskCompletionSource`1 retry, DbConnectionOptions userOptions, DbConnectionInternal oldConnection, DbConnectionInternal& connection)
+   at System.Data.ProviderBase.DbConnectionInternal.TryOpenConnectionInternal(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at System.Data.ProviderBase.DbConnectionClosed.TryOpenConnection(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at System.Data.SqlClient.SqlConnection.TryOpen(TaskCompletionSource`1 retry)
+   at System.Data.SqlClient.SqlConnection.Open()
+   at Microsoft.EntityFrameworkCore.Storage.RelationalConnection.OpenDbConnection(Boolean errorsExpected)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalConnection.Open(Boolean errorsExpected)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalConnection.BeginTransaction(IsolationLevel isolationLevel)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalConnection.BeginTransaction()
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.Execute(DbContext _, ValueTuple`2 parameters)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.Execute[TState,TResult](TState state, Func`3 operation, Func`3 verifySucceeded)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.Execute(IEnumerable`1 commandBatches, IRelationalConnection connection)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalDatabase.SaveChanges(IReadOnlyList`1 entries)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChanges(IReadOnlyList`1 entriesToSave)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChanges(Boolean acceptAllChangesOnSuccess)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChanges(Boolean acceptAllChangesOnSuccess)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChanges()
+   at Portal.Business.StoreManagers.CartManager.TrnxGenerator() in D:\WorkSpace\wealth-planner\Portal.Business\StoreManagers\CartManager.cs:line 35
+   at Portal.Business.StoreManagers.GeneratorsManager.get_TrnxNo() in D:\WorkSpace\wealth-planner\Portal.Business\StoreManagers\GeneratorsManager.cs:line 33
+   at Portal.Business.StoreManagers.GeneratorsManager.UserSessionManagerForTrackingActivities() in D:\WorkSpace\wealth-planner\Portal.Business\StoreManagers\GeneratorsManager.cs:line 40
+   at Portal.Controllers.HomeController.ShowCartInformation() in D:\WorkSpace\wealth-planner\Portal\Controllers\HomeController.cs:line 42
+   at Portal.Controllers.HomeController.Index() in D:\WorkSpace\wealth-planner\Portal\Controllers\HomeController.cs:line 32
+   at lambda_method(Closure , Object , Object[] )
+   at Microsoft.Extensions.Internal.ObjectMethodExecutor.Execute(Object target, Object[] parameters)
+   at Microsoft.AspNetCore.Mvc.Internal.ActionMethodExecutor.SyncActionResultExecutor.Execute(IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeActionMethodAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeNextActionFilterAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Rethrow(ActionExecutedContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeInnerFilterAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeNextResourceFilter()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.Rethrow(ResourceExecutedContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeFilterPipelineAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeAsync()
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Routing.EndpointRoutingMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Session.SessionMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Session.SessionMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+ClientConnectionId:00000000-0000-0000-0000-000000000000
+Error Number:-1,State:0,Class:20
+2019-03-13T13:53:53.2150062+01:00 0HLL7MBJNP3FB:00000001 [INF] Executed action "Portal.Controllers.HomeController.Index (Portal)" in 17827.7006ms (afa2e885)
+2019-03-13T13:53:53.2166291+01:00 0HLL7MBJNP3FB:00000001 [INF] Executed endpoint '"Portal.Controllers.HomeController.Index (Portal)"' (99874f2b)
+2019-03-13T13:53:53.3042322+01:00 0HLL7MBJNP3FB:00000001 [ERR] An unhandled exception has occurred while executing the request. (48a46595)
+System.Data.SqlClient.SqlException (0x80131904): A network-related or instance-specific error occurred while establishing a connection to SQL Server. The server was not found or was not accessible. Verify that the instance name is correct and that SQL Server is configured to allow remote connections. (provider: SQL Network Interfaces, error: 26 - Error Locating Server/Instance Specified)
+   at System.Data.SqlClient.SqlInternalConnectionTds..ctor(DbConnectionPoolIdentity identity, SqlConnectionString connectionOptions, SqlCredential credential, Object providerInfo, String newPassword, SecureString newSecurePassword, Boolean redirectedUserInstance, SqlConnectionString userConnectionOptions, SessionData reconnectSessionData, Boolean applyTransientFaultHandling, String accessToken)
+   at System.Data.SqlClient.SqlConnectionFactory.CreateConnection(DbConnectionOptions options, DbConnectionPoolKey poolKey, Object poolGroupProviderInfo, DbConnectionPool pool, DbConnection owningConnection, DbConnectionOptions userOptions)
+   at System.Data.ProviderBase.DbConnectionFactory.CreatePooledConnection(DbConnectionPool pool, DbConnection owningObject, DbConnectionOptions options, DbConnectionPoolKey poolKey, DbConnectionOptions userOptions)
+   at System.Data.ProviderBase.DbConnectionPool.CreateObject(DbConnection owningObject, DbConnectionOptions userOptions, DbConnectionInternal oldConnection)
+   at System.Data.ProviderBase.DbConnectionPool.UserCreateRequest(DbConnection owningObject, DbConnectionOptions userOptions, DbConnectionInternal oldConnection)
+   at System.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, UInt32 waitForMultipleObjectsTimeout, Boolean allowCreate, Boolean onlyOneCheckConnection, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   at System.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, TaskCompletionSource`1 retry, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   at System.Data.ProviderBase.DbConnectionFactory.TryGetConnection(DbConnection owningConnection, TaskCompletionSource`1 retry, DbConnectionOptions userOptions, DbConnectionInternal oldConnection, DbConnectionInternal& connection)
+   at System.Data.ProviderBase.DbConnectionInternal.TryOpenConnectionInternal(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at System.Data.ProviderBase.DbConnectionClosed.TryOpenConnection(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at System.Data.SqlClient.SqlConnection.TryOpen(TaskCompletionSource`1 retry)
+   at System.Data.SqlClient.SqlConnection.Open()
+   at Microsoft.EntityFrameworkCore.Storage.RelationalConnection.OpenDbConnection(Boolean errorsExpected)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalConnection.Open(Boolean errorsExpected)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalConnection.BeginTransaction(IsolationLevel isolationLevel)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalConnection.BeginTransaction()
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.Execute(DbContext _, ValueTuple`2 parameters)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.Execute[TState,TResult](TState state, Func`3 operation, Func`3 verifySucceeded)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.Execute(IEnumerable`1 commandBatches, IRelationalConnection connection)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalDatabase.SaveChanges(IReadOnlyList`1 entries)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChanges(IReadOnlyList`1 entriesToSave)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChanges(Boolean acceptAllChangesOnSuccess)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChanges(Boolean acceptAllChangesOnSuccess)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChanges()
+   at Portal.Business.StoreManagers.CartManager.TrnxGenerator() in D:\WorkSpace\wealth-planner\Portal.Business\StoreManagers\CartManager.cs:line 35
+   at Portal.Business.StoreManagers.GeneratorsManager.get_TrnxNo() in D:\WorkSpace\wealth-planner\Portal.Business\StoreManagers\GeneratorsManager.cs:line 33
+   at Portal.Business.StoreManagers.GeneratorsManager.UserSessionManagerForTrackingActivities() in D:\WorkSpace\wealth-planner\Portal.Business\StoreManagers\GeneratorsManager.cs:line 40
+   at Portal.Controllers.HomeController.ShowCartInformation() in D:\WorkSpace\wealth-planner\Portal\Controllers\HomeController.cs:line 42
+   at Portal.Controllers.HomeController.Index() in D:\WorkSpace\wealth-planner\Portal\Controllers\HomeController.cs:line 32
+   at lambda_method(Closure , Object , Object[] )
+   at Microsoft.Extensions.Internal.ObjectMethodExecutor.Execute(Object target, Object[] parameters)
+   at Microsoft.AspNetCore.Mvc.Internal.ActionMethodExecutor.SyncActionResultExecutor.Execute(IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeActionMethodAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeNextActionFilterAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Rethrow(ActionExecutedContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeInnerFilterAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeNextResourceFilter()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.Rethrow(ResourceExecutedContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeFilterPipelineAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeAsync()
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Routing.EndpointRoutingMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Session.SessionMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Session.SessionMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+ClientConnectionId:00000000-0000-0000-0000-000000000000
+Error Number:-1,State:0,Class:20
+2019-03-13T13:53:53.5203331+01:00 0HLL7MBJNP3FB:00000001 [INF] Request finished in 18421.4882ms 500 text/html; charset=utf-8 (791a596a)
+2019-03-13T13:55:39.4660900+01:00 0HLL7MBJNP3FC:00000001 [INF] Request starting HTTP/1.1 GET http://localhost/armwealth   (ca22a1cb)
+2019-03-13T13:55:39.4719442+01:00 0HLL7MBJNP3FC:00000001 [INF] "Identity.Application" was not authenticated. Failure message: "Unprotect ticket failed" (48071232)
+2019-03-13T13:55:39.4721353+01:00 0HLL7MBJNP3FC:00000001 [INF] Executing endpoint '"Portal.Controllers.HomeController.Index (Portal)"' (500cc934)
+2019-03-13T13:55:39.4725501+01:00 0HLL7MBJNP3FC:00000001 [INF] Route matched with "{action = \"Index\", controller = \"Home\", area = \"\"}". Executing action "Portal.Controllers.HomeController.Index (Portal)" (a44c0341)
+2019-03-13T13:55:39.4733041+01:00 0HLL7MBJNP3FC:00000001 [INF] Executing action method "Portal.Controllers.HomeController.Index (Portal)" - Validation state: Valid (dad538d7)
+2019-03-13T13:55:39.4744900+01:00 0HLL7MBJNP3FC:00000001 [INF] Entity Framework Core "2.2.0-rtm-35687" initialized '"ApplicationDbContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None" (9958f5bb)
+2019-03-13T13:55:39.7445329+01:00 0HLL7MBJNP3FC:00000001 [INF] Executed DbCommand ("50"ms) [Parameters=["@p0='?' (Size = 4000)"], CommandType='Text', CommandTimeout='30']"
+""SET NOCOUNT ON;
+DECLARE @inserted0 TABLE ([Id] bigint, [_Position] [int]);
+MERGE [TransQIdenfier] USING (
+VALUES (@p0, 0)) AS i ([Owner], _Position) ON 1=0
+WHEN NOT MATCHED THEN
+INSERT ([Owner])
+VALUES (i.[Owner])
+OUTPUT INSERTED.[Id], i._Position
+INTO @inserted0;
+
+SELECT [t].[Id] FROM [TransQIdenfier] t
+INNER JOIN @inserted0 i ON ([t].[Id] = [i].[Id])
+ORDER BY [i].[_Position];" (0723d8ff)
+2019-03-13T13:55:40.2939908+01:00 0HLL7MBJNP3FC:00000001 [INF] Executed DbCommand ("82"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [s].[Id], [s].[Amount], [s].[ItemOwner], [s].[OrderAndPurchaseStatus], [s].[OrderDate], [s].[ProductId], [s].[TransactionNo], [s.Product].[Id], [s.Product].[Description], [s.Product].[Image], [s.Product].[IsActive], [s.Product].[IsVouchering], [s.Product].[Name], [s.Product].[ProductCategoryId], [s.Product].[ProductTypes], [s.Product].[StartFrom], [s.Product.ProductCategory].[Id], [s.Product.ProductCategory].[Name]
+FROM [Transactional] AS [s]
+INNER JOIN [Products] AS [s.Product] ON [s].[ProductId] = [s.Product].[Id]
+INNER JOIN [ProductCategory] AS [s.Product.ProductCategory] ON [s.Product].[ProductCategoryId] = [s.Product.ProductCategory].[Id]" (0723d8ff)
+2019-03-13T13:55:40.4950126+01:00 0HLL7MBJNP3FC:00000001 [INF] Executed action method "Portal.Controllers.HomeController.Index (Portal)", returned result "Microsoft.AspNetCore.Mvc.ViewResult" in 1015.4314ms. (50a9e262)
+2019-03-13T13:55:40.6516868+01:00 0HLL7MBJNP3FC:00000001 [INF] Executing ViewResult, running view "Index". (c83d0e25)
+2019-03-13T13:55:41.1471013+01:00 0HLL7MBJNP3FC:00000001 [INF] Executed DbCommand ("36"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [s].[Id], [s].[Description], [s].[Image], [s].[IsActive], [s].[IsVouchering], [s].[Name], [s].[ProductCategoryId], [s].[ProductTypes], [s].[StartFrom], [s.ProductCategory].[Id], [s.ProductCategory].[Name]
+FROM [Products] AS [s]
+INNER JOIN [ProductCategory] AS [s.ProductCategory] ON [s].[ProductCategoryId] = [s.ProductCategory].[Id]
+ORDER BY [s].[Name], [s].[Id]" (0723d8ff)
+2019-03-13T13:55:41.1946781+01:00 0HLL7MBJNP3FC:00000001 [INF] Executed DbCommand ("30"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [s.WhatYouNeedToKNowAboutThisProducts].[Id], [s.WhatYouNeedToKNowAboutThisProducts].[Description], [s.WhatYouNeedToKNowAboutThisProducts].[Hierarchy], [s.WhatYouNeedToKNowAboutThisProducts].[OnCreated], [s.WhatYouNeedToKNowAboutThisProducts].[ProductId], [s.WhatYouNeedToKNowAboutThisProducts].[Sections], [s.WhatYouNeedToKNowAboutThisProducts].[Title]
+FROM [WhatYouNeedToKNowAboutThisProduct] AS [s.WhatYouNeedToKNowAboutThisProducts]
+INNER JOIN (
+    SELECT DISTINCT [s0].[Id], [s0].[Name]
+    FROM [Products] AS [s0]
+    INNER JOIN [ProductCategory] AS [s.ProductCategory0] ON [s0].[ProductCategoryId] = [s.ProductCategory0].[Id]
+) AS [t] ON [s.WhatYouNeedToKNowAboutThisProducts].[ProductId] = [t].[Id]
+ORDER BY [t].[Name], [t].[Id]" (0723d8ff)
+2019-03-13T13:55:41.2383685+01:00 0HLL7MBJNP3FC:00000001 [INF] Executed DbCommand ("17"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [s.ProductInvestmentInfos].[Id], [s.ProductInvestmentInfos].[Abs], [s.ProductInvestmentInfos].[OnCreated], [s.ProductInvestmentInfos].[ProductId], [s.ProductInvestmentInfos].[RangOrCost], [s.ProductInvestmentInfos].[Sections]
+FROM [ProductInvestmentInfo] AS [s.ProductInvestmentInfos]
+INNER JOIN (
+    SELECT DISTINCT [s1].[Id], [s1].[Name]
+    FROM [Products] AS [s1]
+    INNER JOIN [ProductCategory] AS [s.ProductCategory1] ON [s1].[ProductCategoryId] = [s.ProductCategory1].[Id]
+) AS [t0] ON [s.ProductInvestmentInfos].[ProductId] = [t0].[Id]
+ORDER BY [t0].[Name], [t0].[Id]" (0723d8ff)
+2019-03-13T13:55:41.2571625+01:00 0HLL7MBJNP3FC:00000001 [INF] Executed DbCommand ("1"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [s].[Id], [s].[Description], [s].[Image], [s].[IsActive], [s].[IsVouchering], [s].[Name], [s].[ProductCategoryId], [s].[ProductTypes], [s].[StartFrom], [s.ProductCategory].[Id], [s.ProductCategory].[Name]
+FROM [Products] AS [s]
+INNER JOIN [ProductCategory] AS [s.ProductCategory] ON [s].[ProductCategoryId] = [s.ProductCategory].[Id]
+ORDER BY [s].[Name], [s].[Id]" (0723d8ff)
+2019-03-13T13:55:41.2581418+01:00 0HLL7MBJNP3FC:00000001 [INF] Executed DbCommand ("0"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [s.WhatYouNeedToKNowAboutThisProducts].[Id], [s.WhatYouNeedToKNowAboutThisProducts].[Description], [s.WhatYouNeedToKNowAboutThisProducts].[Hierarchy], [s.WhatYouNeedToKNowAboutThisProducts].[OnCreated], [s.WhatYouNeedToKNowAboutThisProducts].[ProductId], [s.WhatYouNeedToKNowAboutThisProducts].[Sections], [s.WhatYouNeedToKNowAboutThisProducts].[Title]
+FROM [WhatYouNeedToKNowAboutThisProduct] AS [s.WhatYouNeedToKNowAboutThisProducts]
+INNER JOIN (
+    SELECT DISTINCT [s0].[Id], [s0].[Name]
+    FROM [Products] AS [s0]
+    INNER JOIN [ProductCategory] AS [s.ProductCategory0] ON [s0].[ProductCategoryId] = [s.ProductCategory0].[Id]
+) AS [t] ON [s.WhatYouNeedToKNowAboutThisProducts].[ProductId] = [t].[Id]
+ORDER BY [t].[Name], [t].[Id]" (0723d8ff)
+2019-03-13T13:55:41.2588711+01:00 0HLL7MBJNP3FC:00000001 [INF] Executed DbCommand ("0"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [s.ProductInvestmentInfos].[Id], [s.ProductInvestmentInfos].[Abs], [s.ProductInvestmentInfos].[OnCreated], [s.ProductInvestmentInfos].[ProductId], [s.ProductInvestmentInfos].[RangOrCost], [s.ProductInvestmentInfos].[Sections]
+FROM [ProductInvestmentInfo] AS [s.ProductInvestmentInfos]
+INNER JOIN (
+    SELECT DISTINCT [s1].[Id], [s1].[Name]
+    FROM [Products] AS [s1]
+    INNER JOIN [ProductCategory] AS [s.ProductCategory1] ON [s1].[ProductCategoryId] = [s.ProductCategory1].[Id]
+) AS [t0] ON [s.ProductInvestmentInfos].[ProductId] = [t0].[Id]
+ORDER BY [t0].[Name], [t0].[Id]" (0723d8ff)
+2019-03-13T13:55:41.2894272+01:00 0HLL7MBJNP3FC:00000001 [INF] Executed DbCommand ("26"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [s].[Id], [s].[Description], [s].[Image], [s].[IsActive], [s].[IsVouchering], [s].[Name], [s].[ProductCategoryId], [s].[ProductTypes], [s].[StartFrom], [s.ProductCategory].[Id], [s.ProductCategory].[Name]
+FROM [Products] AS [s]
+INNER JOIN [ProductCategory] AS [s.ProductCategory] ON [s].[ProductCategoryId] = [s.ProductCategory].[Id]
+ORDER BY [s].[Name], [s].[Id]" (0723d8ff)
+2019-03-13T13:55:41.2901885+01:00 0HLL7MBJNP3FC:00000001 [INF] Executed DbCommand ("0"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [s.WhatYouNeedToKNowAboutThisProducts].[Id], [s.WhatYouNeedToKNowAboutThisProducts].[Description], [s.WhatYouNeedToKNowAboutThisProducts].[Hierarchy], [s.WhatYouNeedToKNowAboutThisProducts].[OnCreated], [s.WhatYouNeedToKNowAboutThisProducts].[ProductId], [s.WhatYouNeedToKNowAboutThisProducts].[Sections], [s.WhatYouNeedToKNowAboutThisProducts].[Title]
+FROM [WhatYouNeedToKNowAboutThisProduct] AS [s.WhatYouNeedToKNowAboutThisProducts]
+INNER JOIN (
+    SELECT DISTINCT [s0].[Id], [s0].[Name]
+    FROM [Products] AS [s0]
+    INNER JOIN [ProductCategory] AS [s.ProductCategory0] ON [s0].[ProductCategoryId] = [s.ProductCategory0].[Id]
+) AS [t] ON [s.WhatYouNeedToKNowAboutThisProducts].[ProductId] = [t].[Id]
+ORDER BY [t].[Name], [t].[Id]" (0723d8ff)
+2019-03-13T13:55:41.2906119+01:00 0HLL7MBJNP3FC:00000001 [INF] Executed DbCommand ("0"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [s.ProductInvestmentInfos].[Id], [s.ProductInvestmentInfos].[Abs], [s.ProductInvestmentInfos].[OnCreated], [s.ProductInvestmentInfos].[ProductId], [s.ProductInvestmentInfos].[RangOrCost], [s.ProductInvestmentInfos].[Sections]
+FROM [ProductInvestmentInfo] AS [s.ProductInvestmentInfos]
+INNER JOIN (
+    SELECT DISTINCT [s1].[Id], [s1].[Name]
+    FROM [Products] AS [s1]
+    INNER JOIN [ProductCategory] AS [s.ProductCategory1] ON [s1].[ProductCategoryId] = [s.ProductCategory1].[Id]
+) AS [t0] ON [s.ProductInvestmentInfos].[ProductId] = [t0].[Id]
+ORDER BY [t0].[Name], [t0].[Id]" (0723d8ff)
+2019-03-13T13:55:41.2944929+01:00 0HLL7MBJNP3FC:00000001 [INF] Executed DbCommand ("0"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [s].[Id], [s].[Description], [s].[Image], [s].[IsActive], [s].[IsVouchering], [s].[Name], [s].[ProductCategoryId], [s].[ProductTypes], [s].[StartFrom], [s.ProductCategory].[Id], [s.ProductCategory].[Name]
+FROM [Products] AS [s]
+INNER JOIN [ProductCategory] AS [s.ProductCategory] ON [s].[ProductCategoryId] = [s.ProductCategory].[Id]
+ORDER BY [s].[Name], [s].[Id]" (0723d8ff)
+2019-03-13T13:55:41.2950167+01:00 0HLL7MBJNP3FC:00000001 [INF] Executed DbCommand ("0"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [s.WhatYouNeedToKNowAboutThisProducts].[Id], [s.WhatYouNeedToKNowAboutThisProducts].[Description], [s.WhatYouNeedToKNowAboutThisProducts].[Hierarchy], [s.WhatYouNeedToKNowAboutThisProducts].[OnCreated], [s.WhatYouNeedToKNowAboutThisProducts].[ProductId], [s.WhatYouNeedToKNowAboutThisProducts].[Sections], [s.WhatYouNeedToKNowAboutThisProducts].[Title]
+FROM [WhatYouNeedToKNowAboutThisProduct] AS [s.WhatYouNeedToKNowAboutThisProducts]
+INNER JOIN (
+    SELECT DISTINCT [s0].[Id], [s0].[Name]
+    FROM [Products] AS [s0]
+    INNER JOIN [ProductCategory] AS [s.ProductCategory0] ON [s0].[ProductCategoryId] = [s.ProductCategory0].[Id]
+) AS [t] ON [s.WhatYouNeedToKNowAboutThisProducts].[ProductId] = [t].[Id]
+ORDER BY [t].[Name], [t].[Id]" (0723d8ff)
+2019-03-13T13:55:41.2956261+01:00 0HLL7MBJNP3FC:00000001 [INF] Executed DbCommand ("0"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [s.ProductInvestmentInfos].[Id], [s.ProductInvestmentInfos].[Abs], [s.ProductInvestmentInfos].[OnCreated], [s.ProductInvestmentInfos].[ProductId], [s.ProductInvestmentInfos].[RangOrCost], [s.ProductInvestmentInfos].[Sections]
+FROM [ProductInvestmentInfo] AS [s.ProductInvestmentInfos]
+INNER JOIN (
+    SELECT DISTINCT [s1].[Id], [s1].[Name]
+    FROM [Products] AS [s1]
+    INNER JOIN [ProductCategory] AS [s.ProductCategory1] ON [s1].[ProductCategoryId] = [s.ProductCategory1].[Id]
+) AS [t0] ON [s.ProductInvestmentInfos].[ProductId] = [t0].[Id]
+ORDER BY [t0].[Name], [t0].[Id]" (0723d8ff)
+2019-03-13T13:55:41.2997885+01:00 0HLL7MBJNP3FC:00000001 [INF] Executed DbCommand ("0"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [s].[Id], [s].[Description], [s].[Image], [s].[IsActive], [s].[IsVouchering], [s].[Name], [s].[ProductCategoryId], [s].[ProductTypes], [s].[StartFrom], [s.ProductCategory].[Id], [s.ProductCategory].[Name]
+FROM [Products] AS [s]
+INNER JOIN [ProductCategory] AS [s.ProductCategory] ON [s].[ProductCategoryId] = [s.ProductCategory].[Id]
+ORDER BY [s].[Name], [s].[Id]" (0723d8ff)
+2019-03-13T13:55:41.3003179+01:00 0HLL7MBJNP3FC:00000001 [INF] Executed DbCommand ("0"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [s.WhatYouNeedToKNowAboutThisProducts].[Id], [s.WhatYouNeedToKNowAboutThisProducts].[Description], [s.WhatYouNeedToKNowAboutThisProducts].[Hierarchy], [s.WhatYouNeedToKNowAboutThisProducts].[OnCreated], [s.WhatYouNeedToKNowAboutThisProducts].[ProductId], [s.WhatYouNeedToKNowAboutThisProducts].[Sections], [s.WhatYouNeedToKNowAboutThisProducts].[Title]
+FROM [WhatYouNeedToKNowAboutThisProduct] AS [s.WhatYouNeedToKNowAboutThisProducts]
+INNER JOIN (
+    SELECT DISTINCT [s0].[Id], [s0].[Name]
+    FROM [Products] AS [s0]
+    INNER JOIN [ProductCategory] AS [s.ProductCategory0] ON [s0].[ProductCategoryId] = [s.ProductCategory0].[Id]
+) AS [t] ON [s.WhatYouNeedToKNowAboutThisProducts].[ProductId] = [t].[Id]
+ORDER BY [t].[Name], [t].[Id]" (0723d8ff)
+2019-03-13T13:55:41.3007425+01:00 0HLL7MBJNP3FC:00000001 [INF] Executed DbCommand ("0"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [s.ProductInvestmentInfos].[Id], [s.ProductInvestmentInfos].[Abs], [s.ProductInvestmentInfos].[OnCreated], [s.ProductInvestmentInfos].[ProductId], [s.ProductInvestmentInfos].[RangOrCost], [s.ProductInvestmentInfos].[Sections]
+FROM [ProductInvestmentInfo] AS [s.ProductInvestmentInfos]
+INNER JOIN (
+    SELECT DISTINCT [s1].[Id], [s1].[Name]
+    FROM [Products] AS [s1]
+    INNER JOIN [ProductCategory] AS [s.ProductCategory1] ON [s1].[ProductCategoryId] = [s.ProductCategory1].[Id]
+) AS [t0] ON [s.ProductInvestmentInfos].[ProductId] = [t0].[Id]
+ORDER BY [t0].[Name], [t0].[Id]" (0723d8ff)
+2019-03-13T13:55:41.3462376+01:00 0HLL7MBJNP3FC:00000001 [INF] Executed DbCommand ("42"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [s].[Id], [s].[Description], [s].[Image], [s].[IsActive], [s].[IsVouchering], [s].[Name], [s].[ProductCategoryId], [s].[ProductTypes], [s].[StartFrom], [s.ProductCategory].[Id], [s.ProductCategory].[Name]
+FROM [Products] AS [s]
+INNER JOIN [ProductCategory] AS [s.ProductCategory] ON [s].[ProductCategoryId] = [s.ProductCategory].[Id]
+ORDER BY [s].[Name], [s].[Id]" (0723d8ff)
+2019-03-13T13:55:41.3470296+01:00 0HLL7MBJNP3FC:00000001 [INF] Executed DbCommand ("0"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [s.WhatYouNeedToKNowAboutThisProducts].[Id], [s.WhatYouNeedToKNowAboutThisProducts].[Description], [s.WhatYouNeedToKNowAboutThisProducts].[Hierarchy], [s.WhatYouNeedToKNowAboutThisProducts].[OnCreated], [s.WhatYouNeedToKNowAboutThisProducts].[ProductId], [s.WhatYouNeedToKNowAboutThisProducts].[Sections], [s.WhatYouNeedToKNowAboutThisProducts].[Title]
+FROM [WhatYouNeedToKNowAboutThisProduct] AS [s.WhatYouNeedToKNowAboutThisProducts]
+INNER JOIN (
+    SELECT DISTINCT [s0].[Id], [s0].[Name]
+    FROM [Products] AS [s0]
+    INNER JOIN [ProductCategory] AS [s.ProductCategory0] ON [s0].[ProductCategoryId] = [s.ProductCategory0].[Id]
+) AS [t] ON [s.WhatYouNeedToKNowAboutThisProducts].[ProductId] = [t].[Id]
+ORDER BY [t].[Name], [t].[Id]" (0723d8ff)
+2019-03-13T13:55:41.3475599+01:00 0HLL7MBJNP3FC:00000001 [INF] Executed DbCommand ("0"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [s.ProductInvestmentInfos].[Id], [s.ProductInvestmentInfos].[Abs], [s.ProductInvestmentInfos].[OnCreated], [s.ProductInvestmentInfos].[ProductId], [s.ProductInvestmentInfos].[RangOrCost], [s.ProductInvestmentInfos].[Sections]
+FROM [ProductInvestmentInfo] AS [s.ProductInvestmentInfos]
+INNER JOIN (
+    SELECT DISTINCT [s1].[Id], [s1].[Name]
+    FROM [Products] AS [s1]
+    INNER JOIN [ProductCategory] AS [s.ProductCategory1] ON [s1].[ProductCategoryId] = [s.ProductCategory1].[Id]
+) AS [t0] ON [s.ProductInvestmentInfos].[ProductId] = [t0].[Id]
+ORDER BY [t0].[Name], [t0].[Id]" (0723d8ff)
+2019-03-13T13:55:41.5688110+01:00 0HLL7MBJNP3FC:00000001 [INF] Executed DbCommand ("1"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [s].[Id], [s].[Amount], [s].[ItemOwner], [s].[OrderAndPurchaseStatus], [s].[OrderDate], [s].[ProductId], [s].[TransactionNo], [s.Product].[Id], [s.Product].[Description], [s.Product].[Image], [s.Product].[IsActive], [s.Product].[IsVouchering], [s.Product].[Name], [s.Product].[ProductCategoryId], [s.Product].[ProductTypes], [s.Product].[StartFrom], [s.Product.ProductCategory].[Id], [s.Product.ProductCategory].[Name]
+FROM [Transactional] AS [s]
+INNER JOIN [Products] AS [s.Product] ON [s].[ProductId] = [s.Product].[Id]
+INNER JOIN [ProductCategory] AS [s.Product.ProductCategory] ON [s.Product].[ProductCategoryId] = [s.Product.ProductCategory].[Id]" (0723d8ff)
+2019-03-13T13:55:41.6192908+01:00 0HLL7MBJNP3FC:00000001 [INF] Executed ViewResult - view "Index" executed in 1108.7325ms. (f66409e9)
+2019-03-13T13:55:41.6197176+01:00 0HLL7MBJNP3FC:00000001 [INF] Executed action "Portal.Controllers.HomeController.Index (Portal)" in 2147.0986ms (afa2e885)
+2019-03-13T13:55:41.6197885+01:00 0HLL7MBJNP3FC:00000001 [INF] Executed endpoint '"Portal.Controllers.HomeController.Index (Portal)"' (99874f2b)
+2019-03-13T13:55:41.6218537+01:00 0HLL7MBJNP3FC:00000001 [INF] Session started; Key:"a9da4759-2aa8-658a-37a3-110544869ab0", Id:"fa2dc8e6-e325-f4e4-6e06-7e83990dd1b8" (1d7cf8c0)
+2019-03-13T13:55:41.6296673+01:00 0HLL7MBJNP3FC:00000001 [INF] Request finished in 2163.7894ms 200 text/html; charset=utf-8 (791a596a)
+2019-03-13T13:56:33.8419142+01:00 0HLL7MBJNP3FC:00000002 [INF] Request starting HTTP/1.1 GET http://localhost/armwealth/CartAndPayment/CheckOut   (ca22a1cb)
+2019-03-13T13:56:33.8429915+01:00 0HLL7MBJNP3FC:00000002 [INF] "Identity.Application" was not authenticated. Failure message: "Unprotect ticket failed" (48071232)
+2019-03-13T13:56:33.8518354+01:00 0HLL7MBJNP3FC:00000002 [INF] Executing endpoint '"Portal.Controllers.CartAndPaymentController.CheckOut (Portal)"' (500cc934)
+2019-03-13T13:56:33.8645366+01:00 0HLL7MBJNP3FC:00000002 [INF] Route matched with "{action = \"CheckOut\", controller = \"CartAndPayment\", area = \"\"}". Executing action "Portal.Controllers.CartAndPaymentController.CheckOut (Portal)" (a44c0341)
+2019-03-13T13:56:33.8754311+01:00 0HLL7MBJNP3FC:00000002 [INF] Executing action method "Portal.Controllers.CartAndPaymentController.CheckOut (Portal)" - Validation state: Valid (dad538d7)
+2019-03-13T13:56:33.8837486+01:00 0HLL7MBJNP3FC:00000002 [INF] Entity Framework Core "2.2.0-rtm-35687" initialized '"ApplicationDbContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None" (9958f5bb)
+2019-03-13T13:56:33.9043392+01:00 0HLL7MBJNP3FC:00000002 [INF] Executed DbCommand ("3"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [s].[Id], [s].[Amount], [s].[ItemOwner], [s].[OrderAndPurchaseStatus], [s].[OrderDate], [s].[ProductId], [s].[TransactionNo], [s.Product].[Id], [s.Product].[Description], [s.Product].[Image], [s.Product].[IsActive], [s.Product].[IsVouchering], [s.Product].[Name], [s.Product].[ProductCategoryId], [s.Product].[ProductTypes], [s.Product].[StartFrom]
+FROM [Transactional] AS [s]
+INNER JOIN [Products] AS [s.Product] ON [s].[ProductId] = [s.Product].[Id]" (0723d8ff)
+2019-03-13T13:56:33.9133913+01:00 0HLL7MBJNP3FC:00000002 [INF] Executed DbCommand ("0"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [s].[Id], [s].[Amount], [s].[ItemOwner], [s].[OrderAndPurchaseStatus], [s].[OrderDate], [s].[ProductId], [s].[TransactionNo], [s.Product].[Id], [s.Product].[Description], [s.Product].[Image], [s.Product].[IsActive], [s.Product].[IsVouchering], [s.Product].[Name], [s.Product].[ProductCategoryId], [s.Product].[ProductTypes], [s.Product].[StartFrom]
+FROM [Transactional] AS [s]
+INNER JOIN [Products] AS [s.Product] ON [s].[ProductId] = [s.Product].[Id]" (0723d8ff)
+2019-03-13T13:56:33.9236127+01:00 0HLL7MBJNP3FC:00000002 [INF] Executed DbCommand ("5"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [s].[Id], [s].[Amount], [s].[ItemOwner], [s].[OrderAndPurchaseStatus], [s].[OrderDate], [s].[ProductId], [s].[TransactionNo], [s.Product].[Id], [s.Product].[Description], [s.Product].[Image], [s.Product].[IsActive], [s.Product].[IsVouchering], [s.Product].[Name], [s.Product].[ProductCategoryId], [s.Product].[ProductTypes], [s.Product].[StartFrom], [s.Product.ProductCategory].[Id], [s.Product.ProductCategory].[Name]
+FROM [Transactional] AS [s]
+INNER JOIN [Products] AS [s.Product] ON [s].[ProductId] = [s.Product].[Id]
+INNER JOIN [ProductCategory] AS [s.Product.ProductCategory] ON [s.Product].[ProductCategoryId] = [s.Product.ProductCategory].[Id]" (0723d8ff)
+2019-03-13T13:56:33.9252266+01:00 0HLL7MBJNP3FC:00000002 [INF] Executed action method "Portal.Controllers.CartAndPaymentController.CheckOut (Portal)", returned result "Microsoft.AspNetCore.Mvc.ViewResult" in 49.6971ms. (50a9e262)
+2019-03-13T13:56:33.9388141+01:00 0HLL7MBJNP3FC:00000002 [INF] Executing ViewResult, running view "_checkout". (c83d0e25)
+2019-03-13T13:56:34.0210744+01:00 0HLL7MBJNP3FC:00000002 [INF] Executed DbCommand ("0"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [s].[Id], [s].[Amount], [s].[ItemOwner], [s].[OrderAndPurchaseStatus], [s].[OrderDate], [s].[ProductId], [s].[TransactionNo], [s.Product].[Id], [s.Product].[Description], [s.Product].[Image], [s.Product].[IsActive], [s.Product].[IsVouchering], [s.Product].[Name], [s.Product].[ProductCategoryId], [s.Product].[ProductTypes], [s.Product].[StartFrom]
+FROM [Transactional] AS [s]
+INNER JOIN [Products] AS [s.Product] ON [s].[ProductId] = [s.Product].[Id]" (0723d8ff)
+2019-03-13T13:56:34.0223813+01:00 0HLL7MBJNP3FC:00000002 [INF] Executed DbCommand ("0"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [s].[Id], [s].[Amount], [s].[ItemOwner], [s].[OrderAndPurchaseStatus], [s].[OrderDate], [s].[ProductId], [s].[TransactionNo], [s.Product].[Id], [s.Product].[Description], [s.Product].[Image], [s.Product].[IsActive], [s.Product].[IsVouchering], [s.Product].[Name], [s.Product].[ProductCategoryId], [s.Product].[ProductTypes], [s.Product].[StartFrom]
+FROM [Transactional] AS [s]
+INNER JOIN [Products] AS [s.Product] ON [s].[ProductId] = [s.Product].[Id]" (0723d8ff)
+2019-03-13T13:56:34.5272991+01:00 0HLL7MBJNP3FC:00000002 [INF] Executed DbCommand ("0"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [s].[Id], [s].[Amount], [s].[ItemOwner], [s].[OrderAndPurchaseStatus], [s].[OrderDate], [s].[ProductId], [s].[TransactionNo], [s.Product].[Id], [s.Product].[Description], [s.Product].[Image], [s.Product].[IsActive], [s.Product].[IsVouchering], [s.Product].[Name], [s.Product].[ProductCategoryId], [s.Product].[ProductTypes], [s.Product].[StartFrom], [s.Product.ProductCategory].[Id], [s.Product.ProductCategory].[Name]
+FROM [Transactional] AS [s]
+INNER JOIN [Products] AS [s.Product] ON [s].[ProductId] = [s.Product].[Id]
+INNER JOIN [ProductCategory] AS [s.Product.ProductCategory] ON [s.Product].[ProductCategoryId] = [s.Product.ProductCategory].[Id]" (0723d8ff)
+2019-03-13T13:56:34.6102459+01:00 0HLL7MBJNP3FC:00000002 [INF] Executed ViewResult - view "_checkout" executed in 684.7725ms. (f66409e9)
+2019-03-13T13:56:34.6104127+01:00 0HLL7MBJNP3FC:00000002 [INF] Executed action "Portal.Controllers.CartAndPaymentController.CheckOut (Portal)" in 745.1887ms (afa2e885)
+2019-03-13T13:56:34.6104593+01:00 0HLL7MBJNP3FC:00000002 [INF] Executed endpoint '"Portal.Controllers.CartAndPaymentController.CheckOut (Portal)"' (99874f2b)
+2019-03-13T13:56:34.6133494+01:00 0HLL7MBJNP3FC:00000002 [INF] Request finished in 769.3819ms 200 text/html; charset=utf-8 (791a596a)
+2019-03-13T13:56:34.8854583+01:00 0HLL7MBJNP3FC:00000003 [INF] Request starting HTTP/1.1 GET http://localhost/armwealth/liber/Store/css/components/portfolio-masonry-2.css   (ca22a1cb)
+2019-03-13T13:56:34.8895240+01:00 0HLL7MBJNP3FC:00000003 [INF] "Identity.Application" was not authenticated. Failure message: "Unprotect ticket failed" (48071232)
+2019-03-13T13:56:34.9037452+01:00 0HLL7MBJNP3FC:00000003 [INF] Request finished in 17.9618ms 404  (791a596a)
+2019-03-13T13:56:34.9871287+01:00 0HLL7MBJNP3FC:00000004 [INF] Request starting HTTP/1.1 GET http://localhost/armwealth/CartAndPayment/img/arm-investment-center-logo.png   (ca22a1cb)
+2019-03-13T13:56:34.9879082+01:00 0HLL7MBJNP3FC:00000004 [INF] "Identity.Application" was not authenticated. Failure message: "Unprotect ticket failed" (48071232)
+2019-03-13T13:56:34.9953617+01:00 0HLL7MBJNP3FC:00000004 [INF] Request finished in 8.0835ms 404  (791a596a)
+2019-03-13T13:56:35.0376425+01:00 0HLL7MBJNP3FC:00000005 [INF] Request starting HTTP/1.1 GET http://localhost/armwealth/liber/Store/css/components/portfolio-masonry-2.css   (ca22a1cb)
+2019-03-13T13:56:35.0381352+01:00 0HLL7MBJNP3FC:00000005 [INF] "Identity.Application" was not authenticated. Failure message: "Unprotect ticket failed" (48071232)
+2019-03-13T13:56:35.0383815+01:00 0HLL7MBJNP3FC:00000005 [INF] Request finished in 0.7945ms 404  (791a596a)
+2019-03-13T13:56:35.1808816+01:00 0HLL7MBJNP3FC:00000006 [INF] Request starting HTTP/1.1 GET http://localhost/armwealth/CartAndPayment/img/arm-investment-center-logo.png   (ca22a1cb)
+2019-03-13T13:56:35.1813892+01:00 0HLL7MBJNP3FC:00000006 [INF] "Identity.Application" was not authenticated. Failure message: "Unprotect ticket failed" (48071232)
+2019-03-13T13:56:35.1815193+01:00 0HLL7MBJNP3FC:00000006 [INF] Request finished in 0.6761ms 404  (791a596a)
+2019-03-13T13:56:35.2073538+01:00 0HLL7MBJNP3FC:00000007 [INF] Request starting HTTP/1.1 GET http://localhost/armwealth/liber/Store/img/sprite.png   (ca22a1cb)
+2019-03-13T13:56:35.2078054+01:00 0HLL7MBJNP3FC:00000007 [INF] "Identity.Application" was not authenticated. Failure message: "Unprotect ticket failed" (48071232)
+2019-03-13T13:56:35.2080133+01:00 0HLL7MBJNP3FC:00000007 [INF] Request finished in 0.6885ms 404  (791a596a)
+2019-03-13T13:56:35.5671722+01:00 0HLL7MBJNP3FC:00000008 [INF] Request starting HTTP/1.1 GET http://localhost/armwealth/CartAndPayment/img/alternative-banner.jpg   (ca22a1cb)
+2019-03-13T13:56:35.5677864+01:00 0HLL7MBJNP3FC:00000008 [INF] "Identity.Application" was not authenticated. Failure message: "Unprotect ticket failed" (48071232)
+2019-03-13T13:56:35.5679377+01:00 0HLL7MBJNP3FC:00000008 [INF] Request finished in 0.8309ms 404  (791a596a)
+2019-03-13T13:56:35.7234753+01:00 0HLL7MBJNP3FC:00000009 [INF] Request starting HTTP/1.1 GET http://localhost/armwealth/CartAndPayment/img/alternative-banner.jpg   (ca22a1cb)
+2019-03-13T13:56:35.7239389+01:00 0HLL7MBJNP3FC:00000009 [INF] "Identity.Application" was not authenticated. Failure message: "Unprotect ticket failed" (48071232)
+2019-03-13T13:56:35.7240453+01:00 0HLL7MBJNP3FC:00000009 [INF] Request finished in 0.5957ms 404  (791a596a)
+2019-03-13T13:57:00.1751614+01:00 0HLL7MBJNP3FC:0000000A [INF] Request starting HTTP/1.1 POST http://localhost/armwealth/CartAndPayment/SignIn application/x-www-form-urlencoded 245 (ca22a1cb)
+2019-03-13T13:57:00.1757228+01:00 0HLL7MBJNP3FC:0000000A [INF] "Identity.Application" was not authenticated. Failure message: "Unprotect ticket failed" (48071232)
+2019-03-13T13:57:00.1758520+01:00 0HLL7MBJNP3FC:0000000A [INF] Executing endpoint '"Portal.Controllers.CartAndPaymentController.SignIn (Portal)"' (500cc934)
+2019-03-13T13:57:00.2286710+01:00 0HLL7MBJNP3FC:0000000A [INF] Route matched with "{action = \"SignIn\", controller = \"CartAndPayment\", area = \"\"}". Executing action "Portal.Controllers.CartAndPaymentController.SignIn (Portal)" (a44c0341)
+2019-03-13T13:57:00.3045457+01:00 0HLL7MBJNP3FC:0000000A [INF] Executing action method "Portal.Controllers.CartAndPaymentController.SignIn (Portal)" with arguments (["Portal.Domain.ViewModels.CartView"]) - Validation state: Invalid (4e3479ed)
+2019-03-13T13:57:00.3093071+01:00 0HLL7MBJNP3FC:0000000A [INF] Entity Framework Core "2.2.0-rtm-35687" initialized '"ApplicationDbContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None" (9958f5bb)
+2019-03-13T13:57:00.3108270+01:00 0HLL7MBJNP3FC:0000000A [INF] Executed DbCommand ("1"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [s].[Id], [s].[Amount], [s].[ItemOwner], [s].[OrderAndPurchaseStatus], [s].[OrderDate], [s].[ProductId], [s].[TransactionNo], [s.Product].[Id], [s.Product].[Description], [s.Product].[Image], [s.Product].[IsActive], [s.Product].[IsVouchering], [s.Product].[Name], [s.Product].[ProductCategoryId], [s.Product].[ProductTypes], [s.Product].[StartFrom], [s.Product.ProductCategory].[Id], [s.Product.ProductCategory].[Name]
+FROM [Transactional] AS [s]
+INNER JOIN [Products] AS [s.Product] ON [s].[ProductId] = [s.Product].[Id]
+INNER JOIN [ProductCategory] AS [s.Product.ProductCategory] ON [s.Product].[ProductCategoryId] = [s.Product.ProductCategory].[Id]" (0723d8ff)
+2019-03-13T13:57:00.3152293+01:00 0HLL7MBJNP3FC:0000000A [INF] Executed DbCommand ("2"ms) [Parameters=["@ItemOwne='?' (Size = 22)"], CommandType='Text', CommandTimeout='30']"
+""UPDATE Transactional SET ItemOwner=@ItemOwne WHERE TransactionNo='10000000227'" (0723d8ff)
+2019-03-13T13:57:00.3594174+01:00 0HLL7MBJNP3FC:0000000A [INF] Executed DbCommand ("7"ms) [Parameters=["@__model_Username_0='?' (Size = 256)"], CommandType='Text', CommandTimeout='30']"
+""SELECT TOP(2) [s].[Id], [s].[AccessFailedCount], [s].[ConcurrencyStamp], [s].[Email], [s].[EmailConfirmed], [s].[LockoutEnabled], [s].[LockoutEnd], [s].[NormalizedEmail], [s].[NormalizedUserName], [s].[PasswordHash], [s].[PersonId], [s].[PhoneNumber], [s].[PhoneNumberConfirmed], [s].[SecurityStamp], [s].[TwoFactorEnabled], [s].[UserName], [s.Person].[Id], [s.Person].[Address], [s.Person].[BioetricVerificationNumber], [s.Person].[Email], [s.Person].[FirstName], [s.Person].[Gender], [s.Person].[IsCustomer], [s.Person].[LastName], [s.Person].[MemberShipNo], [s.Person].[OnCreated], [s.Person].[PortalOnBoarding], [s.Person].[Tel]
+FROM [AspNetUser] AS [s]
+INNER JOIN [Person] AS [s.Person] ON [s].[PersonId] = [s.Person].[Id]
+WHERE [s].[UserName] = @__model_Username_0" (0723d8ff)
+2019-03-13T13:57:00.5317173+01:00 0HLL7MBJNP3FC:0000000A [INF] Executed DbCommand ("17"ms) [Parameters=["@__user_Id_0='?' (DbType = Int64)"], CommandType='Text', CommandTimeout='30']"
+""SELECT [uc].[Id], [uc].[ClaimType], [uc].[ClaimValue], [uc].[Discriminator], [uc].[UserId]
+FROM [AspNetUserClaims] AS [uc]
+WHERE [uc].[Discriminator] IN (N'ApplicationUserClaim', N'IdentityUserClaim<long>') AND ([uc].[UserId] = @__user_Id_0)" (0723d8ff)
+2019-03-13T13:57:00.5954487+01:00 0HLL7MBJNP3FC:0000000A [INF] Executed DbCommand ("7"ms) [Parameters=["@__userId_0='?' (DbType = Int64)"], CommandType='Text', CommandTimeout='30']"
+""SELECT [role].[Name]
+FROM [AspNetUserRoles] AS [userRole]
+INNER JOIN [AspNetRole] AS [role] ON [userRole].[RoleId] = [role].[Id]
+WHERE [userRole].[Discriminator] IN (N'ApplicationUserRole', N'IdentityUserRole<long>') AND ([userRole].[UserId] = @__userId_0)" (0723d8ff)
+2019-03-13T13:57:00.6125737+01:00 0HLL7MBJNP3FC:0000000A [INF] AuthenticationScheme: "Identity.Application" signed in. (c66dd7e7)
+2019-03-13T13:57:00.6161287+01:00 0HLL7MBJNP3FC:0000000A [INF] Executed action method "Portal.Controllers.CartAndPaymentController.SignIn (Portal)", returned result "Microsoft.AspNetCore.Mvc.RedirectToActionResult" in 311.4564ms. (50a9e262)
+2019-03-13T13:57:00.6167877+01:00 0HLL7MBJNP3FC:0000000A [INF] Executing RedirectResult, redirecting to "/armwealth/CartAndPayment/CheckOut". (d98d540e)
+2019-03-13T13:57:00.6168951+01:00 0HLL7MBJNP3FC:0000000A [INF] Executed action "Portal.Controllers.CartAndPaymentController.SignIn (Portal)" in 388.1753ms (afa2e885)
+2019-03-13T13:57:00.6169421+01:00 0HLL7MBJNP3FC:0000000A [INF] Executed endpoint '"Portal.Controllers.CartAndPaymentController.SignIn (Portal)"' (99874f2b)
+2019-03-13T13:57:00.6171025+01:00 0HLL7MBJNP3FC:0000000A [INF] Request finished in 441.9727ms 302  (791a596a)
+2019-03-13T13:57:00.6238773+01:00 0HLL7MBJNP3FC:0000000B [INF] Request starting HTTP/1.1 GET http://localhost/armwealth/CartAndPayment/CheckOut   (ca22a1cb)
+2019-03-13T13:57:00.6337151+01:00 0HLL7MBJNP3FC:0000000B [INF] Executing endpoint '"Portal.Controllers.CartAndPaymentController.CheckOut (Portal)"' (500cc934)
+2019-03-13T13:57:00.6338169+01:00 0HLL7MBJNP3FC:0000000B [INF] Route matched with "{action = \"CheckOut\", controller = \"CartAndPayment\", area = \"\"}". Executing action "Portal.Controllers.CartAndPaymentController.CheckOut (Portal)" (a44c0341)
+2019-03-13T13:57:00.6338935+01:00 0HLL7MBJNP3FC:0000000B [INF] Executing action method "Portal.Controllers.CartAndPaymentController.CheckOut (Portal)" - Validation state: Valid (dad538d7)
+2019-03-13T13:57:00.6342283+01:00 0HLL7MBJNP3FC:0000000B [INF] Entity Framework Core "2.2.0-rtm-35687" initialized '"ApplicationDbContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None" (9958f5bb)
+2019-03-13T13:57:00.6348933+01:00 0HLL7MBJNP3FC:0000000B [INF] Executed DbCommand ("0"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [s].[Id], [s].[Amount], [s].[ItemOwner], [s].[OrderAndPurchaseStatus], [s].[OrderDate], [s].[ProductId], [s].[TransactionNo], [s.Product].[Id], [s.Product].[Description], [s.Product].[Image], [s.Product].[IsActive], [s.Product].[IsVouchering], [s.Product].[Name], [s.Product].[ProductCategoryId], [s.Product].[ProductTypes], [s.Product].[StartFrom]
+FROM [Transactional] AS [s]
+INNER JOIN [Products] AS [s.Product] ON [s].[ProductId] = [s.Product].[Id]" (0723d8ff)
+2019-03-13T13:57:00.6364431+01:00 0HLL7MBJNP3FC:0000000B [INF] Executed DbCommand ("0"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [s].[Id], [s].[Amount], [s].[ItemOwner], [s].[OrderAndPurchaseStatus], [s].[OrderDate], [s].[ProductId], [s].[TransactionNo], [s.Product].[Id], [s.Product].[Description], [s.Product].[Image], [s.Product].[IsActive], [s.Product].[IsVouchering], [s.Product].[Name], [s.Product].[ProductCategoryId], [s.Product].[ProductTypes], [s.Product].[StartFrom]
+FROM [Transactional] AS [s]
+INNER JOIN [Products] AS [s.Product] ON [s].[ProductId] = [s.Product].[Id]" (0723d8ff)
+2019-03-13T13:57:00.6514290+01:00 0HLL7MBJNP3FC:0000000B [INF] Executed DbCommand ("1"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [p].[Id], [p].[Address], [p].[BioetricVerificationNumber], [p].[Email], [p].[FirstName], [p].[Gender], [p].[IsCustomer], [p].[LastName], [p].[MemberShipNo], [p].[OnCreated], [p].[PortalOnBoarding], [p].[Tel]
+FROM [Person] AS [p]" (0723d8ff)
+2019-03-13T13:57:00.6560014+01:00 0HLL7MBJNP3FC:0000000B [INF] Executed DbCommand ("1"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [s].[Id], [s].[Amount], [s].[ItemOwner], [s].[OrderAndPurchaseStatus], [s].[OrderDate], [s].[ProductId], [s].[TransactionNo], [s.Product].[Id], [s.Product].[Description], [s.Product].[Image], [s.Product].[IsActive], [s.Product].[IsVouchering], [s.Product].[Name], [s.Product].[ProductCategoryId], [s.Product].[ProductTypes], [s.Product].[StartFrom], [s.Product.ProductCategory].[Id], [s.Product.ProductCategory].[Name]
+FROM [Transactional] AS [s]
+INNER JOIN [Products] AS [s.Product] ON [s].[ProductId] = [s.Product].[Id]
+INNER JOIN [ProductCategory] AS [s.Product.ProductCategory] ON [s.Product].[ProductCategoryId] = [s.Product.ProductCategory].[Id]" (0723d8ff)
+2019-03-13T13:57:00.6568285+01:00 0HLL7MBJNP3FC:0000000B [INF] Executed action method "Portal.Controllers.CartAndPaymentController.CheckOut (Portal)", returned result "Microsoft.AspNetCore.Mvc.ViewResult" in 22.8785ms. (50a9e262)
+2019-03-13T13:57:00.6570671+01:00 0HLL7MBJNP3FC:0000000B [INF] Executing ViewResult, running view "_checkout". (c83d0e25)
+2019-03-13T13:57:00.6582239+01:00 0HLL7MBJNP3FC:0000000B [INF] Executed DbCommand ("1"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [s].[Id], [s].[Amount], [s].[ItemOwner], [s].[OrderAndPurchaseStatus], [s].[OrderDate], [s].[ProductId], [s].[TransactionNo], [s.Product].[Id], [s.Product].[Description], [s.Product].[Image], [s.Product].[IsActive], [s.Product].[IsVouchering], [s.Product].[Name], [s.Product].[ProductCategoryId], [s.Product].[ProductTypes], [s.Product].[StartFrom]
+FROM [Transactional] AS [s]
+INNER JOIN [Products] AS [s.Product] ON [s].[ProductId] = [s.Product].[Id]" (0723d8ff)
+2019-03-13T13:57:00.6590227+01:00 0HLL7MBJNP3FC:0000000B [INF] Executed DbCommand ("0"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [s].[Id], [s].[Amount], [s].[ItemOwner], [s].[OrderAndPurchaseStatus], [s].[OrderDate], [s].[ProductId], [s].[TransactionNo], [s.Product].[Id], [s.Product].[Description], [s.Product].[Image], [s.Product].[IsActive], [s.Product].[IsVouchering], [s.Product].[Name], [s.Product].[ProductCategoryId], [s.Product].[ProductTypes], [s.Product].[StartFrom]
+FROM [Transactional] AS [s]
+INNER JOIN [Products] AS [s.Product] ON [s].[ProductId] = [s.Product].[Id]" (0723d8ff)
+2019-03-13T13:57:00.6613616+01:00 0HLL7MBJNP3FC:0000000B [INF] Executed DbCommand ("0"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [s].[Id], [s].[Amount], [s].[ItemOwner], [s].[OrderAndPurchaseStatus], [s].[OrderDate], [s].[ProductId], [s].[TransactionNo], [s.Product].[Id], [s.Product].[Description], [s.Product].[Image], [s.Product].[IsActive], [s.Product].[IsVouchering], [s.Product].[Name], [s.Product].[ProductCategoryId], [s.Product].[ProductTypes], [s.Product].[StartFrom], [s.Product.ProductCategory].[Id], [s.Product.ProductCategory].[Name]
+FROM [Transactional] AS [s]
+INNER JOIN [Products] AS [s.Product] ON [s].[ProductId] = [s.Product].[Id]
+INNER JOIN [ProductCategory] AS [s.Product.ProductCategory] ON [s.Product].[ProductCategoryId] = [s.Product.ProductCategory].[Id]" (0723d8ff)
+2019-03-13T13:57:00.6641640+01:00 0HLL7MBJNP3FC:0000000B [INF] Executed ViewResult - view "_checkout" executed in 7.2204ms. (f66409e9)
+2019-03-13T13:57:00.6642824+01:00 0HLL7MBJNP3FC:0000000B [INF] Executed action "Portal.Controllers.CartAndPaymentController.CheckOut (Portal)" in 30.4005ms (afa2e885)
+2019-03-13T13:57:00.6643556+01:00 0HLL7MBJNP3FC:0000000B [INF] Executed endpoint '"Portal.Controllers.CartAndPaymentController.CheckOut (Portal)"' (99874f2b)
+2019-03-13T13:57:00.6645172+01:00 0HLL7MBJNP3FC:0000000B [INF] Request finished in 40.7053ms 200 text/html; charset=utf-8 (791a596a)
+2019-03-13T13:57:00.8778598+01:00 0HLL7MBJNP3FC:0000000C [INF] Request starting HTTP/1.1 GET http://localhost/armwealth/liber/Store/css/components/portfolio-masonry-2.css   (ca22a1cb)
+2019-03-13T13:57:00.8791688+01:00 0HLL7MBJNP3FC:0000000C [INF] Request finished in 1.3205ms 404  (791a596a)
+2019-03-13T13:57:00.9095754+01:00 0HLL7MBJNP3FC:0000000D [INF] Request starting HTTP/1.1 GET http://localhost/armwealth/CartAndPayment/img/arm-investment-center-logo.png   (ca22a1cb)
+2019-03-13T13:57:00.9103293+01:00 0HLL7MBJNP3FC:0000000D [INF] Request finished in 0.7864ms 404  (791a596a)
+2019-03-13T13:57:00.9678739+01:00 0HLL7MBJNP3FC:0000000E [INF] Request starting HTTP/1.1 GET http://localhost/armwealth/liber/Store/css/components/portfolio-masonry-2.css   (ca22a1cb)
+2019-03-13T13:57:00.9686835+01:00 0HLL7MBJNP3FC:0000000E [INF] Request finished in 0.8313ms 404  (791a596a)
+2019-03-13T13:57:01.0559761+01:00 0HLL7MBJNP3FC:0000000F [INF] Request starting HTTP/1.1 GET http://localhost/armwealth/CartAndPayment/img/arm-investment-center-logo.png   (ca22a1cb)
+2019-03-13T13:57:01.0565342+01:00 0HLL7MBJNP3FC:0000000F [INF] Request finished in 0.5448ms 404  (791a596a)
+2019-03-13T13:57:01.0861192+01:00 0HLL7MBJNP3FC:00000010 [INF] Request starting HTTP/1.1 GET http://localhost/armwealth/liber/Store/img/sprite.png   (ca22a1cb)
+2019-03-13T13:57:01.0872115+01:00 0HLL7MBJNP3FC:00000010 [INF] Request finished in 1.111ms 404  (791a596a)
+2019-03-13T13:57:01.2841586+01:00 0HLL7MBJNP3FC:00000011 [INF] Request starting HTTP/1.1 GET http://localhost/armwealth/CartAndPayment/img/alternative-banner.jpg   (ca22a1cb)
+2019-03-13T13:57:01.2851178+01:00 0HLL7MBJNP3FC:00000011 [INF] Request finished in 0.9699ms 404  (791a596a)
+2019-03-13T13:57:01.4073801+01:00 0HLL7MBJNP3FC:00000012 [INF] Request starting HTTP/1.1 GET http://localhost/armwealth/CartAndPayment/img/alternative-banner.jpg   (ca22a1cb)
+2019-03-13T13:57:01.4081674+01:00 0HLL7MBJNP3FC:00000012 [INF] Request finished in 0.7971ms 404  (791a596a)
