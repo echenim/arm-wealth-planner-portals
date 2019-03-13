@@ -224,18 +224,35 @@ namespace Portal.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Cregistration(RegistrationViewModel model)
+        public IActionResult Cregistration(CartView model)
         {
-            if (ModelState.IsValid)
+           // if (!ModelState.IsValid) return View("_checkout", model);
+            ShowCartInformation();
+            var tracker = HttpContext.Session.GetString("_ArmTracker");
+            if (tracker != null)
             {
-                ShowCartInformation();
-                var tracker = HttpContext.Session.GetString("_ArmTracker");
-                if (tracker != null)
-                {
-                    _cartManager.CartUpdateWithEmail(model.Email, tracker);
-                }
+                _cartManager.CartUpdateWithEmail(model.Email, tracker);
+            }
 
-                var isPersonResult = _personManager.Save(model);
+            var personObj = new Person
+            {
+                FirstName = model.FirstName,
+                LastName = model.LastName,
+                Email = model.Email,
+                BioetricVerificationNumber = model.BioetricVerificationNumber,
+                Address = model.Address,
+                Tel = model.Tel,
+                Gender = model.Gender,
+                IsCustomer = true,
+                OnCreated = DateTime.Now.ToUniversalTime(),
+                PortalOnBoarding = $"NPB"
+            };
+
+            var onboardToArm = _armOneManager.OnboardNewUsers(personObj, model.Password);
+
+            if (onboardToArm.ResponseCode.Equals("00"))
+            {
+                var isPersonResult = _personManager.Save(personObj);
                 if (isPersonResult.Succeed)
                 {
                     var user = new ApplicationUser
@@ -251,11 +268,11 @@ namespace Portal.Controllers
                             _signInManager.PasswordSignInAsync(user, model.Password, true, true).Result;
                         if (isSignInSuccessful.Succeeded)
                         {
-                            return RedirectToAction("CheckOut");
+                            return RedirectToAction("CheckOut", "CartAndPayment");
                         }
                         else
                         {
-                            return RedirectToAction("CheckOut");
+                            return RedirectToAction("CheckOut", "CartAndPayment");
                         }
                     }
                 }

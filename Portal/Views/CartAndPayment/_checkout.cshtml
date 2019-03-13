@@ -279,6 +279,15 @@
                         <form method="get" asp-action="Process" asp-controller="CartAndPayment">
                             <input type="hidden" name="trnxnumber" value="@Model.TransactionNo" />
                             <input type="hidden" name="amount" value="@Model.Total" />
+
+                            <input type="hidden" name="arm_vendor_username" value="gtbank" />
+                            <input type="hidden" name="arm_tranx_id" value="@Model.TransactionNo" />
+                            <input type="hidden" name="arm_cust_id" value="IV020644ST001" />
+                            <input type="hidden" name="arm_cust_name" value="Olusakin Tolulope" />
+                            <input type="hidden" name="arm_tranx_amt" value="XXXXXX" />
+                            <input type="hidden" name="arm_tranx_curr" value="566" />
+                            <input type="hidden" name="arm_tranx_noti_url" value="https://abc.com/getresponse" />
+
                             <button class="btn btn-inside-out btn-lg  btn-shadow pl-50 pr-50" data-brk-library="component__button" data-toggle="modal" data-target="#myModal">
                                 <span class="before">To Payment</span><span class="text">To Payment</span><span class="after">To Payment</span>
                             </button>
