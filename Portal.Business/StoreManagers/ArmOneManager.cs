@@ -87,7 +87,6 @@ namespace Portal.Business.StoreManagers
                     result.BvnNumber = customerDetail.BvnNumber;
                     result.Gender = customerDetail.Gender;
                 }
-
             }
 
             return result;
@@ -99,6 +98,11 @@ namespace Portal.Business.StoreManagers
             var response = _clientService.Authenticate(request);
 
             return response;
+        }
+
+        bool IArmOneManager.IsValidEmailAddress(string s)
+        {
+            return IsValidEmailAddress(s);
         }
 
         public ArmOneRegisterResponse OnboardNewUsers(Person model, string password)
@@ -118,7 +122,7 @@ namespace Portal.Business.StoreManagers
                 Address = model.Address,
                 BvnNumber = model.BioetricVerificationNumber
             };
-            var spResponse = _clientService.AddNewCustomerStageOne(spRequest); 
+            var spResponse = _clientService.AddNewCustomerStageOne(spRequest);
 
             //then, on sales/newcustomer
             if (spResponse != null && spResponse.ProspectCode > 0)

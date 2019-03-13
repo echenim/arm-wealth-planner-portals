@@ -6,7 +6,7 @@
 
         string ArmFundBaseUrl { get; set; }
         string FundPriceConnection { get; set; }
-
+        string ReturnUrl { get; set; }
         string ArmOne { get; set; }
         string ArmOneToken { get; set; }
         string ArmAggregatorBaseUrl { get; set; }

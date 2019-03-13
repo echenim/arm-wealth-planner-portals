@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Portal.Business.Contracts;
 using Portal.Domain.Models;
 using Portal.Domain.Models.Identity;
@@ -31,6 +32,7 @@ namespace Portal.Controllers
         private readonly IPasswordHasher<ApplicationUser> _passwordHasher;
         private readonly IHostingEnvironment _hostingEnvironment;
         private readonly IArmOneManager _armOneManager;
+        private readonly IArmOneServiceConfigManager _armOneServiceConfigManager;
 
         public CartAndPaymentController(ICartManager cartManager,
             IPersonManager personManager, IGeneratorsManager generatorsManager,
@@ -40,12 +42,14 @@ namespace Portal.Controllers
             SignInManager<ApplicationUser> signInManager,
             IPasswordHasher<ApplicationUser> passwordHasher,
             IHostingEnvironment hostingEnvironment,
+            IArmOneServiceConfigManager armOneServiceConfigManager,
+        IConfiguration configuration,
             IArmOneManager armOneManager)
         {
             _cartManager = cartManager;
             _personManager = personManager;
             _generatorsManager = generatorsManager;
-
+            _armOneServiceConfigManager = armOneServiceConfigManager;
             _signInManager = signInManager;
             _userManager = userManager;
             _roleManager = roleManager;
@@ -83,6 +87,11 @@ namespace Portal.Controllers
             //fetch curent selected products
             var data = _cartManager.GetCart(s => s.ItemOwner.ToLower().Equals(filter.ToLower())
                               && s.OrderAndPurchaseStatus.Equals("InCart"));
+            data.PaymentGateway = $"{_armOneServiceConfigManager.ArmAggregatorBaseUrl}/Aggregator2/Payment";
+            data.XmlPayload = _generatorsManager.ArmXmlData(data.CartCollection.ToList());
+            var toHashed =
+                $"{data.TransactionNo}{_armOneServiceConfigManager.ArmServiceUsername}{data.Total}{_armOneServiceConfigManager.ReturnUrl}{_armOneServiceConfigManager.ArmMacKey}";
+            data.HashedData = _generatorsManager.HashedValues(toHashed);
             var trnx = (from u in data.CartCollection
                         select u.TransactionNo).Distinct();
 
@@ -226,7 +235,7 @@ namespace Portal.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Cregistration(CartView model)
         {
-           // if (!ModelState.IsValid) return View("_checkout", model);
+            // if (!ModelState.IsValid) return View("_checkout", model);
             ShowCartInformation();
             var tracker = HttpContext.Session.GetString("_ArmTracker");
             if (tracker != null)
