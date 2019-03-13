@@ -35,10 +35,7 @@
 
                 <div class="form-group">
                     <label for=""> Select Fund Type to Invest in</label>
-                    <select name='product' class="form-control" ng-model='debit.ProductCode' required>
-                        <option>
-                            Select Fund Type
-                        </option>
+                    <select name='product' class="form-control" ng-model='debit.ProductCode' required>                       
                         @foreach (var product in Model.Summaries)
                         {
                             <option value='@product.ProductCode'>@product.ProductName</option>
@@ -183,8 +180,19 @@
                 }
 
                 $scope.getDate = function () {
+                    //set datepicker to disable previous dates
+                    var today = new Date();
+                    var dd = today.getDate();
+                    var mm = today.getMonth() + 1;
+                    var yyyy = today.getFullYear();
+
+                    if (dd < 10) { dd = '0' + dd }
+                    if (mm < 10) { mm = '0' + mm }
+                    var now = mm + '/' + dd + '/' + yyyy;                    
+
                     $(".datepicker").daterangepicker({
                         singleDatePicker: true,
+                        minDate: now,
                         showDropdowns: true,
                         locale: {
                             format: 'MM/DD/YYYY'

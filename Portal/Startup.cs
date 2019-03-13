@@ -49,10 +49,7 @@ namespace Portal
                 options.AccessDeniedPath = new PathString("/Guest/Index");
             });
 
-            ////services.AddMemoryCache(options =>
-            ////{
-            ////    options.ExpirationScanFrequency = TimeSpan.FromMinutes(5);
-            ////});
+            services.AddMemoryCache();
 
             #endregion session to persist state over specific time
 

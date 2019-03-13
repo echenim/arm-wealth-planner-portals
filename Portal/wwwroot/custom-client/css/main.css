@@ -32236,6 +32236,14 @@ tr.spacer > td {
     transition: all 0.25s ease;
 }
 
+.required {
+    font-size: 0.65rem;
+    text-transform: inherit;
+    letter-spacing: 2px;
+    color: rgb(6, 169, 123); /**rgba(0, 0, 0, 0.4);**/
+    transition: all 0.25s ease;
+}
+
 .danger_text {
     font-size: 0.65rem;
     text-transform: uppercase;

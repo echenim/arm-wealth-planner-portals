@@ -102,7 +102,7 @@ namespace Portal.Areas.Client.Controllers
         }
 
         [HttpGet]
-        public IActionResult AjaxSendOtp(string action)
+        public IActionResult AjaxSendOtp(string action = "Redemption")
         {
             var _user = _cache.Get<AuthenticateResponse>("ArmUser");
             if (_user == null)

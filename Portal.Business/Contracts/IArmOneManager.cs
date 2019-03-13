@@ -22,6 +22,8 @@ namespace Portal.Business.Contracts
 
         bool UnLockAccount(string securityanswer);
 
+        bool IsValidEmailAddress(string s);
+
         ArmOneRegisterResponse OnboardNewUsers(Person model, string password);
 
         ArmOneRegisterResponse OnboardOldUsers(string username, string password);

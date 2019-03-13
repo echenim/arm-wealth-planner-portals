@@ -48,7 +48,9 @@ namespace Portal.Controllers
             IArmOneManager armOneManager,
             IPersonManager personManager,
             ICartManager cartManager,
-            IGeneratorsManager generatorsManager
+            IGeneratorsManager generatorsManager,
+
+            IMemoryCache cache
         )
         {
             _signInManager = signInManager;
@@ -61,6 +63,8 @@ namespace Portal.Controllers
             _personManager = personManager;
             _cartManager = cartManager;
             _generatorsManager = generatorsManager;
+
+            _cache = cache;
         }
 
         [AllowAnonymous]
@@ -70,10 +74,11 @@ namespace Portal.Controllers
             return View();
         }
 
+        //will refactor later
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Login(LoginViewModels model)
+        public IActionResult Login(LoginViewModels model)
         {
             if (!ModelState.IsValid) return View(model);
             ShowCartInformation();
@@ -134,28 +139,37 @@ namespace Portal.Controllers
                                     .PasswordSignInAsync(valiedUser, model.Password, true, true).Result;
                                 if (signInResult.Succeeded)
                                 {
-                                    //_cache.Set<CustomerInformationView>("ArmOneUser", armOneObj);
-                                    //_cache.Set<AuthenticateResponse>("ArmUser", dataHubObj);
+                                    _cache.Set<CustomerInformationView>("ArmOneUser", armOneObj, new MemoryCacheEntryOptions()
+                                                                            .SetSlidingExpiration(TimeSpan.FromMinutes(20))
+                                                                            .SetAbsoluteExpiration(TimeSpan.FromHours(1)));
+
+                                    _cache.Set<AuthenticateResponse>("ArmUser", dataHubObj, new MemoryCacheEntryOptions()
+                                                                            .SetSlidingExpiration(TimeSpan.FromMinutes(20))
+                                                                            .SetAbsoluteExpiration(TimeSpan.FromHours(1)));
+
                                     return RedirectToAction("Index", "Dashboard", new { area = "Client" });
                                 }
                             }
                         }
                     }
 
-                                    _cache.Set<AuthenticateResponse>("ArmUser", dataHubObj, new MemoryCacheEntryOptions()
-                                                                                            .SetSlidingExpiration(TimeSpan.FromMinutes(20))
-                                                                                            .SetAbsoluteExpiration(TimeSpan.FromHours(1)));
+                    _cache.Set<AuthenticateResponse>("ArmUser", dataHubObj, new MemoryCacheEntryOptions()
+                                                                            .SetSlidingExpiration(TimeSpan.FromMinutes(20))
+                                                                            .SetAbsoluteExpiration(TimeSpan.FromHours(1)));
 
-                                    //var claims = new[] { new Claim("name", armOneObj.MembershipNumber), new Claim(ClaimTypes.Role, "Client") };
-                                    //var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-                                    //await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(identity));
+                    //var claims = new[] { new Claim("name", armOneObj.MembershipNumber), new Claim(ClaimTypes.Role, "Client") };
+                    //var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                    //await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(identity));
 
-                                    //HttpContext.Session.Set("ArmUser", dataHubObj);
+                    //HttpContext.Session.Set("ArmUser", dataHubObj);
 
-                                    return RedirectToAction("Index", "Dashboard", new { area = "Client" });
-                                }
-                            }
-                        }
+                    return RedirectToAction("Index", "Dashboard", new { area = "Client" });
+                }
+            }
+
+            return View();
+        }
+
 
         [AllowAnonymous]
         public IActionResult SignIn()
