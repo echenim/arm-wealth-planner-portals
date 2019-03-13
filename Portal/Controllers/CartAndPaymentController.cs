@@ -153,7 +153,7 @@ namespace Portal.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult SignIn(CartView model)
         {
-            if (!ModelState.IsValid) return View("_checkout", model);
+            //  if (!ModelState.IsValid) return View("_checkout", model);
             ShowCartInformation();
             var tracker = HttpContext.Session.GetString("_ArmTracker");
             if (tracker != null)
