@@ -55,10 +55,11 @@ namespace Portal.Business.StoreManagers
 
             //if the client is on armone, get customer detail from armone
             //else authenticate on datahub and onboard on armone
-
-            if (customerLoginResponse == null)
+            if (customerLoginResponse.ResponseCode == null)
             {
                 var registerOnArmOne = OnboardOldUsers(username, password);
+                if (registerOnArmOne.ResponseCode == "00")
+                    customerLoginResponse = _clientService.ArmOneAuthenticate(customerLoginRequest);
             }
 
             //get customer detail from arm one
@@ -117,10 +118,10 @@ namespace Portal.Business.StoreManagers
                 Address = model.Address,
                 BvnNumber = model.BioetricVerificationNumber
             };
-            var spResponse = _clientService.AddNewCustomerStageOne(spRequest);
+            var spResponse = _clientService.AddNewCustomerStageOne(spRequest); 
 
             //then, on sales/newcustomer
-            if (spResponse != null)
+            if (spResponse != null && spResponse.ProspectCode > 0)
             {
                 var snRequest = new SalesNewCustomerRequest { ProspectCode = spResponse.ProspectCode };
                 snResponse = _clientService.AddNewCustomerStageTwo(snRequest);

@@ -1,114 +1,73 @@
 ﻿@model Portal.Business.ViewModels.AccountStatementViewModel
+@using Portal.Areas.Client.Extensions;
 
 @{
     ViewData["Title"] = "Initiate";
     Layout = "~/Areas/Client/Views/Shared/_Layout-Client.cshtml";
 }
 
-<div class="row row-eq-height" ng-app="armApp" ng-controller='AppController' ng-init="init()">
+<div class="row row-eq-height" ng-app="armApp" ng-controller='BuyController' ng-init="init()">
     <div class="col-lg-8">
         <div class="element-box">
             <h5 class="element-box-header">
-                Initiate a Redemption
+                Additional Investment
             </h5>
             <div class="form-desc">
-                Select the Fund to withdraw from and enter an amount to redeem from at least 1 product.
-            </div>
-
-            <div class="alert alert-primary" role="alert" ng-if="redemptionResponse.success && redemptionResponse.message">
-                <i class="os-icon os-icon-check"></i>
-                <span class="label">{[{redemptionResponse.message}]}</span>
-            </div>
-            <div class="alert alert-danger" role="alert" ng-if="!redemptionResponse.success && redemptionResponse.message">
-                <i class="os-icon os-icon-delete"></i>
-                <span class="label">{[{redemptionResponse.message}]}</span>
-            </div>
+                Enter an amount to invest for at least 1 product.
+            </div>            
 
         </div>
         @{
             var currentBalance = String.Empty;
         }
 
-        
-        @if (Model.Summaries != null && Model.Summaries.Count > 0)
-        {
-            <div class="row">
-                @foreach (var record in Model.Summaries)
+        <div class="row">
+            <div class="col-sm-12">
+                @if (Model.Summaries != null && Model.Summaries.Count > 0)
                 {
-                    currentBalance = record.CurrentBalance.ToString("F2");  
-                                           
-                    <div class="col-sm-6">                                                   
-                        <div class="element-wrapper pb-0">
-                            <h5 class="element_header_redemption element-header">
-                                @record.ProductName
-                                <br />
-                                <span class="newbalance smaller_text date-timestamp float-right">New Balance - &#8358;@currentBalance</span>
-                            </h5>
-                            <div class="element-box">
-                                <div class="row">
-                                    <div class="col-sm-12">
-                                        <div class="form-group">
-                                            <label class="" for="">Enter Amount</label>
-                                            <div class="input-group mb-2 mr-sm-2 mb-sm-0">
-                                                <input type="number" class="form-control" placeholder="₦0.00" min="0" max="@record.CurrentBalance" ng-disabled='loading||otpGenerated' id="@record.ProductCode" ng-model='@record.ProductCode' data-rel='@record.ProductName' ng-focus="focusCallback($event)" ng-change='addToCart()'>
-                                                <div class="input-group-append">
-                                                    <div class="input-group-text">
-                                                        NGN
+                    foreach (var record in Model.Summaries)
+                    {
+                        currentBalance = record.CurrentBalance.ToString("F2");
+                        <div class="col-lg-6 col-md-6">
+                            <div class="element-wrapper pb-0">
+                                <h5 class="element_header_redemption element-header">
+                                    @record.ProductName
+                                    <br />
+                                    <span class="newbalance smaller_text date-timestamp float-right">Existing Investment - &#8358;@currentBalance</span>
+                                </h5>
+                                <div class="element-box">
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <div class="form-group">
+                                                <label class="" for="">Enter Amount</label>
+                                                <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                                                    <input type="number" class="form-control" placeholder="₦0.00" min="0" max="@record.CurrentBalance" ng-disabled='loading||otpGenerated' id="@record.ProductCode" ng-model='@record.ProductCode' data-rel='@record.ProductName' ng-focus="focusCallback($event)" ng-change='addToCart()'>
+                                                    <div class="input-group-append">
+                                                        <div class="input-group-text">
+                                                            NGN
+                                                        </div>
                                                     </div>
                                                 </div>
+                                                <input type="hidden" class="accruedInterest" value="@record.AccruedInterest" />
                                             </div>
-                                            <input type="hidden" class="accruedInterest" value="@record.AccruedInterest" />
                                         </div>
+                                    
                                     </div>
-
+                                
                                 </div>
-
                             </div>
-                        </div>                                            
-                     </div> 
-                                                                                                                        
+                        </div>                       
+                    }
                 }
-            </div>                                
-                               
-        }
-        else
-        {
-            <div class="element-box">
-                <h5>No transaction records available for the selected date.</h5>
-            </div>
-        }
-
-            
-        <div class="row">
-            <div class="col-12">
-                <div class="element-box">
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="form-group">
-                                <label class="" for="">Reason for Redemption</label>
-                                <select class="form-control" name='source' ng-model="record.Source">
-                                    <option value=""> Select an Option</option>
-                                    <option value="">Urgent Fund Requirement</option>
-                                    <option value="">Investment Goal Realised</option>
-                                    <option value="">To Reallocate my Investment</option>
-                                    <option value="">Others</option>
-                                </select>
-                                <p class="required" style="margin-top: 2px;">*reason for Redemption is required.</p>
-                            </div>
-                        </div>
+                else
+                {
+                    <div class="element-box">
+                        <h5>No transaction records available for the selected date.</h5>
                     </div>
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="form-group">
-                                <input type="text" name="sourceothers" class="form-control" placeholder="If others, please specify" ng-model="record.SourceOther" ng-required="record.Source == 'Others'" />
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
+                }
             </div>
-        </div>        
-           
+
+        </div>
     </div>
 
 
@@ -120,13 +79,12 @@
                     <div class="highlight-header highlight-header-mutual">
                         Mutual Funds
                     </div>
-                    
-                    
+
                     <table>
                         <tbody>
                             <tr ng-repeat="(key, value) in myCart">
                                 <td class="label">{[{value.productName}]}</td>
-                                <td class="col2 value font-one-four">₦{[{value.amount}]}</td>
+                                <td class="col2 value font-one-four">+₦{[{value.amount}]}</td>
                             </tr>
                             <tr>
                                 <td class="label">Total</td>
@@ -189,7 +147,7 @@
                                                     <span class="label">{[{value.productName}]}</span>
                                                 </td>
                                                 <td class="col2">
-                                                    <span class="value font-one-four">₦{[{value.amount}]}</span>
+                                                    <span class="value font-one-four">+₦{[{value.amount}]}</span>
                                                     <span></span>
                                                 </td>
                                             </tr>
@@ -231,14 +189,14 @@
                                             </tr>
                                         </tbody>
                                     </table>
-                                </center>                                
-                            </div>                          
+                                </center>
+                            </div>
                         </form>
 
                     </div>
                 </div>
             </div>
-        </div>        
+        </div>
         <!--end test-->
 
     </div>
@@ -259,10 +217,10 @@
                 $scope.init = function () {
                     $scope.myCart = {};
                     $scope.accruedInterest = 0;
-                    
+
                     $(".accruedInterest").each(function () {
                         $scope.accruedInterest += parseFloat(this.value);
-                    });                   
+                    });
 
                     $scope.cartTotal = 0;
                     $scope.targetField = null;
@@ -321,15 +279,15 @@
                     angular.forEach($scope.myCart, function (value, key) {
                         total = total + value.amount;
                     })
-                    
+
                     $scope.cartTotal = total;
-                    $scope.expectedNetWorth = $scope.realNetWorth - total;                    
+                    $scope.expectedNetWorth = $scope.realNetWorth - total;
                 }
 
                 $scope.sendOtp = function () {
                     $scope.loading = true;
                     var OtpResponse = {};
-                    var url = '@Url.Action("AjaxSendOtp", "Redemption", new { action = "Redemption"})';
+                    var url = '@Url.Action("AjaxSendOtp", "Redemption", new { action = "redemption"})';
                     return $http.get(url).then(function (response) {
                         OtpResponse = response;
                         var res = OtpResponse.data;
@@ -360,13 +318,7 @@
                         }
                     }, $scope.checkoutProduct);
 
-                    if (!$scope.record.Source) {
-                        $scope.record.Source = "";
-                    }
 
-                    if (!$scope.record.SourceOther) {
-                        $scope.record.SourceOther = "";
-                    }
 
                     var payload = new RedemtionPayload;
                     payload.TotalAmount = $scope.cartTotal;

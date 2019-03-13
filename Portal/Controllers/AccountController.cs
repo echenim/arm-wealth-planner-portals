@@ -49,7 +49,9 @@ namespace Portal.Controllers
             IArmOneManager armOneManager,
             IPersonManager personManager,
             ICartManager cartManager,
-            IGeneratorsManager generatorsManager
+            IGeneratorsManager generatorsManager,
+
+            IMemoryCache cache
         )
         {
             _signInManager = signInManager;
@@ -62,6 +64,8 @@ namespace Portal.Controllers
             _personManager = personManager;
             _cartManager = cartManager;
             _generatorsManager = generatorsManager;
+
+            _cache = cache;
         }
 
         [AllowAnonymous]
@@ -71,6 +75,7 @@ namespace Portal.Controllers
             return View();
         }
 
+        //will refactor later
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -161,8 +166,14 @@ namespace Portal.Controllers
                                     .PasswordSignInAsync(valiedUser, model.Password, true, true).Result;
                                 if (signInResult.Succeeded)
                                 {
-                                    //_cache.Set<CustomerInformationView>("ArmOneUser", armOneObj);
-                                    //_cache.Set<AuthenticateResponse>("ArmUser", dataHubObj);
+                                    _cache.Set<CustomerInformationView>("ArmOneUser", armOneObj, new MemoryCacheEntryOptions()
+                                                                            .SetSlidingExpiration(TimeSpan.FromMinutes(20))
+                                                                            .SetAbsoluteExpiration(TimeSpan.FromHours(1)));
+
+                                    _cache.Set<AuthenticateResponse>("ArmUser", dataHubObj, new MemoryCacheEntryOptions()
+                                                                            .SetSlidingExpiration(TimeSpan.FromMinutes(20))
+                                                                            .SetAbsoluteExpiration(TimeSpan.FromHours(1)));
+
                                     return RedirectToAction("Index", "Dashboard", new { area = "Client" });
                                 }
                             }
