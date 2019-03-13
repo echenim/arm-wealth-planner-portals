@@ -15,5 +15,7 @@ namespace Portal.Business.Contracts
         string ArmXmlData(List<Transactional> datapayload);
 
         string HashedValues(string toHashed);
+
+        string DecryptCredentials(string credentials);
     }
 }

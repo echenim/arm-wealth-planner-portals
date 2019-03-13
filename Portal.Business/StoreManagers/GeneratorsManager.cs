@@ -1,15 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Security.Cryptography;
-using System.Security.Policy;
 using System.Text;
 using Microsoft.AspNetCore.Http;
 using Portal.Business.Contracts;
 using Portal.Domain.ViewModels;
-using Microsoft.AspNetCore;
-using Microsoft.AspNetCore.Identity;
 using Portal.Domain.Models;
-using System.Security.Cryptography;
 
 namespace Portal.Business.StoreManagers
 {
@@ -91,36 +87,34 @@ namespace Portal.Business.StoreManagers
                 return builder.ToString();
             }
         }
-    }
-};
 
-private static string getString(byte[] b)
-{
-    return Encoding.UTF8.GetString(b);
-}
+        private static string getString(byte[] b)
+        {
+            return Encoding.UTF8.GetString(b);
+        }
 
-private static byte[] Decrypt(byte[] data, byte[] key)
-{
-    using (AesCryptoServiceProvider csp = new AesCryptoServiceProvider())
-    {
-        csp.KeySize = 256;
-        csp.BlockSize = 128;
-        csp.Key = key;
-        csp.Padding = PaddingMode.PKCS7;
-        csp.Mode = CipherMode.ECB;
-        ICryptoTransform decrypter = csp.CreateDecryptor();
-        return decrypter.TransformFinalBlock(data, 0, data.Length);
-    }
-}
+        private static byte[] Decrypt(byte[] data, byte[] key)
+        {
+            using (AesCryptoServiceProvider csp = new AesCryptoServiceProvider())
+            {
+                csp.KeySize = 256;
+                csp.BlockSize = 128;
+                csp.Key = key;
+                csp.Padding = PaddingMode.PKCS7;
+                csp.Mode = CipherMode.ECB;
+                ICryptoTransform decrypter = csp.CreateDecryptor();
+                return decrypter.TransformFinalBlock(data, 0, data.Length);
+            }
+        }
 
-public string DecryptCredentials(string credentials)
-{
-    byte[] key = { 7, 2, 3, 4, 5, 6, 7, 8, 1, 2, 3, 4, 5, 6, 7, 8,
+        public string DecryptCredentials(string credentials)
+        {
+            byte[] key = { 7, 2, 3, 4, 5, 6, 7, 8, 1, 2, 3, 4, 5, 6, 7, 8,
                            1, 2, 3, 4, 5, 6, 7, 8, 1, 2, 3, 4, 5, 6, 7, 8 };
-    var getEncryptedByte = Convert.FromBase64String(credentials);
-    byte[] dec = Decrypt(getEncryptedByte, key);
+            var getEncryptedByte = Convert.FromBase64String(credentials);
+            byte[] dec = Decrypt(getEncryptedByte, key);
 
-    return getString(dec);
-}
+            return getString(dec);
+        }
     }
 }

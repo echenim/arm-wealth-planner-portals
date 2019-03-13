@@ -87,11 +87,7 @@ namespace Portal.Controllers
             //fetch curent selected products
             var data = _cartManager.GetCart(s => s.ItemOwner.ToLower().Equals(filter.ToLower())
                               && s.OrderAndPurchaseStatus.Equals("InCart"));
-            data.PaymentGateway = $"{_armOneServiceConfigManager.ArmAggregatorBaseUrl}/Aggregator2/Payment";
-            data.XmlPayload = _generatorsManager.ArmXmlData(data.CartCollection.ToList());
-            var toHashed =
-                $"{data.TransactionNo}{_armOneServiceConfigManager.ArmServiceUsername}{data.Total}{_armOneServiceConfigManager.ReturnUrl}{_armOneServiceConfigManager.ArmMacKey}";
-            data.HashedData = _generatorsManager.HashedValues(toHashed);
+
             var trnx = (from u in data.CartCollection
                         select u.TransactionNo).Distinct();
 
@@ -104,6 +100,20 @@ namespace Portal.Controllers
             var username = User.Identity.Name;
             if (!string.IsNullOrEmpty(username))
             {
+                #region fill form for payment
+
+                data.MemberUniqueIdentifier = User.Identity.Name;
+                data.FullName = User.Identity.Name;
+
+                data.PaymentGateway = $"{_armOneServiceConfigManager.ArmAggregatorBaseUrl}/Aggregator2/Payment";
+                data.XmlPayload = _generatorsManager.ArmXmlData(data.CartCollection.ToList());
+                var toHashed =
+                    $"{data.TransactionNo}{_armOneServiceConfigManager.ArmServiceUsername}{data.Total}{_armOneServiceConfigManager.ReturnUrl}{_armOneServiceConfigManager.ArmMacKey}";
+                data.HashedData = _generatorsManager.HashedValues(toHashed);
+                data.VendorUserName = _generatorsManager.DecryptCredentials(_armOneServiceConfigManager.ArmServiceUsername);
+                data.ReturnUr = _armOneServiceConfigManager.ReturnUrl;
+                #endregion fill form for payment
+
                 data.Person = _personManager.Get(s => s.Email.Equals(User.Identity.Name))
                     .SingleOrDefault();
             }
