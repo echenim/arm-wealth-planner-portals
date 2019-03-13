@@ -209,21 +209,24 @@
                             </div>
                             @if (User.Identity.IsAuthenticated)
                             {
-                                var person = UserUtil.GetUser(User.Identity.Name);
-                                <div class="brk-header__element brk-header__element_skin-2  brk-header__item">
+                                   
+                                <div class="brk-header__element brk-header__element_skin-2 brk-header__item">
                                     <a href="#" class="brk-header__element--wrap">
-                                        <i class="fa fa-user"></i>
-                                        <span class="brk-header__element--label font__weight-medium">
-                                            @string.Format("{0}", person.FullName)
-                                        </span>
+                                        <span class="brk-header__element--label font__weight-medium">@User.Identity.Name</span>
                                     </a>
+                                   
+                                </div>
+                                <div class="brk-header__element brk-header__element_skin-2 brk-header__item">
+                                    <form  method="get" asp-controller="Account" asp-action="LogOut">
+                                        <button type="submit" class="brk-header__element--label font__weight-semibold">Logout</button>
+                                    </form>
                                 </div>
 
                             }
                             else
                             {
                                 <div class="brk-header__element brk-header__element_skin-2  brk-header__item">
-                                    <a asp-area="" asp-controller="Account" asp-action="Login" class="brk-header__element--wrap"><i class="fa fa-user"></i> <span class="brk-header__element--label font__weight-medium">Login</span></a>
+                                    <a asp-controller="Account" asp-action="Login" class="brk-header__element--wrap"><i class="fa fa-user"></i> <span class="brk-header__element--label font__weight-medium">Login</span></a>
                                 </div>
                             }
                         </div>
@@ -358,8 +361,24 @@
         </script>
     </environment>
     <script type="text/javascript">
-        $.getJSON("http://jsonip.com?callback=?", function (response) {
-            $('input[name=IpIdentifier]').val(response.ip);
+        $("#signUpDivSection").hide();
+        $("#loginUpDivSection").hide();
+        $(document).ready(function () {
+
+            $("#Cregistration").click(function () {
+                $("#signUpDivSection").show();
+                $("#loginUpDivSection").remove();
+                $("#Cregistration").remove();
+                $("#CsignIn").remove();
+            });
+
+            $("#CsignIn").click(function () {
+                $("#signUpDivSection").remove();
+                $("#loginUpDivSection").show();
+                $("#Cregistration").remove();
+                $("#CsignIn").remove();
+            });
+
         });
     </script>
     @RenderSection("Scripts", required: false)

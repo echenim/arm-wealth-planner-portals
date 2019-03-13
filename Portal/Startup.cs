@@ -16,6 +16,7 @@ using Portal.Domain.Models.Identity;
 using System;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Identity;
 
 namespace Portal
 {
@@ -32,6 +33,16 @@ namespace Portal
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+            services.Configure<IdentityOptions>(s =>
+            {
+                s.Password.RequireDigit = false;
+                s.Password.RequireLowercase = false;
+                s.Password.RequireNonAlphanumeric = false;
+                s.Password.RequireUppercase = false;
+                s.Password.RequiredLength = 4;
+                s.Password.RequiredUniqueChars = 0;
+            });
 
             #region session to persist state over specific time
 
@@ -85,7 +96,7 @@ namespace Portal
             services.AddTransient<IOrdersAndSalesManager, OrdersAndSalesManager>();
             services.AddTransient<ICartManager, CartManager>();
             services.AddTransient<IUserService, UserManagers>();
-            services.AddTransient<IDashBoardManager, DashBoardManager>();
+
             services.AddTransient<IApplicationGroupManager, ApplicationGroupManager>();
             services.AddTransient<IArmOneManager, ArmOneManager>();
 

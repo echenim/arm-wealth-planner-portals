@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Portal.Areas.Admin.ViewModels;
 using Portal.Business.Contracts;
 using Portal.Business.Utilities;
+using Portal.Domain.Models;
 using Portal.Domain.ViewModels;
 
 namespace Portal.Areas.Admin.Controllers
@@ -14,11 +15,13 @@ namespace Portal.Areas.Admin.Controllers
     // [Authorize]
     public class DashboardController : Controller
     {
-        private readonly IDashBoardManager _manager;
+        private readonly ICartManager _manager;
+        private readonly IPersonManager _personManager;
 
-        public DashboardController(IDashBoardManager manager)
+        public DashboardController(ICartManager manager, IPersonManager personManager)
         {
             _manager = manager;
+            _personManager = personManager;
         }
 
         public IActionResult Index(
@@ -48,15 +51,15 @@ namespace Portal.Areas.Admin.Controllers
 
             var sales = ReturnSales(searchString);
             var orders = ReturnOrders(searchString);
-            var expression = ReturnExpressionOfInterest(searchString);
+            //var expression = ReturnExpressionOfInterest(searchString);
             var customer = ReturnCustomer(searchString);
 
             var dashboard = new DashBoardView();
-            dashboard.RecentOrders = ReturnPurchese(searchString).OrderByDescending(s => s.AddToCartDate).Take(50).ToList();
+            dashboard.RecentOrders = ReturnPurchese(searchString).OrderByDescending(s => s.OrderDate).Take(50).ToList();
             dashboard.Customers = TransfromerManager.IntegerHuamanized(customer);
             dashboard.Sales = TransfromerManager.DecimalHumanizedX(sales);
             dashboard.Orders = TransfromerManager.IntegerHuamanized(orders);
-            dashboard.ExpressionOfINterest = TransfromerManager.IntegerHuamanized(expression);
+            // dashboard.ExpressionOfINterest = TransfromerManager.IntegerHuamanized(expression);
 
             return View(dashboard);
         }
@@ -66,17 +69,17 @@ namespace Portal.Areas.Admin.Controllers
         /// </summary>
         /// <param name="searchString"></param>
         /// <returns></returns>
-        private IQueryable<PurchaseOrderViewModel> ReturnPurchese(string searchString)
+        private IQueryable<Transactional> ReturnPurchese(string searchString)
             => !String.IsNullOrEmpty(searchString) && searchString.Equals("This Month") ?
-            _manager.GetRecentOrders(s => s.AddToCartDate.Date.ToString("MM/yyyy")
+            _manager.Get(s => s.OrderDate.Date.ToString("MM/yyyy")
                                               .Equals(DateTime.Now.Date.ToString("MM/yyyy")))
             : !String.IsNullOrEmpty(searchString) && searchString.Equals("Last Month") ?
-                _manager.GetRecentOrders(s => s.AddToCartDate.Date.ToString("MM/yyyy")
+                _manager.Get(s => s.OrderDate.Date.ToString("MM/yyyy")
                                                   .Equals(DateTime.Now.Date.AddMonths(-1).ToString("MM/yyyy")))
             : !String.IsNullOrEmpty(searchString) && searchString.Equals("This year") ?
-                    _manager.GetRecentOrders(s => s.AddToCartDate.Date.ToString("yyyy")
+                    _manager.Get(s => s.OrderDate.Date.ToString("yyyy")
                                                       .Equals(DateTime.Now.Date.ToString("yyyy")))
-                    : _manager.GetRecentOrders();
+                    : _manager.Get();
 
         /// <summary>
         /// return sales by using inline if-else to perform filter
@@ -85,19 +88,19 @@ namespace Portal.Areas.Admin.Controllers
         /// <returns></returns>
         private decimal ReturnSales(string searchString)
             => !String.IsNullOrEmpty(searchString) && searchString.Equals("This Month") ?
-            _manager.GetSales(s => !s.Product.ProductTypes.Equals("Expression of Interest")
-                                   && s.OrderDate != null && s.AddToCartDate.Date.ToString("MM/yyyy")
-                                       .Equals(DateTime.Now.Date.ToString("MM/yyyy")))
+            _manager.Get(s => !s.Product.ProductTypes.Equals("Expression of Interest")
+                                   && s.OrderDate != null && s.OrderDate.Date.ToString("MM/yyyy")
+                                       .Equals(DateTime.Now.Date.ToString("MM/yyyy"))).Select(s => s.Amount).Sum()
             : !String.IsNullOrEmpty(searchString) && searchString.Equals("Last Month") ?
-                _manager.GetSales(s => !s.Product.ProductTypes.Equals("Expression of Interest")
-                                       && s.OrderDate != null && s.AddToCartDate.Date.ToString("MM/yyyy")
-                                           .Equals(DateTime.Now.Date.AddMonths(-1).ToString("MM/yyyy")))
+                _manager.Get(s => !s.Product.ProductTypes.Equals("Expression of Interest")
+                                       && s.OrderDate != null && s.OrderDate.Date.ToString("MM/yyyy")
+                                           .Equals(DateTime.Now.Date.AddMonths(-1).ToString("MM/yyyy"))).Select(s => s.Amount).Sum()
                 : !String.IsNullOrEmpty(searchString) && searchString.Equals("This year") ?
-                    _manager.GetSales(s => !s.Product.ProductTypes.Equals("Expression of Interest")
-                                           && s.OrderDate != null && s.AddToCartDate.Date.ToString("yyyy")
-                                               .Equals(DateTime.Now.Date.ToString("yyyy")))
-                    : _manager.GetSales(s => !s.Product.ProductTypes.Equals("Expression of Interest")
-                                             && s.OrderDate != null);
+                    _manager.Get(s => !s.Product.ProductTypes.Equals("Expression of Interest")
+                                           && s.OrderDate != null && s.OrderDate.Date.ToString("yyyy")
+                                               .Equals(DateTime.Now.Date.ToString("yyyy"))).Select(s => s.Amount).Sum()
+                    : _manager.Get(s => !s.Product.ProductTypes.Equals("Expression of Interest")
+                                             && s.OrderDate != null).Select(s => s.Amount).Sum();
 
         /// <summary>
         /// return orders by using an inline if-else to filter data
@@ -106,40 +109,40 @@ namespace Portal.Areas.Admin.Controllers
         /// <returns></returns>
         private int ReturnOrders(string searchString)
             => !String.IsNullOrEmpty(searchString) && searchString.Equals("This Month") ?
-            _manager.GetOrders(s => !s.Product.ProductTypes.Equals("Expression of Interest")
-                                    && s.AddToCartDate.Date.ToString("MM/yyyy")
-                                        .Equals(DateTime.Now.Date.ToString("MM/yyyy")))
+            _manager.Get(s => !s.Product.ProductTypes.Equals("Expression of Interest")
+                                    && s.OrderDate.Date.ToString("MM/yyyy")
+                                        .Equals(DateTime.Now.Date.ToString("MM/yyyy"))).Count()
 
             : !String.IsNullOrEmpty(searchString) && searchString.Equals("Last Month") ?
-                _manager.GetOrders(s => !s.Product.ProductTypes.Equals("Expression of Interest")
-                                        && s.AddToCartDate.Date.ToString("MM/yyyy")
-                                            .Equals(DateTime.Now.Date.AddMonths(-1).ToString("MM/yyyy")))
+                _manager.Get(s => !s.Product.ProductTypes.Equals("Expression of Interest")
+                                        && s.OrderDate.Date.ToString("MM/yyyy")
+                                            .Equals(DateTime.Now.Date.AddMonths(-1).ToString("MM/yyyy"))).Count()
 
                 : !String.IsNullOrEmpty(searchString) && searchString.Equals("This year") ?
-                    _manager.GetOrders(s => !s.Product.ProductTypes.Equals("Expression of Interest")
-                                            && s.AddToCartDate.Date.ToString("MM/yyyy")
-                                                .Equals(DateTime.Now.Date.AddMonths(-6).ToString("MM/yyyy")))
-                    : _manager.GetOrders(s => !s.Product.ProductTypes.Equals("Expression of Interest"));
+                    _manager.Get(s => !s.Product.ProductTypes.Equals("Expression of Interest")
+                                            && s.OrderDate.Date.ToString("MM/yyyy")
+                                                .Equals(DateTime.Now.Date.AddMonths(-6).ToString("MM/yyyy"))).Count()
+                    : _manager.Get(s => !s.Product.ProductTypes.Equals("Expression of Interest")).Count();
 
         /// <summary>
         /// return expresion of interest by using an inline if-else to filter data
         /// </summary>
         /// <param name="searchString"></param>
         /// <returns></returns>
-        private int ReturnExpressionOfInterest(string searchString)
-            => !String.IsNullOrEmpty(searchString) && searchString.Equals("This Month") ?
-            _manager.GetExpressionOfInterest(s => !s.Product.ProductTypes.Equals("Expression of Interest")
-                                                  && s.AddToCartDate.Date.ToString("MM/yyyy")
-                                                      .Equals(DateTime.Now.Date.ToString("MM/yyyy")))
-            : !String.IsNullOrEmpty(searchString) && searchString.Equals("Last Month") ?
-                _manager.GetExpressionOfInterest(s => !s.Product.ProductTypes.Equals("Expression of Interest")
-                                                      && s.AddToCartDate.Date.ToString("MM/yyyy")
-                                                          .Equals(DateTime.Now.Date.AddMonths(-1).ToString("MM/yyyy")))
-                : !String.IsNullOrEmpty(searchString) && searchString.Equals("This year") ?
-                    _manager.GetExpressionOfInterest(s => !s.Product.ProductTypes.Equals("Expression of Interest")
-                                                          && s.AddToCartDate.Date.ToString("yyyy")
-                                                              .Equals(DateTime.Now.Date.ToString("yyyy")))
-                    : _manager.GetExpressionOfInterest(s => !s.Product.ProductTypes.Equals("Expression of Interest"));
+        //private int ReturnExpressionOfInterest(string searchString)
+        //    => !String.IsNullOrEmpty(searchString) && searchString.Equals("This Month") ?
+        //    _manager.Get(s => !s.Product.ProductTypes.Equals("Expression of Interest")
+        //                                          && s.AddToCartDate.Date.ToString("MM/yyyy")
+        //                                              .Equals(DateTime.Now.Date.ToString("MM/yyyy")))
+        //    : !String.IsNullOrEmpty(searchString) && searchString.Equals("Last Month") ?
+        //        _manager.GetExpressionOfInterest(s => !s.Product.ProductTypes.Equals("Expression of Interest")
+        //                                              && s.AddToCartDate.Date.ToString("MM/yyyy")
+        //                                                  .Equals(DateTime.Now.Date.AddMonths(-1).ToString("MM/yyyy")))
+        //        : !String.IsNullOrEmpty(searchString) && searchString.Equals("This year") ?
+        //            _manager.GetExpressionOfInterest(s => !s.Product.ProductTypes.Equals("Expression of Interest")
+        //                                                  && s.AddToCartDate.Date.ToString("yyyy")
+        //                                                      .Equals(DateTime.Now.Date.ToString("yyyy")))
+        //            : _manager.GetExpressionOfInterest(s => !s.Product.ProductTypes.Equals("Expression of Interest"));
 
         /// <summary>
         /// return customer by using an inline if-else to filter data
@@ -148,14 +151,14 @@ namespace Portal.Areas.Admin.Controllers
         /// <returns></returns>
         private int ReturnCustomer(string searchString)
             => !String.IsNullOrEmpty(searchString) && searchString.Equals("This Month") ?
-                _manager.GetCustomers(s => s.Person.OnCreated.Date.ToString("MM/yyyy")
-                                                          .Equals(DateTime.Now.Date.ToString("MM/yyyy")))
+                _personManager.Get(s => s.OnCreated.Date.ToString("MM/yyyy")
+                                                          .Equals(DateTime.Now.Date.ToString("MM/yyyy"))).Count()
                 : !String.IsNullOrEmpty(searchString) && searchString.Equals("Last Month") ?
-                    _manager.GetCustomers(s => s.Person.OnCreated.Date.ToString("MM/yyyy")
-                                                              .Equals(DateTime.Now.Date.AddMonths(-1).ToString("MM/yyyy")))
+                    _personManager.Get(s => s.OnCreated.Date.ToString("MM/yyyy")
+                                                              .Equals(DateTime.Now.Date.AddMonths(-1).ToString("MM/yyyy"))).Count()
                     : !String.IsNullOrEmpty(searchString) && searchString.Equals("This year") ?
-                        _manager.GetCustomers(s => s.Person.OnCreated.Date.ToString("yyyy")
-                                                                  .Equals(DateTime.Now.Date.ToString("yyyy")))
-                        : _manager.GetCustomers();
+                        _personManager.Get(s => s.OnCreated.Date.ToString("yyyy")
+                                                                  .Equals(DateTime.Now.Date.ToString("yyyy"))).Count()
+                        : _personManager.Get().Count();
     }
 }

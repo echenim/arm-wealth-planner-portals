@@ -20,14 +20,16 @@ namespace Portal.Areas.Admin.Controllers
         private readonly RoleManager<ApplicationRole> _roleManager;
         private readonly IPersonManager _personManager;
         private readonly IOrdersAndSalesManager _ordersAndSalesManager;
+        private readonly ICartManager _cartManager;
 
         public CustomersController(UserManager<ApplicationUser> userManager, RoleManager<ApplicationRole> roleManager,
-            IOrdersAndSalesManager ordersAndSalesManager, IPersonManager personManager)
+            IOrdersAndSalesManager ordersAndSalesManager, IPersonManager personManager, ICartManager cartManager)
         {
             _userManager = userManager;
             _roleManager = roleManager;
             _personManager = personManager;
             _ordersAndSalesManager = ordersAndSalesManager;
+            _cartManager = cartManager;
         }
 
         public IActionResult Index(
@@ -67,9 +69,9 @@ namespace Portal.Areas.Admin.Controllers
             return View(PaginatedList<ApplicationUser>.Create(data.AsQueryable(), page ?? 1, pageSize));
         }
 
-        public IActionResult Detail(long id)
+        public IActionResult Detail(string id)
         {
-            var connectors = new CustomerBuyHistoryHelper(_personManager, _ordersAndSalesManager);
+            var connectors = new CustomerBuyHistoryHelper(_personManager, _cartManager);
             var data = connectors.FetchPersonBuyHistory(id);
             return View("_details", data);
         }

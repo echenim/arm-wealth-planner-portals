@@ -137,33 +137,33 @@
                                     {
                                         <tr>
                                             <td>
-                                                <span class="smaller lighter">@item.AddToCartDateInHuman</span>
+                                                <span class="smaller lighter">@item.OrderDate</span>
                                             </td>
                                             <td>
                                                 <div>
                                                     <span>
-                                                        @item.Customer
+                                                        @item.ItemOwner
                                                     </span>
                                                 </div>
                                             </td>
                                             <td>
                                                 <div>
-                                                    @item.ProductName
+                                                    @item.Product.Name
                                                 </div>
                                             </td>
                                             <td>
                                                 <div>
-                                                    @item.ProductType
+                                                    @item.Product.ProductTypes
                                                 </div>
                                             </td>
                                             <td class="text-center">
                                                 <span>&#8358;@item.Amount</span>
                                             </td>
                                             <td>
-                                                @item.ProductCateogry
+                                                @item.Product.ProductCategory.Name
                                             </td>
                                             <td class="nowrap">
-                                                <span class="status-pill smaller green"></span><span>@item.TransactionStatus</span>
+                                                <span class="status-pill smaller green"></span><span>@item.OrderAndPurchaseStatus</span>
                                             </td>
                                         </tr>
                                     }

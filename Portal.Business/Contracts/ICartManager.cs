@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using Portal.Business.Contracts.Base;
 using Portal.Domain.Models;
@@ -12,6 +13,12 @@ namespace Portal.Business.Contracts
         CartView GetCart(Func<Transactional, bool> predicate = null);
 
         void CartUpdateWithEmail(string email, string session);
+
+        //IQueryable<CartModelView> GetOrders(Func<Transactional, bool> predicate = null);
+
+        void UpdateStatus(string trans, string status);
+
+        void Edit(string cartId);
 
         TransQIdenfier TrnxGenerator();
     }

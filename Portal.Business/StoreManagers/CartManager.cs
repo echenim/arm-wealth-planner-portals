@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.EntityFrameworkCore;
 using Portal.Business.Contracts;
+using Portal.Business.Utilities;
 using Portal.Domain;
 using Portal.Domain.Models;
 using Portal.Domain.ViewModels;
@@ -43,6 +44,13 @@ namespace Portal.Business.StoreManagers
             return model;
         }
 
+        public void UpdateStatus(string trans, string status)
+        {
+            var commandText = $"UPDATE Transactional SET OrderAndPurchaseStatus=@OrderAndPurchaseStatus WHERE TransactionNo='{trans}'";
+            var name = new SqlParameter("@OrderAndPurchaseStatus", status);
+            _context.Database.ExecuteSqlCommand(commandText, name);
+        }
+
         public Transactional Delete(Transactional model)
         {
             _context.Entry(model).State = EntityState.Deleted;
@@ -51,8 +59,8 @@ namespace Portal.Business.StoreManagers
         }
 
         public IQueryable<Transactional> Get(Func<Transactional, bool> predicate = null)
-            => (predicate != null ? _context.Transactional.Include(s => s.Product).Where(predicate: predicate)
-                : _context.Transactional.Include(s => s.Product).AsNoTracking()).AsQueryable();
+            => (predicate != null ? _context.Transactional.Include(s => s.Product).Include(s => s.Product.ProductCategory).Where(predicate: predicate)
+                : _context.Transactional.Include(s => s.Product).Include(s => s.Product.ProductCategory).AsNoTracking()).AsQueryable();
 
         public CartView GetCart(Func<Transactional, bool> predicate = null)
         {
@@ -70,6 +78,12 @@ namespace Portal.Business.StoreManagers
             var commandText = $"UPDATE Transactional SET ItemOwner=@ItemOwne WHERE TransactionNo='{session}'";
             var name = new SqlParameter("@ItemOwne", email);
             _context.Database.ExecuteSqlCommand(commandText, name);
+        }
+
+        public async void Edit(string cartId)
+        {
+            var sql = $"UPDATE Transactional SET OrderAndPurchaseStatus='Succeed' WHERE TransactionNo={cartId}";
+            await _context.Database.ExecuteSqlCommandAsync(sql: sql);
         }
     }
 }

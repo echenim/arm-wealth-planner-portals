@@ -9,6 +9,6 @@ namespace Portal.ViewModel
     public class PersonAndPersonBuyHistoryView
     {
         public Person PersonObj { get; set; }
-        public List<PurchaseOrders> BuyHistory { get; set; }
+        public List<Transactional> BuyHistory { get; set; }
     }
 }

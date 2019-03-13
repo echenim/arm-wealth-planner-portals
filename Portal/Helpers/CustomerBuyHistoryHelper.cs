@@ -10,19 +10,19 @@ namespace Portal.Helpers
     public class CustomerBuyHistoryHelper
     {
         private IPersonManager _person;
-        private IOrdersAndSalesManager _andSalesManager;
+        private ICartManager _andSalesManager;
 
-        public CustomerBuyHistoryHelper(IPersonManager person, IOrdersAndSalesManager andSalesManager)
+        public CustomerBuyHistoryHelper(IPersonManager person, ICartManager andSalesManager)
         {
             _person = person;
             _andSalesManager = andSalesManager;
         }
 
-        public PersonAndPersonBuyHistoryView FetchPersonBuyHistory(long id)
+        public PersonAndPersonBuyHistoryView FetchPersonBuyHistory(string id)
         {
             var data = new PersonAndPersonBuyHistoryView();
-            data.BuyHistory = _andSalesManager.PersonBuyHistory(id).ToList();
-            data.PersonObj = _person.Get(s => s.Id.Equals(id)).SingleOrDefault();
+            data.BuyHistory = _andSalesManager.Get(s => s.ItemOwner.Equals(id)).ToList();
+            data.PersonObj = _person.Get(s => s.Email.Equals(id)).SingleOrDefault();
             return data;
         }
     }
