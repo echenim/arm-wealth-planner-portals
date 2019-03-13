@@ -92,13 +92,39 @@ namespace Portal.Controllers
                 .SingleOrDefault(s => s.UserName.Equals(model.Username));
             if (isValiedUser != null)
             {
-                var resultCustomer =
-                    _signInManager.PasswordSignInAsync(isValiedUser, model.Password, true, true).Result;
-                if (resultCustomer.Succeeded)
+                if (!string.IsNullOrEmpty(isValiedUser.Person.MemberShipNo))
                 {
-                    return isValiedUser.Person.IsCustomer
-                        ? RedirectToAction("Index", "Home")
-                        : RedirectToAction("Index", "Dashboard", new { area = "Admin" });
+                    var resultCustomer =
+                        _signInManager.PasswordSignInAsync(isValiedUser, model.Password, true, true).Result;
+                    if (resultCustomer.Succeeded)
+                    {
+                        return isValiedUser.Person.IsCustomer
+                            ? RedirectToAction("Index", "Home")
+                            : RedirectToAction("Index", "Dashboard", new { area = "Admin" });
+                    }
+                }
+                else
+                {
+                    var armOneObj = _armOneManager.GetCustomerInformation(model.Username, model.Password);
+                    if (armOneObj.ResponseCode == "00")
+                    {
+                        var dataHubObj = _armOneManager.DataHubClientInfo(armOneObj.MembershipNumber, model.Password);
+                        var personObj = new Person();
+                        personObj = isValiedUser.Person;
+                        personObj.MemberShipNo = dataHubObj.MembershipKey.ToString();
+                        var k = _personManager.Edit(personObj);
+
+                        var valiedUser = _userManager.Users.SingleOrDefault(s => s.UserName.Equals(personObj.Email));
+
+                        var signInResult = _signInManager
+                            .PasswordSignInAsync(valiedUser, model.Password, true, true).Result;
+                        if (signInResult.Succeeded)
+                        {
+                            //_cache.Set<CustomerInformationView>("ArmOneUser", armOneObj);
+                            //_cache.Set<AuthenticateResponse>("ArmUser", dataHubObj);
+                            return RedirectToAction("Index", "Dashboard", new { area = "Client" });
+                        }
+                    }
                 }
             }
             else
@@ -133,7 +159,7 @@ namespace Portal.Controllers
                         var profileUserResult = _userManager.CreateAsync(userObj, model.Password).Result;
                         if (profileUserResult.Succeeded)
                         {
-                            var valiedUser = _userManager.Users.SingleOrDefault(s => s.Email.Equals(userObj.Email));
+                            var valiedUser = _userManager.Users.SingleOrDefault(s => s.UserName.Equals(userObj.Email));
                             if (valiedUser != null)
                             {
                                 var signInResult = _signInManager
@@ -168,9 +194,8 @@ namespace Portal.Controllers
                 }
             }
 
-            return View();
+            return View(model);
         }
-
 
         [AllowAnonymous]
         public IActionResult SignIn()
@@ -309,8 +334,6 @@ namespace Portal.Controllers
                                 return RedirectToAction("Login", "Account");
                             }
                         }
-
-                        //}
                     }
                 }
             }
