@@ -380,7 +380,7 @@
 
                             <div class="logged-user-i">
                                 <div class="logged-user-info-w top-personal-info">
-                                    @if (User.Identity.IsAuthenticated)
+                                    @*@if (User.Identity.IsAuthenticated)
                                     {
                                         var person = UserUtil.GetUser(User.Identity.Name);
                                         <div class="logged-user-name">
@@ -389,8 +389,8 @@
                                         <div class="logged-user-role">
                                             @string.Format("Member ID:  {0}", person.MembershipNo)
                                         </div>
-                                    }
-                                    else
+                                    }*@
+                                    @if (!String.IsNullOrEmpty(fullName) && !String.IsNullOrEmpty(membershipKey.ToString()))
                                     {
                                         <div class="logged-user-name">
                                             @string.Format("{0}", fullName)
@@ -410,7 +410,7 @@
                                             <img alt="" src="~/custom-client/img/default-profile.svg">
                                         </div>
                                         <div class="logged-user-info-w">
-                                            @if (User.Identity.IsAuthenticated)
+                                            @*@if (User.Identity.IsAuthenticated)
                                             {
                                                 var person = UserUtil.GetUser(User.Identity.Name);
                                                 <div class="logged-user-name">
@@ -419,8 +419,8 @@
                                                 <div class="logged-user-role">
                                                     @string.Format("Member ID:  {0}", person.MembershipNo)
                                                 </div>
-                                            }
-                                            else
+                                            }*@
+                                            @if (!String.IsNullOrEmpty(fullName) && !String.IsNullOrEmpty(membershipKey.ToString()))
                                             {
                                                 <div class="logged-user-name">
                                                     @string.Format("{0}", fullName)

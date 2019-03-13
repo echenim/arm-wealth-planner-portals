@@ -181,8 +181,8 @@ namespace Portal.Controllers
                     }
 
                     _cache.Set<AuthenticateResponse>("ArmUser", dataHubObj, new MemoryCacheEntryOptions()
-                                                                            .SetSlidingExpiration(TimeSpan.FromMinutes(20))
-                                                                            .SetAbsoluteExpiration(TimeSpan.FromHours(1)));
+                                                           .SetSlidingExpiration(TimeSpan.FromMinutes(20))
+                                                           .SetAbsoluteExpiration(TimeSpan.FromHours(1)));
 
                     //var claims = new[] { new Claim("name", armOneObj.MembershipNumber), new Claim(ClaimTypes.Role, "Client") };
                     //var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
@@ -218,6 +218,7 @@ namespace Portal.Controllers
             }
             var valiedUserObj = _userManager.Users.Include(s => s.Person)
                 .SingleOrDefault(s => s.UserName.Equals(model.Username));
+
             var isUserNameNullable = valiedUserObj?.UserName;
             if (!string.IsNullOrEmpty(isUserNameNullable))
             {
@@ -281,6 +282,8 @@ namespace Portal.Controllers
         [HttpGet]
         public async Task<IActionResult> LogOut()
         {
+            _cache.Remove("ArmUser");
+            _cache.Remove("ArmOneUser");
             await _signInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");
         }
