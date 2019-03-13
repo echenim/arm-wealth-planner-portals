@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Portal.Domain.Models;
 using Portal.Business.Contracts.Base;
+using Portal.Domain.ViewModels;
 
 namespace Portal.Business.Contracts
 {

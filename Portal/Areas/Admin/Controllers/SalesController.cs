@@ -11,6 +11,7 @@ using Portal.Areas.Admin.ViewModels;
 using Portal.Business.Contracts;
 using Portal.Business.Utilities;
 using Portal.Domain.Models;
+using Portal.Domain.ViewModels;
 
 namespace Portal.Areas.Admin.Controllers
 {
@@ -20,12 +21,14 @@ namespace Portal.Areas.Admin.Controllers
         private readonly IOrdersAndSalesManager _ordersAndSalesService;
 
         private readonly IHostingEnvironment _hostingEnvironment;
+        private readonly ICartManager _cartManager;
 
         public SalesController(IOrdersAndSalesManager ordersAndSalesService,
-            IHostingEnvironment hostingEnvironment)
+            IHostingEnvironment hostingEnvironment, ICartManager cartManager)
         {
             _ordersAndSalesService = ordersAndSalesService;
             _hostingEnvironment = hostingEnvironment;
+            _cartManager = cartManager;
         }
 
         public IActionResult Index(
@@ -52,50 +55,19 @@ namespace Portal.Areas.Admin.Controllers
             }
 
             ViewData["CurrentFilter"] = searchString;
+            var list = !String.IsNullOrEmpty(searchString) ?
+                _cartManager.Get(s => s.TransactionNo.Equals(long.Parse(searchString)) && s.OrderAndPurchaseStatus.Equals("Succeed"))
+                : _cartManager.Get(s => s.OrderAndPurchaseStatus.Equals("Succeed")).OrderBy(s => s.OrderDate).ThenBy(s => s.ItemOwner);
 
-            var sales = !String.IsNullOrEmpty(searchString) ?
-                _ordersAndSalesService.Sales(s => !s.Product.ProductTypes.Equals("Expression of Interest")
-                                                && s.CartNumber.Equals(searchString))
-                .OrderByDescending(s => s.AddToCartDate).ThenBy(s => s.Person.FullName)
-                : _ordersAndSalesService.Sales(s => !s.Product.ProductTypes.Equals("Expression of Interest"))
-                    .OrderByDescending(s => s.AddToCartDate).ThenBy(s => s.Person.FullName);
-
-            var totalIn = sales.Sum(s => s.Amount);
-            var countIn = sales.LongCount();
-
-            var groupByCartNumber = sales.GroupBy(s =>
-                    new
-                    {
-                        CartNum = s.CartNumber,
-                        Customer = s.Person.FullName,
-                        TranStatus = s.TransactionStatus,
-                        TransDate = s.OrderDate
-                    })
-                .Select(gr => new
-                {
-                    Id = gr.Key.CartNum,
-                    Customer = gr.Key.Customer,
-                    TranStatus = gr.Key.TranStatus,
-                    TransDate = gr.Key.TransDate,
-                    TotalAmount = gr.Sum(s => s.Amount)
-                });
-
-            var list = groupByCartNumber.Select(item => new OrdersGroupView
-            {
-                CartNumber = item.Id,
-                Customer = item.Customer,
-                TransactionStatus = item.TranStatus,
-                TransactionDate = item.TransDate,
-                TotalAmount = TransfromerManager.DecimalHumanizedX(item.TotalAmount),
-                SoldItems = sales.Where(s => s.CartNumber.Equals(item.Id)).ToList()
-            });
+            var totalIn = list.Sum(s => s.Amount);
+            var countIn = list.LongCount();
 
             ViewData["Totals"] = TransfromerManager.DecimalHumanizedX(totalIn);
             ViewData["Counts"] = TransfromerManager.IntegerHuamanized(countIn);
 
             int pageSize = 20;
 
-            return View(PaginatedList<OrdersGroupView>.Create(list.AsQueryable(), page ?? 1, pageSize));
+            return View(PaginatedList<Transactional>.Create(list.AsQueryable(), page ?? 1, pageSize));
         }
 
         public IActionResult AllTime(

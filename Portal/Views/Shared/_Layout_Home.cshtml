@@ -102,14 +102,19 @@
                             </div>
 
                             @if (User.Identity.IsAuthenticated)
-                            {
-
+                                {
+                                   
                                 <div class="brk-header__element brk-header__element_skin-2 brk-header__item">
                                     <a href="#" class="brk-header__element--wrap">
-
                                         <span class="brk-header__element--label font__weight-medium">@User.Identity.Name</span>
                                     </a>
+                                   
                                 </div>
+                                    <div class="brk-header__element brk-header__element_skin-2 brk-header__item">
+                                        <form  method="get" asp-controller="Account" asp-action="LogOut">
+                                            <button type="submit" class="brk-header__element--label font__weight-semibold">Logout</button>
+                                        </form>
+                                    </div>
 
                             }
                             else

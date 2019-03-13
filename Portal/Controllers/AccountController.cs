@@ -15,6 +15,7 @@ using Portal.Domain.Models.Identity;
 using Microsoft.Extensions.Caching.Memory;
 using Portal.Domain.ViewModels;
 using Portal.Business.ViewModels;
+using Portal.Domain.ModelView;
 using Portal.Helpers;
 
 namespace Portal.Controllers
@@ -165,12 +166,13 @@ namespace Portal.Controllers
             {
                 _cartManager.CartUpdateWithEmail(model.Username, tracker);
             }
-            var isValiedUser = _userManager.Users.Include(s => s.Person)
+            var valiedUserObj = _userManager.Users.Include(s => s.Person)
                 .SingleOrDefault(s => s.UserName.Equals(model.Username));
-            if (isValiedUser != null)
+            var isUserNameNullable = valiedUserObj?.UserName;
+            if (!string.IsNullOrEmpty(isUserNameNullable))
             {
                 var resultCustomer =
-                    _signInManager.PasswordSignInAsync(isValiedUser, model.Password, true, true).Result;
+                    _signInManager.PasswordSignInAsync(valiedUserObj, model.Password, true, true).Result;
                 if (resultCustomer.Succeeded)
                 {
                     return RedirectToAction("CheckOut", "CartAndPayment");
@@ -179,7 +181,7 @@ namespace Portal.Controllers
             else
             {
                 var armOneObj = _armOneManager.GetCustomerInformation(model.Username, model.Password);
-                if (armOneObj != null)
+                if (armOneObj.ResponseCode.Equals("00"))
                 {
                     var dataHubObj = _armOneManager.DataHubClientInfo(armOneObj.MembershipNumber, model.Password);
 
@@ -223,15 +225,14 @@ namespace Portal.Controllers
                 }
             }
 
-            return View("_signin", model);
+            return View();
         }
 
         [HttpGet]
         public async Task<IActionResult> LogOut()
         {
-            ShowCartInformation();
             await _signInManager.SignOutAsync();
-            return RedirectToAction("Index", "Home", new { area = "" });
+            return RedirectToAction("Index", "Home");
         }
 
         public IActionResult Registration()
@@ -340,58 +341,6 @@ namespace Portal.Controllers
         }
 
         #endregion test
-
-        #region checkout-registration
-
-        public IActionResult Cregistration()
-        {
-            ShowCartInformation();
-            return View("_cregistration");
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult Cregistration(RegistrationViewModel model)
-        {
-            if (ModelState.IsValid)
-            {
-                ShowCartInformation();
-                var tracker = HttpContext.Session.GetString("_ArmTracker");
-                if (tracker != null)
-                {
-                    _cartManager.CartUpdateWithEmail(model.Email, tracker);
-                }
-
-                var isPersonResult = _personManager.Save(model);
-                if (isPersonResult.Succeed)
-                {
-                    var user = new ApplicationUser
-                    {
-                        UserName = isPersonResult.TObj.Email,
-                        Email = isPersonResult.TObj.Email,
-                        PersonId = isPersonResult.TObj.Id
-                    };
-                    var rs = _userManager.CreateAsync(user, model.Password).Result;
-                    if (rs.Succeeded)
-                    {
-                        var isSignInSuccessful =
-                            _signInManager.PasswordSignInAsync(user, model.Password, true, true).Result;
-                        if (isSignInSuccessful.Succeeded)
-                        {
-                            return RedirectToAction("CheckOut", "CartAndPayment");
-                        }
-                        else
-                        {
-                            return RedirectToAction("SignIn", "Account");
-                        }
-                    }
-                }
-            }
-
-            return View("_cregistration", model);
-        }
-
-        #endregion checkout-registration
 
         private ApplicationUser IfMemberShipNumberIsEmptyUpdateRecord(ApplicationUser user, string membershipnumber)
         {

@@ -13,11 +13,30 @@
 
                 <div class="element-box">
                     <div class="m-b">
-                        <form asp-controller="Products" asp-action="Add" method="post" enctype="multipart/form-data">
+                        <form asp-area="Admin" asp-controller="Products" asp-action="Add" method="post" enctype="multipart/form-data">
                             @Html.AntiForgeryToken()
+                            <input type="hidden" asp-for="Id" name="Id" />
                             <div class="row">
+                                <div class="col-md-4">
+                                    <div class="element-wrapper">
 
-                                <div class="col-md-12">
+                                        <div class="">
+                                            <h5 class="form-header">
+                                                Product Image(s)
+                                            </h5>
+                                            <div class="form-desc">
+                                            </div>
+                                            <div></div>
+                                            <div class="custom-file">
+
+                                                <input name="UploadProductImage" asp-for="UploadProductImage" type="file" class="custom-file-input" id="customFile">
+                                                <label class="custom-file-label" for="customFile"><img class="img-fluid" src="~/liber/admin/img/upload-image.svg"></label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-8">
                                     <div class="element-box">
 
                                         <h5 class="form-header">
@@ -28,14 +47,11 @@
                                             <label for=""> Product Name</label>
                                             <input name="Name" asp-for="Name" class="form-control" placeholder="Enter product name" type="text">
                                         </div>
-                                        <div class="form-group">
-                                            <label> Description</label>
-                                            <input name="Description" asp-for="Description" class="form-control" rows="2" />
-                                        </div>
 
                                         <div class="form-group">
                                             <label for=""> Select Category</label>
                                             <select name="ProductCategory" asp-for="ProductCategory" class="form-control">
+
                                                 @foreach (var item in Model.AvailableCategories)
                                                 {
                                                     <option value="@item.Value">@item.Text</option>
@@ -45,15 +61,15 @@
 
                                         <div class="form-group">
                                             <label for=""> Product Type</label>
-                                            <select asp-for="ProductTypes" class="form-control">
+                                            <select name="ProductTypes" asp-for="ProductTypes" class="form-control">
                                                 <option>
                                                     Select Product Type
                                                 </option>
                                                 <option value="Enter Amount">
                                                     Enter Amount
                                                 </option>
-                                                <option value="Fixed Amount">
-                                                    Fixed Amount
+                                                <option value="Voucher System">
+                                                    Voucher System
                                                 </option>
                                                 <option value="Expression of Interest">
                                                     Expression of Interest
@@ -62,7 +78,7 @@
                                         </div>
 
                                         <div class="form-group">
-                                            <label for="">Enter Start Price </label>
+                                            <label for="">Enter Price </label>
                                             <div class="input-group mb-3">
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text">&#8358;</span>
@@ -73,40 +89,33 @@
                                                 </div>
                                             </div>
                                         </div>
-
+                                        <div class="form-group">
+                                            <label> Product Description</label>
+                                            <textarea name="Description" asp-for="Description" class="form-control" rows="5"></textarea>
+                                        </div>
                                         <div class="row">
-                                            <div class="col-md-8">
-                                                <div class="element-wrapper">
-
-                                                    <div class="element-box">
-                                                        <h5 class="form-header">
-                                                            Product Image(s)
-                                                        </h5>
-                                                        <div class="form-desc">
-                                                        </div>
-                                                        <div class="dz-message">
-                                                            <div>
-                                                                <h5>
-                                                                    Drop files here or click to upload.
-                                                                </h5>
-                                                                <input class="os-icon os-icon-upload" name="UploadProductImage" asp-for="UploadProductImage" type="file" />
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-2">
+                                            <div class="col-md-3">
                                                 <div class="form-group">
                                                     Active
                                                     <label class="switch">
-                                                        <input name="IsActive" asp-for="IsActive" type="checkbox" class="success">
+                                                        <input type="checkbox" class="success" name="IsActive" asp-for="IsActive">
+                                                        <span class="slider round"></span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    Is Vourcher Available
+                                                    <label class="switch">
+                                                        <input type="checkbox" class="success" name="IsVourcher" asp-for="IsVourcher">
                                                         <span class="slider round"></span>
                                                     </label>
                                                 </div>
                                             </div>
                                         </div>
+
                                         <div class="form-buttons-w">
-                                            <button class="btn btn-primary" type="submit">Add Product</button>
+                                            <button class="btn btn-primary" type="submit">Save</button>
                                         </div>
                                     </div>
                                 </div>

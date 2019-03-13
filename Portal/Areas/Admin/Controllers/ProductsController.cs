@@ -137,9 +137,41 @@ namespace Portal.Areas.Admin.Controllers
             return View("_add", productObj);
         }
 
-        public IActionResult Edit()
+        public IActionResult Edit(int id)
         {
-            return View("_edit");
+            if (id > 0)
+            {
+                var date = _product.Get(s => s.Id == id).SingleOrDefault();
+
+                var productObj = new ProductViewModel();
+                productObj.Id = date.Id;
+                productObj.Name = date.Name;
+                productObj.Description = date.Description;
+                productObj.IsActive = date.IsActive;
+                productObj.IsVourcher = date.IsVouchering == "Yes" ? true : false;
+                productObj.StartFrom = date.StartFrom;
+                productObj.ProductTypes = date.ProductTypes;
+                productObj.ProductCategory = date.ProductCategoryId;
+
+                productObj.AvailableCategories.Add(new SelectListItem
+                {
+                    Text = "--select--",
+                    Value = String.Empty
+                });
+                var productCategoryList = _categoryService.Get().OrderBy(s => s.Name);
+                foreach (var item in productCategoryList)
+                {
+                    productObj.AvailableCategories.Add(new SelectListItem
+                    {
+                        Text = item.Name,
+                        Value = item.Id.ToString()
+                    });
+                }
+
+                return View("_edit", productObj);
+            }
+
+            return RedirectToAction("Index");
         }
 
         [HttpPost]

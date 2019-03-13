@@ -45,9 +45,10 @@
                                 <th class="text-center">
                                     OnBoarding Date
                                 </th>
-                                </
-                                <th class="text-center">
-                                </th>tr>
+                                
+                            <th class="text-center">
+                            </th>
+                            </tr>
                         </thead>
                         <tbody>
                             @foreach (var item in Model)
@@ -57,7 +58,7 @@
                                     <td class="text-center">
                                         <span>@item.Person.MemberShipNo</span>
                                     </td>
-                                    <td class="text-center">
+                                    <td >
 
                                         <div class="user-with-avatar">
                                             <img alt="" src="../Liber/Admin/img/default-profile.svg"><span>@item.Person.FullName</span>
@@ -75,10 +76,10 @@
                                     </td>
 
                                     <td class="row-actions">
-                                        <a asp-action="Detail" asp-route-id="@item.Person.Id" title="View"><i class="os-icon os-icon-eye"></i></a>
-                                        <a href="#" title="Edit"><i class="os-icon os-icon-edit"></i></a>
-                                        <a href="#" title="Suspend"><i class="os-icon os-icon-x-square"></i></a>
-                                    </td><
+                                        <a asp-action="Detail" asp-route-id="@item.Person.Email" title="View"><i class="os-icon os-icon-eye"></i></a>
+                                        @*<a href="#" title="Edit"><i class="os-icon os-icon-edit"></i></a>
+                                        <a href="#" title="Suspend"><i class="os-icon os-icon-x-square"></i></a>*@
+                                    </td>
                                 </tr>
                             }
                         </tbody>
