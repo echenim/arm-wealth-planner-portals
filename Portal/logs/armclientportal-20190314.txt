@@ -12227,3 +12227,406 @@ INNER JOIN [ProductCategory] AS [s.Product.ProductCategory] ON [s.Product].[Prod
 2019-03-14T17:37:10.6098529+01:00 0HLL8JCG8UVA0:0000000F [INF] Request finished in 1.1807ms 404  (791a596a)
 2019-03-14T17:37:10.7568570+01:00 0HLL8JCG8UV9V:00000011 [INF] Request starting HTTP/1.1 GET http://localhost/armwealth/CartAndPayment/img/arm-investment-center-logo.png   (ca22a1cb)
 2019-03-14T17:37:10.7578538+01:00 0HLL8JCG8UV9V:00000011 [INF] Request finished in 1.0917ms 404  (791a596a)
+2019-03-14T17:50:17.0751645+01:00 0HLL8JKHF5PR2:00000001 [INF] Request starting HTTP/1.1 GET http://localhost/armwealth   (ca22a1cb)
+2019-03-14T17:50:17.0751649+01:00 0HLL8JKHF5PR3:00000001 [INF] Request starting HTTP/1.1 DEBUG http://localhost/armwealth  0 (ca22a1cb)
+2019-03-14T17:50:17.1468683+01:00 0HLL8JKHF5PR2:00000001 [WRN] Failed to determine the https port for redirect. (ca76cc21)
+2019-03-14T17:50:17.1689535+01:00 0HLL8JKHF5PR3:00000001 [INF] Request finished in 93.3306ms 200  (791a596a)
+2019-03-14T17:50:17.2450356+01:00 0HLL8JKHF5PR2:00000001 [WRN] Error unprotecting the session cookie. (65f95c31)
+System.Security.Cryptography.CryptographicException: The key {d416518e-42f5-4be4-856b-79c47e76fb14} was not found in the key ring.
+   at Microsoft.AspNetCore.DataProtection.KeyManagement.KeyRingBasedDataProtector.UnprotectCore(Byte[] protectedData, Boolean allowOperationsOnRevokedKeys, UnprotectStatus& status)
+   at Microsoft.AspNetCore.DataProtection.KeyManagement.KeyRingBasedDataProtector.DangerousUnprotect(Byte[] protectedData, Boolean ignoreRevocationErrors, Boolean& requiresMigration, Boolean& wasRevoked)
+   at Microsoft.AspNetCore.DataProtection.KeyManagement.KeyRingBasedDataProtector.Unprotect(Byte[] protectedData)
+   at Microsoft.AspNetCore.Session.CookieProtection.Unprotect(IDataProtector protector, String protectedText, ILogger logger)
+2019-03-14T17:50:17.2702603+01:00 0HLL8JKHF5PR2:00000001 [INF] "Identity.Application" was not authenticated. Failure message: "Unprotect ticket failed" (48071232)
+2019-03-14T17:50:17.3326673+01:00 0HLL8JKHF5PR2:00000001 [INF] Executing endpoint '"Portal.Controllers.HomeController.Index (Portal)"' (500cc934)
+2019-03-14T17:50:17.3556468+01:00 0HLL8JKHF5PR2:00000001 [INF] Route matched with "{action = \"Index\", controller = \"Home\", area = \"\"}". Executing action "Portal.Controllers.HomeController.Index (Portal)" (a44c0341)
+2019-03-14T17:50:17.7062344+01:00 0HLL8JKHF5PR2:00000001 [INF] Executing action method "Portal.Controllers.HomeController.Index (Portal)" - Validation state: Valid (dad538d7)
+2019-03-14T17:50:18.2562118+01:00 0HLL8JKHF5PR2:00000001 [WRN] No type was specified for the decimal column '"AmountApproved"' on entity type '"DDebit"'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values using 'HasColumnType()'. (3a0db05f)
+2019-03-14T17:50:18.2596840+01:00 0HLL8JKHF5PR2:00000001 [WRN] No type was specified for the decimal column '"DebitAmount"' on entity type '"DDebit"'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values using 'HasColumnType()'. (3a0db05f)
+2019-03-14T17:50:18.2629663+01:00 0HLL8JKHF5PR2:00000001 [WRN] No type was specified for the decimal column '"ArmDdAmt"' on entity type '"DirectDebitTransactions"'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values using 'HasColumnType()'. (3a0db05f)
+2019-03-14T17:50:18.2652743+01:00 0HLL8JKHF5PR2:00000001 [WRN] No type was specified for the decimal column '"TransactionAmount"' on entity type '"PaymentTransactionStatus"'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values using 'HasColumnType()'. (3a0db05f)
+2019-03-14T17:50:18.2674113+01:00 0HLL8JKHF5PR2:00000001 [WRN] No type was specified for the decimal column '"Amount"' on entity type '"PurchaseOrders"'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values using 'HasColumnType()'. (3a0db05f)
+2019-03-14T17:50:18.2703881+01:00 0HLL8JKHF5PR2:00000001 [WRN] No type was specified for the decimal column '"Amount"' on entity type '"Redemption"'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values using 'HasColumnType()'. (3a0db05f)
+2019-03-14T17:50:18.3482904+01:00 0HLL8JKHF5PR2:00000001 [INF] Entity Framework Core "2.2.0-rtm-35687" initialized '"ApplicationDbContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None" (9958f5bb)
+2019-03-14T17:50:18.5963455+01:00 0HLL8JKHF5PR2:00000001 [INF] Executed DbCommand ("31"ms) [Parameters=["@p0='?' (Size = 4000)"], CommandType='Text', CommandTimeout='30']"
+""SET NOCOUNT ON;
+DECLARE @inserted0 TABLE ([Id] bigint, [_Position] [int]);
+MERGE [TransQIdenfier] USING (
+VALUES (@p0, 0)) AS i ([Owner], _Position) ON 1=0
+WHEN NOT MATCHED THEN
+INSERT ([Owner])
+VALUES (i.[Owner])
+OUTPUT INSERTED.[Id], i._Position
+INTO @inserted0;
+
+SELECT [t].[Id] FROM [TransQIdenfier] t
+INNER JOIN @inserted0 i ON ([t].[Id] = [i].[Id])
+ORDER BY [i].[_Position];" (0723d8ff)
+2019-03-14T17:50:18.9397211+01:00 0HLL8JKHF5PR2:00000001 [INF] Executed DbCommand ("5"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [s].[Id], [s].[Amount], [s].[ItemOwner], [s].[OrderAndPurchaseStatus], [s].[OrderDate], [s].[ProductId], [s].[TransactionNo], [s.Product].[Id], [s.Product].[CodeName], [s.Product].[Description], [s.Product].[Image], [s.Product].[IsActive], [s.Product].[IsVouchering], [s.Product].[Name], [s.Product].[ProductCategoryId], [s.Product].[ProductTypes], [s.Product].[StartFrom], [s.Product.ProductCategory].[Id], [s.Product.ProductCategory].[Name]
+FROM [Transactional] AS [s]
+INNER JOIN [Products] AS [s.Product] ON [s].[ProductId] = [s.Product].[Id]
+INNER JOIN [ProductCategory] AS [s.Product.ProductCategory] ON [s.Product].[ProductCategoryId] = [s.Product.ProductCategory].[Id]" (0723d8ff)
+2019-03-14T17:50:19.0666482+01:00 0HLL8JKHF5PR2:00000001 [INF] Executed action method "Portal.Controllers.HomeController.Index (Portal)", returned result "Microsoft.AspNetCore.Mvc.ViewResult" in 1352.7083ms. (50a9e262)
+2019-03-14T17:50:19.1526860+01:00 0HLL8JKHF5PR2:00000001 [INF] Executing ViewResult, running view "Index". (c83d0e25)
+2019-03-14T17:50:19.4513269+01:00 0HLL8JKHF5PR2:00000001 [INF] Executed DbCommand ("15"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [s].[Id], [s].[CodeName], [s].[Description], [s].[Image], [s].[IsActive], [s].[IsVouchering], [s].[Name], [s].[ProductCategoryId], [s].[ProductTypes], [s].[StartFrom], [s.ProductCategory].[Id], [s.ProductCategory].[Name]
+FROM [Products] AS [s]
+INNER JOIN [ProductCategory] AS [s.ProductCategory] ON [s].[ProductCategoryId] = [s.ProductCategory].[Id]
+ORDER BY [s].[Name], [s].[Id]" (0723d8ff)
+2019-03-14T17:50:19.4737120+01:00 0HLL8JKHF5PR2:00000001 [INF] Executed DbCommand ("3"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [s.WhatYouNeedToKNowAboutThisProducts].[Id], [s.WhatYouNeedToKNowAboutThisProducts].[Description], [s.WhatYouNeedToKNowAboutThisProducts].[Hierarchy], [s.WhatYouNeedToKNowAboutThisProducts].[OnCreated], [s.WhatYouNeedToKNowAboutThisProducts].[ProductId], [s.WhatYouNeedToKNowAboutThisProducts].[Sections], [s.WhatYouNeedToKNowAboutThisProducts].[Title]
+FROM [WhatYouNeedToKNowAboutThisProduct] AS [s.WhatYouNeedToKNowAboutThisProducts]
+INNER JOIN (
+    SELECT DISTINCT [s0].[Id], [s0].[Name]
+    FROM [Products] AS [s0]
+    INNER JOIN [ProductCategory] AS [s.ProductCategory0] ON [s0].[ProductCategoryId] = [s.ProductCategory0].[Id]
+) AS [t] ON [s.WhatYouNeedToKNowAboutThisProducts].[ProductId] = [t].[Id]
+ORDER BY [t].[Name], [t].[Id]" (0723d8ff)
+2019-03-14T17:50:19.4961724+01:00 0HLL8JKHF5PR2:00000001 [INF] Executed DbCommand ("4"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [s.ProductInvestmentInfos].[Id], [s.ProductInvestmentInfos].[Abs], [s.ProductInvestmentInfos].[OnCreated], [s.ProductInvestmentInfos].[ProductId], [s.ProductInvestmentInfos].[RangOrCost], [s.ProductInvestmentInfos].[Sections]
+FROM [ProductInvestmentInfo] AS [s.ProductInvestmentInfos]
+INNER JOIN (
+    SELECT DISTINCT [s1].[Id], [s1].[Name]
+    FROM [Products] AS [s1]
+    INNER JOIN [ProductCategory] AS [s.ProductCategory1] ON [s1].[ProductCategoryId] = [s.ProductCategory1].[Id]
+) AS [t0] ON [s.ProductInvestmentInfos].[ProductId] = [t0].[Id]
+ORDER BY [t0].[Name], [t0].[Id]" (0723d8ff)
+2019-03-14T17:50:19.5182342+01:00 0HLL8JKHF5PR2:00000001 [INF] Executed DbCommand ("0"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [s].[Id], [s].[CodeName], [s].[Description], [s].[Image], [s].[IsActive], [s].[IsVouchering], [s].[Name], [s].[ProductCategoryId], [s].[ProductTypes], [s].[StartFrom], [s.ProductCategory].[Id], [s.ProductCategory].[Name]
+FROM [Products] AS [s]
+INNER JOIN [ProductCategory] AS [s.ProductCategory] ON [s].[ProductCategoryId] = [s.ProductCategory].[Id]
+ORDER BY [s].[Name], [s].[Id]" (0723d8ff)
+2019-03-14T17:50:19.5225941+01:00 0HLL8JKHF5PR2:00000001 [INF] Executed DbCommand ("1"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [s.WhatYouNeedToKNowAboutThisProducts].[Id], [s.WhatYouNeedToKNowAboutThisProducts].[Description], [s.WhatYouNeedToKNowAboutThisProducts].[Hierarchy], [s.WhatYouNeedToKNowAboutThisProducts].[OnCreated], [s.WhatYouNeedToKNowAboutThisProducts].[ProductId], [s.WhatYouNeedToKNowAboutThisProducts].[Sections], [s.WhatYouNeedToKNowAboutThisProducts].[Title]
+FROM [WhatYouNeedToKNowAboutThisProduct] AS [s.WhatYouNeedToKNowAboutThisProducts]
+INNER JOIN (
+    SELECT DISTINCT [s0].[Id], [s0].[Name]
+    FROM [Products] AS [s0]
+    INNER JOIN [ProductCategory] AS [s.ProductCategory0] ON [s0].[ProductCategoryId] = [s.ProductCategory0].[Id]
+) AS [t] ON [s.WhatYouNeedToKNowAboutThisProducts].[ProductId] = [t].[Id]
+ORDER BY [t].[Name], [t].[Id]" (0723d8ff)
+2019-03-14T17:50:19.5272149+01:00 0HLL8JKHF5PR2:00000001 [INF] Executed DbCommand ("1"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [s.ProductInvestmentInfos].[Id], [s.ProductInvestmentInfos].[Abs], [s.ProductInvestmentInfos].[OnCreated], [s.ProductInvestmentInfos].[ProductId], [s.ProductInvestmentInfos].[RangOrCost], [s.ProductInvestmentInfos].[Sections]
+FROM [ProductInvestmentInfo] AS [s.ProductInvestmentInfos]
+INNER JOIN (
+    SELECT DISTINCT [s1].[Id], [s1].[Name]
+    FROM [Products] AS [s1]
+    INNER JOIN [ProductCategory] AS [s.ProductCategory1] ON [s1].[ProductCategoryId] = [s.ProductCategory1].[Id]
+) AS [t0] ON [s.ProductInvestmentInfos].[ProductId] = [t0].[Id]
+ORDER BY [t0].[Name], [t0].[Id]" (0723d8ff)
+2019-03-14T17:50:19.5391883+01:00 0HLL8JKHF5PR2:00000001 [INF] Executed DbCommand ("4"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [s].[Id], [s].[CodeName], [s].[Description], [s].[Image], [s].[IsActive], [s].[IsVouchering], [s].[Name], [s].[ProductCategoryId], [s].[ProductTypes], [s].[StartFrom], [s.ProductCategory].[Id], [s.ProductCategory].[Name]
+FROM [Products] AS [s]
+INNER JOIN [ProductCategory] AS [s.ProductCategory] ON [s].[ProductCategoryId] = [s.ProductCategory].[Id]
+ORDER BY [s].[Name], [s].[Id]" (0723d8ff)
+2019-03-14T17:50:19.5441825+01:00 0HLL8JKHF5PR2:00000001 [INF] Executed DbCommand ("1"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [s.WhatYouNeedToKNowAboutThisProducts].[Id], [s.WhatYouNeedToKNowAboutThisProducts].[Description], [s.WhatYouNeedToKNowAboutThisProducts].[Hierarchy], [s.WhatYouNeedToKNowAboutThisProducts].[OnCreated], [s.WhatYouNeedToKNowAboutThisProducts].[ProductId], [s.WhatYouNeedToKNowAboutThisProducts].[Sections], [s.WhatYouNeedToKNowAboutThisProducts].[Title]
+FROM [WhatYouNeedToKNowAboutThisProduct] AS [s.WhatYouNeedToKNowAboutThisProducts]
+INNER JOIN (
+    SELECT DISTINCT [s0].[Id], [s0].[Name]
+    FROM [Products] AS [s0]
+    INNER JOIN [ProductCategory] AS [s.ProductCategory0] ON [s0].[ProductCategoryId] = [s.ProductCategory0].[Id]
+) AS [t] ON [s.WhatYouNeedToKNowAboutThisProducts].[ProductId] = [t].[Id]
+ORDER BY [t].[Name], [t].[Id]" (0723d8ff)
+2019-03-14T17:50:19.5479039+01:00 0HLL8JKHF5PR2:00000001 [INF] Executed DbCommand ("1"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [s.ProductInvestmentInfos].[Id], [s.ProductInvestmentInfos].[Abs], [s.ProductInvestmentInfos].[OnCreated], [s.ProductInvestmentInfos].[ProductId], [s.ProductInvestmentInfos].[RangOrCost], [s.ProductInvestmentInfos].[Sections]
+FROM [ProductInvestmentInfo] AS [s.ProductInvestmentInfos]
+INNER JOIN (
+    SELECT DISTINCT [s1].[Id], [s1].[Name]
+    FROM [Products] AS [s1]
+    INNER JOIN [ProductCategory] AS [s.ProductCategory1] ON [s1].[ProductCategoryId] = [s.ProductCategory1].[Id]
+) AS [t0] ON [s.ProductInvestmentInfos].[ProductId] = [t0].[Id]
+ORDER BY [t0].[Name], [t0].[Id]" (0723d8ff)
+2019-03-14T17:50:19.5609037+01:00 0HLL8JKHF5PR2:00000001 [INF] Executed DbCommand ("2"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [s].[Id], [s].[CodeName], [s].[Description], [s].[Image], [s].[IsActive], [s].[IsVouchering], [s].[Name], [s].[ProductCategoryId], [s].[ProductTypes], [s].[StartFrom], [s.ProductCategory].[Id], [s.ProductCategory].[Name]
+FROM [Products] AS [s]
+INNER JOIN [ProductCategory] AS [s.ProductCategory] ON [s].[ProductCategoryId] = [s.ProductCategory].[Id]
+ORDER BY [s].[Name], [s].[Id]" (0723d8ff)
+2019-03-14T17:50:19.5774244+01:00 0HLL8JKHF5PR2:00000001 [INF] Executed DbCommand ("1"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [s.WhatYouNeedToKNowAboutThisProducts].[Id], [s.WhatYouNeedToKNowAboutThisProducts].[Description], [s.WhatYouNeedToKNowAboutThisProducts].[Hierarchy], [s.WhatYouNeedToKNowAboutThisProducts].[OnCreated], [s.WhatYouNeedToKNowAboutThisProducts].[ProductId], [s.WhatYouNeedToKNowAboutThisProducts].[Sections], [s.WhatYouNeedToKNowAboutThisProducts].[Title]
+FROM [WhatYouNeedToKNowAboutThisProduct] AS [s.WhatYouNeedToKNowAboutThisProducts]
+INNER JOIN (
+    SELECT DISTINCT [s0].[Id], [s0].[Name]
+    FROM [Products] AS [s0]
+    INNER JOIN [ProductCategory] AS [s.ProductCategory0] ON [s0].[ProductCategoryId] = [s.ProductCategory0].[Id]
+) AS [t] ON [s.WhatYouNeedToKNowAboutThisProducts].[ProductId] = [t].[Id]
+ORDER BY [t].[Name], [t].[Id]" (0723d8ff)
+2019-03-14T17:50:19.5817356+01:00 0HLL8JKHF5PR2:00000001 [INF] Executed DbCommand ("1"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [s.ProductInvestmentInfos].[Id], [s.ProductInvestmentInfos].[Abs], [s.ProductInvestmentInfos].[OnCreated], [s.ProductInvestmentInfos].[ProductId], [s.ProductInvestmentInfos].[RangOrCost], [s.ProductInvestmentInfos].[Sections]
+FROM [ProductInvestmentInfo] AS [s.ProductInvestmentInfos]
+INNER JOIN (
+    SELECT DISTINCT [s1].[Id], [s1].[Name]
+    FROM [Products] AS [s1]
+    INNER JOIN [ProductCategory] AS [s.ProductCategory1] ON [s1].[ProductCategoryId] = [s.ProductCategory1].[Id]
+) AS [t0] ON [s.ProductInvestmentInfos].[ProductId] = [t0].[Id]
+ORDER BY [t0].[Name], [t0].[Id]" (0723d8ff)
+2019-03-14T17:50:19.5915639+01:00 0HLL8JKHF5PR2:00000001 [INF] Executed DbCommand ("1"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [s].[Id], [s].[CodeName], [s].[Description], [s].[Image], [s].[IsActive], [s].[IsVouchering], [s].[Name], [s].[ProductCategoryId], [s].[ProductTypes], [s].[StartFrom], [s.ProductCategory].[Id], [s.ProductCategory].[Name]
+FROM [Products] AS [s]
+INNER JOIN [ProductCategory] AS [s.ProductCategory] ON [s].[ProductCategoryId] = [s.ProductCategory].[Id]
+ORDER BY [s].[Name], [s].[Id]" (0723d8ff)
+2019-03-14T17:50:19.6031067+01:00 0HLL8JKHF5PR2:00000001 [INF] Executed DbCommand ("1"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [s.WhatYouNeedToKNowAboutThisProducts].[Id], [s.WhatYouNeedToKNowAboutThisProducts].[Description], [s.WhatYouNeedToKNowAboutThisProducts].[Hierarchy], [s.WhatYouNeedToKNowAboutThisProducts].[OnCreated], [s.WhatYouNeedToKNowAboutThisProducts].[ProductId], [s.WhatYouNeedToKNowAboutThisProducts].[Sections], [s.WhatYouNeedToKNowAboutThisProducts].[Title]
+FROM [WhatYouNeedToKNowAboutThisProduct] AS [s.WhatYouNeedToKNowAboutThisProducts]
+INNER JOIN (
+    SELECT DISTINCT [s0].[Id], [s0].[Name]
+    FROM [Products] AS [s0]
+    INNER JOIN [ProductCategory] AS [s.ProductCategory0] ON [s0].[ProductCategoryId] = [s.ProductCategory0].[Id]
+) AS [t] ON [s.WhatYouNeedToKNowAboutThisProducts].[ProductId] = [t].[Id]
+ORDER BY [t].[Name], [t].[Id]" (0723d8ff)
+2019-03-14T17:50:19.6117486+01:00 0HLL8JKHF5PR2:00000001 [INF] Executed DbCommand ("2"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [s.ProductInvestmentInfos].[Id], [s.ProductInvestmentInfos].[Abs], [s.ProductInvestmentInfos].[OnCreated], [s.ProductInvestmentInfos].[ProductId], [s.ProductInvestmentInfos].[RangOrCost], [s.ProductInvestmentInfos].[Sections]
+FROM [ProductInvestmentInfo] AS [s.ProductInvestmentInfos]
+INNER JOIN (
+    SELECT DISTINCT [s1].[Id], [s1].[Name]
+    FROM [Products] AS [s1]
+    INNER JOIN [ProductCategory] AS [s.ProductCategory1] ON [s1].[ProductCategoryId] = [s.ProductCategory1].[Id]
+) AS [t0] ON [s.ProductInvestmentInfos].[ProductId] = [t0].[Id]
+ORDER BY [t0].[Name], [t0].[Id]" (0723d8ff)
+2019-03-14T17:50:19.6203236+01:00 0HLL8JKHF5PR2:00000001 [INF] Executed DbCommand ("0"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [s].[Id], [s].[CodeName], [s].[Description], [s].[Image], [s].[IsActive], [s].[IsVouchering], [s].[Name], [s].[ProductCategoryId], [s].[ProductTypes], [s].[StartFrom], [s.ProductCategory].[Id], [s.ProductCategory].[Name]
+FROM [Products] AS [s]
+INNER JOIN [ProductCategory] AS [s.ProductCategory] ON [s].[ProductCategoryId] = [s.ProductCategory].[Id]
+ORDER BY [s].[Name], [s].[Id]" (0723d8ff)
+2019-03-14T17:50:19.6255585+01:00 0HLL8JKHF5PR2:00000001 [INF] Executed DbCommand ("1"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [s.WhatYouNeedToKNowAboutThisProducts].[Id], [s.WhatYouNeedToKNowAboutThisProducts].[Description], [s.WhatYouNeedToKNowAboutThisProducts].[Hierarchy], [s.WhatYouNeedToKNowAboutThisProducts].[OnCreated], [s.WhatYouNeedToKNowAboutThisProducts].[ProductId], [s.WhatYouNeedToKNowAboutThisProducts].[Sections], [s.WhatYouNeedToKNowAboutThisProducts].[Title]
+FROM [WhatYouNeedToKNowAboutThisProduct] AS [s.WhatYouNeedToKNowAboutThisProducts]
+INNER JOIN (
+    SELECT DISTINCT [s0].[Id], [s0].[Name]
+    FROM [Products] AS [s0]
+    INNER JOIN [ProductCategory] AS [s.ProductCategory0] ON [s0].[ProductCategoryId] = [s.ProductCategory0].[Id]
+) AS [t] ON [s.WhatYouNeedToKNowAboutThisProducts].[ProductId] = [t].[Id]
+ORDER BY [t].[Name], [t].[Id]" (0723d8ff)
+2019-03-14T17:50:19.6328157+01:00 0HLL8JKHF5PR2:00000001 [INF] Executed DbCommand ("1"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [s.ProductInvestmentInfos].[Id], [s.ProductInvestmentInfos].[Abs], [s.ProductInvestmentInfos].[OnCreated], [s.ProductInvestmentInfos].[ProductId], [s.ProductInvestmentInfos].[RangOrCost], [s.ProductInvestmentInfos].[Sections]
+FROM [ProductInvestmentInfo] AS [s.ProductInvestmentInfos]
+INNER JOIN (
+    SELECT DISTINCT [s1].[Id], [s1].[Name]
+    FROM [Products] AS [s1]
+    INNER JOIN [ProductCategory] AS [s.ProductCategory1] ON [s1].[ProductCategoryId] = [s.ProductCategory1].[Id]
+) AS [t0] ON [s.ProductInvestmentInfos].[ProductId] = [t0].[Id]
+ORDER BY [t0].[Name], [t0].[Id]" (0723d8ff)
+2019-03-14T17:50:19.7543676+01:00 0HLL8JKHF5PR2:00000001 [INF] Executed DbCommand ("0"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [s].[Id], [s].[Amount], [s].[ItemOwner], [s].[OrderAndPurchaseStatus], [s].[OrderDate], [s].[ProductId], [s].[TransactionNo], [s.Product].[Id], [s.Product].[CodeName], [s.Product].[Description], [s.Product].[Image], [s.Product].[IsActive], [s.Product].[IsVouchering], [s.Product].[Name], [s.Product].[ProductCategoryId], [s.Product].[ProductTypes], [s.Product].[StartFrom], [s.Product.ProductCategory].[Id], [s.Product.ProductCategory].[Name]
+FROM [Transactional] AS [s]
+INNER JOIN [Products] AS [s.Product] ON [s].[ProductId] = [s.Product].[Id]
+INNER JOIN [ProductCategory] AS [s.Product.ProductCategory] ON [s.Product].[ProductCategoryId] = [s.Product.ProductCategory].[Id]" (0723d8ff)
+2019-03-14T17:50:19.8124015+01:00 0HLL8JKHF5PR2:00000001 [INF] Executed ViewResult - view "Index" executed in 727.9021ms. (f66409e9)
+2019-03-14T17:50:19.8160301+01:00 0HLL8JKHF5PR2:00000001 [INF] Executed action "Portal.Controllers.HomeController.Index (Portal)" in 2457.3473ms (afa2e885)
+2019-03-14T17:50:19.8201621+01:00 0HLL8JKHF5PR2:00000001 [INF] Executed endpoint '"Portal.Controllers.HomeController.Index (Portal)"' (99874f2b)
+2019-03-14T17:50:19.8596563+01:00 0HLL8JKHF5PR2:00000001 [INF] Session started; Key:"b747138a-8131-de9f-8204-f456ff059720", Id:"8b278375-a38d-05a2-1651-b2bb6ffc366e" (1d7cf8c0)
+2019-03-14T17:50:19.8946973+01:00 0HLL8JKHF5PR2:00000001 [INF] Request finished in 2817.5387ms 200 text/html; charset=utf-8 (791a596a)
+2019-03-14T17:51:58.4023153+01:00 0HLL8JKHF5PR4:00000001 [INF] Request starting HTTP/1.1 GET http://localhost/armwealth/CartAndPayment/CheckOut   (ca22a1cb)
+2019-03-14T17:51:58.4355209+01:00 0HLL8JKHF5PR4:00000001 [INF] "Identity.Application" was not authenticated. Failure message: "Unprotect ticket failed" (48071232)
+2019-03-14T17:51:58.4792335+01:00 0HLL8JKHF5PR4:00000001 [INF] Executing endpoint '"Portal.Controllers.CartAndPaymentController.CheckOut (Portal)"' (500cc934)
+2019-03-14T17:51:58.4856915+01:00 0HLL8JKHF5PR4:00000001 [INF] Route matched with "{action = \"CheckOut\", controller = \"CartAndPayment\", area = \"\"}". Executing action "Portal.Controllers.CartAndPaymentController.CheckOut (Portal)" (a44c0341)
+2019-03-14T17:51:58.5061572+01:00 0HLL8JKHF5PR4:00000001 [INF] Executing action method "Portal.Controllers.CartAndPaymentController.CheckOut (Portal)" - Validation state: Valid (dad538d7)
+2019-03-14T17:51:58.5368055+01:00 0HLL8JKHF5PR4:00000001 [INF] Entity Framework Core "2.2.0-rtm-35687" initialized '"ApplicationDbContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None" (9958f5bb)
+2019-03-14T17:51:58.5886254+01:00 0HLL8JKHF5PR4:00000001 [INF] Executed DbCommand ("14"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [s].[Id], [s].[Amount], [s].[ItemOwner], [s].[OrderAndPurchaseStatus], [s].[OrderDate], [s].[ProductId], [s].[TransactionNo], [s.Product].[Id], [s.Product].[CodeName], [s.Product].[Description], [s.Product].[Image], [s.Product].[IsActive], [s.Product].[IsVouchering], [s.Product].[Name], [s.Product].[ProductCategoryId], [s.Product].[ProductTypes], [s.Product].[StartFrom]
+FROM [Transactional] AS [s]
+INNER JOIN [Products] AS [s.Product] ON [s].[ProductId] = [s.Product].[Id]" (0723d8ff)
+2019-03-14T17:51:58.6376474+01:00 0HLL8JKHF5PR4:00000001 [INF] Executed DbCommand ("17"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [s].[Id], [s].[Amount], [s].[ItemOwner], [s].[OrderAndPurchaseStatus], [s].[OrderDate], [s].[ProductId], [s].[TransactionNo], [s.Product].[Id], [s.Product].[CodeName], [s.Product].[Description], [s.Product].[Image], [s.Product].[IsActive], [s.Product].[IsVouchering], [s.Product].[Name], [s.Product].[ProductCategoryId], [s.Product].[ProductTypes], [s.Product].[StartFrom]
+FROM [Transactional] AS [s]
+INNER JOIN [Products] AS [s.Product] ON [s].[ProductId] = [s.Product].[Id]" (0723d8ff)
+2019-03-14T17:51:58.6626001+01:00 0HLL8JKHF5PR4:00000001 [INF] Executed DbCommand ("9"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [s].[Id], [s].[Amount], [s].[ItemOwner], [s].[OrderAndPurchaseStatus], [s].[OrderDate], [s].[ProductId], [s].[TransactionNo], [s.Product].[Id], [s.Product].[CodeName], [s.Product].[Description], [s.Product].[Image], [s.Product].[IsActive], [s.Product].[IsVouchering], [s.Product].[Name], [s.Product].[ProductCategoryId], [s.Product].[ProductTypes], [s.Product].[StartFrom], [s.Product.ProductCategory].[Id], [s.Product.ProductCategory].[Name]
+FROM [Transactional] AS [s]
+INNER JOIN [Products] AS [s.Product] ON [s].[ProductId] = [s.Product].[Id]
+INNER JOIN [ProductCategory] AS [s.Product.ProductCategory] ON [s.Product].[ProductCategoryId] = [s.Product.ProductCategory].[Id]" (0723d8ff)
+2019-03-14T17:51:58.6826814+01:00 0HLL8JKHF5PR4:00000001 [INF] Executed action method "Portal.Controllers.CartAndPaymentController.CheckOut (Portal)", returned result "Microsoft.AspNetCore.Mvc.ViewResult" in 160.736ms. (50a9e262)
+2019-03-14T17:51:58.7049048+01:00 0HLL8JKHF5PR4:00000001 [INF] Executing ViewResult, running view "_checkout". (c83d0e25)
+2019-03-14T17:51:58.7671566+01:00 0HLL8JKHF5PR4:00000001 [ERR] An exception was thrown while deserializing the token. (348bf365)
+Microsoft.AspNetCore.Antiforgery.AntiforgeryValidationException: The antiforgery token could not be decrypted. ---> System.Security.Cryptography.CryptographicException: The key {d416518e-42f5-4be4-856b-79c47e76fb14} was not found in the key ring.
+   at Microsoft.AspNetCore.DataProtection.KeyManagement.KeyRingBasedDataProtector.UnprotectCore(Byte[] protectedData, Boolean allowOperationsOnRevokedKeys, UnprotectStatus& status)
+   at Microsoft.AspNetCore.DataProtection.KeyManagement.KeyRingBasedDataProtector.DangerousUnprotect(Byte[] protectedData, Boolean ignoreRevocationErrors, Boolean& requiresMigration, Boolean& wasRevoked)
+   at Microsoft.AspNetCore.DataProtection.KeyManagement.KeyRingBasedDataProtector.Unprotect(Byte[] protectedData)
+   at Microsoft.AspNetCore.Antiforgery.Internal.DefaultAntiforgeryTokenSerializer.Deserialize(String serializedToken)
+   --- End of inner exception stack trace ---
+   at Microsoft.AspNetCore.Antiforgery.Internal.DefaultAntiforgeryTokenSerializer.Deserialize(String serializedToken)
+   at Microsoft.AspNetCore.Antiforgery.Internal.DefaultAntiforgery.GetCookieTokenDoesNotThrow(HttpContext httpContext)
+2019-03-14T17:51:58.9174818+01:00 0HLL8JKHF5PR4:00000001 [INF] Executed DbCommand ("6"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [s].[Id], [s].[Amount], [s].[ItemOwner], [s].[OrderAndPurchaseStatus], [s].[OrderDate], [s].[ProductId], [s].[TransactionNo], [s.Product].[Id], [s.Product].[CodeName], [s.Product].[Description], [s.Product].[Image], [s.Product].[IsActive], [s.Product].[IsVouchering], [s.Product].[Name], [s.Product].[ProductCategoryId], [s.Product].[ProductTypes], [s.Product].[StartFrom]
+FROM [Transactional] AS [s]
+INNER JOIN [Products] AS [s.Product] ON [s].[ProductId] = [s.Product].[Id]" (0723d8ff)
+2019-03-14T17:51:58.9328149+01:00 0HLL8JKHF5PR4:00000001 [INF] Executed DbCommand ("6"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [s].[Id], [s].[Amount], [s].[ItemOwner], [s].[OrderAndPurchaseStatus], [s].[OrderDate], [s].[ProductId], [s].[TransactionNo], [s.Product].[Id], [s.Product].[CodeName], [s.Product].[Description], [s.Product].[Image], [s.Product].[IsActive], [s.Product].[IsVouchering], [s.Product].[Name], [s.Product].[ProductCategoryId], [s.Product].[ProductTypes], [s.Product].[StartFrom]
+FROM [Transactional] AS [s]
+INNER JOIN [Products] AS [s.Product] ON [s].[ProductId] = [s.Product].[Id]" (0723d8ff)
+2019-03-14T17:51:59.3434317+01:00 0HLL8JKHF5PR4:00000001 [INF] Executed DbCommand ("4"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [s].[Id], [s].[Amount], [s].[ItemOwner], [s].[OrderAndPurchaseStatus], [s].[OrderDate], [s].[ProductId], [s].[TransactionNo], [s.Product].[Id], [s.Product].[CodeName], [s.Product].[Description], [s.Product].[Image], [s.Product].[IsActive], [s.Product].[IsVouchering], [s.Product].[Name], [s.Product].[ProductCategoryId], [s.Product].[ProductTypes], [s.Product].[StartFrom], [s.Product.ProductCategory].[Id], [s.Product.ProductCategory].[Name]
+FROM [Transactional] AS [s]
+INNER JOIN [Products] AS [s.Product] ON [s].[ProductId] = [s.Product].[Id]
+INNER JOIN [ProductCategory] AS [s.Product.ProductCategory] ON [s.Product].[ProductCategoryId] = [s.Product.ProductCategory].[Id]" (0723d8ff)
+2019-03-14T17:51:59.4779792+01:00 0HLL8JKHF5PR4:00000001 [INF] Executed ViewResult - view "_checkout" executed in 750.7576ms. (f66409e9)
+2019-03-14T17:51:59.5853770+01:00 0HLL8JKHF5PR4:00000001 [INF] Executed action "Portal.Controllers.CartAndPaymentController.CheckOut (Portal)" in 992.8864ms (afa2e885)
+2019-03-14T17:51:59.8166904+01:00 0HLL8JKHF5PR4:00000001 [INF] Executed endpoint '"Portal.Controllers.CartAndPaymentController.CheckOut (Portal)"' (99874f2b)
+2019-03-14T17:51:59.8950305+01:00 0HLL8JKHF5PR4:00000001 [INF] Request finished in 1419.9204ms 200 text/html; charset=utf-8 (791a596a)
+2019-03-14T17:51:59.9306669+01:00 0HLL8JKHF5PR5:00000001 [INF] Request starting HTTP/1.1 GET http://localhost/armwealth/liber/Store/css/components/portfolio-masonry-2.css   (ca22a1cb)
+2019-03-14T17:51:59.9339559+01:00 0HLL8JKHF5PR4:00000002 [INF] Request starting HTTP/1.1 GET http://localhost/armwealth/CartAndPayment/img/arm-investment-center-logo.png   (ca22a1cb)
+2019-03-14T17:51:59.9798440+01:00 0HLL8JKHF5PR5:00000001 [INF] "Identity.Application" was not authenticated. Failure message: "Unprotect ticket failed" (48071232)
+2019-03-14T17:52:00.0737617+01:00 0HLL8JKHF5PR4:00000002 [INF] "Identity.Application" was not authenticated. Failure message: "Unprotect ticket failed" (48071232)
+2019-03-14T17:52:00.1175017+01:00 0HLL8JKHF5PR4:00000002 [INF] Request finished in 151.9828ms 404  (791a596a)
+2019-03-14T17:52:00.1221563+01:00 0HLL8JKHF5PR5:00000001 [INF] Request finished in 199.4502ms 404  (791a596a)
+2019-03-14T17:52:00.3777958+01:00 0HLL8JKHF5PR5:00000002 [INF] Request starting HTTP/1.1 GET http://localhost/armwealth/liber/Store/img/sprite.png   (ca22a1cb)
+2019-03-14T17:52:00.3851369+01:00 0HLL8JKHF5PR4:00000003 [INF] Request starting HTTP/1.1 GET http://localhost/armwealth/CartAndPayment/img/arm-investment-center-logo.png   (ca22a1cb)
+2019-03-14T17:52:00.3872021+01:00 0HLL8JKHF5PR5:00000002 [INF] "Identity.Application" was not authenticated. Failure message: "Unprotect ticket failed" (48071232)
+2019-03-14T17:52:00.3998795+01:00 0HLL8JKHF5PR4:00000003 [INF] "Identity.Application" was not authenticated. Failure message: "Unprotect ticket failed" (48071232)
+2019-03-14T17:52:00.4129708+01:00 0HLL8JKHF5PR5:00000002 [INF] Request finished in 61.9904ms 404  (791a596a)
+2019-03-14T17:52:00.4160499+01:00 0HLL8JKHF5PR4:00000003 [INF] Request finished in 24.0448ms 404  (791a596a)
+2019-03-14T17:52:00.8192392+01:00 0HLL8JKHF5PR5:00000003 [INF] Request starting HTTP/1.1 GET http://localhost/armwealth/CartAndPayment/img/alternative-banner.jpg   (ca22a1cb)
+2019-03-14T17:52:00.8224269+01:00 0HLL8JKHF5PR5:00000003 [INF] "Identity.Application" was not authenticated. Failure message: "Unprotect ticket failed" (48071232)
+2019-03-14T17:52:00.8295046+01:00 0HLL8JKHF5PR5:00000003 [INF] Request finished in 6.916ms 404  (791a596a)
+2019-03-14T17:52:01.0137983+01:00 0HLL8JKHF5PR4:00000004 [INF] Request starting HTTP/1.1 GET http://localhost/armwealth/CartAndPayment/img/alternative-banner.jpg   (ca22a1cb)
+2019-03-14T17:52:01.0170823+01:00 0HLL8JKHF5PR4:00000004 [INF] "Identity.Application" was not authenticated. Failure message: "Unprotect ticket failed" (48071232)
+2019-03-14T17:52:01.0228231+01:00 0HLL8JKHF5PR4:00000004 [INF] Request finished in 6.082ms 404  (791a596a)
+2019-03-14T17:52:13.0441591+01:00 0HLL8JKHF5PR5:00000004 [INF] Request starting HTTP/1.1 POST http://localhost/armwealth/CartAndPayment/SignIn application/x-www-form-urlencoded 245 (ca22a1cb)
+2019-03-14T17:52:13.0529256+01:00 0HLL8JKHF5PR5:00000004 [INF] "Identity.Application" was not authenticated. Failure message: "Unprotect ticket failed" (48071232)
+2019-03-14T17:52:13.0599079+01:00 0HLL8JKHF5PR5:00000004 [INF] Executing endpoint '"Portal.Controllers.CartAndPaymentController.SignIn (Portal)"' (500cc934)
+2019-03-14T17:52:13.1219176+01:00 0HLL8JKHF5PR5:00000004 [INF] Route matched with "{action = \"SignIn\", controller = \"CartAndPayment\", area = \"\"}". Executing action "Portal.Controllers.CartAndPaymentController.SignIn (Portal)" (a44c0341)
+2019-03-14T17:52:13.2137443+01:00 0HLL8JKHF5PR5:00000004 [INF] Executing action method "Portal.Controllers.CartAndPaymentController.SignIn (Portal)" with arguments (["Portal.Domain.ViewModels.CartView"]) - Validation state: Invalid (4e3479ed)
+2019-03-14T17:52:13.2205836+01:00 0HLL8JKHF5PR5:00000004 [INF] Entity Framework Core "2.2.0-rtm-35687" initialized '"ApplicationDbContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None" (9958f5bb)
+2019-03-14T17:52:13.2303059+01:00 0HLL8JKHF5PR5:00000004 [INF] Executed DbCommand ("4"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [s].[Id], [s].[Amount], [s].[ItemOwner], [s].[OrderAndPurchaseStatus], [s].[OrderDate], [s].[ProductId], [s].[TransactionNo], [s.Product].[Id], [s.Product].[CodeName], [s.Product].[Description], [s.Product].[Image], [s.Product].[IsActive], [s.Product].[IsVouchering], [s.Product].[Name], [s.Product].[ProductCategoryId], [s.Product].[ProductTypes], [s.Product].[StartFrom], [s.Product.ProductCategory].[Id], [s.Product.ProductCategory].[Name]
+FROM [Transactional] AS [s]
+INNER JOIN [Products] AS [s.Product] ON [s].[ProductId] = [s.Product].[Id]
+INNER JOIN [ProductCategory] AS [s.Product.ProductCategory] ON [s.Product].[ProductCategoryId] = [s.Product.ProductCategory].[Id]" (0723d8ff)
+2019-03-14T17:52:13.2411457+01:00 0HLL8JKHF5PR5:00000004 [INF] Executed DbCommand ("3"ms) [Parameters=["@ItemOwne='?' (Size = 22)"], CommandType='Text', CommandTimeout='30']"
+""UPDATE Transactional SET ItemOwner=@ItemOwne WHERE TransactionNo='10000000264'" (0723d8ff)
+2019-03-14T17:52:13.2961419+01:00 0HLL8JKHF5PR5:00000004 [INF] Executed DbCommand ("3"ms) [Parameters=["@__model_Username_0='?' (Size = 256)"], CommandType='Text', CommandTimeout='30']"
+""SELECT TOP(2) [s].[Id], [s].[AccessFailedCount], [s].[ConcurrencyStamp], [s].[Email], [s].[EmailConfirmed], [s].[LockoutEnabled], [s].[LockoutEnd], [s].[NormalizedEmail], [s].[NormalizedUserName], [s].[PasswordHash], [s].[PersonId], [s].[PhoneNumber], [s].[PhoneNumberConfirmed], [s].[SecurityStamp], [s].[TwoFactorEnabled], [s].[UserName], [s.Person].[Id], [s.Person].[Address], [s.Person].[BioetricVerificationNumber], [s.Person].[Email], [s.Person].[FirstName], [s.Person].[Gender], [s.Person].[IsCustomer], [s.Person].[LastName], [s.Person].[MemberShipNo], [s.Person].[OnCreated], [s.Person].[PortalOnBoarding], [s.Person].[Tel]
+FROM [AspNetUser] AS [s]
+INNER JOIN [Person] AS [s.Person] ON [s].[PersonId] = [s.Person].[Id]
+WHERE [s].[UserName] = @__model_Username_0" (0723d8ff)
+2019-03-14T17:52:13.4814941+01:00 0HLL8JKHF5PR5:00000004 [INF] Executed DbCommand ("21"ms) [Parameters=["@__user_Id_0='?' (DbType = Int64)"], CommandType='Text', CommandTimeout='30']"
+""SELECT [uc].[Id], [uc].[ClaimType], [uc].[ClaimValue], [uc].[Discriminator], [uc].[UserId]
+FROM [AspNetUserClaims] AS [uc]
+WHERE [uc].[Discriminator] IN (N'ApplicationUserClaim', N'IdentityUserClaim<long>') AND ([uc].[UserId] = @__user_Id_0)" (0723d8ff)
+2019-03-14T17:52:13.5738175+01:00 0HLL8JKHF5PR5:00000004 [INF] Executed DbCommand ("10"ms) [Parameters=["@__userId_0='?' (DbType = Int64)"], CommandType='Text', CommandTimeout='30']"
+""SELECT [role].[Name]
+FROM [AspNetUserRoles] AS [userRole]
+INNER JOIN [AspNetRole] AS [role] ON [userRole].[RoleId] = [role].[Id]
+WHERE [userRole].[Discriminator] IN (N'ApplicationUserRole', N'IdentityUserRole<long>') AND ([userRole].[UserId] = @__userId_0)" (0723d8ff)
+2019-03-14T17:52:13.5962352+01:00 0HLL8JKHF5PR5:00000004 [INF] AuthenticationScheme: "Identity.Application" signed in. (c66dd7e7)
+2019-03-14T17:52:13.6042959+01:00 0HLL8JKHF5PR5:00000004 [INF] Executed action method "Portal.Controllers.CartAndPaymentController.SignIn (Portal)", returned result "Microsoft.AspNetCore.Mvc.RedirectToActionResult" in 387.9849ms. (50a9e262)
+2019-03-14T17:52:13.6079520+01:00 0HLL8JKHF5PR5:00000004 [INF] Executing RedirectResult, redirecting to "/armwealth/CartAndPayment/CheckOut". (d98d540e)
+2019-03-14T17:52:13.6108022+01:00 0HLL8JKHF5PR5:00000004 [INF] Executed action "Portal.Controllers.CartAndPaymentController.SignIn (Portal)" in 486.3696ms (afa2e885)
+2019-03-14T17:52:13.6155932+01:00 0HLL8JKHF5PR5:00000004 [INF] Executed endpoint '"Portal.Controllers.CartAndPaymentController.SignIn (Portal)"' (99874f2b)
+2019-03-14T17:52:13.6186745+01:00 0HLL8JKHF5PR5:00000004 [INF] Request finished in 575.3967ms 302  (791a596a)
+2019-03-14T17:52:13.6232388+01:00 0HLL8JKHF5PR4:00000005 [INF] Request starting HTTP/1.1 GET http://localhost/armwealth/CartAndPayment/CheckOut   (ca22a1cb)
+2019-03-14T17:52:13.6429011+01:00 0HLL8JKHF5PR4:00000005 [INF] Executing endpoint '"Portal.Controllers.CartAndPaymentController.CheckOut (Portal)"' (500cc934)
+2019-03-14T17:52:13.6478230+01:00 0HLL8JKHF5PR4:00000005 [INF] Route matched with "{action = \"CheckOut\", controller = \"CartAndPayment\", area = \"\"}". Executing action "Portal.Controllers.CartAndPaymentController.CheckOut (Portal)" (a44c0341)
+2019-03-14T17:52:13.6541510+01:00 0HLL8JKHF5PR4:00000005 [INF] Executing action method "Portal.Controllers.CartAndPaymentController.CheckOut (Portal)" - Validation state: Valid (dad538d7)
+2019-03-14T17:52:13.6633228+01:00 0HLL8JKHF5PR4:00000005 [INF] Entity Framework Core "2.2.0-rtm-35687" initialized '"ApplicationDbContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None" (9958f5bb)
+2019-03-14T17:52:13.6709175+01:00 0HLL8JKHF5PR4:00000005 [INF] Executed DbCommand ("4"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [s].[Id], [s].[Amount], [s].[ItemOwner], [s].[OrderAndPurchaseStatus], [s].[OrderDate], [s].[ProductId], [s].[TransactionNo], [s.Product].[Id], [s.Product].[CodeName], [s.Product].[Description], [s.Product].[Image], [s.Product].[IsActive], [s.Product].[IsVouchering], [s.Product].[Name], [s.Product].[ProductCategoryId], [s.Product].[ProductTypes], [s.Product].[StartFrom]
+FROM [Transactional] AS [s]
+INNER JOIN [Products] AS [s.Product] ON [s].[ProductId] = [s.Product].[Id]" (0723d8ff)
+2019-03-14T17:52:13.6759211+01:00 0HLL8JKHF5PR4:00000005 [INF] Executed DbCommand ("1"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [s].[Id], [s].[Amount], [s].[ItemOwner], [s].[OrderAndPurchaseStatus], [s].[OrderDate], [s].[ProductId], [s].[TransactionNo], [s.Product].[Id], [s.Product].[CodeName], [s.Product].[Description], [s.Product].[Image], [s.Product].[IsActive], [s.Product].[IsVouchering], [s.Product].[Name], [s.Product].[ProductCategoryId], [s.Product].[ProductTypes], [s.Product].[StartFrom]
+FROM [Transactional] AS [s]
+INNER JOIN [Products] AS [s.Product] ON [s].[ProductId] = [s.Product].[Id]" (0723d8ff)
+2019-03-14T17:52:13.6809015+01:00 0HLL8JKHF5PR4:00000005 [INF] Executed DbCommand ("1"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [s].[Id], [s].[Amount], [s].[ItemOwner], [s].[OrderAndPurchaseStatus], [s].[OrderDate], [s].[ProductId], [s].[TransactionNo], [s.Product].[Id], [s.Product].[CodeName], [s.Product].[Description], [s.Product].[Image], [s.Product].[IsActive], [s.Product].[IsVouchering], [s.Product].[Name], [s.Product].[ProductCategoryId], [s.Product].[ProductTypes], [s.Product].[StartFrom]
+FROM [Transactional] AS [s]
+INNER JOIN [Products] AS [s.Product] ON [s].[ProductId] = [s.Product].[Id]" (0723d8ff)
+2019-03-14T17:52:13.7497447+01:00 0HLL8JKHF5PR4:00000005 [INF] Executed DbCommand ("1"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [p].[Id], [p].[Address], [p].[BioetricVerificationNumber], [p].[Email], [p].[FirstName], [p].[Gender], [p].[IsCustomer], [p].[LastName], [p].[MemberShipNo], [p].[OnCreated], [p].[PortalOnBoarding], [p].[Tel]
+FROM [Person] AS [p]" (0723d8ff)
+2019-03-14T17:52:13.7600366+01:00 0HLL8JKHF5PR4:00000005 [INF] Executed DbCommand ("0"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [s].[Id], [s].[Amount], [s].[ItemOwner], [s].[OrderAndPurchaseStatus], [s].[OrderDate], [s].[ProductId], [s].[TransactionNo], [s.Product].[Id], [s.Product].[CodeName], [s.Product].[Description], [s.Product].[Image], [s.Product].[IsActive], [s.Product].[IsVouchering], [s.Product].[Name], [s.Product].[ProductCategoryId], [s.Product].[ProductTypes], [s.Product].[StartFrom], [s.Product.ProductCategory].[Id], [s.Product.ProductCategory].[Name]
+FROM [Transactional] AS [s]
+INNER JOIN [Products] AS [s.Product] ON [s].[ProductId] = [s.Product].[Id]
+INNER JOIN [ProductCategory] AS [s.Product.ProductCategory] ON [s.Product].[ProductCategoryId] = [s.Product.ProductCategory].[Id]" (0723d8ff)
+2019-03-14T17:52:13.7646749+01:00 0HLL8JKHF5PR4:00000005 [INF] Executed action method "Portal.Controllers.CartAndPaymentController.CheckOut (Portal)", returned result "Microsoft.AspNetCore.Mvc.ViewResult" in 106.4394ms. (50a9e262)
+2019-03-14T17:52:13.7681450+01:00 0HLL8JKHF5PR4:00000005 [INF] Executing ViewResult, running view "_checkout". (c83d0e25)
+2019-03-14T17:52:13.7738737+01:00 0HLL8JKHF5PR4:00000005 [INF] Executed DbCommand ("1"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [s].[Id], [s].[Amount], [s].[ItemOwner], [s].[OrderAndPurchaseStatus], [s].[OrderDate], [s].[ProductId], [s].[TransactionNo], [s.Product].[Id], [s.Product].[CodeName], [s.Product].[Description], [s.Product].[Image], [s.Product].[IsActive], [s.Product].[IsVouchering], [s.Product].[Name], [s.Product].[ProductCategoryId], [s.Product].[ProductTypes], [s.Product].[StartFrom]
+FROM [Transactional] AS [s]
+INNER JOIN [Products] AS [s.Product] ON [s].[ProductId] = [s.Product].[Id]" (0723d8ff)
+2019-03-14T17:52:13.7827626+01:00 0HLL8JKHF5PR4:00000005 [INF] Executed DbCommand ("3"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [s].[Id], [s].[Amount], [s].[ItemOwner], [s].[OrderAndPurchaseStatus], [s].[OrderDate], [s].[ProductId], [s].[TransactionNo], [s.Product].[Id], [s.Product].[CodeName], [s.Product].[Description], [s.Product].[Image], [s.Product].[IsActive], [s.Product].[IsVouchering], [s.Product].[Name], [s.Product].[ProductCategoryId], [s.Product].[ProductTypes], [s.Product].[StartFrom]
+FROM [Transactional] AS [s]
+INNER JOIN [Products] AS [s.Product] ON [s].[ProductId] = [s.Product].[Id]" (0723d8ff)
+2019-03-14T17:52:13.7930035+01:00 0HLL8JKHF5PR4:00000005 [INF] Executed DbCommand ("1"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [s].[Id], [s].[Amount], [s].[ItemOwner], [s].[OrderAndPurchaseStatus], [s].[OrderDate], [s].[ProductId], [s].[TransactionNo], [s.Product].[Id], [s.Product].[CodeName], [s.Product].[Description], [s.Product].[Image], [s.Product].[IsActive], [s.Product].[IsVouchering], [s.Product].[Name], [s.Product].[ProductCategoryId], [s.Product].[ProductTypes], [s.Product].[StartFrom], [s.Product.ProductCategory].[Id], [s.Product.ProductCategory].[Name]
+FROM [Transactional] AS [s]
+INNER JOIN [Products] AS [s.Product] ON [s].[ProductId] = [s.Product].[Id]
+INNER JOIN [ProductCategory] AS [s.Product.ProductCategory] ON [s.Product].[ProductCategoryId] = [s.Product.ProductCategory].[Id]" (0723d8ff)
+2019-03-14T17:52:13.8028951+01:00 0HLL8JKHF5PR4:00000005 [INF] Executed ViewResult - view "_checkout" executed in 33.918ms. (f66409e9)
+2019-03-14T17:52:13.8067911+01:00 0HLL8JKHF5PR4:00000005 [INF] Executed action "Portal.Controllers.CartAndPaymentController.CheckOut (Portal)" in 155.0974ms (afa2e885)
+2019-03-14T17:52:13.8130280+01:00 0HLL8JKHF5PR4:00000005 [INF] Executed endpoint '"Portal.Controllers.CartAndPaymentController.CheckOut (Portal)"' (99874f2b)
+2019-03-14T17:52:13.8199384+01:00 0HLL8JKHF5PR4:00000005 [INF] Request finished in 192.7493ms 200 text/html; charset=utf-8 (791a596a)
+2019-03-14T17:52:14.1415567+01:00 0HLL8JKHF5PR5:00000005 [INF] Request starting HTTP/1.1 GET http://localhost/armwealth/liber/Store/css/components/portfolio-masonry-2.css   (ca22a1cb)
+2019-03-14T17:52:14.2700268+01:00 0HLL8JKHF5PR4:00000006 [INF] Request starting HTTP/1.1 GET http://localhost/armwealth/CartAndPayment/img/arm-investment-center-logo.png   (ca22a1cb)
+2019-03-14T17:52:14.2970806+01:00 0HLL8JKHF5PR5:00000005 [INF] Request finished in 90.5217ms 404  (791a596a)
+2019-03-14T17:52:14.3415043+01:00 0HLL8JKHF5PR4:00000006 [INF] Request finished in 197.5604ms 404  (791a596a)
+2019-03-14T17:52:14.3830659+01:00 0HLL8JKHF5PR5:00000006 [INF] Request starting HTTP/1.1 GET http://localhost/armwealth/CartAndPayment/img/arm-investment-center-logo.png   (ca22a1cb)
+2019-03-14T17:52:14.3985113+01:00 0HLL8JKHF5PR5:00000006 [INF] Request finished in 6.9788ms 404  (791a596a)
+2019-03-14T17:52:14.4165378+01:00 0HLL8JKHF5PR4:00000007 [INF] Request starting HTTP/1.1 GET http://localhost/armwealth/liber/Store/img/sprite.png   (ca22a1cb)
+2019-03-14T17:52:14.4217385+01:00 0HLL8JKHF5PR4:00000007 [INF] Request finished in 3.845ms 404  (791a596a)
+2019-03-14T17:52:14.6428199+01:00 0HLL8JKHF5PR5:00000007 [INF] Request starting HTTP/1.1 GET http://localhost/armwealth/CartAndPayment/img/alternative-banner.jpg   (ca22a1cb)
+2019-03-14T17:52:14.6489888+01:00 0HLL8JKHF5PR5:00000007 [INF] Request finished in 5.5552ms 404  (791a596a)
+2019-03-14T17:52:14.8405380+01:00 0HLL8JKHF5PR4:00000008 [INF] Request starting HTTP/1.1 GET http://localhost/armwealth/CartAndPayment/img/alternative-banner.jpg   (ca22a1cb)
+2019-03-14T17:52:14.8489004+01:00 0HLL8JKHF5PR4:00000008 [INF] Request finished in 4.8436ms 404  (791a596a)
+2019-03-14T17:53:03.4703276+01:00 0HLL8JKHF5PR5:00000008 [INF] Request starting HTTP/1.1 GET http://localhost/armwealth/CartAndPayment/CheckOut   (ca22a1cb)
+2019-03-14T17:53:03.4755159+01:00 0HLL8JKHF5PR5:00000008 [INF] Executing endpoint '"Portal.Controllers.CartAndPaymentController.CheckOut (Portal)"' (500cc934)
+2019-03-14T17:53:03.4848768+01:00 0HLL8JKHF5PR5:00000008 [INF] Route matched with "{action = \"CheckOut\", controller = \"CartAndPayment\", area = \"\"}". Executing action "Portal.Controllers.CartAndPaymentController.CheckOut (Portal)" (a44c0341)
+2019-03-14T17:53:03.4883994+01:00 0HLL8JKHF5PR5:00000008 [INF] Executing action method "Portal.Controllers.CartAndPaymentController.CheckOut (Portal)" - Validation state: Valid (dad538d7)
+2019-03-14T17:53:03.4928333+01:00 0HLL8JKHF5PR5:00000008 [INF] Entity Framework Core "2.2.0-rtm-35687" initialized '"ApplicationDbContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None" (9958f5bb)
+2019-03-14T17:53:03.5052275+01:00 0HLL8JKHF5PR5:00000008 [INF] Executed DbCommand ("9"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [s].[Id], [s].[Amount], [s].[ItemOwner], [s].[OrderAndPurchaseStatus], [s].[OrderDate], [s].[ProductId], [s].[TransactionNo], [s.Product].[Id], [s.Product].[CodeName], [s.Product].[Description], [s.Product].[Image], [s.Product].[IsActive], [s.Product].[IsVouchering], [s.Product].[Name], [s.Product].[ProductCategoryId], [s.Product].[ProductTypes], [s.Product].[StartFrom]
+FROM [Transactional] AS [s]
+INNER JOIN [Products] AS [s.Product] ON [s].[ProductId] = [s.Product].[Id]" (0723d8ff)
+2019-03-14T17:53:03.5180238+01:00 0HLL8JKHF5PR5:00000008 [INF] Executed DbCommand ("4"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [s].[Id], [s].[Amount], [s].[ItemOwner], [s].[OrderAndPurchaseStatus], [s].[OrderDate], [s].[ProductId], [s].[TransactionNo], [s.Product].[Id], [s.Product].[CodeName], [s.Product].[Description], [s.Product].[Image], [s.Product].[IsActive], [s.Product].[IsVouchering], [s.Product].[Name], [s.Product].[ProductCategoryId], [s.Product].[ProductTypes], [s.Product].[StartFrom]
+FROM [Transactional] AS [s]
+INNER JOIN [Products] AS [s.Product] ON [s].[ProductId] = [s.Product].[Id]" (0723d8ff)
+2019-03-14T17:53:03.5336498+01:00 0HLL8JKHF5PR5:00000008 [INF] Executed DbCommand ("5"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [s].[Id], [s].[Amount], [s].[ItemOwner], [s].[OrderAndPurchaseStatus], [s].[OrderDate], [s].[ProductId], [s].[TransactionNo], [s.Product].[Id], [s.Product].[CodeName], [s.Product].[Description], [s.Product].[Image], [s.Product].[IsActive], [s.Product].[IsVouchering], [s.Product].[Name], [s.Product].[ProductCategoryId], [s.Product].[ProductTypes], [s.Product].[StartFrom]
+FROM [Transactional] AS [s]
+INNER JOIN [Products] AS [s.Product] ON [s].[ProductId] = [s.Product].[Id]" (0723d8ff)
+2019-03-14T17:53:03.5398375+01:00 0HLL8JKHF5PR5:00000008 [INF] Executed DbCommand ("2"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [p].[Id], [p].[Address], [p].[BioetricVerificationNumber], [p].[Email], [p].[FirstName], [p].[Gender], [p].[IsCustomer], [p].[LastName], [p].[MemberShipNo], [p].[OnCreated], [p].[PortalOnBoarding], [p].[Tel]
+FROM [Person] AS [p]" (0723d8ff)
+2019-03-14T17:53:03.5546741+01:00 0HLL8JKHF5PR5:00000008 [INF] Executed DbCommand ("10"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [s].[Id], [s].[Amount], [s].[ItemOwner], [s].[OrderAndPurchaseStatus], [s].[OrderDate], [s].[ProductId], [s].[TransactionNo], [s.Product].[Id], [s.Product].[CodeName], [s.Product].[Description], [s.Product].[Image], [s.Product].[IsActive], [s.Product].[IsVouchering], [s.Product].[Name], [s.Product].[ProductCategoryId], [s.Product].[ProductTypes], [s.Product].[StartFrom], [s.Product.ProductCategory].[Id], [s.Product.ProductCategory].[Name]
+FROM [Transactional] AS [s]
+INNER JOIN [Products] AS [s.Product] ON [s].[ProductId] = [s.Product].[Id]
+INNER JOIN [ProductCategory] AS [s.Product.ProductCategory] ON [s.Product].[ProductCategoryId] = [s.Product.ProductCategory].[Id]" (0723d8ff)
+2019-03-14T17:53:03.5584520+01:00 0HLL8JKHF5PR5:00000008 [INF] Executed action method "Portal.Controllers.CartAndPaymentController.CheckOut (Portal)", returned result "Microsoft.AspNetCore.Mvc.ViewResult" in 66.8024ms. (50a9e262)
+2019-03-14T17:53:03.5616590+01:00 0HLL8JKHF5PR5:00000008 [INF] Executing ViewResult, running view "_checkout". (c83d0e25)
+2019-03-14T17:53:03.5738090+01:00 0HLL8JKHF5PR5:00000008 [INF] Executed DbCommand ("8"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [s].[Id], [s].[Amount], [s].[ItemOwner], [s].[OrderAndPurchaseStatus], [s].[OrderDate], [s].[ProductId], [s].[TransactionNo], [s.Product].[Id], [s.Product].[CodeName], [s.Product].[Description], [s.Product].[Image], [s.Product].[IsActive], [s.Product].[IsVouchering], [s.Product].[Name], [s.Product].[ProductCategoryId], [s.Product].[ProductTypes], [s.Product].[StartFrom]
+FROM [Transactional] AS [s]
+INNER JOIN [Products] AS [s.Product] ON [s].[ProductId] = [s.Product].[Id]" (0723d8ff)
+2019-03-14T17:53:03.5856713+01:00 0HLL8JKHF5PR5:00000008 [INF] Executed DbCommand ("5"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [s].[Id], [s].[Amount], [s].[ItemOwner], [s].[OrderAndPurchaseStatus], [s].[OrderDate], [s].[ProductId], [s].[TransactionNo], [s.Product].[Id], [s.Product].[CodeName], [s.Product].[Description], [s.Product].[Image], [s.Product].[IsActive], [s.Product].[IsVouchering], [s.Product].[Name], [s.Product].[ProductCategoryId], [s.Product].[ProductTypes], [s.Product].[StartFrom]
+FROM [Transactional] AS [s]
+INNER JOIN [Products] AS [s.Product] ON [s].[ProductId] = [s.Product].[Id]" (0723d8ff)
+2019-03-14T17:53:03.5991941+01:00 0HLL8JKHF5PR5:00000008 [INF] Executed DbCommand ("6"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [s].[Id], [s].[Amount], [s].[ItemOwner], [s].[OrderAndPurchaseStatus], [s].[OrderDate], [s].[ProductId], [s].[TransactionNo], [s.Product].[Id], [s.Product].[CodeName], [s.Product].[Description], [s.Product].[Image], [s.Product].[IsActive], [s.Product].[IsVouchering], [s.Product].[Name], [s.Product].[ProductCategoryId], [s.Product].[ProductTypes], [s.Product].[StartFrom], [s.Product.ProductCategory].[Id], [s.Product.ProductCategory].[Name]
+FROM [Transactional] AS [s]
+INNER JOIN [Products] AS [s.Product] ON [s].[ProductId] = [s.Product].[Id]
+INNER JOIN [ProductCategory] AS [s.Product.ProductCategory] ON [s.Product].[ProductCategoryId] = [s.Product.ProductCategory].[Id]" (0723d8ff)
+2019-03-14T17:53:03.6046864+01:00 0HLL8JKHF5PR5:00000008 [INF] Executed ViewResult - view "_checkout" executed in 43.2909ms. (f66409e9)
+2019-03-14T17:53:03.6093949+01:00 0HLL8JKHF5PR5:00000008 [INF] Executed action "Portal.Controllers.CartAndPaymentController.CheckOut (Portal)" in 119.8476ms (afa2e885)
+2019-03-14T17:53:03.6229400+01:00 0HLL8JKHF5PR5:00000008 [INF] Executed endpoint '"Portal.Controllers.CartAndPaymentController.CheckOut (Portal)"' (99874f2b)
+2019-03-14T17:53:03.6934326+01:00 0HLL8JKHF5PR5:00000008 [INF] Request finished in 158.2941ms 200 text/html; charset=utf-8 (791a596a)
+2019-03-14T17:53:04.1092373+01:00 0HLL8JKHF5PR5:00000009 [INF] Request starting HTTP/1.1 GET http://localhost/armwealth/CartAndPayment/img/arm-investment-center-logo.png   (ca22a1cb)
+2019-03-14T17:53:04.2635273+01:00 0HLL8JKHF5PR5:00000009 [INF] Request finished in 76.9202ms 404  (791a596a)
+2019-03-14T17:53:04.2838468+01:00 0HLL8JKHF5PR4:00000009 [INF] Request starting HTTP/1.1 GET http://localhost/armwealth/liber/Store/css/components/portfolio-masonry-2.css   (ca22a1cb)
+2019-03-14T17:53:04.2937111+01:00 0HLL8JKHF5PR4:00000009 [INF] Request finished in 41.5123ms 404  (791a596a)
+2019-03-14T17:53:04.3886125+01:00 0HLL8JKHF5PR5:0000000A [INF] Request starting HTTP/1.1 GET http://localhost/armwealth/CartAndPayment/img/arm-investment-center-logo.png   (ca22a1cb)
+2019-03-14T17:53:04.3931742+01:00 0HLL8JKHF5PR5:0000000A [INF] Request finished in 3.2852ms 404  (791a596a)
+2019-03-14T17:53:04.4344941+01:00 0HLL8JKHF5PR4:0000000A [INF] Request starting HTTP/1.1 GET http://localhost/armwealth/liber/Store/img/sprite.png   (ca22a1cb)
+2019-03-14T17:53:04.4385730+01:00 0HLL8JKHF5PR4:0000000A [INF] Request finished in 3.6602ms 404  (791a596a)
+2019-03-14T17:53:05.0896405+01:00 0HLL8JKHF5PR5:0000000B [INF] Request starting HTTP/1.1 GET http://localhost/armwealth/img/arm-favicon.jpg   (ca22a1cb)
+2019-03-14T17:53:05.1098753+01:00 0HLL8JKHF5PR4:0000000B [INF] Request starting HTTP/1.1 GET http://localhost/armwealth/CartAndPayment/img/alternative-banner.jpg   (ca22a1cb)
+2019-03-14T17:53:05.1264645+01:00 0HLL8JKHF5PR5:0000000B [INF] Sending file. Request path: '"/img/arm-favicon.jpg"'. Physical path: '"D:\WorkSpace\wealth-planner\Portal\wwwroot\img\arm-favicon.jpg"' (27b0a520)
+2019-03-14T17:53:05.1265043+01:00 0HLL8JKHF5PR4:0000000B [INF] Request finished in 15.889ms 404  (791a596a)
+2019-03-14T17:53:05.1406364+01:00 0HLL8JKHF5PR5:0000000B [INF] Request finished in 44.0829ms 200 image/jpeg (791a596a)
+2019-03-14T17:53:05.1458397+01:00 0HLL8JKHF5PR5:0000000C [INF] Request starting HTTP/1.1 GET http://localhost/armwealth/CartAndPayment/img/alternative-banner.jpg   (ca22a1cb)
+2019-03-14T17:53:05.1521219+01:00 0HLL8JKHF5PR5:0000000C [INF] Request finished in 6.8471ms 404  (791a596a)

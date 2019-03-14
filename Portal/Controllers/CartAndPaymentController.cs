@@ -160,6 +160,15 @@ namespace Portal.Controllers
             var trCustId = trResponse["arm_cust_id"];
             var trPaymentParams = trResponse["arm_payment_params"];
 
+            if (!User.Identity.IsAuthenticated)
+            {
+                var result = _personManager.Get(s => s.Email.Equals(trCustId) || s.MemberShipNo.Equals(trCustId)).SingleOrDefault();
+                if (result != null)
+                {
+                    var rs = _userManager.Users.Where(s => s.UserName == result.Email);
+                }
+            }
+
             ShowCartInformation();
             var tranno = transactionRef.ToString().Replace("ARM", "").Trim();
             if (trStatusCode.Equals("00"))
