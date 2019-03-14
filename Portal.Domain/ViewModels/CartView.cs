@@ -15,6 +15,7 @@ namespace Portal.Domain.ViewModels
         public decimal SubTotal { get; set; }
         public decimal Discount { get; set; }
         public string TransactionNo { get; set; }
+        public string TransactionParameter { get; set; }
         public string MemberUniqueIdentifier { get; set; }
         public string FullName { get; set; }
         public string PaymentGateway { get; set; }
