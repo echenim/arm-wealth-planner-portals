@@ -30661,3 +30661,8 @@ Contents:
 .custom-file-label::after {
     display: none !important;
 }
+
+.wpc-content-wrap {
+    width: 100%;
+    background: #FFF;
+}

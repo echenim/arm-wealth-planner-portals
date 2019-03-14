@@ -38,13 +38,16 @@ namespace Portal.Controllers
         //caching to persist user data
         private readonly IMemoryCache _cache;
 
-        public CartAndPaymentController(ICartManager cartManager,
-            IPersonManager personManager, IGeneratorsManager generatorsManager,
+        public CartAndPaymentController(
+            ICartManager cartManager,
+            IPersonManager personManager, 
+            IGeneratorsManager generatorsManager,
             IUserService userService,
             UserManager<ApplicationUser> userManager,
             RoleManager<ApplicationRole> roleManager,
             SignInManager<ApplicationUser> signInManager,
             IPasswordHasher<ApplicationUser> passwordHasher,
+            IArmOneServiceConfigManager armOneServiceConfigManager,
             IHostingEnvironment hostingEnvironment,
             IArmOneManager armOneManager,
 
