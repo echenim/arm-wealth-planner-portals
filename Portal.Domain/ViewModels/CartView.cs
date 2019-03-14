@@ -15,6 +15,13 @@ namespace Portal.Domain.ViewModels
         public decimal SubTotal { get; set; }
         public decimal Discount { get; set; }
         public string TransactionNo { get; set; }
+        public string MemberUniqueIdentifier { get; set; }
+        public string FullName { get; set; }
+        public string PaymentGateway { get; set; }
+        public string XmlPayload { get; set; }
+        public string HashedData { get; set; }
+        public string VendorUserName { get; set; }
+        public string ReturnUr { get; set; }
         public decimal Total => SubTotal - Discount;
 
         #region signin

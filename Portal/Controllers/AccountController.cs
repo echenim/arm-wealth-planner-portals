@@ -120,8 +120,8 @@ namespace Portal.Controllers
                             .PasswordSignInAsync(valiedUser, model.Password, true, true).Result;
                         if (signInResult.Succeeded)
                         {
-                            //_cache.Set<CustomerInformationView>("ArmOneUser", armOneObj);
-                            //_cache.Set<AuthenticateResponse>("ArmUser", dataHubObj);
+                            _cache.Set<CustomerInformationView>("ArmOneUser", armOneObj);
+                            _cache.Set<AuthenticateResponse>("ArmUser", dataHubObj);
                             return RedirectToAction("Index", "Dashboard", new { area = "Client" });
                         }
                     }

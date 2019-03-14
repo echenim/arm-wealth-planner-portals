@@ -33,6 +33,7 @@ namespace Portal.Controllers
         private readonly IPasswordHasher<ApplicationUser> _passwordHasher;
         private readonly IHostingEnvironment _hostingEnvironment;
         private readonly IArmOneManager _armOneManager;
+        private readonly IArmOneServiceConfigManager _armOneServiceConfigManager;
 
         //caching to persist user data
         private readonly IMemoryCache _cache;
@@ -52,7 +53,7 @@ namespace Portal.Controllers
             _cartManager = cartManager;
             _personManager = personManager;
             _generatorsManager = generatorsManager;
-
+            _armOneServiceConfigManager = armOneServiceConfigManager;
             _signInManager = signInManager;
             _userManager = userManager;
             _roleManager = roleManager;
@@ -105,6 +106,20 @@ namespace Portal.Controllers
             var username = User.Identity.Name;
             if (!string.IsNullOrEmpty(username))
             {
+                #region fill form for payment
+
+                data.MemberUniqueIdentifier = User.Identity.Name;
+                data.FullName = User.Identity.Name;
+
+                data.PaymentGateway = $"{_armOneServiceConfigManager.ArmAggregatorBaseUrl}/Aggregator2/Payment";
+                data.XmlPayload = _generatorsManager.ArmXmlData(data.CartCollection.ToList());
+                var toHashed =
+                    $"{data.TransactionNo}{_armOneServiceConfigManager.ArmServiceUsername}{data.Total}{_armOneServiceConfigManager.ReturnUrl}{_armOneServiceConfigManager.ArmMacKey}";
+                data.HashedData = _generatorsManager.HashedValues(toHashed);
+                data.VendorUserName = _generatorsManager.DecryptCredentials(_armOneServiceConfigManager.ArmServiceUsername);
+                data.ReturnUr = _armOneServiceConfigManager.ReturnUrl;
+                #endregion fill form for payment
+
                 data.Person = _personManager.Get(s => s.Email.Equals(User.Identity.Name))
                     .SingleOrDefault();
             }
@@ -257,7 +272,7 @@ namespace Portal.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Cregistration(CartView model)
         {
-           // if (!ModelState.IsValid) return View("_checkout", model);
+            // if (!ModelState.IsValid) return View("_checkout", model);
             ShowCartInformation();
             var tracker = HttpContext.Session.GetString("_ArmTracker");
             if (tracker != null)

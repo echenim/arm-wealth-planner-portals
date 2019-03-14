@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using System.Text;
 using Microsoft.AspNetCore.Http;
 using Portal.Business.Contracts;
 using Portal.Domain.ViewModels;
-using Microsoft.AspNetCore;
-using Microsoft.AspNetCore.Identity;
-using System.Security.Cryptography;
+using Portal.Domain.Models;
 
 namespace Portal.Business.StoreManagers
 {
@@ -55,6 +54,38 @@ namespace Portal.Business.StoreManagers
             var cart = new CartDetailView();
             cart.ItemsInCart = cartdata;
             return cart;
+        }
+
+        public string ArmXmlData(List<Transactional> datapayload)
+        {
+            var xml = new StringBuilder();
+            xml.Append("<paymentitemxml><payment_items>");
+            foreach (var item in datapayload)
+            {
+                var parts = $"<payment_item><item_code>{item.Product.CodeName}</item_code><item_amt>{item.Amount}</item_amt></payment_item>";
+                xml.Append(parts);
+            }
+
+            xml.Append("</payment_items></paymentitemxml>");
+            return xml.ToString();
+        }
+
+        public string HashedValues(string toHashed)
+        {
+            // Create a SHA256
+            using (var sha256Hash = SHA256.Create())
+            {
+                // ComputeHash - returns byte array
+                byte[] bytes = sha256Hash.ComputeHash(Encoding.UTF8.GetBytes(toHashed));
+
+                // Convert byte array to a string
+                StringBuilder builder = new StringBuilder();
+                foreach (var t in bytes)
+                {
+                    builder.Append(t.ToString("x2"));
+                }
+                return builder.ToString();
+            }
         }
 
         private static string getString(byte[] b)

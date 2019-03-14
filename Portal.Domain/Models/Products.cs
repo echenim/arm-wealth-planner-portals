@@ -18,6 +18,9 @@ namespace Portal.Domain.Models
         [MaxLength(100)]
         public string Name { get; set; }
 
+        [MaxLength(5)]
+        public string CodeName { get; set; }
+
         [Required]
         [Column(TypeName = "decimal(18, 2)")]
         public decimal StartFrom { get; set; }
