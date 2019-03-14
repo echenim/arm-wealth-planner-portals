@@ -17,5 +17,7 @@ namespace Portal.Business.Contracts
         string HashedValues(string toHashed);
 
         string DecryptCredentials(string credentials);
+
+        string GenerateTransactionParameter(int key);
     }
 }

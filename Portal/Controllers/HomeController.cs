@@ -40,7 +40,7 @@ namespace Portal.Controllers
             #region available cart
 
             var currentSession = _generatorsManager.UserSessionManagerForTrackingActivities();
-            var cartView = _generatorsManager.ViewCart(User.Identity.Name);
+            var cartView = _generatorsManager.ViewCart(User.Identity.Name); 
 
             ViewBag.Name = currentSession;
 

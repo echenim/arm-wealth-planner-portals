@@ -37,6 +37,7 @@ namespace Portal.Areas.Client.Controllers
 
         //test
         private readonly IArmOneServiceConfigManager _configSettingManager;
+        private readonly IPersonManager _personManager;
 
         public TestArmClientServices _clientService;
 
@@ -47,7 +48,8 @@ namespace Portal.Areas.Client.Controllers
 
         public DashboardController(IHostingEnvironment hostingEnvironment,
                                     ILogger<DashboardController> logger, IConfiguration configuration,
-                                    IMemoryCache cache, ApplicationDbContext _db, IArmOneServiceConfigManager configManager)
+                                    IMemoryCache cache, ApplicationDbContext _db, IArmOneServiceConfigManager configManager,
+                                    IPersonManager personmanager)
         {
             _hostingEnvironment = hostingEnvironment;
             _webRootPath = _hostingEnvironment.WebRootPath;
@@ -57,6 +59,7 @@ namespace Portal.Areas.Client.Controllers
             _configuration = configuration;
 
             _configSettingManager = configManager;
+            _personManager = personmanager;
 
             _clientService = new TestArmClientServices(_configSettingManager, _contentRootPath);
             _client = new ClientRepository(_configSettingManager, _contentRootPath);
@@ -69,13 +72,31 @@ namespace Portal.Areas.Client.Controllers
         public IActionResult Index()
         {
             var model = new AccountStatementViewModel();
-            
+            var person = _personManager.Get(s => s.Email.Equals(User.Identity.Name)).SingleOrDefault();
+
             var _user = _cache.Get<AuthenticateResponse>("ArmUser");
-            if (_user == null)
+
+            if (_user == null && person == null)
             {
                 TempData["SessionTimeOut"] = $@"You have been logged out due to inactivity. 
                                                 Please login to gain access.";
                 return RedirectToAction("Index", "Home", new { area = "" });
+            }
+            else if (_user == null && person != null)
+            {
+                var client = new AuthenticateResponse();
+
+                client.EmailAddress = person.Email;
+                client.FirstName = person.FirstName;
+                client.LastName = person.LastName;
+                client.MembershipKey = Convert.ToInt32(person.MemberShipNo);
+                client.FullName = person.FullName;
+
+                _user = client;
+
+                _cache.Set<AuthenticateResponse>("ArmUser", _user, new MemoryCacheEntryOptions()
+                                                                .SetSlidingExpiration(TimeSpan.FromMinutes(20))
+                                                                .SetAbsoluteExpiration(TimeSpan.FromHours(1)));
             }
 
             try

@@ -86,7 +86,8 @@ namespace Portal.Controllers
 
         public IActionResult CheckOut()
         {
-            var currentSession = _generatorsManager.UserSessionManagerForTrackingActivities();
+            var _user = _cache.Get<AuthenticateResponse>("ArmUser");
+            var currentSession = _generatorsManager.UserSessionManagerForTrackingActivities(); 
 
             ViewBag.Name = currentSession;
             //check if the user is signed by calling user.identity.name
@@ -95,7 +96,7 @@ namespace Portal.Controllers
 
             //fetch curent selected products
             var data = _cartManager.GetCart(s => s.ItemOwner.ToLower().Equals(filter.ToLower())
-                              && s.OrderAndPurchaseStatus.Equals("InCart"));
+                              && s.OrderAndPurchaseStatus.Equals("InCart")); 
 
             var trnx = (from u in data.CartCollection
                         select u.TransactionNo).Distinct();
@@ -107,6 +108,7 @@ namespace Portal.Controllers
 
             //get customer information if signed in
             var username = User.Identity.Name;
+           
             if (!string.IsNullOrEmpty(username))
             {
                 #region fill form for payment
@@ -116,15 +118,25 @@ namespace Portal.Controllers
 
                 data.PaymentGateway = $"{_armOneServiceConfigManager.ArmAggregatorBaseUrl}/Aggregator2/Payment";
                 data.XmlPayload = _generatorsManager.ArmXmlData(data.CartCollection.ToList());
-                var toHashed =
-                    $"{data.TransactionNo}{_armOneServiceConfigManager.ArmServiceUsername}{data.Total}{_armOneServiceConfigManager.ReturnUrl}{_armOneServiceConfigManager.ArmMacKey}";
-                data.HashedData = _generatorsManager.HashedValues(toHashed);
+
+                
+                //var toHashed =
+                //    $"{data.TransactionNo}{_armOneServiceConfigManager.ArmServiceUsername}{data.Total}{_armOneServiceConfigManager.ReturnUrl}{_armOneServiceConfigManager.ArmMacKey}";
+                //data.HashedData = _generatorsManager.HashedValues(toHashed);
+
                 data.VendorUserName = _generatorsManager.DecryptCredentials(_armOneServiceConfigManager.ArmServiceUsername);
+                
                 data.ReturnUr = _armOneServiceConfigManager.ReturnUrl;
+
                 #endregion fill form for payment
 
                 data.Person = _personManager.Get(s => s.Email.Equals(User.Identity.Name))
                     .SingleOrDefault();
+
+                data.TransactionParameter = _generatorsManager.GenerateTransactionParameter(Convert.ToInt32(data.Person.MemberShipNo));
+
+                var tobeHashed = String.Concat(data.TransactionParameter, data.VendorUserName, data.Total.ToString().Replace(".", ""), _armOneServiceConfigManager.ReturnUrl, _armOneServiceConfigManager.ArmMacKey);
+                data.HashedData = _generatorsManager.HashedValues(tobeHashed);
             }
 
             ShowCartInformation();

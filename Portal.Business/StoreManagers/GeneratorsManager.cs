@@ -56,13 +56,20 @@ namespace Portal.Business.StoreManagers
             return cart;
         }
 
+        public string GenerateTransactionParameter(int key)
+        {
+            return string.Format("{0}{1:N}", key, Guid.NewGuid());
+        }
+
         public string ArmXmlData(List<Transactional> datapayload)
         {
             var xml = new StringBuilder();
             xml.Append("<paymentitemxml><payment_items>");
             foreach (var item in datapayload)
             {
-                var parts = $"<payment_item><item_code>{item.Product.Name}</item_code><item_amt>{item.Amount}</item_amt></payment_item>";
+                var formattedAmount = item.Amount.ToString().Replace(".", "");
+                var amountInDecimal = Convert.ToDecimal(formattedAmount);
+                var parts = $"<payment_item><item_code>{item.Product.Name}</item_code><item_amt>{amountInDecimal}</item_amt></payment_item>";
                 xml.Append(parts);
             }
 
