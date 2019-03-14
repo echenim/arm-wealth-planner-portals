@@ -62,7 +62,7 @@ namespace Portal.Business.StoreManagers
             xml.Append("<paymentitemxml><payment_items>");
             foreach (var item in datapayload)
             {
-                var parts = $"<payment_item><item_code>{item.Product.CodeName}</item_code><item_amt>{item.Amount}</item_amt></payment_item>";
+                var parts = $"<payment_item><item_code>{item.Product.Name}</item_code><item_amt>{item.Amount}</item_amt></payment_item>";
                 xml.Append(parts);
             }
 
@@ -70,22 +70,19 @@ namespace Portal.Business.StoreManagers
             return xml.ToString();
         }
 
+        public static byte[] GetHash(string inputString)
+        {
+            HashAlgorithm algorithm = SHA512.Create();
+            return algorithm.ComputeHash(Encoding.UTF8.GetBytes(inputString));
+        }
+
         public string HashedValues(string toHashed)
         {
-            // Create a SHA256
-            using (var sha256Hash = SHA256.Create())
-            {
-                // ComputeHash - returns byte array
-                byte[] bytes = sha256Hash.ComputeHash(Encoding.UTF8.GetBytes(toHashed));
+            var sb = new StringBuilder();
+            foreach (var b in GetHash(toHashed))
+                sb.Append(b.ToString("x2"));
 
-                // Convert byte array to a string
-                StringBuilder builder = new StringBuilder();
-                foreach (var t in bytes)
-                {
-                    builder.Append(t.ToString("x2"));
-                }
-                return builder.ToString();
-            }
+            return sb.ToString();
         }
 
         private static string getString(byte[] b)

@@ -276,23 +276,29 @@
                         </footer><span class="brk-checkout-order__after"></span>
                     </div>
                     <div class="modal-footer">
-                        <form id="paymentform" name="submit2aggregator_form" action="@Model.PaymentGateway" target="_self" method="post">
-                            @*<form method="get" asp-action="Process" asp-controller="CartAndPayment">*@
-                            <input type="hidden" name="arm_vendor_username" value="gtbank" />
-                            <input type="hidden" name="arm_tranx_id" value="@Model.TransactionNo" />
-                            <input type="hidden" name="arm_cust_id" value="@Model.MemberUniqueIdentifier" />
-                            <input type="hidden" name="arm_cust_name" value="@Model.FullName" />
-                            <input type="hidden" name="arm_tranx_amt" value="@Model.Total" />
-                            <input type="hidden" name="arm_tranx_curr" value="566" />
-                            <input type="hidden" name="arm_tranx_noti_url" value="@Model.ReturnUr" />
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <form id="paymentform" name="submit2aggregator_form" action="@Model.PaymentGateway" target="_self" method="post">
+                                @*<form method="get" asp-action="Process" asp-controller="CartAndPayment">*@
+                                <input type="hidden" name="arm_vendor_username" value="@Model.VendorUserName" />
+                                <input type="hidden" name="arm_tranx_id" value="@Model.TransactionNo" />
+                                <input type="hidden" name="arm_cust_id" value="@Model.Person.MemberShipNo" />
+                                <input type="hidden" name="arm_cust_name" value="@Model.Person.FirstName @Model.Person.LastName" />
+                                <input type="hidden" name="arm_tranx_amt" value="@Model.PTotal" />
+                                <input type="hidden" name="arm_tranx_curr" value="566" />
+                                <input type="hidden" name="arm_tranx_noti_url" value="@Model.ReturnUr" />
+                                <input type="hidden" name="arm_xml_data" value="@Html.Raw(@Model.XmlPayload)" />
+                                <input type="hidden" name="arm_hash" value="@Model.HashedData" />
+                                <input type="hidden" name="arm_payment_params" value="@Model.TransactionNo" />
+                                <button class="btn btn-inside-out btn-lg  btn-shadow pl-50 pr-50" data-brk-library="component__button" data-toggle="modal" data-target="#myModal">
+                                    <span class="before">To Payment</span><span class="text">To Payment</span><span class="after">To Payment</span>
+                                </button>
+                                <button data-dismiss="modal" class="btn btn-inside-out btn-lg  btn-shadow pl-50 pr-50" data-brk-library="component__button" data-toggle="modal" data-target="#myModal">
+                                    <span class="before">Close</span><span class="text">Close</span><span class="after">Close</span>
+                                </button>
+                            </form>
+                        }
 
-                            <button class="btn btn-inside-out btn-lg  btn-shadow pl-50 pr-50" data-brk-library="component__button" data-toggle="modal" data-target="#myModal">
-                                <span class="before">To Payment</span><span class="text">To Payment</span><span class="after">To Payment</span>
-                            </button>
-                            <button data-dismiss="modal" class="btn btn-inside-out btn-lg  btn-shadow pl-50 pr-50" data-brk-library="component__button" data-toggle="modal" data-target="#myModal">
-                                <span class="before">Close</span><span class="text">Close</span><span class="after">Close</span>
-                            </button>
-                        </form>
                     </div>
                 </div>
             </div>
