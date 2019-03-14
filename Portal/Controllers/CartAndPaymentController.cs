@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
 using Portal.Business.Contracts;
+using Portal.Business.StoreManagers;
 using Portal.Business.ViewModels;
 using Portal.Domain.Models;
 using Portal.Domain.Models.Identity;
@@ -47,6 +48,7 @@ namespace Portal.Controllers
             IPasswordHasher<ApplicationUser> passwordHasher,
             IHostingEnvironment hostingEnvironment,
             IArmOneManager armOneManager,
+            IArmOneServiceConfigManager armOneServiceConfigManager,
 
             IMemoryCache cache)
         {
