@@ -41,14 +41,13 @@ namespace Portal.Controllers
 
         public CartAndPaymentController(
             ICartManager cartManager,
-            IPersonManager personManager, 
+            IPersonManager personManager,
             IGeneratorsManager generatorsManager,
             IUserService userService,
             UserManager<ApplicationUser> userManager,
             RoleManager<ApplicationRole> roleManager,
             SignInManager<ApplicationUser> signInManager,
             IPasswordHasher<ApplicationUser> passwordHasher,
-            IArmOneServiceConfigManager armOneServiceConfigManager,
             IHostingEnvironment hostingEnvironment,
             IArmOneManager armOneManager,
             IArmOneServiceConfigManager armOneServiceConfigManager,
@@ -89,7 +88,7 @@ namespace Portal.Controllers
         public IActionResult CheckOut()
         {
             var _user = _cache.Get<AuthenticateResponse>("ArmUser");
-            var currentSession = _generatorsManager.UserSessionManagerForTrackingActivities(); 
+            var currentSession = _generatorsManager.UserSessionManagerForTrackingActivities();
 
             ViewBag.Name = currentSession;
             //check if the user is signed by calling user.identity.name
@@ -98,7 +97,7 @@ namespace Portal.Controllers
 
             //fetch curent selected products
             var data = _cartManager.GetCart(s => s.ItemOwner.ToLower().Equals(filter.ToLower())
-                              && s.OrderAndPurchaseStatus.Equals("InCart")); 
+                              && s.OrderAndPurchaseStatus.Equals("InCart"));
 
             var trnx = (from u in data.CartCollection
                         select u.TransactionNo).Distinct();
@@ -110,7 +109,7 @@ namespace Portal.Controllers
 
             //get customer information if signed in
             var username = User.Identity.Name;
-           
+
             if (!string.IsNullOrEmpty(username))
             {
                 #region fill form for payment
@@ -121,13 +120,12 @@ namespace Portal.Controllers
                 data.PaymentGateway = $"{_armOneServiceConfigManager.ArmAggregatorBaseUrl}/Aggregator2/Payment";
                 data.XmlPayload = _generatorsManager.ArmXmlData(data.CartCollection.ToList());
 
-                
                 //var toHashed =
                 //    $"{data.TransactionNo}{_armOneServiceConfigManager.ArmServiceUsername}{data.Total}{_armOneServiceConfigManager.ReturnUrl}{_armOneServiceConfigManager.ArmMacKey}";
                 //data.HashedData = _generatorsManager.HashedValues(toHashed);
 
                 data.VendorUserName = _generatorsManager.DecryptCredentials(_armOneServiceConfigManager.ArmServiceUsername);
-                
+
                 data.ReturnUr = _armOneServiceConfigManager.ReturnUrl;
 
                 #endregion fill form for payment

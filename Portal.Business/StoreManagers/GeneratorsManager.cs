@@ -67,9 +67,7 @@ namespace Portal.Business.StoreManagers
             xml.Append("<paymentitemxml><payment_items>");
             foreach (var item in datapayload)
             {
-                var formattedAmount = item.Amount.ToString().Replace(".", "");
-                var amountInDecimal = Convert.ToDecimal(formattedAmount);
-                var parts = $"<payment_item><item_code>{item.Product.Name}</item_code><item_amt>{amountInDecimal}</item_amt></payment_item>";
+                var parts = $"<payment_item><item_code>{item.Product.Name}</item_code><item_amt>{item.Amount.ToString().Replace(".", "")}</item_amt></payment_item>";
                 xml.Append(parts);
             }
 
