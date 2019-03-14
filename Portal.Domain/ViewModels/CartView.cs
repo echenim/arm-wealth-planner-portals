@@ -23,6 +23,7 @@ namespace Portal.Domain.ViewModels
         public string VendorUserName { get; set; }
         public string ReturnUr { get; set; }
         public decimal Total => SubTotal - Discount;
+        public string PTotal => Total.ToString().Replace(".", "");
 
         #region signin
 
