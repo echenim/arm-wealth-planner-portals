@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
+using NPOI.OpenXmlFormats.Wordprocessing;
 using Portal.Business.Contracts;
 using Portal.Business.StoreManagers;
 using Portal.Business.ViewModels;
@@ -41,14 +42,13 @@ namespace Portal.Controllers
 
         public CartAndPaymentController(
             ICartManager cartManager,
-            IPersonManager personManager, 
+            IPersonManager personManager,
             IGeneratorsManager generatorsManager,
             IUserService userService,
             UserManager<ApplicationUser> userManager,
             RoleManager<ApplicationRole> roleManager,
             SignInManager<ApplicationUser> signInManager,
             IPasswordHasher<ApplicationUser> passwordHasher,
-            IArmOneServiceConfigManager armOneServiceConfigManager,
             IHostingEnvironment hostingEnvironment,
             IArmOneManager armOneManager,
 
@@ -88,7 +88,7 @@ namespace Portal.Controllers
         public IActionResult CheckOut()
         {
             var _user = _cache.Get<AuthenticateResponse>("ArmUser");
-            var currentSession = _generatorsManager.UserSessionManagerForTrackingActivities(); 
+            var currentSession = _generatorsManager.UserSessionManagerForTrackingActivities();
 
             ViewBag.Name = currentSession;
             //check if the user is signed by calling user.identity.name
@@ -97,7 +97,7 @@ namespace Portal.Controllers
 
             //fetch curent selected products
             var data = _cartManager.GetCart(s => s.ItemOwner.ToLower().Equals(filter.ToLower())
-                              && s.OrderAndPurchaseStatus.Equals("InCart")); 
+                              && s.OrderAndPurchaseStatus.Equals("InCart"));
 
             var trnx = (from u in data.CartCollection
                         select u.TransactionNo).Distinct();
@@ -109,7 +109,7 @@ namespace Portal.Controllers
 
             //get customer information if signed in
             var username = User.Identity.Name;
-           
+
             if (!string.IsNullOrEmpty(username))
             {
                 #region fill form for payment
@@ -120,8 +120,12 @@ namespace Portal.Controllers
                 data.PaymentGateway = $"{_armOneServiceConfigManager.ArmAggregatorBaseUrl}/Aggregator2/Payment";
                 data.XmlPayload = _generatorsManager.ArmXmlData(data.CartCollection.ToList());
 
+                //var toHashed =
+                //    $"{data.TransactionNo}{_armOneServiceConfigManager.ArmServiceUsername}{data.Total}{_armOneServiceConfigManager.ReturnUrl}{_armOneServiceConfigManager.ArmMacKey}";
+                //data.HashedData = _generatorsManager.HashedValues(toHashed);
+
                 data.VendorUserName = _generatorsManager.DecryptCredentials(_armOneServiceConfigManager.ArmServiceUsername);
-                
+
                 data.ReturnUr = _armOneServiceConfigManager.ReturnUrl;
 
                 #endregion fill form for payment
@@ -129,8 +133,7 @@ namespace Portal.Controllers
                 data.Person = _personManager.Get(s => s.Email.Equals(User.Identity.Name))
                     .SingleOrDefault();
 
-                //var key = Convert.ToInt32(data.Person.MemberShipNo) ?? Convert.ToInt32(data.TransactionNo);
-                data.TransactionParameter = _generatorsManager.GenerateTransactionParameter(Convert.ToInt32(data.Person.MemberShipNo));
+                data.TransactionParameter = _generatorsManager.GenerateTransactionParameter(data.TransactionNo);
 
                 var tobeHashed = String.Concat(data.TransactionParameter, data.VendorUserName, data.Total.ToString().Replace(".", ""), _armOneServiceConfigManager.ReturnUrl, _armOneServiceConfigManager.ArmMacKey);
                 data.HashedData = _generatorsManager.HashedValues(tobeHashed);
@@ -141,27 +144,41 @@ namespace Portal.Controllers
             return View("_checkout", data);
         }
 
-        [HttpGet]
-        public IActionResult Process(string trnxnumber, string amount)
+        [HttpPost]
+        [AllowAnonymous]
+        [IgnoreAntiforgeryToken(Order = 1001)]
+        public IActionResult Processing(IFormCollection files, string au)
         {
-            if (!string.IsNullOrEmpty(trnxnumber))
+            var trResponse = files;
+            var transactionRef = trResponse["arm_txnref"];
+            var trStatusCode = trResponse["arm_tranx_status_code"];
+            var trPayRef = trResponse["arm_payref"];
+            var trAmount = trResponse["arm_tranx_amt"];
+            var trStatusMsg = trResponse["arm_tranx_status_msg"];
+            var trCurrency = trResponse["arm_tranx_curr"];
+            var trCustId = trResponse["arm_cust_id"];
+            var trPaymentParams = trResponse["arm_payment_params"];
+
+            if (!User.Identity.IsAuthenticated)
             {
-                var trn_number = long.Parse(trnxnumber);
-                var orderAndPurchaseStatus = "Succeed";
-                _cartManager.UpdateStatus(trnxnumber, orderAndPurchaseStatus);
+                var result = _personManager.Get(s => s.Email.Equals(trCustId) || s.MemberShipNo.Equals(trCustId)).SingleOrDefault();
+                if (result != null)
+                {
+                    var rs = _userManager.Users.Where(s => s.UserName == result.Email);
+                }
             }
 
-            return RedirectToAction("Index", "Dashboard", new { area = "Client" });
-        }
-
-        public IActionResult PaymentStatus()
-        {
-            return View();
-        }
-
-        public IActionResult ExpressinOfInterest()
-        {
-            return View();
+            ShowCartInformation();
+            var tranno = transactionRef.ToString().Replace("ARM", "").Trim();
+            if (trStatusCode.Equals("00"))
+            {
+                UpdateStatus(tranno, "Succeed");
+                return RedirectToAction("Index", "Dashboard", new { area = "Client" });
+            }
+            UpdateStatus(tranno, "Failed");
+            ViewBag.Status = trStatusCode;
+            ViewBag.Message = trStatusMsg;
+            return View("_process");
         }
 
         #region cartbasket
@@ -182,6 +199,15 @@ namespace Portal.Controllers
         }
 
         #endregion cartbasket
+
+        #region update transaction
+
+        private void UpdateStatus(string transactionno, string status)
+        {
+            _cartManager.UpdateStatus(transactionno, status);
+        }
+
+        #endregion update transaction
 
         #region
 

@@ -33,6 +33,15 @@ namespace Portal.Controllers
             return View(data);
         }
 
+        public IActionResult Me()
+        {
+            string base64Decoded = "100000003";
+            string base64Encoded;
+            byte[] data = System.Text.ASCIIEncoding.ASCII.GetBytes(base64Decoded);
+            base64Encoded = System.Convert.ToBase64String(data);
+            return View();
+        }
+
         #region cartbasket
 
         public void ShowCartInformation()
@@ -40,7 +49,7 @@ namespace Portal.Controllers
             #region available cart
 
             var currentSession = _generatorsManager.UserSessionManagerForTrackingActivities();
-            var cartView = _generatorsManager.ViewCart(User.Identity.Name); 
+            var cartView = _generatorsManager.ViewCart(User.Identity.Name);
 
             ViewBag.Name = currentSession;
 

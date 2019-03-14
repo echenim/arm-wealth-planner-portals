@@ -289,7 +289,7 @@
                                 <input type="hidden" name="arm_tranx_noti_url" value="@Model.ReturnUr" />
                                 <input type="hidden" name="arm_xml_data" value="@Html.Raw(@Model.XmlPayload)" />
                                 <input type="hidden" name="arm_hash" value="@Model.HashedData" />
-                                <input type="hidden" name="arm_payment_params" value="@Model.TransactionParameter" />
+                                <input type="hidden" name="arm_payment_params" value="@string.Format("{0}",@Model.TransactionParameter)" />
                                 <button class="btn btn-inside-out btn-lg  btn-shadow pl-50 pr-50" data-brk-library="component__button" data-toggle="modal" data-target="#myModal">
                                     <span class="before">To Payment</span><span class="text">To Payment</span><span class="after">To Payment</span>
                                 </button>
