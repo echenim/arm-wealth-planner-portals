@@ -56,9 +56,9 @@ namespace Portal.Business.StoreManagers
             return cart;
         }
 
-        public string GenerateTransactionParameter(int key)
+        public string GenerateTransactionParameter(string trnxNo)
         {
-            return string.Format("{0}{1:N}", key, Guid.NewGuid());
+            return $"ARM{trnxNo}ARM";
         }
 
         public string ArmXmlData(List<Transactional> datapayload)

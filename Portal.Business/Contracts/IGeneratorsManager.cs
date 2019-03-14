@@ -18,6 +18,6 @@ namespace Portal.Business.Contracts
 
         string DecryptCredentials(string credentials);
 
-        string GenerateTransactionParameter(int key);
+        string GenerateTransactionParameter(string trnxNo);
     }
 }
