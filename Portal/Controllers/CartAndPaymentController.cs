@@ -119,11 +119,6 @@ namespace Portal.Controllers
                 data.PaymentGateway = $"{_armOneServiceConfigManager.ArmAggregatorBaseUrl}/Aggregator2/Payment";
                 data.XmlPayload = _generatorsManager.ArmXmlData(data.CartCollection.ToList());
 
-                
-                //var toHashed =
-                //    $"{data.TransactionNo}{_armOneServiceConfigManager.ArmServiceUsername}{data.Total}{_armOneServiceConfigManager.ReturnUrl}{_armOneServiceConfigManager.ArmMacKey}";
-                //data.HashedData = _generatorsManager.HashedValues(toHashed);
-
                 data.VendorUserName = _generatorsManager.DecryptCredentials(_armOneServiceConfigManager.ArmServiceUsername);
                 
                 data.ReturnUr = _armOneServiceConfigManager.ReturnUrl;
