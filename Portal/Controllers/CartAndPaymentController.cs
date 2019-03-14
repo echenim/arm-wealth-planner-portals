@@ -51,7 +51,6 @@ namespace Portal.Controllers
             IArmOneServiceConfigManager armOneServiceConfigManager,
             IHostingEnvironment hostingEnvironment,
             IArmOneManager armOneManager,
-            IArmOneServiceConfigManager armOneServiceConfigManager,
 
             IMemoryCache cache)
         {
@@ -130,6 +129,7 @@ namespace Portal.Controllers
                 data.Person = _personManager.Get(s => s.Email.Equals(User.Identity.Name))
                     .SingleOrDefault();
 
+                //var key = Convert.ToInt32(data.Person.MemberShipNo) ?? Convert.ToInt32(data.TransactionNo);
                 data.TransactionParameter = _generatorsManager.GenerateTransactionParameter(Convert.ToInt32(data.Person.MemberShipNo));
 
                 var tobeHashed = String.Concat(data.TransactionParameter, data.VendorUserName, data.Total.ToString().Replace(".", ""), _armOneServiceConfigManager.ReturnUrl, _armOneServiceConfigManager.ArmMacKey);
