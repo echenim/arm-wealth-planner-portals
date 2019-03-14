@@ -1,0 +1,356 @@
+2019-03-14T10:43:42.5675700+01:00 0HLL8C63FA956:00000001 [INF] Request starting HTTP/1.1 GET https://localhost:5001/   (ca22a1cb)
+2019-03-14T10:43:44.8838968+01:00 0HLL8C63FA956:00000001 [INF] Executing endpoint '"Portal.Controllers.HomeController.Index (Portal)"' (500cc934)
+2019-03-14T10:43:45.8296872+01:00 0HLL8C63FA956:00000001 [INF] Route matched with "{action = \"Index\", controller = \"Home\", area = \"\"}". Executing action "Portal.Controllers.HomeController.Index (Portal)" (a44c0341)
+2019-03-14T10:43:54.3400600+01:00 0HLL8C63FA956:00000001 [INF] Executing action method "Portal.Controllers.HomeController.Index (Portal)" - Validation state: Valid (dad538d7)
+2019-03-14T10:43:57.7733282+01:00 0HLL8C63FA956:00000001 [WRN] No type was specified for the decimal column '"AmountApproved"' on entity type '"DDebit"'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values using 'HasColumnType()'. (3a0db05f)
+2019-03-14T10:43:57.7812955+01:00 0HLL8C63FA956:00000001 [WRN] No type was specified for the decimal column '"DebitAmount"' on entity type '"DDebit"'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values using 'HasColumnType()'. (3a0db05f)
+2019-03-14T10:43:57.7840985+01:00 0HLL8C63FA956:00000001 [WRN] No type was specified for the decimal column '"ArmDdAmt"' on entity type '"DirectDebitTransactions"'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values using 'HasColumnType()'. (3a0db05f)
+2019-03-14T10:43:57.7974750+01:00 0HLL8C63FA956:00000001 [WRN] No type was specified for the decimal column '"TransactionAmount"' on entity type '"PaymentTransactionStatus"'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values using 'HasColumnType()'. (3a0db05f)
+2019-03-14T10:43:57.8002889+01:00 0HLL8C63FA956:00000001 [WRN] No type was specified for the decimal column '"Amount"' on entity type '"PurchaseOrders"'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values using 'HasColumnType()'. (3a0db05f)
+2019-03-14T10:43:57.8106286+01:00 0HLL8C63FA956:00000001 [WRN] No type was specified for the decimal column '"Amount"' on entity type '"Redemption"'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values using 'HasColumnType()'. (3a0db05f)
+2019-03-14T10:43:58.7382989+01:00 0HLL8C63FA956:00000001 [INF] Entity Framework Core "2.2.1-servicing-10028" initialized '"ApplicationDbContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None" (9958f5bb)
+2019-03-14T10:43:59.4679911+01:00 0HLL8C63FA956:00000001 [INF] Accessing expired session, Key:"cd14abe6-094d-8c57-4c7b-a3a078599e0a" (08c5a9e7)
+2019-03-14T10:44:04.3282688+01:00 0HLL8C63FA956:00000001 [INF] Executed DbCommand ("145"ms) [Parameters=["@p0='?' (Size = 4000)"], CommandType='Text', CommandTimeout='30']"
+""SET NOCOUNT ON;
+DECLARE @inserted0 TABLE ([Id] bigint, [_Position] [int]);
+MERGE [TransQIdenfier] USING (
+VALUES (@p0, 0)) AS i ([Owner], _Position) ON 1=0
+WHEN NOT MATCHED THEN
+INSERT ([Owner])
+VALUES (i.[Owner])
+OUTPUT INSERTED.[Id], i._Position
+INTO @inserted0;
+
+SELECT [t].[Id] FROM [TransQIdenfier] t
+INNER JOIN @inserted0 i ON ([t].[Id] = [i].[Id])
+ORDER BY [i].[_Position];" (0723d8ff)
+2019-03-14T10:44:10.0424618+01:00 0HLL8C63FA956:00000001 [INF] Executed DbCommand ("32"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [s].[Id], [s].[Amount], [s].[ItemOwner], [s].[OrderAndPurchaseStatus], [s].[OrderDate], [s].[ProductId], [s].[TransactionNo], [s.Product].[Id], [s.Product].[Description], [s.Product].[Image], [s.Product].[IsActive], [s.Product].[IsVouchering], [s.Product].[Name], [s.Product].[ProductCategoryId], [s.Product].[ProductTypes], [s.Product].[StartFrom], [s.Product.ProductCategory].[Id], [s.Product.ProductCategory].[Name]
+FROM [Transactional] AS [s]
+INNER JOIN [Products] AS [s.Product] ON [s].[ProductId] = [s.Product].[Id]
+INNER JOIN [ProductCategory] AS [s.Product.ProductCategory] ON [s.Product].[ProductCategoryId] = [s.Product.ProductCategory].[Id]" (0723d8ff)
+2019-03-14T10:44:11.0057117+01:00 0HLL8C63FA956:00000001 [INF] Executed action method "Portal.Controllers.HomeController.Index (Portal)", returned result "Microsoft.AspNetCore.Mvc.ViewResult" in 16644.2877ms. (50a9e262)
+2019-03-14T10:44:11.8707999+01:00 0HLL8C63FA956:00000001 [INF] Executing ViewResult, running view "Index". (c83d0e25)
+2019-03-14T10:44:15.0546372+01:00 0HLL8C63FA956:00000001 [INF] Executed DbCommand ("87"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [s].[Id], [s].[Description], [s].[Image], [s].[IsActive], [s].[IsVouchering], [s].[Name], [s].[ProductCategoryId], [s].[ProductTypes], [s].[StartFrom], [s.ProductCategory].[Id], [s.ProductCategory].[Name]
+FROM [Products] AS [s]
+INNER JOIN [ProductCategory] AS [s.ProductCategory] ON [s].[ProductCategoryId] = [s.ProductCategory].[Id]
+ORDER BY [s].[Name], [s].[Id]" (0723d8ff)
+2019-03-14T10:44:15.4884125+01:00 0HLL8C63FA956:00000001 [INF] Executed DbCommand ("369"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [s.WhatYouNeedToKNowAboutThisProducts].[Id], [s.WhatYouNeedToKNowAboutThisProducts].[Description], [s.WhatYouNeedToKNowAboutThisProducts].[Hierarchy], [s.WhatYouNeedToKNowAboutThisProducts].[OnCreated], [s.WhatYouNeedToKNowAboutThisProducts].[ProductId], [s.WhatYouNeedToKNowAboutThisProducts].[Sections], [s.WhatYouNeedToKNowAboutThisProducts].[Title]
+FROM [WhatYouNeedToKNowAboutThisProduct] AS [s.WhatYouNeedToKNowAboutThisProducts]
+INNER JOIN (
+    SELECT DISTINCT [s0].[Id], [s0].[Name]
+    FROM [Products] AS [s0]
+    INNER JOIN [ProductCategory] AS [s.ProductCategory0] ON [s0].[ProductCategoryId] = [s.ProductCategory0].[Id]
+) AS [t] ON [s.WhatYouNeedToKNowAboutThisProducts].[ProductId] = [t].[Id]
+ORDER BY [t].[Name], [t].[Id]" (0723d8ff)
+2019-03-14T10:44:15.5257190+01:00 0HLL8C63FA956:00000001 [INF] Executed DbCommand ("18"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [s.ProductInvestmentInfos].[Id], [s.ProductInvestmentInfos].[Abs], [s.ProductInvestmentInfos].[OnCreated], [s.ProductInvestmentInfos].[ProductId], [s.ProductInvestmentInfos].[RangOrCost], [s.ProductInvestmentInfos].[Sections]
+FROM [ProductInvestmentInfo] AS [s.ProductInvestmentInfos]
+INNER JOIN (
+    SELECT DISTINCT [s1].[Id], [s1].[Name]
+    FROM [Products] AS [s1]
+    INNER JOIN [ProductCategory] AS [s.ProductCategory1] ON [s1].[ProductCategoryId] = [s.ProductCategory1].[Id]
+) AS [t0] ON [s.ProductInvestmentInfos].[ProductId] = [t0].[Id]
+ORDER BY [t0].[Name], [t0].[Id]" (0723d8ff)
+2019-03-14T10:44:15.8624937+01:00 0HLL8C63FA956:00000001 [INF] Executed DbCommand ("26"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [s].[Id], [s].[Description], [s].[Image], [s].[IsActive], [s].[IsVouchering], [s].[Name], [s].[ProductCategoryId], [s].[ProductTypes], [s].[StartFrom], [s.ProductCategory].[Id], [s.ProductCategory].[Name]
+FROM [Products] AS [s]
+INNER JOIN [ProductCategory] AS [s.ProductCategory] ON [s].[ProductCategoryId] = [s.ProductCategory].[Id]
+ORDER BY [s].[Name], [s].[Id]" (0723d8ff)
+2019-03-14T10:44:15.8929149+01:00 0HLL8C63FA956:00000001 [INF] Executed DbCommand ("20"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [s.WhatYouNeedToKNowAboutThisProducts].[Id], [s.WhatYouNeedToKNowAboutThisProducts].[Description], [s.WhatYouNeedToKNowAboutThisProducts].[Hierarchy], [s.WhatYouNeedToKNowAboutThisProducts].[OnCreated], [s.WhatYouNeedToKNowAboutThisProducts].[ProductId], [s.WhatYouNeedToKNowAboutThisProducts].[Sections], [s.WhatYouNeedToKNowAboutThisProducts].[Title]
+FROM [WhatYouNeedToKNowAboutThisProduct] AS [s.WhatYouNeedToKNowAboutThisProducts]
+INNER JOIN (
+    SELECT DISTINCT [s0].[Id], [s0].[Name]
+    FROM [Products] AS [s0]
+    INNER JOIN [ProductCategory] AS [s.ProductCategory0] ON [s0].[ProductCategoryId] = [s.ProductCategory0].[Id]
+) AS [t] ON [s.WhatYouNeedToKNowAboutThisProducts].[ProductId] = [t].[Id]
+ORDER BY [t].[Name], [t].[Id]" (0723d8ff)
+2019-03-14T10:44:15.9305921+01:00 0HLL8C63FA956:00000001 [INF] Executed DbCommand ("16"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [s.ProductInvestmentInfos].[Id], [s.ProductInvestmentInfos].[Abs], [s.ProductInvestmentInfos].[OnCreated], [s.ProductInvestmentInfos].[ProductId], [s.ProductInvestmentInfos].[RangOrCost], [s.ProductInvestmentInfos].[Sections]
+FROM [ProductInvestmentInfo] AS [s.ProductInvestmentInfos]
+INNER JOIN (
+    SELECT DISTINCT [s1].[Id], [s1].[Name]
+    FROM [Products] AS [s1]
+    INNER JOIN [ProductCategory] AS [s.ProductCategory1] ON [s1].[ProductCategoryId] = [s.ProductCategory1].[Id]
+) AS [t0] ON [s.ProductInvestmentInfos].[ProductId] = [t0].[Id]
+ORDER BY [t0].[Name], [t0].[Id]" (0723d8ff)
+2019-03-14T10:44:15.9736232+01:00 0HLL8C63FA956:00000001 [INF] Executed DbCommand ("27"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [s].[Id], [s].[Description], [s].[Image], [s].[IsActive], [s].[IsVouchering], [s].[Name], [s].[ProductCategoryId], [s].[ProductTypes], [s].[StartFrom], [s.ProductCategory].[Id], [s.ProductCategory].[Name]
+FROM [Products] AS [s]
+INNER JOIN [ProductCategory] AS [s.ProductCategory] ON [s].[ProductCategoryId] = [s.ProductCategory].[Id]
+ORDER BY [s].[Name], [s].[Id]" (0723d8ff)
+2019-03-14T10:44:16.0002755+01:00 0HLL8C63FA956:00000001 [INF] Executed DbCommand ("21"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [s.WhatYouNeedToKNowAboutThisProducts].[Id], [s.WhatYouNeedToKNowAboutThisProducts].[Description], [s.WhatYouNeedToKNowAboutThisProducts].[Hierarchy], [s.WhatYouNeedToKNowAboutThisProducts].[OnCreated], [s.WhatYouNeedToKNowAboutThisProducts].[ProductId], [s.WhatYouNeedToKNowAboutThisProducts].[Sections], [s.WhatYouNeedToKNowAboutThisProducts].[Title]
+FROM [WhatYouNeedToKNowAboutThisProduct] AS [s.WhatYouNeedToKNowAboutThisProducts]
+INNER JOIN (
+    SELECT DISTINCT [s0].[Id], [s0].[Name]
+    FROM [Products] AS [s0]
+    INNER JOIN [ProductCategory] AS [s.ProductCategory0] ON [s0].[ProductCategoryId] = [s.ProductCategory0].[Id]
+) AS [t] ON [s.WhatYouNeedToKNowAboutThisProducts].[ProductId] = [t].[Id]
+ORDER BY [t].[Name], [t].[Id]" (0723d8ff)
+2019-03-14T10:44:16.0344108+01:00 0HLL8C63FA956:00000001 [INF] Executed DbCommand ("28"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [s.ProductInvestmentInfos].[Id], [s.ProductInvestmentInfos].[Abs], [s.ProductInvestmentInfos].[OnCreated], [s.ProductInvestmentInfos].[ProductId], [s.ProductInvestmentInfos].[RangOrCost], [s.ProductInvestmentInfos].[Sections]
+FROM [ProductInvestmentInfo] AS [s.ProductInvestmentInfos]
+INNER JOIN (
+    SELECT DISTINCT [s1].[Id], [s1].[Name]
+    FROM [Products] AS [s1]
+    INNER JOIN [ProductCategory] AS [s.ProductCategory1] ON [s1].[ProductCategoryId] = [s.ProductCategory1].[Id]
+) AS [t0] ON [s.ProductInvestmentInfos].[ProductId] = [t0].[Id]
+ORDER BY [t0].[Name], [t0].[Id]" (0723d8ff)
+2019-03-14T10:44:16.0719987+01:00 0HLL8C63FA956:00000001 [INF] Executed DbCommand ("23"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [s].[Id], [s].[Description], [s].[Image], [s].[IsActive], [s].[IsVouchering], [s].[Name], [s].[ProductCategoryId], [s].[ProductTypes], [s].[StartFrom], [s.ProductCategory].[Id], [s.ProductCategory].[Name]
+FROM [Products] AS [s]
+INNER JOIN [ProductCategory] AS [s.ProductCategory] ON [s].[ProductCategoryId] = [s.ProductCategory].[Id]
+ORDER BY [s].[Name], [s].[Id]" (0723d8ff)
+2019-03-14T10:44:16.0966642+01:00 0HLL8C63FA956:00000001 [INF] Executed DbCommand ("20"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [s.WhatYouNeedToKNowAboutThisProducts].[Id], [s.WhatYouNeedToKNowAboutThisProducts].[Description], [s.WhatYouNeedToKNowAboutThisProducts].[Hierarchy], [s.WhatYouNeedToKNowAboutThisProducts].[OnCreated], [s.WhatYouNeedToKNowAboutThisProducts].[ProductId], [s.WhatYouNeedToKNowAboutThisProducts].[Sections], [s.WhatYouNeedToKNowAboutThisProducts].[Title]
+FROM [WhatYouNeedToKNowAboutThisProduct] AS [s.WhatYouNeedToKNowAboutThisProducts]
+INNER JOIN (
+    SELECT DISTINCT [s0].[Id], [s0].[Name]
+    FROM [Products] AS [s0]
+    INNER JOIN [ProductCategory] AS [s.ProductCategory0] ON [s0].[ProductCategoryId] = [s.ProductCategory0].[Id]
+) AS [t] ON [s.WhatYouNeedToKNowAboutThisProducts].[ProductId] = [t].[Id]
+ORDER BY [t].[Name], [t].[Id]" (0723d8ff)
+2019-03-14T10:44:16.1255305+01:00 0HLL8C63FA956:00000001 [INF] Executed DbCommand ("15"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [s.ProductInvestmentInfos].[Id], [s.ProductInvestmentInfos].[Abs], [s.ProductInvestmentInfos].[OnCreated], [s.ProductInvestmentInfos].[ProductId], [s.ProductInvestmentInfos].[RangOrCost], [s.ProductInvestmentInfos].[Sections]
+FROM [ProductInvestmentInfo] AS [s.ProductInvestmentInfos]
+INNER JOIN (
+    SELECT DISTINCT [s1].[Id], [s1].[Name]
+    FROM [Products] AS [s1]
+    INNER JOIN [ProductCategory] AS [s.ProductCategory1] ON [s1].[ProductCategoryId] = [s.ProductCategory1].[Id]
+) AS [t0] ON [s.ProductInvestmentInfos].[ProductId] = [t0].[Id]
+ORDER BY [t0].[Name], [t0].[Id]" (0723d8ff)
+2019-03-14T10:44:16.2488818+01:00 0HLL8C63FA956:00000001 [INF] Executed DbCommand ("51"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [s].[Id], [s].[Description], [s].[Image], [s].[IsActive], [s].[IsVouchering], [s].[Name], [s].[ProductCategoryId], [s].[ProductTypes], [s].[StartFrom], [s.ProductCategory].[Id], [s.ProductCategory].[Name]
+FROM [Products] AS [s]
+INNER JOIN [ProductCategory] AS [s.ProductCategory] ON [s].[ProductCategoryId] = [s.ProductCategory].[Id]
+ORDER BY [s].[Name], [s].[Id]" (0723d8ff)
+2019-03-14T10:44:16.3055159+01:00 0HLL8C63FA956:00000001 [INF] Executed DbCommand ("30"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [s.WhatYouNeedToKNowAboutThisProducts].[Id], [s.WhatYouNeedToKNowAboutThisProducts].[Description], [s.WhatYouNeedToKNowAboutThisProducts].[Hierarchy], [s.WhatYouNeedToKNowAboutThisProducts].[OnCreated], [s.WhatYouNeedToKNowAboutThisProducts].[ProductId], [s.WhatYouNeedToKNowAboutThisProducts].[Sections], [s.WhatYouNeedToKNowAboutThisProducts].[Title]
+FROM [WhatYouNeedToKNowAboutThisProduct] AS [s.WhatYouNeedToKNowAboutThisProducts]
+INNER JOIN (
+    SELECT DISTINCT [s0].[Id], [s0].[Name]
+    FROM [Products] AS [s0]
+    INNER JOIN [ProductCategory] AS [s.ProductCategory0] ON [s0].[ProductCategoryId] = [s.ProductCategory0].[Id]
+) AS [t] ON [s.WhatYouNeedToKNowAboutThisProducts].[ProductId] = [t].[Id]
+ORDER BY [t].[Name], [t].[Id]" (0723d8ff)
+2019-03-14T10:44:16.3515225+01:00 0HLL8C63FA956:00000001 [INF] Executed DbCommand ("24"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [s.ProductInvestmentInfos].[Id], [s.ProductInvestmentInfos].[Abs], [s.ProductInvestmentInfos].[OnCreated], [s.ProductInvestmentInfos].[ProductId], [s.ProductInvestmentInfos].[RangOrCost], [s.ProductInvestmentInfos].[Sections]
+FROM [ProductInvestmentInfo] AS [s.ProductInvestmentInfos]
+INNER JOIN (
+    SELECT DISTINCT [s1].[Id], [s1].[Name]
+    FROM [Products] AS [s1]
+    INNER JOIN [ProductCategory] AS [s.ProductCategory1] ON [s1].[ProductCategoryId] = [s.ProductCategory1].[Id]
+) AS [t0] ON [s.ProductInvestmentInfos].[ProductId] = [t0].[Id]
+ORDER BY [t0].[Name], [t0].[Id]" (0723d8ff)
+2019-03-14T10:44:16.4039132+01:00 0HLL8C63FA956:00000001 [INF] Executed DbCommand ("26"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [s].[Id], [s].[Description], [s].[Image], [s].[IsActive], [s].[IsVouchering], [s].[Name], [s].[ProductCategoryId], [s].[ProductTypes], [s].[StartFrom], [s.ProductCategory].[Id], [s.ProductCategory].[Name]
+FROM [Products] AS [s]
+INNER JOIN [ProductCategory] AS [s.ProductCategory] ON [s].[ProductCategoryId] = [s.ProductCategory].[Id]
+ORDER BY [s].[Name], [s].[Id]" (0723d8ff)
+2019-03-14T10:44:16.4370955+01:00 0HLL8C63FA956:00000001 [INF] Executed DbCommand ("31"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [s.WhatYouNeedToKNowAboutThisProducts].[Id], [s.WhatYouNeedToKNowAboutThisProducts].[Description], [s.WhatYouNeedToKNowAboutThisProducts].[Hierarchy], [s.WhatYouNeedToKNowAboutThisProducts].[OnCreated], [s.WhatYouNeedToKNowAboutThisProducts].[ProductId], [s.WhatYouNeedToKNowAboutThisProducts].[Sections], [s.WhatYouNeedToKNowAboutThisProducts].[Title]
+FROM [WhatYouNeedToKNowAboutThisProduct] AS [s.WhatYouNeedToKNowAboutThisProducts]
+INNER JOIN (
+    SELECT DISTINCT [s0].[Id], [s0].[Name]
+    FROM [Products] AS [s0]
+    INNER JOIN [ProductCategory] AS [s.ProductCategory0] ON [s0].[ProductCategoryId] = [s.ProductCategory0].[Id]
+) AS [t] ON [s.WhatYouNeedToKNowAboutThisProducts].[ProductId] = [t].[Id]
+ORDER BY [t].[Name], [t].[Id]" (0723d8ff)
+2019-03-14T10:44:16.4707291+01:00 0HLL8C63FA956:00000001 [INF] Executed DbCommand ("30"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [s.ProductInvestmentInfos].[Id], [s.ProductInvestmentInfos].[Abs], [s.ProductInvestmentInfos].[OnCreated], [s.ProductInvestmentInfos].[ProductId], [s.ProductInvestmentInfos].[RangOrCost], [s.ProductInvestmentInfos].[Sections]
+FROM [ProductInvestmentInfo] AS [s.ProductInvestmentInfos]
+INNER JOIN (
+    SELECT DISTINCT [s1].[Id], [s1].[Name]
+    FROM [Products] AS [s1]
+    INNER JOIN [ProductCategory] AS [s.ProductCategory1] ON [s1].[ProductCategoryId] = [s.ProductCategory1].[Id]
+) AS [t0] ON [s.ProductInvestmentInfos].[ProductId] = [t0].[Id]
+ORDER BY [t0].[Name], [t0].[Id]" (0723d8ff)
+2019-03-14T10:44:17.7530118+01:00 0HLL8C63FA956:00000001 [INF] Executed DbCommand ("40"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [s].[Id], [s].[Amount], [s].[ItemOwner], [s].[OrderAndPurchaseStatus], [s].[OrderDate], [s].[ProductId], [s].[TransactionNo], [s.Product].[Id], [s.Product].[Description], [s.Product].[Image], [s.Product].[IsActive], [s.Product].[IsVouchering], [s.Product].[Name], [s.Product].[ProductCategoryId], [s.Product].[ProductTypes], [s.Product].[StartFrom], [s.Product.ProductCategory].[Id], [s.Product.ProductCategory].[Name]
+FROM [Transactional] AS [s]
+INNER JOIN [Products] AS [s.Product] ON [s].[ProductId] = [s.Product].[Id]
+INNER JOIN [ProductCategory] AS [s.Product.ProductCategory] ON [s.Product].[ProductCategoryId] = [s.Product.ProductCategory].[Id]" (0723d8ff)
+2019-03-14T10:44:18.3376393+01:00 0HLL8C63FA956:00000001 [INF] Executed ViewResult - view "Index" executed in 7109.3714ms. (f66409e9)
+2019-03-14T10:44:18.3515944+01:00 0HLL8C63FA956:00000001 [INF] Executed action "Portal.Controllers.HomeController.Index (Portal)" in 32508.8141ms (afa2e885)
+2019-03-14T10:44:18.4545641+01:00 0HLL8C63FA956:00000001 [INF] Executed endpoint '"Portal.Controllers.HomeController.Index (Portal)"' (99874f2b)
+2019-03-14T10:44:18.4734562+01:00 0HLL8C63FA956:00000001 [INF] Session started; Key:"cd14abe6-094d-8c57-4c7b-a3a078599e0a", Id:"65bbeed7-2792-7ab1-f405-f1c001e951d7" (1d7cf8c0)
+2019-03-14T10:44:18.5003739+01:00 0HLL8C63FA956:00000001 [INF] Request finished in 35933.0638ms 200 text/html; charset=utf-8 (791a596a)
+2019-03-14T10:44:19.5029399+01:00 0HLL8C63FA956:00000002 [INF] Request starting HTTP/1.1 GET https://localhost:5001/css/assets/bootstrap.css   (ca22a1cb)
+2019-03-14T10:44:19.5075786+01:00 0HLL8C63FA957:00000001 [INF] Request starting HTTP/1.1 GET https://localhost:5001/css/skins/brk-green.css   (ca22a1cb)
+2019-03-14T10:44:19.7039293+01:00 0HLL8C63FA95A:00000001 [INF] Request starting HTTP/1.1 GET https://localhost:5001/css/skins/brk-base-color.css   (ca22a1cb)
+2019-03-14T10:44:20.3237522+01:00 0HLL8C63FA95A:00000001 [INF] The file "/css/skins/brk-base-color.css" was not modified (f1f8d725)
+2019-03-14T10:44:20.3281031+01:00 0HLL8C63FA956:00000002 [INF] The file "/css/assets/bootstrap.css" was not modified (f1f8d725)
+2019-03-14T10:44:20.3329626+01:00 0HLL8C63FA957:00000001 [INF] The file "/css/skins/brk-green.css" was not modified (f1f8d725)
+2019-03-14T10:44:20.3386975+01:00 0HLL8C63FA956:00000002 [INF] Request finished in 923.0689ms 304 text/css (791a596a)
+2019-03-14T10:44:20.3470401+01:00 0HLL8C63FA95A:00000001 [INF] Request finished in 831.9972ms 304 text/css (791a596a)
+2019-03-14T10:44:20.3505711+01:00 0HLL8C63FA957:00000001 [INF] Request finished in 836.8876ms 304 text/css (791a596a)
+2019-03-14T10:44:20.3610382+01:00 0HLL8C63FA95B:00000001 [INF] Request starting HTTP/1.1 GET https://localhost:5001/css/custom.css   (ca22a1cb)
+2019-03-14T10:44:20.3671396+01:00 0HLL8C63FA959:00000001 [INF] Request starting HTTP/1.1 GET https://localhost:5001/css/assets/offsets.css   (ca22a1cb)
+2019-03-14T10:44:20.3717778+01:00 0HLL8C63FA95B:00000001 [INF] The file "/css/custom.css" was not modified (f1f8d725)
+2019-03-14T10:44:20.3729725+01:00 0HLL8C63FA959:00000001 [INF] The file "/css/assets/offsets.css" was not modified (f1f8d725)
+2019-03-14T10:44:20.3779543+01:00 0HLL8C63FA95B:00000001 [INF] Request finished in 18.915ms 304 text/css (791a596a)
+2019-03-14T10:44:20.3877888+01:00 0HLL8C63FA959:00000001 [INF] Request finished in 22.4024ms 304 text/css (791a596a)
+2019-03-14T10:44:20.3940689+01:00 0HLL8C63FA956:00000003 [INF] Request starting HTTP/1.1 GET https://localhost:5001/js/scripts.js   (ca22a1cb)
+2019-03-14T10:44:20.4072712+01:00 0HLL8C63FA958:00000001 [INF] Request starting HTTP/1.1 GET https://localhost:5001/css/styles.css   (ca22a1cb)
+2019-03-14T10:44:20.4432970+01:00 0HLL8C63FA956:00000003 [INF] The file "/js/scripts.js" was not modified (f1f8d725)
+2019-03-14T10:44:20.4491310+01:00 0HLL8C63FA958:00000001 [INF] The file "/css/styles.css" was not modified (f1f8d725)
+2019-03-14T10:44:20.4574517+01:00 0HLL8C63FA956:00000003 [INF] Request finished in 54.7811ms 304 application/javascript (791a596a)
+2019-03-14T10:44:20.4805484+01:00 0HLL8C63FA958:00000001 [INF] Request finished in 55.1679ms 304 text/css (791a596a)
+2019-03-14T10:44:22.9846397+01:00 0HLL8C63FA958:00000002 [INF] Request starting HTTP/1.1 GET https://localhost:5001/fonts/VarelaRound-Regular-webfont.woff   (ca22a1cb)
+2019-03-14T10:44:22.9876087+01:00 0HLL8C63FA958:00000002 [INF] The file "/fonts/VarelaRound-Regular-webfont.woff" was not modified (f1f8d725)
+2019-03-14T10:44:22.9917643+01:00 0HLL8C63FA958:00000002 [INF] Request finished in 5.8566ms 304 application/font-woff (791a596a)
+2019-03-14T10:44:25.4171046+01:00 0HLL8C63FA95B:00000002 [INF] Request starting HTTP/1.1 GET https://localhost:5001/css/components/sliders.css   (ca22a1cb)
+2019-03-14T10:44:25.4313338+01:00 0HLL8C63FA956:00000004 [INF] Request starting HTTP/1.1 GET https://localhost:5001/css/components/image-frames.css   (ca22a1cb)
+2019-03-14T10:44:25.4365673+01:00 0HLL8C63FA958:00000003 [INF] Request starting HTTP/1.1 GET https://localhost:5001/css/components/dividers.css   (ca22a1cb)
+2019-03-14T10:44:25.4514597+01:00 0HLL8C63FA956:00000004 [INF] The file "/css/components/image-frames.css" was not modified (f1f8d725)
+2019-03-14T10:44:25.4551460+01:00 0HLL8C63FA958:00000003 [INF] The file "/css/components/dividers.css" was not modified (f1f8d725)
+2019-03-14T10:44:25.4646348+01:00 0HLL8C63FA956:00000004 [INF] Request finished in 142.7543ms 304 text/css (791a596a)
+2019-03-14T10:44:25.4778597+01:00 0HLL8C63FA958:00000003 [INF] Request finished in 146.3898ms 304 text/css (791a596a)
+2019-03-14T10:44:25.5466955+01:00 0HLL8C63FA959:00000002 [INF] Request starting HTTP/1.1 GET https://localhost:5001/vendor/slickCarousel/css/slick.css   (ca22a1cb)
+2019-03-14T10:44:25.5516998+01:00 0HLL8C63FA957:00000002 [INF] Request starting HTTP/1.1 GET https://localhost:5001/css/components/content-sliders.css   (ca22a1cb)
+2019-03-14T10:44:25.5582941+01:00 0HLL8C63FA95A:00000002 [INF] Request starting HTTP/1.1 GET https://localhost:5001/css/components/section-titles.css   (ca22a1cb)
+2019-03-14T10:44:25.5657449+01:00 0HLL8C63FA957:00000002 [INF] The file "/css/components/content-sliders.css" was not modified (f1f8d725)
+2019-03-14T10:44:25.5684283+01:00 0HLL8C63FA95A:00000002 [INF] The file "/css/components/section-titles.css" was not modified (f1f8d725)
+2019-03-14T10:44:25.5709950+01:00 0HLL8C63FA957:00000002 [INF] Request finished in 23.9193ms 304 text/css (791a596a)
+2019-03-14T10:44:25.5737140+01:00 0HLL8C63FA95A:00000002 [INF] Request finished in 21.7335ms 304 text/css (791a596a)
+2019-03-14T10:44:25.5759069+01:00 0HLL8C63FA959:00000002 [INF] The file "/vendor/slickCarousel/css/slick.css" was not modified (f1f8d725)
+2019-03-14T10:44:25.5790308+01:00 0HLL8C63FA95B:00000002 [INF] The file "/css/components/sliders.css" was not modified (f1f8d725)
+2019-03-14T10:44:25.5823876+01:00 0HLL8C63FA959:00000002 [INF] Request finished in 267.2227ms 304 text/css (791a596a)
+2019-03-14T10:44:25.6295382+01:00 0HLL8C63FA95B:00000002 [INF] Request finished in 271.6414ms 304 text/css (791a596a)
+2019-03-14T10:44:26.0647824+01:00 0HLL8C63FA95B:00000003 [INF] Request starting HTTP/1.1 GET https://localhost:5001/js/assets/flexmenu.js   (ca22a1cb)
+2019-03-14T10:44:26.0729197+01:00 0HLL8C63FA959:00000003 [INF] Request starting HTTP/1.1 GET https://localhost:5001/vendor/slickCarousel/js/slick.min.js   (ca22a1cb)
+2019-03-14T10:44:26.0756423+01:00 0HLL8C63FA95A:00000003 [INF] Request starting HTTP/1.1 GET https://localhost:5001/js/assets/sliders-skin.js   (ca22a1cb)
+2019-03-14T10:44:26.0795302+01:00 0HLL8C63FA95B:00000003 [INF] The file "/js/assets/flexmenu.js" was not modified (f1f8d725)
+2019-03-14T10:44:26.0813103+01:00 0HLL8C63FA95A:00000003 [INF] The file "/js/assets/sliders-skin.js" was not modified (f1f8d725)
+2019-03-14T10:44:26.0863527+01:00 0HLL8C63FA959:00000003 [INF] The file "/vendor/slickCarousel/js/slick.min.js" was not modified (f1f8d725)
+2019-03-14T10:44:26.0926331+01:00 0HLL8C63FA95A:00000003 [INF] Request finished in 15.4424ms 304 application/javascript (791a596a)
+2019-03-14T10:44:26.1017581+01:00 0HLL8C63FA959:00000003 [INF] Request finished in 21.773ms 304 application/javascript (791a596a)
+2019-03-14T10:44:26.1081697+01:00 0HLL8C63FA95B:00000003 [INF] Request finished in 78.2156ms 304 application/javascript (791a596a)
+2019-03-14T10:44:51.1097001+01:00 0HLL8C63FA959:00000004 [INF] Request starting HTTP/1.1 GET https://localhost:5001/Account/ForgotPassword   (ca22a1cb)
+2019-03-14T10:44:51.2971849+01:00 0HLL8C63FA959:00000004 [INF] Executing endpoint '"Portal.Controllers.AccountController.ForgotPassword (Portal)"' (500cc934)
+2019-03-14T10:44:51.3173219+01:00 0HLL8C63FA959:00000004 [INF] Route matched with "{action = \"ForgotPassword\", controller = \"Account\", area = \"\"}". Executing action "Portal.Controllers.AccountController.ForgotPassword (Portal)" (a44c0341)
+2019-03-14T10:44:51.8822208+01:00 0HLL8C63FA959:00000004 [INF] Executing action method "Portal.Controllers.AccountController.ForgotPassword (Portal)" - Validation state: Valid (dad538d7)
+2019-03-14T10:44:51.9774231+01:00 0HLL8C63FA959:00000004 [INF] Executed action method "Portal.Controllers.AccountController.ForgotPassword (Portal)", returned result "Microsoft.AspNetCore.Mvc.ViewResult" in 0.4093ms. (50a9e262)
+2019-03-14T10:44:52.1993875+01:00 0HLL8C63FA959:00000004 [INF] Executing ViewResult, running view "ForgotPassword". (c83d0e25)
+2019-03-14T10:44:57.7276925+01:00 0HLL8C63FA959:00000004 [INF] Executed action "Portal.Controllers.AccountController.ForgotPassword (Portal)" in 6402.9717ms (afa2e885)
+2019-03-14T10:44:57.7350230+01:00 0HLL8C63FA959:00000004 [INF] Executed endpoint '"Portal.Controllers.AccountController.ForgotPassword (Portal)"' (99874f2b)
+2019-03-14T10:45:05.1922872+01:00 0HLL8C63FA959:00000004 [ERR] An unhandled exception has occurred while executing the request. (48a46595)
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at AspNetCore.Views_Shared__Layout.<ExecuteAsync>b__196_1() in C:\WorkSpace\arm-wealth-planner-portals\Portal\Views\Shared\_Layout.cshtml:line 188
+   at Microsoft.AspNetCore.Razor.Runtime.TagHelpers.TagHelperExecutionContext.SetOutputContentAsync()
+   at AspNetCore.Views_Shared__Layout.ExecuteAsync()
+   at Microsoft.AspNetCore.Mvc.Razor.RazorView.RenderPageCoreAsync(IRazorPage page, ViewContext context)
+   at Microsoft.AspNetCore.Mvc.Razor.RazorView.RenderPageAsync(IRazorPage page, ViewContext context, Boolean invokeViewStarts)
+   at Microsoft.AspNetCore.Mvc.Razor.RazorView.RenderLayoutAsync(ViewContext context, ViewBufferTextWriter bodyWriter)
+   at Microsoft.AspNetCore.Mvc.Razor.RazorView.RenderAsync(ViewContext context)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewExecutor.ExecuteAsync(ViewContext viewContext, String contentType, Nullable`1 statusCode)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewExecutor.ExecuteAsync(ActionContext actionContext, IView view, ViewDataDictionary viewData, ITempDataDictionary tempData, String contentType, Nullable`1 statusCode)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewResultExecutor.ExecuteAsync(ActionContext context, ViewResult result)
+   at Microsoft.AspNetCore.Mvc.ViewResult.ExecuteResultAsync(ActionContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeResultAsync(IActionResult result)
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeNextResultFilterAsync[TFilter,TFilterAsync]()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.Rethrow(ResultExecutedContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.ResultNext[TFilter,TFilterAsync](State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeResultFilters()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeNextResourceFilter()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.Rethrow(ResourceExecutedContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeFilterPipelineAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeAsync()
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Routing.EndpointRoutingMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Session.SessionMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Session.SessionMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+2019-03-14T10:45:05.5984790+01:00 0HLL8C63FA959:00000004 [INF] Request finished in 14529.1005ms 500 text/html; charset=utf-8 (791a596a)
+2019-03-14T10:45:56.6883046+01:00 0HLL8C63FA959:00000005 [INF] Request starting HTTP/1.1 GET https://localhost:5001/Account/Login   (ca22a1cb)
+2019-03-14T10:45:56.7004581+01:00 0HLL8C63FA959:00000005 [INF] Executing endpoint '"Portal.Controllers.AccountController.Login (Portal)"' (500cc934)
+2019-03-14T10:45:56.7082481+01:00 0HLL8C63FA959:00000005 [INF] Route matched with "{action = \"Login\", controller = \"Account\", area = \"\"}". Executing action "Portal.Controllers.AccountController.Login (Portal)" (a44c0341)
+2019-03-14T10:45:56.8349432+01:00 0HLL8C63FA959:00000005 [INF] Executing action method "Portal.Controllers.AccountController.Login (Portal)" - Validation state: Valid (dad538d7)
+2019-03-14T10:45:56.8405352+01:00 0HLL8C63FA959:00000005 [INF] Entity Framework Core "2.2.1-servicing-10028" initialized '"ApplicationDbContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None" (9958f5bb)
+2019-03-14T10:45:57.2330268+01:00 0HLL8C63FA959:00000005 [INF] Executed DbCommand ("384"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [s].[Id], [s].[Amount], [s].[ItemOwner], [s].[OrderAndPurchaseStatus], [s].[OrderDate], [s].[ProductId], [s].[TransactionNo], [s.Product].[Id], [s.Product].[Description], [s.Product].[Image], [s.Product].[IsActive], [s.Product].[IsVouchering], [s.Product].[Name], [s.Product].[ProductCategoryId], [s.Product].[ProductTypes], [s.Product].[StartFrom], [s.Product.ProductCategory].[Id], [s.Product.ProductCategory].[Name]
+FROM [Transactional] AS [s]
+INNER JOIN [Products] AS [s.Product] ON [s].[ProductId] = [s.Product].[Id]
+INNER JOIN [ProductCategory] AS [s.Product.ProductCategory] ON [s.Product].[ProductCategoryId] = [s.Product.ProductCategory].[Id]" (0723d8ff)
+2019-03-14T10:45:57.2439638+01:00 0HLL8C63FA959:00000005 [INF] Executed action method "Portal.Controllers.AccountController.Login (Portal)", returned result "Microsoft.AspNetCore.Mvc.ViewResult" in 406.9506ms. (50a9e262)
+2019-03-14T10:45:57.2559990+01:00 0HLL8C63FA959:00000005 [INF] Executing ViewResult, running view "Login". (c83d0e25)
+2019-03-14T10:45:58.2024167+01:00 0HLL8C63FA959:00000005 [INF] Executed ViewResult - view "Login" executed in 874.0717ms. (f66409e9)
+2019-03-14T10:45:58.2601355+01:00 0HLL8C63FA959:00000005 [INF] Executed action "Portal.Controllers.AccountController.Login (Portal)" in 1494.3357ms (afa2e885)
+2019-03-14T10:45:58.2728152+01:00 0HLL8C63FA959:00000005 [INF] Executed endpoint '"Portal.Controllers.AccountController.Login (Portal)"' (99874f2b)
+2019-03-14T10:45:58.2856870+01:00 0HLL8C63FA959:00000005 [INF] Request finished in 1588.8846ms 200 text/html; charset=utf-8 (791a596a)
+2019-03-14T10:46:00.7720547+01:00 0HLL8C63FA959:00000006 [INF] Request starting HTTP/1.1 GET https://localhost:5001/liber/Admin/img/arm-favicon.jpg   (ca22a1cb)
+2019-03-14T10:46:00.7828084+01:00 0HLL8C63FA959:00000006 [INF] The file "/Admin/img/arm-favicon.jpg" was not modified (f1f8d725)
+2019-03-14T10:46:00.7919707+01:00 0HLL8C63FA959:00000006 [INF] Request finished in 31.1931ms 304 image/jpeg (791a596a)
+2019-03-14T10:49:01.9777442+01:00 0HLL8C63FA959:00000007 [INF] Request starting HTTP/1.1 GET https://localhost:5001/Account/ForgotPassword   (ca22a1cb)
+2019-03-14T10:49:01.9802834+01:00 0HLL8C63FA959:00000007 [INF] Executing endpoint '"Portal.Controllers.AccountController.ForgotPassword (Portal)"' (500cc934)
+2019-03-14T10:49:01.9840958+01:00 0HLL8C63FA959:00000007 [INF] Route matched with "{action = \"ForgotPassword\", controller = \"Account\", area = \"\"}". Executing action "Portal.Controllers.AccountController.ForgotPassword (Portal)" (a44c0341)
+2019-03-14T10:49:01.9912064+01:00 0HLL8C63FA959:00000007 [INF] Executing action method "Portal.Controllers.AccountController.ForgotPassword (Portal)" - Validation state: Valid (dad538d7)
+2019-03-14T10:49:01.9930597+01:00 0HLL8C63FA959:00000007 [INF] Executed action method "Portal.Controllers.AccountController.ForgotPassword (Portal)", returned result "Microsoft.AspNetCore.Mvc.ViewResult" in 0.025ms. (50a9e262)
+2019-03-14T10:49:13.2539178+01:00 0HLL8C63FA959:00000007 [INF] Executing ViewResult, running view "ForgotPassword". (c83d0e25)
+2019-03-14T10:49:13.2727625+01:00 0HLL8C63FA959:00000007 [INF] Executed ViewResult - view "ForgotPassword" executed in 11274.0437ms. (f66409e9)
+2019-03-14T10:49:13.3395763+01:00 0HLL8C63FA959:00000007 [INF] Executed action "Portal.Controllers.AccountController.ForgotPassword (Portal)" in 11289.0419ms (afa2e885)
+2019-03-14T10:49:13.3535187+01:00 0HLL8C63FA95A:00000004 [INF] Request starting HTTP/1.1 GET https://localhost:5001/img/login-banner.png   (ca22a1cb)
+2019-03-14T10:49:13.3689833+01:00 0HLL8C63FA95B:00000004 [INF] Request starting HTTP/1.1 GET https://localhost:5001/img/logo.png   (ca22a1cb)
+2019-03-14T10:49:13.3701067+01:00 0HLL8C63FA959:00000007 [INF] Executed endpoint '"Portal.Controllers.AccountController.ForgotPassword (Portal)"' (99874f2b)
+2019-03-14T10:49:13.3739037+01:00 0HLL8C63FA959:00000007 [INF] Request finished in 11398.6831ms 200 text/html; charset=utf-8 (791a596a)
+2019-03-14T10:49:13.3904885+01:00 0HLL8C63FA95B:00000004 [INF] Sending file. Request path: '"/img/logo.png"'. Physical path: '"C:\WorkSpace\arm-wealth-planner-portals\Portal\wwwroot\img\logo.png"' (27b0a520)
+2019-03-14T10:49:13.3964439+01:00 0HLL8C63FA95B:00000004 [INF] Request finished in 51.1551ms 200 image/png (791a596a)
+2019-03-14T10:49:13.4876056+01:00 0HLL8C63FA95A:00000004 [INF] Sending file. Request path: '"/img/login-banner.png"'. Physical path: '"C:\WorkSpace\arm-wealth-planner-portals\Portal\wwwroot\img\login-banner.png"' (27b0a520)
+2019-03-14T10:49:13.4904046+01:00 0HLL8C63FA95A:00000004 [INF] Request finished in 151.7647ms 200 image/png (791a596a)
+2019-03-14T10:49:46.7411251+01:00 0HLL8C63FA95A:00000005 [INF] Request starting HTTP/1.1 GET https://localhost:5001/liber/Admin/components/bootstrap/js/dist/tab.js.map   (ca22a1cb)
+2019-03-14T10:49:46.7520057+01:00 0HLL8C63FA959:00000008 [INF] Request starting HTTP/1.1 GET https://localhost:5001/liber/Admin/components/bootstrap/js/dist/util.js.map   (ca22a1cb)
+2019-03-14T10:49:46.7698865+01:00 0HLL8C63FA95B:00000005 [INF] Request starting HTTP/1.1 GET https://localhost:5001/liber/Admin/components/bootstrap/js/dist/modal.js.map   (ca22a1cb)
+2019-03-14T10:49:46.7846109+01:00 0HLL8C63FA959:00000008 [INF] The file "/Admin/components/bootstrap/js/dist/util.js.map" was not modified (f1f8d725)
+2019-03-14T10:49:46.7991493+01:00 0HLL8C63FA95B:00000005 [INF] The file "/Admin/components/bootstrap/js/dist/modal.js.map" was not modified (f1f8d725)
+2019-03-14T10:49:46.8048073+01:00 0HLL8C63FA959:00000008 [INF] Request finished in 45.1779ms 304 text/plain (791a596a)
+2019-03-14T10:49:46.8074903+01:00 0HLL8C63FA95B:00000005 [INF] Request finished in 50.6974ms 304 text/plain (791a596a)
+2019-03-14T10:49:46.8117982+01:00 0HLL8C63FA95A:00000005 [INF] The file "/Admin/components/bootstrap/js/dist/tab.js.map" was not modified (f1f8d725)
+2019-03-14T10:49:46.8156291+01:00 0HLL8C63FA95C:00000001 [INF] Request starting HTTP/1.1 GET https://localhost:5001/liber/Admin/components/popper.js/dist/umd/popper.min.js.map   (ca22a1cb)
+2019-03-14T10:49:46.8204137+01:00 0HLL8C63FA95E:00000001 [INF] Request starting HTTP/1.1 GET https://localhost:5001/liber/Admin/components/bootstrap/js/dist/button.js.map   (ca22a1cb)
+2019-03-14T10:49:46.8227441+01:00 0HLL8C63FA95C:00000001 [INF] The file "/Admin/components/popper.js/dist/umd/popper.min.js.map" was not modified (f1f8d725)
+2019-03-14T10:49:46.8257350+01:00 0HLL8C63FA95D:00000001 [INF] Request starting HTTP/1.1 GET https://localhost:5001/liber/Admin/components/bootstrap/js/dist/tooltip.js.map   (ca22a1cb)
+2019-03-14T10:49:46.8287350+01:00 0HLL8C63FA95E:00000001 [INF] The file "/Admin/components/bootstrap/js/dist/button.js.map" was not modified (f1f8d725)
+2019-03-14T10:49:46.8358437+01:00 0HLL8C63FA95C:00000001 [INF] Request finished in 15.423ms 304 text/plain (791a596a)
+2019-03-14T10:49:46.8449066+01:00 0HLL8C63FA95E:00000001 [INF] Request finished in 18.1759ms 304 text/plain (791a596a)
+2019-03-14T10:49:46.8476108+01:00 0HLL8C63FA95D:00000001 [INF] The file "/Admin/components/bootstrap/js/dist/tooltip.js.map" was not modified (f1f8d725)
+2019-03-14T10:49:46.8544092+01:00 0HLL8C63FA959:00000009 [INF] Request starting HTTP/1.1 GET https://localhost:5001/liber/Admin/components/bootstrap/js/dist/collapse.js.map   (ca22a1cb)
+2019-03-14T10:49:46.8572026+01:00 0HLL8C63FA95B:00000006 [INF] Request starting HTTP/1.1 GET https://localhost:5001/liber/Admin/components/jquery-bar-rating/dist/jquery.barrating.min.js.map   (ca22a1cb)
+2019-03-14T10:49:46.8619199+01:00 0HLL8C63FA95D:00000001 [INF] Request finished in 36.9806ms 304 text/plain (791a596a)
+2019-03-14T10:49:46.8684947+01:00 0HLL8C63FA95B:00000006 [INF] The file "/Admin/components/jquery-bar-rating/dist/jquery.barrating.min.js.map" was not modified (f1f8d725)
+2019-03-14T10:49:46.8761108+01:00 0HLL8C63FA959:00000009 [INF] The file "/Admin/components/bootstrap/js/dist/collapse.js.map" was not modified (f1f8d725)
+2019-03-14T10:49:46.8789434+01:00 0HLL8C63FA95B:00000006 [INF] Request finished in 20.8463ms 304 text/plain (791a596a)
+2019-03-14T10:49:46.8843455+01:00 0HLL8C63FA959:00000009 [INF] Request finished in 31.3257ms 304 text/plain (791a596a)
+2019-03-14T10:49:46.8924157+01:00 0HLL8C63FA95A:00000005 [INF] Request finished in 152.6907ms 304 text/plain (791a596a)
+2019-03-14T10:49:46.8992928+01:00 0HLL8C63FA95E:00000002 [INF] Request starting HTTP/1.1 GET https://localhost:5001/liber/Admin/components/bootstrap/js/dist/carousel.js.map   (ca22a1cb)
+2019-03-14T10:49:46.9037378+01:00 0HLL8C63FA95C:00000002 [INF] Request starting HTTP/1.1 GET https://localhost:5001/liber/Admin/components/bootstrap/js/dist/dropdown.js.map   (ca22a1cb)
+2019-03-14T10:49:46.9626636+01:00 0HLL8C63FA95E:00000002 [INF] The file "/Admin/components/bootstrap/js/dist/carousel.js.map" was not modified (f1f8d725)
+2019-03-14T10:49:46.9866128+01:00 0HLL8C63FA95C:00000002 [INF] The file "/Admin/components/bootstrap/js/dist/dropdown.js.map" was not modified (f1f8d725)
+2019-03-14T10:49:47.0203545+01:00 0HLL8C63FA95E:00000002 [INF] Request finished in 78.2597ms 304 text/plain (791a596a)
+2019-03-14T10:49:47.0434095+01:00 0HLL8C63FA95C:00000002 [INF] Request finished in 94.3584ms 304 text/plain (791a596a)
+2019-03-14T10:49:47.0472332+01:00 0HLL8C63FA95D:00000002 [INF] Request starting HTTP/1.1 GET https://localhost:5001/liber/Admin/components/bootstrap/js/dist/alert.js.map   (ca22a1cb)
+2019-03-14T10:49:47.0508278+01:00 0HLL8C63FA95A:00000006 [INF] Request starting HTTP/1.1 GET https://localhost:5001/liber/Admin/components/bootstrap/js/dist/popover.js.map   (ca22a1cb)
+2019-03-14T10:49:47.0516758+01:00 0HLL8C63FA95D:00000002 [INF] The file "/Admin/components/bootstrap/js/dist/alert.js.map" was not modified (f1f8d725)
+2019-03-14T10:49:47.0636647+01:00 0HLL8C63FA95D:00000002 [INF] Request finished in 97.4653ms 304 text/plain (791a596a)
+2019-03-14T10:49:47.0658763+01:00 0HLL8C63FA95A:00000006 [INF] The file "/Admin/components/bootstrap/js/dist/popover.js.map" was not modified (f1f8d725)
+2019-03-14T10:49:47.0762390+01:00 0HLL8C63FA95A:00000006 [INF] Request finished in 173.7268ms 304 text/plain (791a596a)
+2019-03-14T10:52:02.8179794+01:00 0HLL8C63FA95A:00000007 [INF] Request starting HTTP/1.1 GET https://localhost:5001/Account/ForgotPassword   (ca22a1cb)
+2019-03-14T10:52:02.8229890+01:00 0HLL8C63FA95A:00000007 [INF] Executing endpoint '"Portal.Controllers.AccountController.ForgotPassword (Portal)"' (500cc934)
+2019-03-14T10:52:02.8256797+01:00 0HLL8C63FA95A:00000007 [INF] Route matched with "{action = \"ForgotPassword\", controller = \"Account\", area = \"\"}". Executing action "Portal.Controllers.AccountController.ForgotPassword (Portal)" (a44c0341)
+2019-03-14T10:52:02.8281030+01:00 0HLL8C63FA95A:00000007 [INF] Executing action method "Portal.Controllers.AccountController.ForgotPassword (Portal)" - Validation state: Valid (dad538d7)
+2019-03-14T10:52:02.8302775+01:00 0HLL8C63FA95A:00000007 [INF] Executed action method "Portal.Controllers.AccountController.ForgotPassword (Portal)", returned result "Microsoft.AspNetCore.Mvc.ViewResult" in 0.0387ms. (50a9e262)
+2019-03-14T10:52:02.8324747+01:00 0HLL8C63FA95A:00000007 [INF] Executing ViewResult, running view "ForgotPassword". (c83d0e25)
+2019-03-14T10:52:02.8356369+01:00 0HLL8C63FA95A:00000007 [INF] Executed ViewResult - view "ForgotPassword" executed in 3.255ms. (f66409e9)
+2019-03-14T10:52:02.8393395+01:00 0HLL8C63FA95A:00000007 [INF] Executed action "Portal.Controllers.AccountController.ForgotPassword (Portal)" in 10.0012ms (afa2e885)
+2019-03-14T10:52:02.8414196+01:00 0HLL8C63FA95A:00000007 [INF] Executed endpoint '"Portal.Controllers.AccountController.ForgotPassword (Portal)"' (99874f2b)
+2019-03-14T10:52:02.8434150+01:00 0HLL8C63FA95A:00000007 [INF] Request finished in 32.5828ms 200 text/html; charset=utf-8 (791a596a)
+2019-03-14T10:52:04.2267844+01:00 0HLL8C63FA95A:00000008 [INF] Request starting HTTP/1.1 GET https://localhost:5001/liber/Admin/img/arm-favicon.jpg   (ca22a1cb)
+2019-03-14T10:52:04.5440540+01:00 0HLL8C63FA95A:00000008 [INF] Sending file. Request path: '"/Admin/img/arm-favicon.jpg"'. Physical path: '"C:\WorkSpace\arm-wealth-planner-portals\Portal\Liber\Admin\img\arm-favicon.jpg"' (27b0a520)
+2019-03-14T10:52:04.5567873+01:00 0HLL8C63FA95A:00000008 [INF] Request finished in 402.5517ms 200 image/jpeg (791a596a)

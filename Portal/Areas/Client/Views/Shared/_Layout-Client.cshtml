@@ -3,7 +3,11 @@
 
 @{
     var _user = UserUtil.GetDataHubUser();
-    var membershipKey = _user.MembershipKey;
+    var membershipKey = 0;
+    if (!String.IsNullOrEmpty(_user.MembershipKey.ToString()))
+    {
+        membershipKey = _user.MembershipKey;
+    }    
     var fullName = _user.FullName;
 }
 

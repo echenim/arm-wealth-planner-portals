@@ -219,13 +219,25 @@ namespace Portal.Controllers
             var valiedUserObj = _userManager.Users.Include(s => s.Person)
                 .SingleOrDefault(s => s.UserName.Equals(model.Username));
 
-            var isUserNameNullable = valiedUserObj?.UserName;
+            var isUserNameNullable = valiedUserObj?.UserName; 
             if (!string.IsNullOrEmpty(isUserNameNullable))
             {
-                var resultCustomer =
-                    _signInManager.PasswordSignInAsync(valiedUserObj, model.Password, true, true).Result;
+                var resultCustomer = _signInManager.PasswordSignInAsync(valiedUserObj, model.Password, true, true).Result;
                 if (resultCustomer.Succeeded)
                 {
+                    var dataHubObj = new AuthenticateResponse
+                    {
+                        FirstName = valiedUserObj.Person.FirstName,
+                        LastName = valiedUserObj.Person.LastName,
+                        FullName = valiedUserObj.Person.FullName,
+                        EmailAddress = valiedUserObj.Person.Email,
+                        MembershipKey = Convert.ToInt32(valiedUserObj.Person.MemberShipNo)
+                    };
+
+                    _cache.Set<AuthenticateResponse>("ArmUser", dataHubObj, new MemoryCacheEntryOptions()
+                                                                            .SetSlidingExpiration(TimeSpan.FromMinutes(20))
+                                                                            .SetAbsoluteExpiration(TimeSpan.FromHours(1)));
+
                     return RedirectToAction("CheckOut", "CartAndPayment");
                 }
             }
@@ -268,6 +280,14 @@ namespace Portal.Controllers
                                     .PasswordSignInAsync(valiedUser, model.Password, true, true).Result;
                                 if (signInResult.Succeeded)
                                 {
+                                    _cache.Set<CustomerInformationView>("ArmOneUser", armOneObj, new MemoryCacheEntryOptions()
+                                                                            .SetSlidingExpiration(TimeSpan.FromMinutes(20))
+                                                                            .SetAbsoluteExpiration(TimeSpan.FromHours(1)));
+
+                                    _cache.Set<AuthenticateResponse>("ArmUser", dataHubObj, new MemoryCacheEntryOptions()
+                                                                            .SetSlidingExpiration(TimeSpan.FromMinutes(20))
+                                                                            .SetAbsoluteExpiration(TimeSpan.FromHours(1)));
+
                                     return RedirectToAction("CheckOut", "CartAndPayment");
                                 }
                             }
@@ -311,15 +331,34 @@ namespace Portal.Controllers
 
                 if (onboardToArm.ResponseCode.Equals("00"))
                 {
-                    var isPersonResult = _personManager.Save(model);
+                    var dataHubObj = new AuthenticateResponse();
+                    var armOneObj = _armOneManager.GetCustomerInformation(model.Email, model.Password);
+                    if (armOneObj.ResponseCode.Equals("00"))
+                    {
+                        dataHubObj = _armOneManager.DataHubClientInfo(armOneObj.MembershipNumber, model.Password);
+                    }                        
+
+                    var isPersonResult = _personManager.Save(model);                    
+
                     if (isPersonResult.Succeed)
                     {
+                        if (dataHubObj == null)
+                        {
+                            dataHubObj.EmailAddress = isPersonResult.TObj.Email;
+                            dataHubObj.FirstName = isPersonResult.TObj.FirstName;
+                            dataHubObj.LastName = isPersonResult.TObj.LastName;
+                            dataHubObj.FullName = isPersonResult.TObj.FullName;
+                            dataHubObj.IsActive = isPersonResult.TObj.IsCustomer;
+                            dataHubObj.MembershipKey = Convert.ToInt32(isPersonResult.TObj.MemberShipNo);
+                        }
+
                         var user = new ApplicationUser
                         {
                             UserName = isPersonResult.TObj.Email,
                             Email = isPersonResult.TObj.Email,
                             PersonId = isPersonResult.TObj.Id
                         };
+
                         var rs = _userManager.CreateAsync(user, model.Password).Result;
                         if (rs.Succeeded)
                         {
@@ -327,10 +366,26 @@ namespace Portal.Controllers
                                 _signInManager.PasswordSignInAsync(user, model.Password, true, true).Result;
                             if (isSignInSuccessful.Succeeded)
                             {
+                                _cache.Set<CustomerInformationView>("ArmOneUser", armOneObj, new MemoryCacheEntryOptions()
+                                                                            .SetSlidingExpiration(TimeSpan.FromMinutes(20))
+                                                                            .SetAbsoluteExpiration(TimeSpan.FromHours(1)));
+
+                                _cache.Set<AuthenticateResponse>("ArmUser", dataHubObj, new MemoryCacheEntryOptions()
+                                                                        .SetSlidingExpiration(TimeSpan.FromMinutes(20))
+                                                                        .SetAbsoluteExpiration(TimeSpan.FromHours(1)));
+
                                 return RedirectToAction("Index", "Home");
                             }
                             else
                             {
+                                _cache.Set<CustomerInformationView>("ArmOneUser", armOneObj, new MemoryCacheEntryOptions()
+                                                                            .SetSlidingExpiration(TimeSpan.FromMinutes(20))
+                                                                            .SetAbsoluteExpiration(TimeSpan.FromHours(1)));
+
+                                _cache.Set<AuthenticateResponse>("ArmUser", dataHubObj, new MemoryCacheEntryOptions()
+                                                                        .SetSlidingExpiration(TimeSpan.FromMinutes(20))
+                                                                        .SetAbsoluteExpiration(TimeSpan.FromHours(1)));
+
                                 return RedirectToAction("Login", "Account");
                             }
                         }
@@ -339,6 +394,11 @@ namespace Portal.Controllers
             }
 
             return View(model);
+        }
+
+        public IActionResult ForgotPassword()
+        {
+            return View();
         }
 
         #region test
