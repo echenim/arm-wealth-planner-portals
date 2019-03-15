@@ -7,7 +7,7 @@ namespace Portal.Business.ViewModels
         public string ArmVendorUserName { get; set; }
         public string ArmTranxID { get; set; }
         public Decimal ArmTranxAmount { get; set; }
-        public int ArmCustomerID { get; set; }
+        public string ArmCustomerID { get; set; }
         public string ArmCustomerName { get; set; }
         public string ArmTranxCurr { get; set; }
         public string ArmTranxNotiUrl { get; set; }
@@ -24,7 +24,7 @@ namespace Portal.Business.ViewModels
         public string ArmFrequency { get; set; }
         public string ArmXmlData { get; set; }
         public string ArmPaymentParams { get; set; }
-        public int ArmCustomerID { get; set; }
+        public string ArmCustomerID { get; set; }
         public string ArmCustomerName { get; set; }
         public string ArmDdNotiUrl { get; set; }
         public decimal ArmDdAmt { get; set; }

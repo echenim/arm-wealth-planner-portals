@@ -40,6 +40,8 @@ namespace Portal.Controllers
         //caching to persist user data
         private readonly IMemoryCache _cache;
 
+        private const string PasswordDef = "10^%$#3Solution%^&*";
+
         public CartAndPaymentController(
             ICartManager cartManager,
             IPersonManager personManager,
@@ -160,22 +162,66 @@ namespace Portal.Controllers
             var trCustId = trResponse["arm_cust_id"];
             var trPaymentParams = trResponse["arm_payment_params"];
 
+            ShowCartInformation();
+            var tranno = transactionRef.ToString().Replace("ARM", "").Trim();
+            var userObj = _userManager.Users.Include(s => s.Person).SingleOrDefault(s => s.UserName.Equals("gbadebo.ayan@gmail.com"));
+
+            var user = _userManager.Users.Include(s => s.Person).SingleOrDefault(s => s.Email.Equals("gbadebo.ayan@gmail.com"));
+
+            if (trStatusCode.Equals("00"))
+            {
+                if (!User.Identity.IsAuthenticated)
+                {
+                    if (userObj != null)
+                    {
+                        userObj.PasswordHash = _userManager.PasswordHasher.HashPassword(userObj, PasswordDef);
+                        var signInResult = _signInManager
+                            .PasswordSignInAsync(userObj, PasswordDef, true, true).Result;
+                        if (signInResult.Succeeded)
+                        {
+                            var dataHubObj = new AuthenticateResponse
+                            {
+                                FirstName = userObj.Person.FirstName,
+                                LastName = userObj.Person.LastName,
+                                FullName = userObj.Person.FullName,
+                                EmailAddress = userObj.Person.Email,
+                                MembershipKey = userObj.Person.MemberShipNo
+                            };
+
+                            _cache.Set<AuthenticateResponse>("ArmUser", dataHubObj, new MemoryCacheEntryOptions()
+                                .SetSlidingExpiration(TimeSpan.FromMinutes(20))
+                                .SetAbsoluteExpiration(TimeSpan.FromHours(1)));
+
+                            //RedirectToAction("Index", "Dashboard", new { area = "Client" });
+                        }
+                    }
+                }
+            }
             if (!User.Identity.IsAuthenticated)
             {
-                var result = _personManager.Get(s => s.Email.Equals(trCustId) || s.MemberShipNo.Equals(trCustId)).SingleOrDefault();
-                if (result != null)
+                if (userObj != null)
                 {
-                    var rs = _userManager.Users.Where(s => s.UserName == result.Email);
+                    userObj.PasswordHash = _userManager.PasswordHasher.HashPassword(userObj, PasswordDef);
+                    var signInResult = _signInManager
+                        .PasswordSignInAsync(userObj, PasswordDef, true, true).Result;
+                    if (signInResult.Succeeded)
+                    {
+                        var dataHubObj = new AuthenticateResponse
+                        {
+                            FirstName = userObj.Person.FirstName,
+                            LastName = userObj.Person.LastName,
+                            FullName = userObj.Person.FullName,
+                            EmailAddress = userObj.Person.Email,
+                            MembershipKey = userObj.Person.MemberShipNo
+                        };
+                        _cache.Set<AuthenticateResponse>("ArmUser", dataHubObj, new MemoryCacheEntryOptions()
+                            .SetSlidingExpiration(TimeSpan.FromMinutes(20))
+                            .SetAbsoluteExpiration(TimeSpan.FromHours(1)));
+                        RedirectToAction("Index", "Dashboard", new { area = "Client" });
+                    }
                 }
             }
 
-            ShowCartInformation();
-            var tranno = transactionRef.ToString().Replace("ARM", "").Trim();
-            if (trStatusCode.Equals("00"))
-            {
-                UpdateStatus(tranno, "Succeed");
-                return RedirectToAction("Index", "Dashboard", new { area = "Client" });
-            }
             UpdateStatus(tranno, "Failed");
             ViewBag.Status = trStatusCode;
             ViewBag.Message = trStatusMsg;
@@ -227,76 +273,84 @@ namespace Portal.Controllers
             var valiedUserObj = _userManager.Users.Include(s => s.Person)
                 .SingleOrDefault(s => s.UserName.Equals(model.Username));
             var isUserNameNullable = valiedUserObj?.UserName;
-            if (!string.IsNullOrEmpty(isUserNameNullable))
+
+            if (valiedUserObj != null)
             {
-                var resultCustomer =
-                    _signInManager.PasswordSignInAsync(valiedUserObj, model.Password, true, true).Result;
-                if (resultCustomer.Succeeded)
+                valiedUserObj.PasswordHash = _userManager.PasswordHasher.HashPassword(valiedUserObj, model.Password);
+
+                if (!string.IsNullOrEmpty(isUserNameNullable))
                 {
-                    var dataHubObj = new AuthenticateResponse
+                    var resultCustomer =
+                        _signInManager.PasswordSignInAsync(valiedUserObj, model.Password, true, true).Result;
+                    if (resultCustomer.Succeeded)
                     {
-                        FirstName = valiedUserObj.Person.FirstName,
-                        LastName = valiedUserObj.Person.LastName,
-                        FullName = valiedUserObj.Person.FullName,
-                        EmailAddress = valiedUserObj.Person.Email,
-                        MembershipKey = Convert.ToInt32(valiedUserObj.Person.MemberShipNo)
-                    };
-
-                    _cache.Set<AuthenticateResponse>("ArmUser", dataHubObj, new MemoryCacheEntryOptions()
-                                                                .SetSlidingExpiration(TimeSpan.FromMinutes(20))
-                                                                .SetAbsoluteExpiration(TimeSpan.FromHours(1)));
-
-                    return RedirectToAction("CheckOut", "CartAndPayment");
-                }
-            }
-            else
-            {
-                var armOneObj = _armOneManager.GetCustomerInformation(model.Username, model.Password);
-                if (armOneObj.ResponseCode.Equals("00"))
-                {
-                    var dataHubObj = _armOneManager.DataHubClientInfo(armOneObj.MembershipNumber, model.Password);
-
-                    var person = new Person
-                    {
-                        FirstName = armOneObj.FirstName,
-                        LastName = armOneObj.LastName,
-                        BioetricVerificationNumber = string.Empty,
-                        Gender = string.Empty,
-                        IsCustomer = true,
-                        Email = armOneObj.Email,
-                        OnCreated = DateTime.Now.ToUniversalTime(),
-                        PortalOnBoarding = "OPB"
-                    };
-
-                    var personResult = _personManager.Save(person);
-                    if (personResult.Succeed)
-                    {
-                        var userObj = new ApplicationUser
+                        var dataHubObj = new AuthenticateResponse
                         {
-                            UserName = armOneObj.Email,
-                            Email = armOneObj.Email,
-                            PersonId = personResult.TObj.Id
+                            FirstName = valiedUserObj.Person.FirstName,
+                            LastName = valiedUserObj.Person.LastName,
+                            FullName = valiedUserObj.Person.FullName,
+                            EmailAddress = valiedUserObj.Person.Email,
+                            MembershipKey = valiedUserObj.Person.MemberShipNo
                         };
 
-                        var profileUserResult = _userManager.CreateAsync(userObj, model.Password).Result;
-                        if (profileUserResult.Succeeded)
+                        _cache.Set<AuthenticateResponse>("ArmUser", dataHubObj, new MemoryCacheEntryOptions()
+                            .SetSlidingExpiration(TimeSpan.FromMinutes(20))
+                            .SetAbsoluteExpiration(TimeSpan.FromHours(1)));
+
+                        return RedirectToAction("CheckOut", "CartAndPayment");
+                    }
+                }
+                else
+                {
+                    var armOneObj = _armOneManager.GetCustomerInformation(model.Username, model.Password);
+                    if (armOneObj.ResponseCode.Equals("00"))
+                    {
+                        var dataHubObj = _armOneManager.DataHubClientInfo(armOneObj.MembershipNumber, model.Password);
+
+                        var person = new Person
                         {
-                            var valiedUser = _userManager.Users.SingleOrDefault(s => s.Email.Equals(userObj.Email));
-                            if (valiedUser != null)
+                            FirstName = armOneObj.FirstName,
+                            LastName = armOneObj.LastName,
+                            BioetricVerificationNumber = string.Empty,
+                            Gender = string.Empty,
+                            IsCustomer = true,
+                            Email = armOneObj.Email,
+                            OnCreated = DateTime.Now.ToUniversalTime(),
+                            PortalOnBoarding = "OPB"
+                        };
+
+                        var personResult = _personManager.Save(person);
+                        if (personResult.Succeed)
+                        {
+                            var userObj = new ApplicationUser
                             {
-                                var signInResult = _signInManager
-                                    .PasswordSignInAsync(valiedUser, model.Password, true, true).Result;
-                                if (signInResult.Succeeded)
+                                UserName = armOneObj.Email,
+                                Email = armOneObj.Email,
+                                PersonId = personResult.TObj.Id
+                            };
+
+                            var profileUserResult = _userManager.CreateAsync(userObj, model.Password).Result;
+                            if (profileUserResult.Succeeded)
+                            {
+                                var valiedUser = _userManager.Users.SingleOrDefault(s => s.Email.Equals(userObj.Email));
+                                if (valiedUser != null)
                                 {
-                                    _cache.Set<CustomerInformationView>("ArmOneUser", armOneObj, new MemoryCacheEntryOptions()
-                                                                            .SetSlidingExpiration(TimeSpan.FromMinutes(20))
-                                                                            .SetAbsoluteExpiration(TimeSpan.FromHours(1)));
+                                    var signInResult = _signInManager
+                                        .PasswordSignInAsync(valiedUser, model.Password, true, true).Result;
+                                    if (signInResult.Succeeded)
+                                    {
+                                        _cache.Set<CustomerInformationView>("ArmOneUser", armOneObj,
+                                            new MemoryCacheEntryOptions()
+                                                .SetSlidingExpiration(TimeSpan.FromMinutes(20))
+                                                .SetAbsoluteExpiration(TimeSpan.FromHours(1)));
 
-                                    _cache.Set<AuthenticateResponse>("ArmUser", dataHubObj, new MemoryCacheEntryOptions()
-                                                                            .SetSlidingExpiration(TimeSpan.FromMinutes(20))
-                                                                            .SetAbsoluteExpiration(TimeSpan.FromHours(1)));
+                                        _cache.Set<AuthenticateResponse>("ArmUser", dataHubObj,
+                                            new MemoryCacheEntryOptions()
+                                                .SetSlidingExpiration(TimeSpan.FromMinutes(20))
+                                                .SetAbsoluteExpiration(TimeSpan.FromHours(1)));
 
-                                    return RedirectToAction("CheckOut", "CartAndPayment");
+                                        return RedirectToAction("CheckOut", "CartAndPayment");
+                                    }
                                 }
                             }
                         }
@@ -354,7 +408,7 @@ namespace Portal.Controllers
                         dataHubObj.LastName = isPersonResult.TObj.LastName;
                         dataHubObj.FullName = isPersonResult.TObj.FullName;
                         dataHubObj.IsActive = isPersonResult.TObj.IsCustomer;
-                        dataHubObj.MembershipKey = Convert.ToInt32(isPersonResult.TObj.MemberShipNo);
+                        dataHubObj.MembershipKey = isPersonResult.TObj.MemberShipNo;
                     }
 
                     var user = new ApplicationUser

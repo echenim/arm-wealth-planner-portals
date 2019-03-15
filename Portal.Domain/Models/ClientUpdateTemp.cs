@@ -5,7 +5,7 @@ namespace Portal.Domain.Models
     public class ClientUpdateTemp
     {
         public int Id { get; set; }
-        public int MembershipNumber { get; set; }
+        public string MembershipNumber { get; set; }
         public string ProgressStatus { get; set; }
         public string EvaluationStatus { get; set; }
         public byte[] Passport { get; set; }

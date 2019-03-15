@@ -28,7 +28,7 @@ namespace Portal.Business.StoreManagers
 
         public CustomerInformationView GetCustomerInformation(string username, string password)
         {
-            var result = new CustomerInformationView();          
+            var result = new CustomerInformationView();
             var configSetting = _configSettingManager;
 
             var absoluteUrl = new UriBuilder()
@@ -37,7 +37,7 @@ namespace Portal.Business.StoreManagers
                 Host = "localhost",
                 Port = 5000
             };
-            
+
             //authenticate user
             var customerLoginRequest = new ArmOneAuthRequest
             {
@@ -80,8 +80,7 @@ namespace Portal.Business.StoreManagers
 
                 var registerOnArmOne = OnboardOldUsers(username, password);
                 if (registerOnArmOne.ResponseCode == "00")
-                    customerLoginResponse = _clientService.ArmOneAuthenticate(customerLoginRequest);               
-
+                    customerLoginResponse = _clientService.ArmOneAuthenticate(customerLoginRequest);
             }
 
             //get customer detail from arm one
@@ -117,7 +116,7 @@ namespace Portal.Business.StoreManagers
         public AuthenticateResponse DataHubClientInfo(string membershipnumber, string password)
         {
             var request = new AuthenticateRequest { Password = password, UserName = membershipnumber };
-            var response = _clientService.Authenticate(request); 
+            var response = _clientService.Authenticate(request);
 
             return response;
         }
@@ -215,11 +214,11 @@ namespace Portal.Business.StoreManagers
             return response;
         }
 
-        public CustomerDetail GetUserProfile(int membershipKey)
+        public CustomerDetail GetUserProfile(string membershipKey)
         {
             var customerRequest = new ClientValidateRequest
             {
-                CustomerReference = membershipKey.ToString()
+                CustomerReference = membershipKey
             };
             var customerResponse = _clientService.ClientValidate(customerRequest);
             if (customerResponse != null)

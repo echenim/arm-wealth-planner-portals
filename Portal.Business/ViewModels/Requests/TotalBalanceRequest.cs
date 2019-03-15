@@ -2,6 +2,6 @@
 {
     public class TotalBalanceRequest : BaseRequest
     {
-        public int MembershipNumber { get; set; }
+        public string MembershipNumber { get; set; }
     }
 }

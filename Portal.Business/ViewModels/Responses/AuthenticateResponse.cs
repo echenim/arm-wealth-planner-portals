@@ -4,7 +4,7 @@ namespace Portal.Business.ViewModels
 {
     public class AuthenticateResponse
     {
-        public int MembershipKey { get; set; }
+        public string MembershipKey { get; set; }
         public string AltUsername { get; set; }
         public string OldPortfolioNo { get; set; }
         public string EmailAddress { get; set; }

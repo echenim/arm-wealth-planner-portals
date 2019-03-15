@@ -37,6 +37,7 @@ namespace Portal.Areas.Client.Controllers
 
         //test
         private readonly IArmOneServiceConfigManager _configSettingManager;
+
         private readonly IPersonManager _personManager;
 
         public TestArmClientServices _clientService;
@@ -78,7 +79,7 @@ namespace Portal.Areas.Client.Controllers
 
             if (_user == null && person == null)
             {
-                TempData["SessionTimeOut"] = $@"You have been logged out due to inactivity. 
+                TempData["SessionTimeOut"] = $@"You have been logged out due to inactivity.
                                                 Please login to gain access.";
                 return RedirectToAction("Index", "Home", new { area = "" });
             }
@@ -89,7 +90,7 @@ namespace Portal.Areas.Client.Controllers
                 client.EmailAddress = person.Email;
                 client.FirstName = person.FirstName;
                 client.LastName = person.LastName;
-                client.MembershipKey = Convert.ToInt32(person.MemberShipNo);
+                client.MembershipKey = person.MemberShipNo;
                 client.FullName = person.FullName;
 
                 _user = client;
@@ -106,7 +107,7 @@ namespace Portal.Areas.Client.Controllers
                 List<ProductDetails> getSummaries = new List<ProductDetails>();
                 List<decimal> sumOfAccruedInterests = new List<decimal>();
 
-                //get account summary                
+                //get account summary
                 var accountsResponse = _client.GetAccountSummary(_user.MembershipKey);
 
                 if (accountsResponse != null)
