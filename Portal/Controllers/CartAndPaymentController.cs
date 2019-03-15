@@ -53,7 +53,6 @@ namespace Portal.Controllers
             IPasswordHasher<ApplicationUser> passwordHasher,
             IHostingEnvironment hostingEnvironment,
             IArmOneManager armOneManager,
-            IArmOneServiceConfigManager armOneServiceConfigManager,
 
             IMemoryCache cache)
         {
