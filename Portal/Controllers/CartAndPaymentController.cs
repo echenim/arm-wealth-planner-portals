@@ -163,9 +163,8 @@ namespace Portal.Controllers
 
             ShowCartInformation();
             var tranno = transactionRef.ToString().Replace("ARM", "").Trim();
-            var userObj = _userManager.Users.Include(s => s.Person).SingleOrDefault(s => s.UserName.Equals("gbadebo.ayan@gmail.com"));
-
-            var user = _userManager.Users.Include(s => s.Person).SingleOrDefault(s => s.Email.Equals("gbadebo.ayan@gmail.com"));
+            var owner = _cartManager.Get(s => s.TransactionNo.Equals(tranno)).FirstOrDefault();
+            var userObj = _userManager.Users.Include(s => s.Person).SingleOrDefault(s => s.UserName.Equals(owner.ItemOwner));
 
             if (trStatusCode.Equals("00"))
             {
@@ -191,7 +190,7 @@ namespace Portal.Controllers
                                 .SetSlidingExpiration(TimeSpan.FromMinutes(20))
                                 .SetAbsoluteExpiration(TimeSpan.FromHours(1)));
 
-                            //RedirectToAction("Index", "Dashboard", new { area = "Client" });
+                            RedirectToAction("Index", "Dashboard", new { area = "Client" });
                         }
                     }
                 }

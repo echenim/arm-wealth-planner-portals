@@ -1,0 +1,6 @@
+2019-03-18T16:11:07.1503767+01:00 0HLLBMFP3BBG8:00000001 [INF] Request starting HTTP/1.1 GET http://localhost/armwealth/img/arm-favicon.jpg   (ca22a1cb)
+2019-03-18T16:11:07.1768485+01:00 0HLLBMFP3BBG8:00000001 [WRN] Failed to determine the https port for redirect. (ca76cc21)
+2019-03-18T16:11:07.2642164+01:00 0HLLBMFP3BBG8:00000001 [INF] Sending file. Request path: '"/img/arm-favicon.jpg"'. Physical path: '"D:\WorkSpace\wealth-planner\Portal\wwwroot\img\arm-favicon.jpg"' (27b0a520)
+2019-03-18T16:11:07.2685511+01:00 0HLLBMFP3BBG8:00000001 [INF] Request finished in 123.5448ms 200 image/jpeg (791a596a)
+2019-03-18T16:32:02.0454839+01:00 0HLLBMFP3BBG9:00000001 [INF] Request starting HTTP/1.1 POST http://127.0.0.1:25173/ARMWEALTH/iisintegration  0 (ca22a1cb)
+2019-03-18T16:32:02.0484417+01:00 0HLLBMFP3BBG9:00000001 [INF] Request finished in 2.9717ms 202  (791a596a)
