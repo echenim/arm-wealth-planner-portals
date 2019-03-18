@@ -51,6 +51,7 @@ namespace Portal.Controllers
             IPasswordHasher<ApplicationUser> passwordHasher,
             IHostingEnvironment hostingEnvironment,
             IArmOneManager armOneManager,
+            IArmOneServiceConfigManager armOneServiceConfigManager,
 
             IMemoryCache cache)
         {
@@ -159,14 +160,14 @@ namespace Portal.Controllers
             var trCustId = trResponse["arm_cust_id"];
             var trPaymentParams = trResponse["arm_payment_params"];
 
-            if (!User.Identity.IsAuthenticated)
-            {
-                var result = _personManager.Get(s => s.Email.Equals(trCustId) || s.MemberShipNo.Equals(trCustId)).SingleOrDefault();
-                if (result != null)
-                {
-                    var rs = _userManager.Users.Where(s => s.UserName == result.Email);
-                }
-            }
+            //if (!User.Identity.IsAuthenticated)
+            //{
+            //    var result = _personManager.Get(s => s.Email.Equals(trCustId) || s.MemberShipNo.Equals(trCustId)).SingleOrDefault();
+            //    if (result != null)
+            //    {
+            //        var rs = _userManager.Users.Where(s => s.UserName == result.Email);
+            //    }
+            //}
 
             ShowCartInformation();
             var tranno = transactionRef.ToString().Replace("ARM", "").Trim();
@@ -219,17 +220,21 @@ namespace Portal.Controllers
             //  if (!ModelState.IsValid) return View("_checkout", model);
             ShowCartInformation();
             var tracker = HttpContext.Session.GetString("_ArmTracker");
+
             if (tracker != null)
             {
                 _cartManager.CartUpdateWithEmail(model.Username, tracker);
             }
+
             var valiedUserObj = _userManager.Users.Include(s => s.Person)
                 .SingleOrDefault(s => s.UserName.Equals(model.Username));
+
             var isUserNameNullable = valiedUserObj?.UserName;
             if (!string.IsNullOrEmpty(isUserNameNullable))
             {
                 var resultCustomer =
                     _signInManager.PasswordSignInAsync(valiedUserObj, model.Password, true, true).Result;
+
                 if (resultCustomer.Succeeded)
                 {
                     var dataHubObj = new AuthenticateResponse
