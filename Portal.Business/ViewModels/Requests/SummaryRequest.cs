@@ -2,6 +2,6 @@
 {
     public class SummaryRequest : BaseRequest
     {
-        public int MembershipNumber { get; set; }
+        public string MembershipNumber { get; set; }
     }
 }

@@ -219,7 +219,7 @@ namespace Portal.Controllers
             var valiedUserObj = _userManager.Users.Include(s => s.Person)
                 .SingleOrDefault(s => s.UserName.Equals(model.Username));
 
-            var isUserNameNullable = valiedUserObj?.UserName; 
+            var isUserNameNullable = valiedUserObj?.UserName;
             if (!string.IsNullOrEmpty(isUserNameNullable))
             {
                 var resultCustomer = _signInManager.PasswordSignInAsync(valiedUserObj, model.Password, true, true).Result;
@@ -231,7 +231,7 @@ namespace Portal.Controllers
                         LastName = valiedUserObj.Person.LastName,
                         FullName = valiedUserObj.Person.FullName,
                         EmailAddress = valiedUserObj.Person.Email,
-                        MembershipKey = Convert.ToInt32(valiedUserObj.Person.MemberShipNo)
+                        MembershipKey = valiedUserObj.Person.MemberShipNo
                     };
 
                     _cache.Set<AuthenticateResponse>("ArmUser", dataHubObj, new MemoryCacheEntryOptions()
@@ -336,9 +336,9 @@ namespace Portal.Controllers
                     if (armOneObj.ResponseCode.Equals("00"))
                     {
                         dataHubObj = _armOneManager.DataHubClientInfo(armOneObj.MembershipNumber, model.Password);
-                    }                        
+                    }
 
-                    var isPersonResult = _personManager.Save(model);                    
+                    var isPersonResult = _personManager.Save(model);
 
                     if (isPersonResult.Succeed)
                     {
@@ -349,7 +349,7 @@ namespace Portal.Controllers
                             dataHubObj.LastName = isPersonResult.TObj.LastName;
                             dataHubObj.FullName = isPersonResult.TObj.FullName;
                             dataHubObj.IsActive = isPersonResult.TObj.IsCustomer;
-                            dataHubObj.MembershipKey = Convert.ToInt32(isPersonResult.TObj.MemberShipNo);
+                            dataHubObj.MembershipKey = isPersonResult.TObj.MemberShipNo;
                         }
 
                         var user = new ApplicationUser

@@ -5,7 +5,7 @@ namespace Portal.Business.ViewModels
 {
     public class TransactionRequest : BaseRequest
     {
-        public int CustomerReference { get; set; }
+        public string CustomerReference { get; set; }
         public string CustomerName { get; set; }
         public string EmailAddress { get; set; }
         public string MobileNumber { get; set; }

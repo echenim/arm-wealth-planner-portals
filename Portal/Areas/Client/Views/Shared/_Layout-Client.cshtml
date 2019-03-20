@@ -3,11 +3,11 @@
 
 @{
     var _user = UserUtil.GetDataHubUser();
-    var membershipKey = 0;
+    var membershipKey = string.Empty;
     if (!String.IsNullOrEmpty(_user.MembershipKey.ToString()))
     {
         membershipKey = _user.MembershipKey;
-    }    
+    }
     var fullName = _user.FullName;
 }
 
@@ -215,8 +215,8 @@
                                         <a asp-area="Client" asp-controller="Portfolio" asp-action="FamilyAccounts">Family Accounts</a>
                                     </li>
                                     @*<li>
-                                        <a asp-area="Client" asp-controller="Portfolio" asp-action="ForgotPassword">Forgot Password</a>
-                                    </li>*@
+                                            <a asp-area="Client" asp-controller="Portfolio" asp-action="ForgotPassword">Forgot Password</a>
+                                        </li>*@
                                 </ul>
                             </div>
                         </div>
@@ -385,15 +385,15 @@
                             <div class="logged-user-i">
                                 <div class="logged-user-info-w top-personal-info">
                                     @*@if (User.Identity.IsAuthenticated)
-                                    {
-                                        var person = UserUtil.GetUser(User.Identity.Name);
-                                        <div class="logged-user-name">
-                                            @string.Format("{0}", person.FullName)
-                                        </div>
-                                        <div class="logged-user-role">
-                                            @string.Format("Member ID:  {0}", person.MembershipNo)
-                                        </div>
-                                    }*@
+                                        {
+                                            var person = UserUtil.GetUser(User.Identity.Name);
+                                            <div class="logged-user-name">
+                                                @string.Format("{0}", person.FullName)
+                                            </div>
+                                            <div class="logged-user-role">
+                                                @string.Format("Member ID:  {0}", person.MembershipNo)
+                                            </div>
+                                        }*@
                                     @if (!String.IsNullOrEmpty(fullName) && !String.IsNullOrEmpty(membershipKey.ToString()))
                                     {
                                         <div class="logged-user-name">
@@ -415,15 +415,15 @@
                                         </div>
                                         <div class="logged-user-info-w">
                                             @*@if (User.Identity.IsAuthenticated)
-                                            {
-                                                var person = UserUtil.GetUser(User.Identity.Name);
-                                                <div class="logged-user-name">
-                                                    @string.Format("{0}", person.FullName)
-                                                </div>
-                                                <div class="logged-user-role">
-                                                    @string.Format("Member ID:  {0}", person.MembershipNo)
-                                                </div>
-                                            }*@
+                                                {
+                                                    var person = UserUtil.GetUser(User.Identity.Name);
+                                                    <div class="logged-user-name">
+                                                        @string.Format("{0}", person.FullName)
+                                                    </div>
+                                                    <div class="logged-user-role">
+                                                        @string.Format("Member ID:  {0}", person.MembershipNo)
+                                                    </div>
+                                                }*@
                                             @if (!String.IsNullOrEmpty(fullName) && !String.IsNullOrEmpty(membershipKey.ToString()))
                                             {
                                                 <div class="logged-user-name">

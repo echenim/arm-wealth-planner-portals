@@ -28,7 +28,7 @@ namespace Portal.Services
             _clientService = new TestArmClientServices(_configSettingManager, _contentRootPath);
         }
 
-        public CustomerDetail GetUserProfile(int membershipKey)
+        public CustomerDetail GetUserProfile(string membershipKey)
         {
             var customerRequest = new ClientValidateRequest
             {
@@ -42,7 +42,7 @@ namespace Portal.Services
             return null;
         }
 
-        public SummaryResponse GetAccountSummary(int membershipkey)
+        public SummaryResponse GetAccountSummary(string membershipkey)
         {
             var accountsResponse = new SummaryResponse();
             var accountsRequest = new SummaryRequest
@@ -70,7 +70,7 @@ namespace Portal.Services
             return null;
         }
 
-        public TotalBalanceResponse GetTotalAccountBalance(int membershipkey)
+        public TotalBalanceResponse GetTotalAccountBalance(string membershipkey)
         {
             var totalBalanceResponse = new TotalBalanceResponse();
             var totalBalanceRequest = new TotalBalanceRequest
@@ -200,7 +200,7 @@ namespace Portal.Services
             return elResponse;
         }
 
-        public string GenerateUniqueID(int key)
+        public string GenerateUniqueID(string key)
         {
             return string.Format("{0}{1:N}", key, Guid.NewGuid());
         }
