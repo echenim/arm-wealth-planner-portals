@@ -48,6 +48,8 @@ namespace Portal.ViewModel
         [EmailAddress]
         public string EmailOfReferrer { get; set; }
 
+        public string ProspectCode { get; set; }
+
         public static implicit operator Person(RegistrationViewModel model)
         {
             return new Person
@@ -61,6 +63,7 @@ namespace Portal.ViewModel
                 Gender = model.Gender,
                 IsCustomer = true,
                 OnCreated = DateTime.Now.ToUniversalTime(),
+                ProspectCode = model.ProspectCode,
                 PortalOnBoarding = $"NPB"
             };
         }

@@ -47,6 +47,9 @@ namespace Portal.Domain.Models
 
         public string PortalOnBoarding { get; set; }
 
+        [MaxLength(10)]
+        public string ProspectCode { get; set; }
+
         [Required]
         [DataType(DataType.DateTime)]
         public DateTime OnCreated { get; set; }

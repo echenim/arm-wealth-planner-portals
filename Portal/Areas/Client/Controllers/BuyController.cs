@@ -421,6 +421,11 @@ namespace Portal.Areas.Client.Controllers
             return View("TransactionStatus", transactionStatus);
         }
 
+        public IActionResult PaymentStatus()
+        {
+            return View();
+        }
+
         public IActionResult TransactionStatus(PaymentTransactionStatus transactionStatus)
         {
             var model = new PaymentTransactionStatus();
@@ -542,17 +547,10 @@ namespace Portal.Areas.Client.Controllers
             if (_user == null)
             {
                 _cache.Set<AuthenticateResponse>("ArmUser", userprofile,
-                                                            new MemoryCacheEntryOptions().SetSlidingExpiration(TimeSpan.FromMinutes(20))
-                                                                                 .SetAbsoluteExpiration(TimeSpan.FromHours(1)));
-            }
-
-            //var getClientBalance = _client.GetTotalAccountBalance(_user.MembershipKey);
-
-            //if (getClientBalance != null)
-            //{
-            //HttpContext.Session.Set("ArmClientBalance", getClientBalance);
-            //set session at this point.
-            //}
+                        new MemoryCacheEntryOptions()
+                        .SetSlidingExpiration(TimeSpan.FromMinutes(20))
+                        .SetAbsoluteExpiration(TimeSpan.FromHours(1)));
+            }            
 
             var ddResponse = response;
             var ddRef = ddResponse["arm_ddref"];

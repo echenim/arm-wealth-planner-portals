@@ -2,6 +2,8 @@
 @using Portal.Business.Utilities
 @using Portal.Domain.ViewModels
 @using Microsoft.AspNetCore.Mvc.Rendering
+@using Newtonsoft.Json;
+@using System.Text;
 @inject UserUtils UserUtil
 
 <!DOCTYPE html>
@@ -59,7 +61,7 @@
                         </div>
                         <!-- Logo Area -->
                         <div class="col-lg-2 align-self-lg-center d-none d-lg-block ">
-                            <a href="/" class="brk-header__logo brk-header__item @@modifier">
+                            <a asp-controller="Home" asp-action="Index" class="brk-header__logo brk-header__item @@modifier">
 
                                 <img src="~/Liber/Store/img/ARM-investment-center-logo.png"
                                      class="brk-header__logo-2 lazyload centering-img"
@@ -73,13 +75,25 @@
                         <!-- Cart -->
                         <div class="col-lg-5 align-self-lg-stretch text-left text-lg-right">
                             <div class="brk-mini-cart brk-header__item">
-                                <a href="cart.html" class="brk-mini-cart__open d-flex"><i class="fa fa-shopping-basket" aria-hidden="true"></i> <span class="brk-mini-cart__label font__family-varela-round font__weight-medium text-uppercase letter-spacing-60 font__size-10 opacity-80">My cart</span> <span class="brk-mini-cart__title">Shopping Cart</span> <span class="brk-mini-cart__count brk-mini-cart__count_skin-1 brk-mini-cart__count_white">@ViewBag.Count</span></a>
+                                <a asp-controller="CartAndPayment" asp-action="Carts" class="brk-mini-cart__open d-flex"><i class="fa fa-shopping-basket" aria-hidden="true"></i> <span class="brk-mini-cart__label font__family-varela-round font__weight-medium text-uppercase letter-spacing-60 font__size-10 opacity-80">My cart</span> <span class="brk-mini-cart__title">Shopping Cart</span> <span class="brk-mini-cart__count brk-mini-cart__count_skin-1 brk-mini-cart__count_white">@ViewBag.Count</span></a>
                                 <div class="brk-mini-cart__menu">
-                                    Cart Dropdown
+                                    
                                     <div class="brk-mini-cart__header"><span class="font__family-varela-round font__weight-bold font__size-18">My Cart</span></div>
                                     <div class="brk-mini-cart__products">
                                         @foreach (var item in (IQueryable<Transactional>)ViewData["cartitems"])
                                         {
+                                            var itemId = item.Id;
+                                            var tranno = item.TransactionNo;
+                                            //var cartItem = JsonConvert.SerializeObject(item, new JsonSerializerSettings()
+                                            //{
+                                            //    PreserveReferencesHandling = PreserveReferencesHandling.Objects,
+                                            //    Formatting = Formatting.Indented
+                                            //});
+
+                                            //var textBytes = Encoding.Default.GetBytes(cartItem);
+                                            //var encodedItem = BitConverter.ToString(textBytes);
+                                            //encodedItem = encodedItem.Replace("-", "");
+
                                             <div class="brk-mini-cart__product">
                                                 <div class="brk-mini-cart__product--img"><img class="lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="@Url.Content("~/")Liber/FileArchives/@item.Product.Image" alt="alt"></div>
                                                 <div class="brk-mini-cart__product--title-price">
@@ -88,7 +102,8 @@
                                                     </a> <span class="brk-mini-cart__product--price font__family-varela-round">&#8358;@item.Amount</span>
                                                 </div>
                                                 <div class="brk-quantity"><span class="brk-quantity__arrows minus"></span> <input class="brk-quantity__value" name="quantity" type="text" value="1"></div>
-                                                <a href="#" class="brk-mini-cart__product--remove remove"><i class="fa fa-times-circle" aria-hidden="true"></i></a>
+                                                <a href="@Url.Action("DeleteCartItem", "CartAndPayment", new { id = itemId, transactionNo = tranno })" class="brk-mini-cart__product--remove remove"><i class="fa fa-times-circle" aria-hidden="true"></i></a>
+                                                
                                             </div>
                                         }
                                     </div>
@@ -102,17 +117,17 @@
                             </div>
 
                             @if (User.Identity.IsAuthenticated)
-                                {
+                            {
                                    
                                 <div class="brk-header__element brk-header__element_skin-2 brk-header__item">
-                                    <a href="#" class="brk-header__element--wrap">
-                                        <span class="brk-header__element--label font__weight-medium">@User.Identity.Name</span>
+                                    <a asp-area="Client" asp-controller="Dashboard" asp-action="Index" class="brk-header__element--wrap">
+                                        <span class="brk-header__element--label font__weight-medium"> <i class="fas fa-home"></i> My Account@*@User.Identity.Name*@</span>
                                     </a>
                                    
                                 </div>
                                     <div class="brk-header__element brk-header__element_skin-2 brk-header__item">
                                         <form  method="get" asp-controller="Account" asp-action="LogOut">
-                                            <button type="submit" class="brk-header__element--label font__weight-semibold">Logout</button>
+                                            <button type="submit" class="brk-header__element--label font__weight-semibold" style="margin-top: 19px;">Logout</button>
                                         </form>
                                     </div>
 
@@ -138,11 +153,11 @@
                         <div class="col-lg align-self-lg-stretch">
                             <nav class="brk-nav brk-header__item">
                                 <ul class="brk-nav__menu">
-                                    @if (User.Identity.IsAuthenticated)
+                                    @*@if (User.Identity.IsAuthenticated)
                                     {
                                         <li class="brk-nav__drop-down-effect"><a asp-controller="Dashboard" asp-action="Index" asp-area="Client"><span>Client Portal</span></a></li>
 
-                                    }
+                                    }*@
                                     <li class="brk-nav__drop-down-effect"><a asp-controller="MutualFunds" asp-action="Index"><span>Mutual Funds</span></a></li>
                                     <li class="brk-nav__drop-down-effect"><a asp-controller="Pension" asp-action="Index"><span>Pensions</span></a></li>
                                     <li class="brk-nav__drop-down-effect"><a asp-controller="Insurance" asp-action="Index"><span>Insurance</span></a></li>

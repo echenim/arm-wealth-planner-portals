@@ -107,7 +107,18 @@
                     <div class="el-chart-w">
                         <canvas height="120" id="donutChart1" width="120"></canvas>
                         <div class="inside-donut-chart-label">
-                            <strong>&#8358;@String.Format("{0:#,##0.##}", @ViewBag.SumAccruedInterest)</strong><span>Accrued Interest</span>
+                            @{
+                                var accruedInterest = String.Empty;
+                                if (ViewBag.SumAccruedInterest != null)
+                                {
+                                    accruedInterest = String.Format("{0:#,##0.##}", @ViewBag.SumAccruedInterest);
+                                }
+                                else
+                                {
+                                    accruedInterest = "0.00";
+                                }
+                            }
+                            <strong>&#8358;@accruedInterest</strong><span>Accrued Interest</span>
                         </div>
                     </div>
                     <div class="el-legend condensed">

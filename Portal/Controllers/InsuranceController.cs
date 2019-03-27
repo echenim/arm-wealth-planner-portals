@@ -56,6 +56,17 @@ namespace Portal.Controllers
             ShowCartInformation();
             if (ModelState.IsValid)
             {
+                if (model.Amount < 50000 && model.ProductId == 2010)
+                {
+                    TempData["AmountTooLow"] = "Please enter an amount equal to or greater than ₦50,000.00";
+                    return RedirectToAction("Details", "Insurance", new { id = model.ProductId });
+                }
+                else if (model.Amount < 10000 && model.ProductId == 2009)
+                {
+                    TempData["AmountTooLow"] = "Please enter an amount equal to or greater than ₦10,000.00";
+                    return RedirectToAction("Details", "Insurance", new { id = model.ProductId });
+                }
+
                 var carts = new Transactional
                 {
                     ProductId = model.ProductId,
@@ -69,13 +80,14 @@ namespace Portal.Controllers
                 };
 
                 var result = _cartManager.Save(carts);
-                if (result.Id > 0)
+                var transact = _cartManager.SavePayment(carts);
+                if (result.Id > 0 && transact.Id > 0)
                 {
                     return RedirectToAction("Carts", "CartAndPayment");
                 }
             }
 
-            return RedirectToAction($"Details/{model.ProductId}", "Insurance");
+            return RedirectToAction("Details", "Insurance", new { id = model.ProductId});
         }
 
         #region cartbasket

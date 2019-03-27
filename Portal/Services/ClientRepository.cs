@@ -47,7 +47,7 @@ namespace Portal.Services
             var accountsResponse = new SummaryResponse();
             var accountsRequest = new SummaryRequest
             {
-                MembershipNumber = membershipkey
+                MembershipNumber = Convert.ToInt32(membershipkey)
             };
 
             accountsResponse = _clientService.GetAccountSummary(accountsRequest);
@@ -75,7 +75,7 @@ namespace Portal.Services
             var totalBalanceResponse = new TotalBalanceResponse();
             var totalBalanceRequest = new TotalBalanceRequest
             {
-                MembershipNumber = membershipkey
+                MembershipNumber = Convert.ToInt32(membershipkey)
             };
             totalBalanceResponse = _clientService.GetTotalBalance(totalBalanceRequest);
 
@@ -93,7 +93,7 @@ namespace Portal.Services
                 {
                     var request = new LastTransactionRequest
                     {
-                        MembershipNumber = user.MembershipKey,
+                        MembershipNumber = Convert.ToInt32(user.MembershipKey),
                         ProductCode = summary.ProductCode,
                         Count = count
                     };
@@ -115,7 +115,7 @@ namespace Portal.Services
             var response = new StatementResponse();
             var request = new StatementRequest
             {
-                MembershipNumber = user.MembershipKey,
+                MembershipNumber = Convert.ToInt32(user.MembershipKey),
                 EndDate = model.EndDate.Value.AddDays(1),
                 StartDate = model.StartDate.Value.AddDays(1),
                 TransactionType = model.TransactionType,

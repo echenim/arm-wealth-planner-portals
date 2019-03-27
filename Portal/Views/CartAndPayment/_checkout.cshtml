@@ -72,6 +72,12 @@
                                             <h2 class="font__family-montserrat font__size-36 font__weight-bold line__height-42 mt-40">Login</h2>
                                             <form asp-controller="CartAndPayment" asp-action="SignIn" class="brk-form brk-form-strict maxw-570" data-brk-library="component__form">
 
+                                                @*<input type="text" value="@Model.PTotal" id="mmf" hidden />
+                                                <input type="text" value="@Model.TransactionNo" id="ef" hidden />
+                                                <input type="text" value="@Model.SubTotal" id="df" hidden />
+                                                <input type="text" value="@Model.Total" id="agf" hidden />
+                                                <input type="text" value="@Model.CartCollection" id="agf" hidden />*@
+
                                                 <input type="text" name="Username" asp-for="Username" placeholder="Member ID or Email Address">
                                                 <input type="password" name="Password" asp-for="Password" placeholder="Password">
                                                 <div class="no-margin pl-10 pr-10 mb-30 mt-40 d-flex flex-wrap justify-content-between align-items-center">
@@ -160,6 +166,7 @@
                                 </div>
                                 <div class="col-12 col-md-12">
                                     <Label>First Name </Label>  <input type="text" readonly="readonly" value="@Model.Person.FirstName" required>
+
                                 </div>
                                 <div class="col-12 col-md-12">
                                     <Label>Last Name </Label> <input type="text" readonly="readonly" value="@Model.Person.LastName" required>
@@ -216,73 +223,24 @@
                     </article>
                     @if (User.Identity.IsAuthenticated)
                     {
-                        <div class="text-center translate-top-50">
-                            <button class="btn btn-inside-out btn-lg border-radius-25 btn-shadow pl-50 pr-50" data-brk-library="component__button" data-toggle="modal" data-target="#myModal">
-                                <span class="before">Proceed Checkout</span><span class="text">Proceed Checkout</span><span class="after">Proceed Checkout</span>
-                            </button>
-                        </div>
-
-                    }
-                </div>
-            </div>
-        </div>
-
-        <!--proceed to checkout-->
-        <!-- Modal -->
-        <div class="modal fade" id="myModal" role="dialog">
-            <div class="modal-dialog modal-lg">
-
-                <!-- Modal content-->
-                <div class="modal-content">
-
-                    <div class="modal-body">
-                        @if (User.Identity.IsAuthenticated)
+                        var customerId = String.Empty;
+                        if (String.IsNullOrEmpty(Model.Person.MemberShipNo))
                         {
-                            <header class="brk-checkout-order__header d-flex align-items-center justify-content-between">
-                                <h1 class="font__family-montserrat font__size-21 line__height-24 font__weight-bold">@Model.Person.FirstName @Model.Person.LastName here are your orders</h1>
-                            </header>
+                            customerId = Model.Person.Email;
                         }
-
-                        <ul class="brk-checkout-order__list brk-styled-scroll-x">
-                            @foreach (var item in Model.CartCollection)
-                            {
-                                <li class="brk-checkout-order-item font__family-montserrat font__size-14 line__height-16" data-brk-library="component__checkout">
-                                    <img data-src="../Liber/FileArchives/@item.Product.Image" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="item-alt" class="lazyload brk-checkout-order-item__img">
-                                    <h2 class="font__size-14 line__height-16 font__weight-bold brk-checkout-order-item__title">@item.Product.Name</h2>
-                                    <p class="brk-checkout-order-item__price text-left"> <span class="brk-base-font-color pl-1 font__weight-bold ">&#8358;@item.Amount</span></p>
-                                </li>
-                            }
-                        </ul>
-                        <div></div>
-                        <div class="maxw-770" data-brk-library="component__title">
-                            <div class="text-left">
-
-                                <h4 class="font__family-montserrat highlight-underline line__height-26 font__size-21 font__weight-light">
-                                    <span class="before wow fadeInUp"></span> <span class="before wow fadeInUp"></span><span>Process payment via ARMPay </span></br><span class="checkout-small-desc mt-20 text-justify">
-                                        ARMPay is ARM’s proprietary payment gateway which facilitates electronic payments on Mastercard, Visa, Verve and various debit/credit
-                                        cards in Nigeria.
-                                    </span>
-                                </h4>
-                                <img src="../Liber/Store/img/payment-icons.svg" class="pd-lr-20 pb-1">
-                            </div>
-                        </div>
-                        <footer class="brk-checkout-order__footer">
-                            <section class="brk-checkout-order__footer-section">
-                                <h3 class="font__family-montserrat"><span class="font__size-14 font__weight-bold pr-2">Subtotal:</span><span class="font__size-24 font__weight-bold brk-base-font-color">&#8358;@Model.SubTotal</span></h3>
-                            </section>
-                            <section class="brk-checkout-order__footer-section">
-                                <h3 class="font__family-montserrat"><span class="font__size-14 font__weight-bold pr-2">Total:</span><span class="font__size-24 font__weight-bold brk-base-font-color">&#8358;@Model.Total</span></h3>
-                            </section>
-                        </footer><span class="brk-checkout-order__after"></span>
-                    </div>
-                    <div class="modal-footer">
-                        @if (User.Identity.IsAuthenticated)
+                        else
                         {
+                            customerId = Model.Person.MemberShipNo;
+                        }
+                        <div class="text-center translate-top-50">
+                            @*<button class="btn btn-inside-out btn-lg border-radius-25 btn-shadow pl-50 pr-50" data-brk-library="component__button" data-toggle="modal" data-target="#myModal">
+                                <span class="before">Proceed Checkout</span><span class="text">Proceed Checkout</span><span class="after">Proceed Checkout</span>
+                            </button>*@
+
                             <form id="paymentform" name="submit2aggregator_form" action="@Model.PaymentGateway" target="_self" method="post">
-                                @*<form method="get" asp-action="Process" asp-controller="CartAndPayment">*@
                                 <input type="hidden" name="arm_vendor_username" value="@Model.VendorUserName" />
                                 <input type="hidden" name="arm_tranx_id" value="@Model.TransactionParameter" />
-                                <input type="hidden" name="arm_cust_id" value="@Model.Person.MemberShipNo" />
+                                <input type="hidden" name="arm_cust_id" value="@customerId" />
                                 <input type="hidden" name="arm_cust_name" value="@Model.Person.FirstName @Model.Person.LastName" />
                                 <input type="hidden" name="arm_tranx_amt" value="@Model.PTotal" />
                                 <input type="hidden" name="arm_tranx_curr" value="566" />
@@ -290,17 +248,20 @@
                                 <input type="hidden" name="arm_xml_data" value="@Html.Raw(@Model.XmlPayload)" />
                                 <input type="hidden" name="arm_hash" value="@Model.HashedData" />
                                 <input type="hidden" name="arm_payment_params" value="@string.Format("{0}",@Model.TransactionParameter)" />
-                                <button class="btn btn-inside-out btn-lg  btn-shadow pl-50 pr-50" data-brk-library="component__button" data-toggle="modal" data-target="#myModal">
-                                    <span class="before">To Payment</span><span class="text">To Payment</span><span class="after">To Payment</span>
-                                </button>
-                                <button data-dismiss="modal" class="btn btn-inside-out btn-lg  btn-shadow pl-50 pr-50" data-brk-library="component__button" data-toggle="modal" data-target="#myModal">
-                                    <span class="before">Close</span><span class="text">Close</span><span class="after">Close</span>
+
+                                <button class="btn btn-inside-out btn-lg border-radius-25 btn-shadow pl-50 pr-50" data-brk-library="component__button">
+                                    <span class="before">Proceed To Payment</span><span class="text">Proceed To Payment</span><span class="after">Proceed To Payment</span>
                                 </button>
                             </form>
-                        }
-                    </div>
+                            
+                        </div>                        
+                    }
                 </div>
             </div>
         </div>
+
+        <!--proceed to checkout-->
+        <!-- Modal -->
+        
     </main>
 </div>

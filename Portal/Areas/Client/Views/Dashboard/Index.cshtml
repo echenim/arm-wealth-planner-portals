@@ -19,7 +19,19 @@
                             Your Investment Position
                         </div>
                         <div class="balance-value">
-                            <span>&#8358;@String.Format("{0:#,##0.##}", Model.TotalBalance)</span>
+                            @{ 
+                                var total_balance = String.Empty;
+                                if (Model.TotalBalance > 0)
+                                {
+                                    total_balance = @String.Format("{0:#,##0.##}", Model.TotalBalance);
+                                }
+                                else
+                                {
+                                    total_balance = "0.00";
+                                }
+                            }
+                            
+                            <span>&#8358;@total_balance</span>
                         </div>
                     </div>
 
@@ -73,7 +85,7 @@
                         <div class="inside-donut-chart-label">
                             @{ 
                                 var accruedInterest = String.Empty;
-                                if (!String.IsNullOrEmpty(String.Format("{0:#,##0.##}", @ViewBag.SumAccruedInterest)))
+                                if (ViewBag.SumAccruedInterest != null)
                                 {
                                     accruedInterest = String.Format("{0:#,##0.##}", @ViewBag.SumAccruedInterest);
                                 }

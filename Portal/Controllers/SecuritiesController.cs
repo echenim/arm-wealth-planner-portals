@@ -56,6 +56,12 @@ namespace Portal.Controllers
             ShowCartInformation();
             if (ModelState.IsValid)
             {
+                if (model.Amount < 10000 && model.ProductId == 2012)
+                {
+                    TempData["AmountTooLow"] = "Please enter an amount equal to or greater than ₦10,000.00";
+                    return RedirectToAction("Details", "Securities", new { id = model.ProductId });
+                }
+
                 var carts = new Transactional
                 {
                     ProductId = model.ProductId,
@@ -69,13 +75,14 @@ namespace Portal.Controllers
                 };
 
                 var result = _cartManager.Save(carts);
+                var transact = _cartManager.SavePayment(carts);
                 if (result.Id > 0)
                 {
                     return RedirectToAction("Carts", "CartAndPayment");
                 }
             }
 
-            return RedirectToAction($"Details/{model.ProductId}", "Securities");
+            return RedirectToAction("Details", "Securities", new { id = model.ProductId});
         }
 
         #region cartbasket
