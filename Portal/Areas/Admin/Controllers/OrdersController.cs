@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using NPOI.SS.UserModel;
@@ -31,6 +32,7 @@ namespace Portal.Areas.Admin.Controllers
             _cartManager = cartManager;
         }
 
+        [Authorize(Roles = "Sub-Administrator,Administrator,Sale,Marketing")]
         public IActionResult Index(
             string sortOrder,
             string currentFilter,
