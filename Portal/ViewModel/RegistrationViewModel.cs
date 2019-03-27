@@ -52,6 +52,7 @@ namespace Portal.ViewModel
 
         public static implicit operator Person(RegistrationViewModel model)
         {
+            var prospectCode = model.ProspectCode;
             return new Person
             {
                 FirstName = model.FirstName,
@@ -63,7 +64,7 @@ namespace Portal.ViewModel
                 Gender = model.Gender,
                 IsCustomer = true,
                 OnCreated = DateTime.Now.ToUniversalTime(),
-                ProspectCode = model.ProspectCode,
+                ProspectCode = prospectCode,
                 PortalOnBoarding = $"NPB"
             };
         }
