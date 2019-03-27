@@ -9,6 +9,7 @@ using Portal.Business.Contracts;
 using Portal.Business.Utilities;
 using Portal.Domain.ViewModels;
 using Portal.Domain.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Portal.Areas.Admin.Controllers
 {
@@ -35,6 +36,7 @@ namespace Portal.Areas.Admin.Controllers
             _personManager = personManager;
         }
 
+        [Authorize(Roles = "Sub-Administrator,Administrator")]
         public IActionResult Index(
             string sortOrder,
             string currentFilter,
@@ -70,6 +72,7 @@ namespace Portal.Areas.Admin.Controllers
             return View(PaginatedList<ViewModelInternalUser>.Create(data.AsQueryable(), page ?? 1, pageSize));
         }
 
+        [Authorize(Roles = "Sub-Administrator,Administrator")]
         public IActionResult Add()
         {
             var internalUser = new InternalUserViewModel();
@@ -94,6 +97,7 @@ namespace Portal.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Sub-Administrator,Administrator")]
         public IActionResult Add(InternalUserViewModel models)
         {
             if (ModelState.IsValid)
@@ -132,6 +136,7 @@ namespace Portal.Areas.Admin.Controllers
             return View(models);
         }
 
+        [Authorize(Roles = "Sub-Administrator,Administrator")]
         public IActionResult Edit(string id)
         {
             if (string.IsNullOrEmpty(id)) return RedirectToAction("Index");

@@ -12,7 +12,6 @@ using Portal.Domain.ViewModels;
 namespace Portal.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    // [Authorize]
     public class DashboardController : Controller
     {
         private readonly ICartManager _manager;
@@ -24,6 +23,7 @@ namespace Portal.Areas.Admin.Controllers
             _personManager = personManager;
         }
 
+        [Authorize]
         public IActionResult Index(
             string sortOrder,
             string currentFilter,
