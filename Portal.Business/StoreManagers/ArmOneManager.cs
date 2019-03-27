@@ -14,16 +14,21 @@ namespace Portal.Business.StoreManagers
     public class ArmOneManager : IArmOneManager
     {
         private readonly IArmOneServiceConfigManager _configSettingManager;
-        public TestArmClientServices _clientService;
-        public readonly IHostingEnvironment _hostingEnvironment;
-        public string _contentRootPath;
+        private TestArmClientServices _clientService;
+        private readonly IHostingEnvironment _hostingEnvironment;
+        private string _contentRootPath;
 
-        public ArmOneManager(IArmOneServiceConfigManager configManager, IHostingEnvironment hostingEnvironment)
+        private readonly IPersonManager _personManager;
+
+        public ArmOneManager(IArmOneServiceConfigManager configManager, IHostingEnvironment hostingEnvironment,
+            IPersonManager personManager)
         {
             _configSettingManager = configManager;
             _hostingEnvironment = hostingEnvironment;
             _contentRootPath = _hostingEnvironment.ContentRootPath;
             _clientService = new TestArmClientServices(_configSettingManager, _contentRootPath);
+
+            _personManager = personManager;
         }
 
         public CustomerInformationView GetCustomerInformation(string username, string password)
@@ -150,6 +155,7 @@ namespace Portal.Business.StoreManagers
             {
                 var snRequest = new SalesNewCustomerRequest { ProspectCode = spResponse.ProspectCode };
                 snResponse = _clientService.AddNewCustomerStageTwo(snRequest);
+                model.ProspectCode = spResponse.ProspectCode.ToString();
             }
 
             //onboard on ArmOne

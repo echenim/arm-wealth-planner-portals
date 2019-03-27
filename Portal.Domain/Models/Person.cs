@@ -32,6 +32,8 @@ namespace Portal.Domain.Models
         [MaxLength(15)]
         public string Tel { get; set; }
 
+        public string ProspectCode { get; set; }
+
         public string Address { get; set; }
 
         [MaxLength(15)]
