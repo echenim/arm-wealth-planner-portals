@@ -39,7 +39,7 @@ namespace Portal.Controllers
             ShowCartInformation();
             if (id > 0)
             {
-                var usr = _personManager.Get(s => s.Email.Equals(User.Identity.Name)).SingleOrDefault();
+                var usr = _personManager.Get(s => s.Email.Equals(User.Identity.Name)).FirstOrDefault();
                 var product = _productManager.Get(s => s.Id.Equals(id)).SingleOrDefault();
                 var data = new RenderProductViewHelper(_productManager).Get("Real Estate", id);
                 data.ProductId = id;
@@ -77,7 +77,8 @@ namespace Portal.Controllers
                 };
 
                 var result = _cartManager.Save(carts);
-                if (result.Id > 0)
+                var transact = _cartManager.SavePayment(carts);
+                if (result.Id > 0 && transact.Id > 0)
                 {
                     return RedirectToAction("Carts", "CartAndPayment");
                 }

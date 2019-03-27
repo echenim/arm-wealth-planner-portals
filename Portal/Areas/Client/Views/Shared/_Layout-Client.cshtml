@@ -4,11 +4,24 @@
 @{
     var _user = UserUtil.GetDataHubUser();
     var membershipKey = string.Empty;
-    if (!String.IsNullOrEmpty(_user.MembershipKey.ToString()))
+    if (_user != null && !String.IsNullOrEmpty(_user.MembershipKey))
     {
         membershipKey = _user.MembershipKey;
     }
-    var fullName = _user.FullName;
+    else
+    {
+        membershipKey = _user.EmailAddress;
+    }
+
+    var fullName = String.Empty;
+    if (!String.IsNullOrEmpty(_user.FullName))
+    {
+        fullName = _user.FullName;
+    }
+    else
+    {
+        fullName = _user.FirstName +""+ _user.LastName;
+    }
 }
 
 <!DOCTYPE html>
@@ -53,7 +66,7 @@
             -------------------->
             <div class="menu-mobile menu-activated-on-click color-scheme-dark">
                 <div class="mm-logo-buttons-w">
-                    <a class="mm-logo" href="Dashboard.html"><img src="~/custom-client/img/arm-logo.png"></a>
+                    <a class="mm-logo" asp-controller="Home" asp-action="Index"><img src="~/custom-client/img/arm-logo.png"></a>
                     <div class="mm-buttons">
                         <div class="mobile-menu-trigger">
                             <div class="os-icon os-icon-hamburger-menu-1"></div>
@@ -173,7 +186,7 @@
             -------------------->
             <div class="menu-w color-scheme-dark menu-position-side menu-side-left menu-layout-full sub-menu-style-over sub-menu-color-bright selected-menu-color-light menu-activated-on-hover menu-has-selected-link">
                 <div class="logo-w">
-                    <a class="logo" href="Dashboard.html">
+                    <a class="logo" asp-controller="Home" asp-action="Index">
                         <img src="~/custom-client/img/arm-logo.png">
                     </a>
                 </div>

@@ -24,7 +24,9 @@ namespace Portal.Business.Contracts
 
         bool IsValidEmailAddress(string s);
 
-        ArmOneRegisterResponse OnboardNewUsers(Person model, string password);
+        //ArmOneRegisterResponse OnboardNewUsers(Person model, string password);
+
+        SalesProspectResponse OnboardNewUsers(Person model, string password);
 
         ArmOneRegisterResponse OnboardOldUsers(string username, string password);
 

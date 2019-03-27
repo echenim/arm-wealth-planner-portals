@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Caching.Memory;
 using Portal.Business.Contracts;
 using Portal.Business.ViewModels;
@@ -15,10 +16,14 @@ namespace Portal.Business.Utilities
         private readonly IPersonManager _manager;
         private readonly IMemoryCache _cache;
 
-        public UserUtils(IPersonManager manager, IMemoryCache cache)
+        private IHttpContextAccessor _contextAccessor;
+        private HttpContext _context { get { return _contextAccessor.HttpContext; } }
+
+        public UserUtils(IPersonManager manager, IMemoryCache cache, IHttpContextAccessor contextAccessor)
         {
             _manager = manager;
             _cache = cache;
+            _contextAccessor = contextAccessor;
         }
 
         public PersonView GetUser(string email)
@@ -30,8 +35,23 @@ namespace Portal.Business.Utilities
 
         public AuthenticateResponse GetDataHubUser()
         {
+            var client = new AuthenticateResponse();
             var person = _cache.Get<AuthenticateResponse>("ArmUser");
-            return person;
+
+            if (_context.User.Identity.IsAuthenticated)
+            {
+                var user = _manager.Get(s => s.Email.Equals(_context.User.Identity.Name)).FirstOrDefault();
+                if (user != null)
+                {
+                    client.EmailAddress = user.Email;
+                    client.FirstName = user.FirstName;
+                    client.LastName = user.LastName;
+                    client.MembershipKey = user.MemberShipNo;
+                    client.FullName = user.FullName;
+                }               
+            }
+            
+            return person ?? client;
         }
     }
 }

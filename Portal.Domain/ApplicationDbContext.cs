@@ -56,6 +56,9 @@ namespace Portal.Domain
         public DbSet<ProcessPayments> ProcessPayments { get; set; }
         public DbSet<Redemption> Redemptions { get; set; }
 
+        //onboarding new users
+        public DbSet<NewUsers> NewUsers { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
@@ -135,6 +138,7 @@ namespace Portal.Domain
                 .HasMany<ApplicationGroupRole>((ApplicationGroup g) => g.ApplicationRoles)
                 .WithOne().IsRequired()
                 .HasForeignKey((ApplicationGroupRole g) => g.ApplicationGroupId);
+
             builder.Entity<ApplicationGroupRole>().ToTable("ApplicationGroupRoles")
                 .HasKey((ApplicationGroupRole s) => new
                 {
@@ -146,6 +150,7 @@ namespace Portal.Domain
                 .HasMany<ApplicationUserGroup>((ApplicationGroup g) => g.ApplicationUsers)
                 .WithOne().IsRequired()
                 .HasForeignKey((ApplicationUserGroup g) => g.ApplicationGroupId);
+
             builder.Entity<ApplicationUserGroup>().ToTable("ApplicationUserGroups")
                 .HasKey((ApplicationUserGroup s) => new
                 {

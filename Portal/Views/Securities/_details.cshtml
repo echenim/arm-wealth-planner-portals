@@ -74,10 +74,15 @@
                             {
                                 <h4 class="font__family-varela-round text-uppercase font__size-20 mb-10 mt-20">Enter the Amount you wish to Invest</h4>
                                 <form method="post" asp-action="SubmitToCart" class="brk-form-round brk-form-round-btn-inside-full w-100">
+                                    @Html.AntiForgeryToken()
                                     <input type="text" asp-for="Amount" name="Amount" placeholder="enter amount" />
                                     <input type="hidden" readonly="readonly" asp-for="ProductId" name="ProductId" />
                                     <button type="submit" class="btn btn-inside-out btn-lg border-radius-30 btn-shadow mx-0 my-0" data-brk-library="component__button"><span class="before">invest now</span><span class="text">invest now</span><span class="after">invest now</span></button>
                                 </form>
+                                if (TempData["AmountTooLow"] != null)
+                                {
+                                    <p class="p font__weight-semibold  mt-1">@TempData["AmountTooLow"].ToString()</p>
+                                }
                                 <p class="font__family-playfair p font__weight-normal font__style-italic mt-1">Starting from as low as &#8358;@Model.ProductsObj.StartFrom</p>
 
                             }
@@ -86,11 +91,11 @@
                             {
                                 <h4 class="font__family-varela-round text-uppercase font__size-20 mb-10 mt-20">Enter the Amount you wish to Invest</h4>
                                 @*<form class="brk-form-round brk-form-round-btn-inside-full w-100">
-                                        <input type="text" placeholder="enter amount">
-                                        <input type="hidden" readonly="readonly" name="IpIdentifier" />
-                                        <input type="text" readonly="readonly" name="IpIdentifier" />
-                                        <button class="btn btn-inside-out btn-lg border-radius-30 btn-shadow mx-0 my-0" data-brk-library="component__button"><span class="before">invest now</span><span class="text">invest now</span><span class="after">invest now</span></button>
-                                    </form>*@
+                <input type="text" placeholder="enter amount">
+                <input type="hidden" readonly="readonly" name="IpIdentifier" />
+                <input type="text" readonly="readonly" name="IpIdentifier" />
+                <button class="btn btn-inside-out btn-lg border-radius-30 btn-shadow mx-0 my-0" data-brk-library="component__button"><span class="before">invest now</span><span class="text">invest now</span><span class="after">invest now</span></button>
+            </form>*@
                                 <p class="font__family-playfair p font__weight-normal font__style-italic mt-1">Starting from as low as &#8358;@Model.ProductsObj.StartFrom</p>
 
                             }

@@ -49,6 +49,7 @@ namespace Portal.Business.StoreManagers
         public CartDetailView ViewCart(string email)
         {
             var filter = email ?? _httpContextAccessor.HttpContext.Session.GetString(SessionName);
+
             var cartdata = _cartManager.Get(s => s.ItemOwner.ToLower().Equals(filter.ToLower())
                                                      && s.OrderAndPurchaseStatus.Equals("InCart"));
             var cart = new CartDetailView();
@@ -67,7 +68,11 @@ namespace Portal.Business.StoreManagers
             xml.Append("<paymentitemxml><payment_items>");
             foreach (var item in datapayload)
             {
-                var parts = $"<payment_item><item_code>{item.Product.Name}</item_code><item_amt>{item.Amount.ToString().Replace(".", "")}</item_amt></payment_item>";
+                var parts = $@"<payment_item>
+                                    <item_code>{item.Product.Name}</item_code>
+                                    <item_amt>{item.Amount.ToString().Replace(".", "")}</item_amt>
+                              </payment_item>";
+
                 xml.Append(parts);
             }
 

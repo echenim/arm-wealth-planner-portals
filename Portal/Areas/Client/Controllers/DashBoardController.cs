@@ -73,7 +73,7 @@ namespace Portal.Areas.Client.Controllers
         public IActionResult Index()
         {
             var model = new AccountStatementViewModel();
-            var person = _personManager.Get(s => s.Email.Equals(User.Identity.Name)).SingleOrDefault();
+            var person = _personManager.Get(s => s.Email.Equals(User.Identity.Name)).FirstOrDefault();
 
             var _user = _cache.Get<AuthenticateResponse>("ArmUser");
 
@@ -102,7 +102,7 @@ namespace Portal.Areas.Client.Controllers
 
             try
             {
-                var customer = _client.GetUserProfile(_user.MembershipKey);
+                var customer = _client.GetUserProfile(_user.MembershipKey); 
 
                 List<ProductDetails> getSummaries = new List<ProductDetails>();
                 List<decimal> sumOfAccruedInterests = new List<decimal>();
@@ -156,7 +156,7 @@ namespace Portal.Areas.Client.Controllers
                 //get total balance
                 var totalBalanceRequest = new TotalBalanceRequest
                 {
-                    MembershipNumber = _user.MembershipKey
+                    MembershipNumber = Convert.ToInt32(_user.MembershipKey)
                 };
                 var totalBalanceResponse = _clientService.GetTotalBalance(totalBalanceRequest);
 

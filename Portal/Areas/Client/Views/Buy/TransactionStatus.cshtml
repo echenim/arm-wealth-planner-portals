@@ -1,0 +1,109 @@
+﻿@model Portal.Business.ViewModels.TransactionStatusViewModel
+
+@{
+    ViewData["Title"] = "Transaction Status";
+}
+
+<!---- Page Title & Date --->
+<div class="row">
+    <div class="element-wrapper col-md-12 pb-0">
+        <h6 class="element-header">
+            Transaction Status
+            @{
+                var now = DateTime.Now;
+                var time = now.ToString("HH:mm tt");
+                var date = now.ToString("MMM dd yyyy");
+            }
+            <span class="date-timestamp float-right">@date, @time</span>
+        </h6>
+    </div>
+</div>
+
+@if (Model.TransactionStatusCode.Equals("0") || Model.TransactionStatusCode.Equals("00"))
+{
+    <div class="row">
+        <div class="col-lg-12 col-sm-12">
+            <div class="element-box">
+                <h3>Your transaction was successful.</h3>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <div class="row">
+        <div class="col-lg-12 col-sm-12">
+            <div class="element-box">
+                <h3w>Your transaction was unsuccessful.</h3w>
+            </div>
+        </div>
+    </div>
+}
+
+<div class="row">
+    <div class="col-lg-8 col-sm-12">
+        <div class="element-box">
+            @if (Model != null)
+            {
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr></tr>
+                        </thead>
+                        <tbody>
+                            @if (String.IsNullOrEmpty(Model.TransactionReference))
+                            {
+                                <tr>
+                                    <td>Transaction Reference</td>
+                                    <td>@Model.TransactionReference</td>
+                                </tr>
+                            }
+                            @if (Model.TransactionAmount > 0)
+                            {
+                                <tr>
+                                    <td>Amount</td>
+                                    <td>₦@((Model.TransactionAmount/100).ToString("F2"))</td>
+                                </tr>
+                            }
+                            
+                            <tr>
+                                <td>Status</td>
+                                <td>@Model.TransactionStatusMessage</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            }
+            else
+            {
+                <h3>No update available.</h3>
+            }
+        </div>
+        <br />
+        <div>
+            <h4>
+                For information or queries on this transaction, kindly email
+                <a href="mailto:info@arminvestmentmanagers.com"> info@arminvestmentmanagers.com</a>.
+            </h4>
+        </div>
+        <div class="b-t mt-3 pt-3">
+            <a class="btn btn-primary" asp-area="Client" asp-controller="Dashboard" asp-action="Index">Back to dashboard</a>
+        </div>
+    </div>
+
+    <div class="col-lg-4 col-sm-12">
+
+        <div class="element-box">
+            <form>
+                <h5 class="element-box-header">
+                    Ad Banner
+                </h5>
+                <div class="form-desc">
+
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>

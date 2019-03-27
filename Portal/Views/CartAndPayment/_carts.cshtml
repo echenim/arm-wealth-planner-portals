@@ -1,5 +1,6 @@
 ﻿@model CartView
-
+@using Newtonsoft.Json;
+@using System.Text;
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -74,12 +75,29 @@
                         </tr>
                     </thead>
                     <tbody>
+                        @{
+
+                        }
                         @foreach (var item in Model.CartCollection)
                         {
+
+                            var view = "carts";
+                            var itemId = item.Id;
+                            var tranno = item.TransactionNo;
+                            //var cartItem = JsonConvert.SerializeObject(item, new JsonSerializerSettings()
+                            //{
+                            //    PreserveReferencesHandling = PreserveReferencesHandling.Objects,
+                            //    Formatting = Formatting.Indented
+                            //});
+
+                            //var textBytes = Encoding.Default.GetBytes(cartItem);
+                            //var encodedItem = BitConverter.ToString(textBytes);
+                            //encodedItem = encodedItem.Replace("-", "");
+
                             <tr>
                                 <td>
                                     <div class="d-flex flex-row justify-content-lg-start justify-content-between align-items-center">
-                                        <button class="brk-cart__remove"></button>
+                                        <a href="@Url.Action("DeleteCartItem", "CartAndPayment", new { id = itemId, transactionNo = tranno, page = view })" class="brk-cart__remove"></a>
                                         <img data-src="../Liber/FileArchives/@item.Product.Image" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="item-alt" class="lazyload brk-cart__img">
                                     </div>
                                 </td>

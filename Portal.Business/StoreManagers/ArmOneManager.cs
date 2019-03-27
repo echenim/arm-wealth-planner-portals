@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System;
 using Portal.Domain.Models;
+using Portal.Domain;
 
 namespace Portal.Business.StoreManagers
 {
@@ -17,13 +18,19 @@ namespace Portal.Business.StoreManagers
         public TestArmClientServices _clientService;
         public readonly IHostingEnvironment _hostingEnvironment;
         public string _contentRootPath;
+        private readonly ApplicationDbContext _db;
 
-        public ArmOneManager(IArmOneServiceConfigManager configManager, IHostingEnvironment hostingEnvironment)
+        private readonly IPersonManager _personManager;
+
+        public ArmOneManager(IArmOneServiceConfigManager configManager, IHostingEnvironment hostingEnvironment, ApplicationDbContext db, IPersonManager personManager)
         {
             _configSettingManager = configManager;
             _hostingEnvironment = hostingEnvironment;
             _contentRootPath = _hostingEnvironment.ContentRootPath;
             _clientService = new TestArmClientServices(_configSettingManager, _contentRootPath);
+
+            _db = db;
+            _personManager = personManager;
         }
 
         public CustomerInformationView GetCustomerInformation(string username, string password)
@@ -126,11 +133,8 @@ namespace Portal.Business.StoreManagers
             return IsValidEmailAddress(s);
         }
 
-        public ArmOneRegisterResponse OnboardNewUsers(Person model, string password)
+        public SalesProspectResponse OnboardNewUsers(Person model, string password)
         {
-            var response = new ArmOneRegisterResponse();
-            var snResponse = new SalesNewCustomerResponse();
-
             //onboard on datahub API
             //first, on sales/prospect
             var spRequest = new SalesProspectRequest
@@ -145,35 +149,66 @@ namespace Portal.Business.StoreManagers
             };
             var spResponse = _clientService.AddNewCustomerStageOne(spRequest);
 
-            //then, on sales/newcustomer
             if (spResponse != null && spResponse.ProspectCode > 0)
             {
-                var snRequest = new SalesNewCustomerRequest { ProspectCode = spResponse.ProspectCode };
-                snResponse = _clientService.AddNewCustomerStageTwo(snRequest);
+                return spResponse;
             }
 
-            //onboard on ArmOne
-            if (snResponse != null)
-            {
-                var armRequest = new ArmOneRegisterRequest
-                {
-                    Membershipkey = snResponse.MembershipNumber,
-                    Password = password,
-                    EmailAddress = model.Email,
-                    MobileNumber = model.Tel,
-                    SecurityQuestion = "",
-                    SecurityAnswer = "",
-                    SecurtiyQuestion2 = String.Empty,
-                    SecurityAnswer2 = String.Empty,
-                    FirstName = model.FirstName,
-                    LastName = model.LastName,
-                    Channel = "CLient_Portal"
-                };
-                response = _clientService.ArmOneRegister(armRequest);
-            }
-
-            return response;
+            return null;
         }
+
+        //public ArmOneRegisterResponse OnboardNewUsers(Person model, string password)
+        //{
+        //    var response = new ArmOneRegisterResponse();
+        //    var snResponse = new SalesNewCustomerResponse();
+
+        //    //onboard on datahub API
+        //    //first, on sales/prospect
+        //    var spRequest = new SalesProspectRequest
+        //    {
+        //        Surname = model.LastName,
+        //        FirstName = model.FirstName,
+        //        EmailAddress = model.Email,
+        //        MobileNumber = model.Tel,
+        //        Sex = model.Gender,
+        //        Address = model.Address,
+        //        BvnNumber = model.BioetricVerificationNumber
+        //    };
+        //    var spResponse = _clientService.AddNewCustomerStageOne(spRequest);
+
+        //    //then, on sales/newcustomer
+        //    if (spResponse != null && spResponse.ProspectCode > 0)
+        //    {
+        //        var snRequest = new SalesNewCustomerRequest { ProspectCode = spResponse.ProspectCode };
+        //        snResponse = _clientService.AddNewCustomerStageTwo(snRequest);
+            
+        //        var personUpdate = _personManager.Get(s => s.Email.Equals(model.Email)).SingleOrDefault();
+        //        //model.ProspectCode = spResponse.ProspectCode.ToString();
+        //    }
+
+        //    //onboard on ArmOne
+        //    if (snResponse != null)
+        //    {
+        //        var armRequest = new ArmOneRegisterRequest
+        //        {
+        //            Membershipkey = snResponse.MembershipNumber,
+        //            Password = password,
+        //            EmailAddress = model.Email,
+        //            MobileNumber = model.Tel,
+        //            SecurityQuestion = "",
+        //            SecurityAnswer = "",
+        //            SecurtiyQuestion2 = String.Empty,
+        //            SecurityAnswer2 = String.Empty,
+        //            FirstName = model.FirstName,
+        //            LastName = model.LastName,
+        //            Channel = "Client_Portal"
+        //        };
+        //        response = _clientService.ArmOneRegister(armRequest);
+        //        response.ProspectCode = spResponse.ProspectCode.ToString();
+        //    }
+
+        //    return response;
+        //}
 
         //this method is intended for clients
         //who have accounts on datahub but not on armone

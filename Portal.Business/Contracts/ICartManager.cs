@@ -21,5 +21,11 @@ namespace Portal.Business.Contracts
         void Edit(string cartId);
 
         TransQIdenfier TrnxGenerator();
+
+        ProcessPayments SavePayment(Transactional model);
+
+        Transactional DeleteCartItem(long id, long tranxNo);
+
+        string DecodeHex(string text);
     }
 }
