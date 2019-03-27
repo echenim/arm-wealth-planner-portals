@@ -8,6 +8,7 @@ using Portal.Domain.Models.Identity;
 using Portal.Business.Contracts;
 using Portal.Business.Utilities;
 using Portal.Domain.ViewModels;
+using Portal.Domain.Models;
 
 namespace Portal.Areas.Admin.Controllers
 {
@@ -19,15 +20,19 @@ namespace Portal.Areas.Admin.Controllers
         private readonly IApplicationGroupManager _groupManager;
         private readonly IUserService _service;
 
+        private readonly IPersonManager _personManager;
+
         public UsersController(UserManager<ApplicationUser> userManager,
             RoleManager<ApplicationRole> roleManager,
             IApplicationGroupManager groupManager,
-            IUserService service)
+            IPersonManager personManager,
+        IUserService service)
         {
             _userManager = userManager;
             _roleManager = roleManager;
             _service = service;
             _groupManager = groupManager;
+            _personManager = personManager;
         }
 
         public IActionResult Index(
@@ -93,19 +98,33 @@ namespace Portal.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser
+                var personObj = new Person
                 {
+                    FirstName = models.FirstName,
+                    LastName = models.LastName,
                     Email = models.Email,
-                    UserName = models.Email,
+                    IsCustomer = false,
+                    Gender = "Non"
                 };
 
-                var result = _userManager.CreateAsync(user: user, password: models.Password).Result;
-                if (result.Succeeded)
+                var isPersonResult = _personManager.Save(personObj);
+                if (isPersonResult.Succeed)
                 {
-                    var resultFromAssigningPermission = _groupManager.SetUserGroups(user.Id, models.Roles);
-                    if (resultFromAssigningPermission.Succeeded)
+                    var user = new ApplicationUser
                     {
-                        return RedirectToAction("Index");
+                        Email = models.Email,
+                        UserName = models.Email,
+                        PersonId = isPersonResult.TObj.Id
+                    };
+
+                    var result = _userManager.CreateAsync(user: user, password: models.Password).Result;
+                    if (result.Succeeded)
+                    {
+                        var resultFromAssigningPermission = _groupManager.SetUserGroups(user.Id, models.Roles);
+                        if (resultFromAssigningPermission.Succeeded)
+                        {
+                            return RedirectToAction("Index");
+                        }
                     }
                 }
             }
