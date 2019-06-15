@@ -44,134 +44,59 @@
                 </div>
                 <div class="element-wrapper pb-4 border-bottom">
                     <div class="element-box-tp">
-                        <a class="btn btn-primary" href="#"><i class="os-icon os-icon-plus-circle"></i><span>New Investment</span></a><a class="btn btn-grey" href="#"><i class="os-icon os-icon-agenda-1"></i><span>Additional Investment </span></a>
+                        <a class="btn btn-primary" href="#"><i class="os-icon os-icon-plus-circle"></i><span>New Investment</span></a><a class="btn btn-grey"  asp-area="Client" asp-controller="Portfolio" asp-action="AdditionalInvestment"><i class="os-icon os-icon-agenda-1"></i><span>Additional Investment </span></a>
 
                     </div>
                 </div>
                 <!---- Personal Information --->
+
                 <div class="mt-3">
+                    <h5 class="form-header">
+                        My Portfolio
+                    </h5>
+
+                    <div class="table-responsive">
+                        @if (Model.Summaries != null && Model.Summaries.Count > 0)
+                        {
+                            <div class="row">
+                                @foreach (var data in Model.Summaries)
+                                {
+                                    <div class="col-sm-6 col-lg-5 col-12 pb-5">
+                                        <a class="el-tablo highlight smaller cta-w cta-with-media mutual-purple" href="#">
+                                            <div class="cta-content products-content">
+                                                <div class="highlight-header highlight-header-mutual">
+                                                    Mutual Funds
+                                                </div>
+                                                <h6 class="cta-header products-header">
+                                                    <span class="label">@data.ProductName</span>
+                                                </h6>
+
+                                                <h5>@data.Currency @String.Format("{0:#,##0.##}", data.CurrentBalance)</h5>
+                                                <h6 title="Pending Transactions">
+                                                    <span class="label">Pending Transactions</span>
+                                                </h6>
+                                                <h5>@data.Currency @String.Format("{0:#,##0.##}", data.PendingTransaction)</h5>
+                                                <h6 title="Accrued Interest">
+                                                    <span class="label">Interest:</span> <span>@data.Currency @String.Format("{0:#,##0.##}", data.AccruedInterest)</span>
+                                                </h6>
+                                                <img class="portfolio-sideicon" alt="" src="img/orders-icon.svg">
+                                            </div>
+                                        </a>
+                                    </div>
+                                }
+                            </div>
+                            
+                        }
+                    </div>
+                </div>
+
+                @*<div class="mt-3">
                     <h5 class="form-header">
                         ARM Pay History
                     </h5>
 
-                    <div class="table-responsive">
-                        <!--------------------
-                        START - Basic Table
-                        -------------------->
-                        <table class="table table-striped">
-                            <thead>
-                                <tr>
-                                    <th>
-                                        Date
-                                    </th>
-                                    <th>
-                                        Item
-                                    </th>
-                                    <th>
-                                        Amount
-                                    </th>
-                                    <th>
-                                        Category
-                                    </th>
-                                    <th>
-                                        Status
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>
-                                        <span>Jan 21</span><br><span class="smaller lighter">1:52am</span>
-                                    </td>
-                                    <td>
-                                        <span>ARM Life Education Plan</span>
-                                    </td>
-                                    <td>
-                                        <span>&#8358;72,246,000</span>
-                                    </td>
-                                    <td>
-                                        <span>Pensions</span>
-                                    </td>
-                                    <td>
-                                        Successful
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <span>Jan 21</span><br><span class="smaller lighter">1:52am</span>
-                                    </td>
-                                    <td>
-                                        <span>ARM Life Education Plan</span>
-                                    </td>
-                                    <td>
-                                        <span>&#8358;72,246,000</span>
-                                    </td>
-                                    <td>
-                                        <span>Pensions</span>
-                                    </td>
-                                    <td>
-                                        Successful
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <span>Jan 21</span><br><span class="smaller lighter">1:52am</span>
-                                    </td>
-                                    <td>
-                                        <span>ARM Life Education Plan</span>
-                                    </td>
-                                    <td>
-                                        <span>&#8358;72,246,000</span>
-                                    </td>
-                                    <td>
-                                        <span>Pensions</span>
-                                    </td>
-                                    <td>
-                                        Successful
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <span>Jan 21</span><br><span class="smaller lighter">1:52am</span>
-                                    </td>
-                                    <td>
-                                        <span>ARM Life Education Plan</span>
-                                    </td>
-                                    <td>
-                                        <span>&#8358;72,246,000</span>
-                                    </td>
-                                    <td>
-                                        <span>Pensions</span>
-                                    </td>
-                                    <td>
-                                        Successful
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <span>Jan 21</span><br><span class="smaller lighter">1:52am</span>
-                                    </td>
-                                    <td>
-                                        <span>ARM Life Education Plan</span>
-                                    </td>
-                                    <td>
-                                        <span>&#8358;72,246,000</span>
-                                    </td>
-                                    <td>
-                                        <span>Pensions</span>
-                                    </td>
-                                    <td>
-                                        Successful
-                                    </td>
-                                </tr>
-
-                            </tbody>
-                        </table>
-                        <!--------------------
-                        END - Basic Table
-                        -------------------->
-                    </div>
-                </div>
+                    
+                </div>*@
             </div>
             <!---- Investment Distribution  --->
             <div class="col-sm-12 col-lg-4 col-md-5 col-xxl-4">
@@ -182,7 +107,18 @@
                     <div class="el-chart-w">
                         <canvas height="120" id="donutChart1" width="120"></canvas>
                         <div class="inside-donut-chart-label">
-                            <strong>&#8358;@String.Format("{0:#,##0.##}", @ViewBag.SumAccruedInterest)</strong><span>Spread</span>
+                            @{
+                                var accruedInterest = String.Empty;
+                                if (ViewBag.SumAccruedInterest != null)
+                                {
+                                    accruedInterest = String.Format("{0:#,##0.##}", @ViewBag.SumAccruedInterest);
+                                }
+                                else
+                                {
+                                    accruedInterest = "0.00";
+                                }
+                            }
+                            <strong>&#8358;@accruedInterest</strong><span>Accrued Interest</span>
                         </div>
                     </div>
                     <div class="el-legend condensed">
@@ -268,137 +204,133 @@
 <div class=" element-wrapper">
 
     <div class="row">
-        @*<div class="col-md-12 ">
-            <div class="element-box element-wrapper">
-                <h5 class="element-header">
-                    My Portfolio
-                </h5>
-                <div>
-                    <div class=" col-md-12">
-                        <div class="row ">
-                            <div class="col-sm-6 col-lg-4 col-12 pb-4">
-                                <a class="el-tablo highlight smaller cta-w cta-with-media mutual-purple" href="#">
-                                    <div class="cta-content">
-                                        <div class="highlight-header highlight-header-mutual">
-                                            Mutual Funds
-                                        </div>
-                                        <h5 class="cta-header">
-                                            Manage Mutual Funds Portfolio
-                                        </h5>
-                                        <img class="portfolio-sideicon" alt="" src="img/orders-icon.svg">
-                                    </div>
-                                </a>
-                            </div>
-                            <div class="col-sm-6 col-lg-4 col-12 pb-4">
-                                <a class="el-tablo highlight smaller cta-w cta-with-media mutual-purple" href="#">
-                                    <div class="cta-content">
-                                        <div class="highlight-header highlight-header-pensions">
-                                            Pensions
-                                        </div>
-                                        <h5 class="cta-header">
-                                            Manage Pensions Account
-                                        </h5>
-                                        <img class="portfolio-sideicon" alt="" src="img/orders-icon.svg">
-                                    </div>
-                                </a>
-                            </div>
-                            <div class="col-sm-6 col-lg-4 col-12 pb-4">
-                                <a class="el-tablo highlight smaller cta-w cta-with-media mutual-purple" href="#">
-                                    <div class="cta-content">
-                                        <div class="highlight-header highlight-header-life">
-                                            Insurance
-                                        </div>
-                                        <h5 class="cta-header">
-                                            Manage Insurance Portfolio
-                                        </h5>
-                                        <img class="portfolio-sideicon" alt="" src="img/orders-icon.svg">
-                                    </div>
-                                </a>
-                            </div>
-                            <div class="col-sm-6 col-lg-4 col-12 pb-4">
-                                <a class="el-tablo highlight smaller cta-w cta-with-media mutual-purple" href="#">
-                                    <div class="cta-content">
-                                        <div class="highlight-header highlight-header-securities">
-                                            Securities
-                                        </div>
-                                        <h5 class="cta-header">
-                                            Manage Securities Portfolio
-                                        </h5>
-                                        <img class="portfolio-sideicon" alt="" src="img/orders-icon.svg">
-                                    </div>
-                                </a>
-                            </div>
-                            <div class="col-sm-6 col-lg-4 col-12 pb-4">
-                                <a class="el-tablo highlight smaller cta-w cta-with-media mutual-purple" href="#">
-                                    <div class="cta-content">
-                                        <div class="highlight-header highlight-header-Trustee">
-                                            Trustees
-                                        </div>
-                                        <h5 class="cta-header">
-                                            Manage Trustees Portfolio
-                                        </h5>
-                                        <img class="portfolio-sideicon" alt="" src="img/orders-icon.svg">
-                                    </div>
-                                </a>
-                            </div>
-                            <div class="col-sm-6 col-lg-4 col-12 pb-4">
-                                <a class="el-tablo highlight smaller cta-w cta-with-media mutual-purple" href="#">
-                                    <div class="cta-content">
-                                        <div class="highlight-header highlight-header-mixta">
-                                            Real Estate
-                                        </div>
-                                        <h5 class="cta-header">
-                                            Manage Real Estate Portfolio
-                                        </h5>
-                                        <img class="portfolio-sideicon" alt="" src="img/orders-icon.svg">
-                                    </div>
-                                </a>
-                            </div>
-
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-        </div>*@
-
+        
         <!--This is to test prudct page and possibly get approval-->
         <div class="col-md-12">
             <div class="element-box element-wrapper">
                 <h5 class="element-header">
-                    My Portfolio
+                    ARM Pay History
                 </h5>
                 <div>
                     <div class="col-md-12">
                         <div class="row">
-                            @if (Model.Summaries != null && Model.Summaries.Count > 0)
-                            {
-                                foreach (var data in Model.Summaries)
-                                {
-                                    <div class="col-sm-6 col-lg-4 col-12 pb-4">
-                                        <a class="el-tablo highlight smaller cta-w cta-with-media mutual-purple" href="#">
-                                            <div class="cta-content products-content">
-                                                <div class="highlight-header highlight-header-mutual">
-                                                    Mutual Funds
-                                                </div>
-                                                <h6 class="cta-header products-header">
-                                                    <span class="label">@data.ProductName</span>
-                                                </h6>
-                                                
-                                                <h5>@data.Currency @String.Format("{0:#,##0.##}", data.CurrentBalance)</h5>
-                                                <h6 title="Pending Transactions">
-                                                    <span class="label">Pending Transactions</span>
-                                                </h6>
-                                                <h5>@data.Currency @String.Format("{0:#,##0.##}", data.PendingTransaction)</h5>
-                                                <h6 title="Accrued Interest">
-                                                    <span class="label">Interest:</span> <span>@data.Currency @String.Format("{0:#,##0.##}", data.AccruedInterest)</span>
-                                                </h6>
-                                                <img class="portfolio-sideicon" alt="" src="img/orders-icon.svg">
-                                            </div>
-                                        </a>
-                                    </div>
-                                }
-                            }
+                            <div class="table-responsive">
+                                <!--------------------
+                                START - Basic Table
+                                -------------------->
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                Date
+                                            </th>
+                                            <th>
+                                                Item
+                                            </th>
+                                            <th>
+                                                Amount
+                                            </th>
+                                            <th>
+                                                Category
+                                            </th>
+                                            <th>
+                                                Status
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <span>Jan 21</span><br><span class="smaller lighter">1:52am</span>
+                                            </td>
+                                            <td>
+                                                <span>ARM Life Education Plan</span>
+                                            </td>
+                                            <td>
+                                                <span>&#8358;72,246,000</span>
+                                            </td>
+                                            <td>
+                                                <span>Pensions</span>
+                                            </td>
+                                            <td>
+                                                Successful
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <span>Jan 21</span><br><span class="smaller lighter">1:52am</span>
+                                            </td>
+                                            <td>
+                                                <span>ARM Life Education Plan</span>
+                                            </td>
+                                            <td>
+                                                <span>&#8358;72,246,000</span>
+                                            </td>
+                                            <td>
+                                                <span>Pensions</span>
+                                            </td>
+                                            <td>
+                                                Successful
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <span>Jan 21</span><br><span class="smaller lighter">1:52am</span>
+                                            </td>
+                                            <td>
+                                                <span>ARM Life Education Plan</span>
+                                            </td>
+                                            <td>
+                                                <span>&#8358;72,246,000</span>
+                                            </td>
+                                            <td>
+                                                <span>Pensions</span>
+                                            </td>
+                                            <td>
+                                                Successful
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <span>Jan 21</span><br><span class="smaller lighter">1:52am</span>
+                                            </td>
+                                            <td>
+                                                <span>ARM Life Education Plan</span>
+                                            </td>
+                                            <td>
+                                                <span>&#8358;72,246,000</span>
+                                            </td>
+                                            <td>
+                                                <span>Pensions</span>
+                                            </td>
+                                            <td>
+                                                Successful
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <span>Jan 21</span><br><span class="smaller lighter">1:52am</span>
+                                            </td>
+                                            <td>
+                                                <span>ARM Life Education Plan</span>
+                                            </td>
+                                            <td>
+                                                <span>&#8358;72,246,000</span>
+                                            </td>
+                                            <td>
+                                                <span>Pensions</span>
+                                            </td>
+                                            <td>
+                                                Successful
+                                            </td>
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+                                <!--------------------
+                                END - Basic Table
+                                -------------------->
+                            </div>
                         </div>
                     </div>
                 </div>

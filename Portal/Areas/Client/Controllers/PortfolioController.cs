@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Distributed;
+using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
@@ -14,6 +15,7 @@ using Portal.Business.Contracts;
 using Portal.Business.TestServices;
 using Portal.Business.ViewModels;
 using Portal.Domain;
+using Portal.Domain.ViewModels;
 using Portal.Services;
 using WkWrap.Core;
 
@@ -36,9 +38,11 @@ namespace Portal.Areas.Client.Controllers
         public ApplicationDbContext db;
         public ClientRepository _client;
 
+        private readonly IMemoryCache _cache;
+
         public PortfolioController(IHostingEnvironment hostingEnvironment, IArmOneServiceConfigManager configManager,
                                     ILogger<PortfolioController> logger, IConfiguration configuration,
-                                    IDistributedCache cache, ApplicationDbContext _db)
+                                    IMemoryCache cache, ApplicationDbContext _db)
         {
             _hostingEnvironment = hostingEnvironment;
             _webRootPath = _hostingEnvironment.WebRootPath;
@@ -53,19 +57,20 @@ namespace Portal.Areas.Client.Controllers
             _client = new ClientRepository(_configSettingManager, _contentRootPath);
 
             db = _db;
+            _cache = cache;
         }
 
         public IActionResult FamilyAccounts()
         {
             var model = new FamilyAccountsViewModel();
-            var _user = new AuthenticateResponse
+            var _user = _cache.Get<AuthenticateResponse>("ArmUser");
+
+            if (_user == null)
             {
-                MembershipKey = 1006979,//1007435,
-                EmailAddress = "tolu.olusakin@gmail.com",//"gbadebo.ayan@gmail.com",
-                FirstName = "Tolulope",
-                LastName = "Olusakin",
-                FullName = "Olusakin Tolulope S"//"Funmilayo Ruth Adeyemi",
-            };
+                TempData["SessionTimeOut"] = $@"You have been logged out due to inactivity. 
+                                                Please login to gain access.";
+                return RedirectToAction("Index", "Home", new { area = "" });
+            }
 
             try
             {
@@ -87,15 +92,15 @@ namespace Portal.Areas.Client.Controllers
 
         public IActionResult MyInvestments()
         {
-            var model = new AccountStatementViewModel();
-            var _user = new AuthenticateResponse
+            var model = new AccountStatementViewModel();           
+            var _user = _cache.Get<AuthenticateResponse>("ArmUser");
+
+            if (_user == null)
             {
-                MembershipKey = 1006979,//1007435,
-                EmailAddress = "tolu.olusakin@gmail.com",//"gbadebo.ayan@gmail.com",
-                FirstName = "Tolulope",
-                LastName = "Olusakin",
-                FullName = "Olusakin Tolulope S"//"Funmilayo Ruth Adeyemi",
-            };
+                TempData["SessionTimeOut"] = $@"You have been logged out due to inactivity. 
+                                                Please login to gain access.";
+                return RedirectToAction("Index", "Home", new { area = "" });
+            }
 
             try
             {
@@ -144,17 +149,146 @@ namespace Portal.Areas.Client.Controllers
             return View(model);
         }
 
+        public IActionResult AddQuestion()
+        {
+            var _user = _cache.Get<AuthenticateResponse>("ArmUser");
+            if (_user == null)
+            {
+                TempData["SessionTimeOut"] = $@"You have been logged out due to inactivity. 
+                                                Please login to gain access.";
+                return RedirectToAction("Index", "Home", new { area = "" });
+            }
+
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult AddQuestion(AddQuestionViewModel model)
+        {
+            var _user = _cache.Get<AuthenticateResponse>("ArmUser");
+            if (_user == null)
+            {
+                TempData["SessionTimeOut"] = $@"You have been logged out due to inactivity. 
+                                                Please login to gain access.";
+                return RedirectToAction("Index", "Home", new { area = "" });
+            }
+
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    ViewBag.message = "Error! Incorrect form details.";
+                    return View(model);
+                }
+
+                var armSeqRequest = new ArmOneSecurityQuestionRequest
+                {
+                    UserId = _user.EmailAddress,
+                    SecurityQuestion = model.NewQuestion,
+                    SecurityQuestion2 = String.Empty,
+                    SecurityAnswer = model.NewAnswer,
+                    SecurityAnswer2 = String.Empty,
+                    Channel = "Client_Portal"
+                };
+                var armSeqResponse = _clientService.ArmOneSecurityQuestion(armSeqRequest);
+
+                var cpRequest = new AddSecurityQuestionRequest
+                {
+                    MembershipNumber = _user.MembershipKey,
+                    SecurityQuestion = model.NewQuestion,
+                    SecurityAnswer = model.NewAnswer
+                };
+                var cpResponse = _clientService.AddSecurityQuestion(cpRequest);
+
+                var armoneres = (armSeqResponse != null && (armSeqResponse.ResponseCode == "00")) ? true : false;
+                var cpres = (cpResponse != null && (cpResponse.Status == "00" || cpResponse.Status == "0")) ? true : false;
+
+                if (cpres && armoneres)
+                {
+                    _user.SecurityQuestion = model.NewQuestion;
+                    var msg = "Success: " + cpResponse.StatusMessage;
+                    ViewBag.message = msg;
+                }
+                else
+                {
+                    ViewBag.message = cpResponse.StatusMessage;
+                }
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Message = ex.Message;
+                Utilities.ProcessError(ex, _contentRootPath);
+                _logger.LogError(null, ex, ex.Message);
+            }
+            return View(model);
+        }
+
+        public IActionResult ForgotPassword()
+        {
+            var _user = _cache.Get<AuthenticateResponse>("ArmUser");
+            if (_user == null)
+            {
+                TempData["SessionTimeOut"] = $@"You have been logged out due to inactivity. 
+                                                Please login to gain access.";
+                return RedirectToAction("Index", "Home", new { area = "" });
+            }
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult ForgotPassword(ForgotPasswordViewModel model)
+        {
+            var _user = _cache.Get<AuthenticateResponse>("ArmUser");
+            if (_user == null)
+            {
+                TempData["SessionTimeOut"] = $@"You have been logged out due to inactivity. 
+                                                Please login to gain access.";
+                return RedirectToAction("Index", "Home", new { area = "" });
+            }
+
+            ResetPasswordResponse response = new ResetPasswordResponse();
+
+            try
+            {
+                var resetRequest = new ResetPasswordRequest
+                {
+                    Username = model.Username,
+                    EmailAddress = model.EmailAddress
+                };
+                response = _clientService.ResetPassword(resetRequest);
+
+                if (response.ResponseCode == "00" || response.ResponseCode == "0")
+                {
+                    var msg = "Success: " + response.ResponseMessage;
+                    ViewBag.message = msg;
+                    return View(model);
+                }
+                else
+                {
+                    ViewBag.message = response.ResponseMessage;
+                }
+            }
+            catch (Exception ex)
+            {
+                ViewBag.message = ex.Message;
+                Utilities.ProcessError(ex, _contentRootPath);
+                _logger.LogError(null, ex, ex.Message);
+            }
+            return View(model);
+        }
+
         public IActionResult AccountStatement(string code)
         {
             var model = new AccountStatementViewModel();
-            var _user = new AuthenticateResponse
+            var _user = _cache.Get<AuthenticateResponse>("ArmUser");
+
+            if (_user == null)
             {
-                MembershipKey = 1006979,//1007435,
-                EmailAddress = "tolu.olusakin@gmail.com",//"gbadebo.ayan@gmail.com",
-                FirstName = "Tolulope",
-                LastName = "Olusakin",
-                FullName = "Olusakin Tolulope S"//"Funmilayo Ruth Adeyemi",
-            };
+                TempData["SessionTimeOut"] = $@"You have been logged out due to inactivity. 
+                                                Please login to gain access.";
+                return RedirectToAction("Index", "Home", new { area = "" });
+            }
+
             try
             {
                 List<ProductItems> getItems = new List<ProductItems>();
@@ -209,14 +343,13 @@ namespace Portal.Areas.Client.Controllers
         [HttpPost]
         public IActionResult AccountStatement(AccountStatementViewModel model)
         {
-            var _user = new AuthenticateResponse
+            var _user = _cache.Get<AuthenticateResponse>("ArmUser");
+            if (_user == null)
             {
-                MembershipKey = 1006979,//1007435,
-                EmailAddress = "tolu.olusakin@gmail.com",//"gbadebo.ayan@gmail.com",
-                FirstName = "Tolulope",
-                LastName = "Olusakin",
-                FullName = "Olusakin Tolulope S"//"Funmilayo Ruth Adeyemi",
-            };
+                TempData["SessionTimeOut"] = $@"You have been logged out due to inactivity. 
+                                                Please login to gain access.";
+                return RedirectToAction("Index", "Home", new { area = "" });
+            }
 
             try
             {
@@ -284,14 +417,13 @@ namespace Portal.Areas.Client.Controllers
         [HttpPost]
         public IActionResult PrintStatement(AccountStatementViewModel model)
         {
-            var _user = new AuthenticateResponse
+            var _user = _cache.Get<AuthenticateResponse>("ArmUser");
+            if (_user == null)
             {
-                MembershipKey = 1007435,
-                EmailAddress = "gbadebo.ayan@gmail.com",
-                FirstName = "Funmilayo",
-                LastName = "Adeyemi",
-                FullName = "Funmilayo Ruth Adeyemi",
-            };
+                TempData["SessionTimeOut"] = $@"You have been logged out due to inactivity. 
+                                                Please login to gain access.";
+                return RedirectToAction("Index", "Home", new { area = "" });
+            }
 
             try
             {

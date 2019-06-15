@@ -18,6 +18,7 @@ namespace Portal.Services
 
         //test
         private readonly IArmOneServiceConfigManager _configSettingManager;
+
         public TestArmClientServices _clientService;
 
         public ClientRepository(IArmOneServiceConfigManager configManager, string contentRootPath)
@@ -27,7 +28,7 @@ namespace Portal.Services
             _clientService = new TestArmClientServices(_configSettingManager, _contentRootPath);
         }
 
-        public CustomerDetail GetUserProfile(int membershipKey)
+        public CustomerDetail GetUserProfile(string membershipKey)
         {
             var customerRequest = new ClientValidateRequest
             {
@@ -41,12 +42,12 @@ namespace Portal.Services
             return null;
         }
 
-        public SummaryResponse GetAccountSummary(int membershipkey)
+        public SummaryResponse GetAccountSummary(string membershipkey)
         {
             var accountsResponse = new SummaryResponse();
             var accountsRequest = new SummaryRequest
             {
-                MembershipNumber = membershipkey
+                MembershipNumber = Convert.ToInt32(membershipkey)
             };
 
             accountsResponse = _clientService.GetAccountSummary(accountsRequest);
@@ -69,20 +70,20 @@ namespace Portal.Services
             return null;
         }
 
-        public TotalBalanceResponse GetTotalAccountBalance(int membershipkey)
+        public TotalBalanceResponse GetTotalAccountBalance(string membershipkey)
         {
             var totalBalanceResponse = new TotalBalanceResponse();
             var totalBalanceRequest = new TotalBalanceRequest
             {
-                MembershipNumber = membershipkey
+                MembershipNumber = Convert.ToInt32(membershipkey)
             };
             totalBalanceResponse = _clientService.GetTotalBalance(totalBalanceRequest);
 
             return totalBalanceResponse;
         }
 
-        public List<LastTransactions> LoadLastTransactions(AuthenticateResponse user, 
-                                                            SummaryResponse accounts, 
+        public List<LastTransactions> LoadLastTransactions(AuthenticateResponse user,
+                                                            SummaryResponse accounts,
                                                             int count = 2, string type = "")
         {
             var transactions = new List<LastTransactions>();
@@ -92,7 +93,7 @@ namespace Portal.Services
                 {
                     var request = new LastTransactionRequest
                     {
-                        MembershipNumber = user.MembershipKey,
+                        MembershipNumber = Convert.ToInt32(user.MembershipKey),
                         ProductCode = summary.ProductCode,
                         Count = count
                     };
@@ -108,13 +109,13 @@ namespace Portal.Services
             return transactions;
         }
 
-        public StatementResponse GetClientTransactions(AuthenticateResponse user, 
+        public StatementResponse GetClientTransactions(AuthenticateResponse user,
                                                         AccountStatementViewModel model)
         {
             var response = new StatementResponse();
             var request = new StatementRequest
             {
-                MembershipNumber = user.MembershipKey,
+                MembershipNumber = Convert.ToInt32(user.MembershipKey),
                 EndDate = model.EndDate.Value.AddDays(1),
                 StartDate = model.StartDate.Value.AddDays(1),
                 TransactionType = model.TransactionType,
@@ -136,8 +137,8 @@ namespace Portal.Services
             return response;
         }
 
-        //currently api can't pull from test db as endpoint has not been written. 
-        //pulling directly from the tesdb.
+        //currently api can't pull from test db as endpoint has not been written.
+        //pulling directly from the testdb.
         public PriceHistoryResponse GetFundPriceHistory(string fundcode)
         {
             var request = new PriceHistoryRequest
@@ -181,7 +182,7 @@ namespace Portal.Services
             return response;
         }
 
-        public EmbassyLetterResponse SendEmbassyLetter(EmbassyLetterViewModel model, 
+        public EmbassyLetterResponse SendEmbassyLetter(EmbassyLetterViewModel model,
                                                         AuthenticateResponse user)
         {
             var embassyLetter = new EmbassyLetterRequest
@@ -199,7 +200,7 @@ namespace Portal.Services
             return elResponse;
         }
 
-        public string GenerateUniqueID(int key)
+        public string GenerateUniqueID(string key)
         {
             return string.Format("{0}{1:N}", key, Guid.NewGuid());
         }
@@ -232,6 +233,5 @@ namespace Portal.Services
 
             return sb.ToString();
         }
-
     }
 }

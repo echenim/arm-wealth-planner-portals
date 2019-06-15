@@ -26,14 +26,24 @@ namespace Portal.Domain
         public DbSet<ProductCategory> ProductCategory { get; set; }
         public DbSet<Products> Products { get; set; }
         public DbSet<WhatYouNeedToKNowAboutThisProduct> WhatYouNeedToKNowAboutThisProduct { get; set; }
+        public DbSet<TransQIdenfier> TransQIdenfier { get; set; }
+        public DbSet<Transactional> Transactional { get; set; }
 
+        #region mark for deletion
+
+        public DbSet<Carts> Carts { get; set; }
         public DbSet<PurchaseOrders> PurchaseOrders { get; set; }
 
-        public DbSet<ApplicationRoleClaim> ApplicationRoleClaim { get; set; }
+        #endregion mark for deletion
 
+        public DbSet<ApplicationRoleClaim> ApplicationRoleClaim { get; set; }
         public DbSet<ApplicationGroup> ApplicationGroup { get; set; }
         public DbSet<ApplicationUserGroup> ApplicationUserGroup { get; set; }
         public DbSet<ApplicationGroupRole> ApplicationGroupRoles { get; set; }
+        public DbSet<Referrer> Referrer { get; set; }
+        public DbSet<MemberShip> MemberShip { get; set; }
+        public DbSet<ProductInvestmentInfo> ProductInvestmentInfo { get; set; }
+        public DbSet<Vouchering> Vouchering { get; set; }
 
         //client portal
         public DbSet<DDebit> DDebit { get; set; }
@@ -46,9 +56,33 @@ namespace Portal.Domain
         public DbSet<ProcessPayments> ProcessPayments { get; set; }
         public DbSet<Redemption> Redemptions { get; set; }
 
+        //onboarding new users
+        public DbSet<NewUsers> NewUsers { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
+
+            #region Manager Unique Identity generator
+
+            builder.HasSequence<long>("DBTransManagerStartFrom10000000000")
+                .StartsAt(10000000000)
+                .IncrementsBy(1);
+
+            builder.Entity<TransQIdenfier>()
+                .Property(x => x.Id)
+                .HasDefaultValueSql("NEXT VALUE FOR DBTransManagerStartFrom10000000000");
+
+            #endregion Manager Unique Identity generator
+
+            #region apply uniqueness contraints on table  columm
+
+            builder.Entity<Person>().HasIndex(s => s.Email).IsUnique();
+            builder.Entity<ProductCategory>().HasIndex(s => s.Name).IsUnique();
+            builder.Entity<Products>().HasIndex(s => s.Name).IsUnique();
+            builder.Entity<MemberShip>().HasIndex(s => s.Number).IsUnique();
+
+            #endregion apply uniqueness contraints on table  columm
 
             #region approval process model
 
@@ -104,6 +138,7 @@ namespace Portal.Domain
                 .HasMany<ApplicationGroupRole>((ApplicationGroup g) => g.ApplicationRoles)
                 .WithOne().IsRequired()
                 .HasForeignKey((ApplicationGroupRole g) => g.ApplicationGroupId);
+
             builder.Entity<ApplicationGroupRole>().ToTable("ApplicationGroupRoles")
                 .HasKey((ApplicationGroupRole s) => new
                 {
@@ -115,6 +150,7 @@ namespace Portal.Domain
                 .HasMany<ApplicationUserGroup>((ApplicationGroup g) => g.ApplicationUsers)
                 .WithOne().IsRequired()
                 .HasForeignKey((ApplicationUserGroup g) => g.ApplicationGroupId);
+
             builder.Entity<ApplicationUserGroup>().ToTable("ApplicationUserGroups")
                 .HasKey((ApplicationUserGroup s) => new
                 {

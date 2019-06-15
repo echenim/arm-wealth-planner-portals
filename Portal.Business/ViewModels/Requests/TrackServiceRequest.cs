@@ -2,7 +2,7 @@
 {
     public class TrackServiceRequest : BaseRequest
     {
-        public int MembershipNumber { get; set; }
+        public string MembershipNumber { get; set; }
         public string TrackingNumber { get; set; }
         public string RequestType { get; set; }
     }

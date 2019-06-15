@@ -19,15 +19,27 @@
                             Your Investment Position
                         </div>
                         <div class="balance-value">
-                            <span>&#8358;@String.Format("{0:#,##0.##}", Model.TotalBalance)</span>
+                            @{ 
+                                var total_balance = String.Empty;
+                                if (Model.TotalBalance > 0)
+                                {
+                                    total_balance = @String.Format("{0:#,##0.##}", Model.TotalBalance);
+                                }
+                                else
+                                {
+                                    total_balance = "0.00";
+                                }
+                            }
+                            
+                            <span>&#8358;@total_balance</span>
                         </div>
                     </div>
 
                 </div>
                 <div class="element-wrapper pb-4 mb-4 border-bottom">
                     <div class="element-box-tp">
-                        <a class="btn btn-primary" href="#"><i class="os-icon os-icon-plus-circle"></i><span>New Investment</span></a><a class="btn btn-grey" asp-area="Client" asp-controller="Portfolio" asp-action="MyInvestments"><i class="os-icon os-icon-agenda-1"></i><span>Manage Portfolio </span></a>
-
+                        <a class="btn btn-primary" asp-area="" asp-controller="MutualFunds" asp-action="Index"><i class="os-icon os-icon-plus-circle"></i><span>New Investment</span></a><a class="btn btn-grey" asp-area="Client" asp-controller="Portfolio" asp-action="MyInvestments"><i class="os-icon os-icon-agenda-1"></i><span>Manage Portfolio </span></a>
+                        <a class="btn btn-primary" asp-area="Client" asp-controller="Portfolio" asp-action="AdditionalInvestment"><i class="os-icon os-icon-plus-circle"></i><span>Additional Investment</span></a>
                     </div>
                 </div>
                 <!---- Balance History --->
@@ -71,7 +83,18 @@
                     <div class="el-chart-w">
                         <canvas height="120" id="donutChart1" width="120"></canvas>
                         <div class="inside-donut-chart-label">
-                            <strong>&#8358;@String.Format("{0:#,##0.##}", @ViewBag.SumAccruedInterest)</strong><span>Spread</span>
+                            @{ 
+                                var accruedInterest = String.Empty;
+                                if (ViewBag.SumAccruedInterest != null)
+                                {
+                                    accruedInterest = String.Format("{0:#,##0.##}", @ViewBag.SumAccruedInterest);
+                                }
+                                else
+                                {
+                                    accruedInterest = "0.00";
+                                }
+                            }
+                            <strong>&#8358;@accruedInterest</strong><span>Accrued Interest</span>
                         </div>
                     </div>
                     <div class="el-legend condensed">
@@ -262,24 +285,21 @@
 
 
                         <div class="tab-content" ng-app="chartApp" ng-controller="amChartsController" ng-init="init()">
-                            <div class="tab-pane active" id="ARMMMF">
+                            <div class="tab-pane active" id="ARMMMF" style="height:500px;">
 
-                                @*MMF PERFORMANCE*@
                             </div>
 
-                            <div class="tab-pane" id="ARMDF">
+                            <div class="tab-pane" id="ARMDF" style="height:500px;">
 
-                                @*Discovery Fund PERFORMANCE*@
                             </div>
 
-                            <div class="tab-pane" id="AGF">
+                            <div class="tab-pane" id="AGF" style="height:500px;">
 
-                                @*Aggressive Fund PERFORMANCE*@
                             </div>
 
-                            <div class="tab-pane" id="ARMEF">
+                            <div class="tab-pane" id="ARMEF" style="height:500px;">
 
-                                @*Ethical Fund PERFORMANCE*@
+
                             </div>
                         </div>
 
@@ -310,9 +330,9 @@
             .controller('amChartsController', function ($scope, $http, $filter) {
                 $scope.init = function () {
                     plotYield();
-                    //loadPrice('ARMDF');
-                    //loadPrice('AGF');
-                    //loadPrice('ARMEF');
+                    loadPrice('ARMDF');
+                    loadPrice('AGF');
+                    loadPrice('ARMEF');
                 }
 
                 function GraphData(data) {
@@ -323,7 +343,7 @@
                     var url = '@Url.Action("FundPriceHistory", "Dashboard")' + '?fundCode=' + fund_code;
                     $http.get(url)
                         .success(function (data, status, headers, config) {
-                            var graphData = new GraphData(data.fundPrice.reverse());
+                            var graphData = new GraphData(data.FundPrice.reverse());
                             var plotter = new FundPlotter(fund_code, graphData.data);
                             plotter.plot();
                         })
@@ -415,7 +435,6 @@
                             },
                             "dataProvider": this.data
                         });
-                        
                     }
 
                 }
@@ -424,8 +443,13 @@
                     var url = '@Url.Action("FundYieldHistory", "Dashboard")';
                     $http.get(url)
                         .success(function (data, status, headers, config) {
-                            var graphData = new GraphData(data.yields.reverse());
-                            this.plot(graphData.data);
+                            //console.log(data.yields.reverse());
+                            //var graphData = new GraphData(data.yields.reverse());
+
+                            var res = data.Yields.reverse();                          
+                            console.log(res);
+                            //this.plot(graphData.data);
+                            this.plot(res);
                         })
                         .error(function (data, status, header, config) {
                         });

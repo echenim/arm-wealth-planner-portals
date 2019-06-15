@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Portal.Domain.Models;
 using Portal.Business.Contracts.Base;
+using Portal.Domain.ViewModels;
 
 namespace Portal.Business.Contracts
 {
@@ -11,5 +12,7 @@ namespace Portal.Business.Contracts
         IQueryable<PurchaseOrders> Sales(Func<PurchaseOrders, bool> predicate = null);
 
         void Edit(string cartId);
+
+        IQueryable<PurchaseOrders> PersonBuyHistory(long personId);
     }
 }

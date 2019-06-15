@@ -2,7 +2,7 @@
 {
     public class FeedbackRequest : BaseRequest
     {
-        public int MembershipNumber { get; set; }
+        public string MembershipNumber { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string EmailAddress { get; set; }

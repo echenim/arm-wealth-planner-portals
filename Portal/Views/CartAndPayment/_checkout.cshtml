@@ -1,0 +1,267 @@
+﻿@model CartView
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<!--- BreadCrumb Area-->
+
+<div class="breadcrumbs__section breadcrumbs__section-dark bg__style mt-80 mb-30 pt-80 pb-80 lazyload" data-bg="img/alternative-banner.jpg" data-brk-library="component__breadcrumbs_css">
+    <div class="brk-base-bg-6 breadcrumb-bg full__size-absolute"></div>
+    <h2 class="font__size-40 line__height-46 font__family-montserrat font__weight-ultralight text-center"><span class="font__weight-bold">Checkout</span></h2>
+    <div class="breadcrumbs__wrapper">
+        <div class="container">
+            <ol class="breadcrumb font__family-montserrat font__weight-medium font__size-12 letter-spacing-100">
+                <li class="breadcrumb__icon"><a href="#"><i class="fas fa-home"></i></a></li>
+                <li><a href="#">Cart <i class="fas fa-arrow-right"></i></a></li>
+                <li class="active">Checkout</li>
+            </ol>
+        </div>
+    </div>
+</div>
+
+<h1 class="sr-only">Checkout</h1>
+<div class="main-wrapper text-center">
+    <main class="main-container mt-150 mb-10">
+
+        <!-- Checkout Breakdown-->
+        <div class="container">
+            <div class="tabs-wrapper mb-130" data-brk-library="component__steps">
+                <div class="steps__wrapper-main steps__wrapper-checkers">
+                    <div class="steps__progress"></div>
+                    <ul class="steps__wrapper tabs" data-tabgroup="tab-group-5">
+                        <li class="complete">
+                            <a href="cart.html" class="">
+                                <span class="font__family-montserrat font__weight-bold font__size-15 steps__dot"><span class="before"></span> <span class="after"></span> 1</span>
+                                <p class="font__family-montserrat font__size-15 steps__title">Cart</p>
+                            </a>
+                        </li>
+                        <li class="complete">
+                            <a class="active">
+                                <span class="font__family-montserrat font__weight-bold font__size-15 steps__dot"><span class="before"></span> <span class="after"></span> 2</span>
+                                <p class="font__family-montserrat font__size-15 steps__title">Checkout</p>
+                            </a>
+                        </li>
+                        <li class="">
+                            <a class="">
+                                <span class="font__family-montserrat font__weight-bold font__size-15 steps__dot"><span class="before"></span> <span class="after"></span> 3</span>
+                                <p class="font__family-montserrat font__size-15 steps__title">Payment</p>
+                            </a>
+                        </li>
+                        <li class="">
+                            <a class="">
+                                <span class="font__family-montserrat font__weight-bold font__size-15 steps__dot"><span class="before"></span> <span class="after"></span> 4</span>
+                                <p class="font__family-montserrat font__size-15 steps__title">Done</p>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-7">
+                    @if (!User.Identity.IsAuthenticated)
+                    {
+
+                        <!--- Sign in -->
+                        <div class="mb-40">
+                            <div class="d-flex align-items-center">
+                                <div class="container-fluid">
+                                    <div class="row">
+                                        <div class="col-12" id="loginUpDivSection">
+                                            <h2 class="font__family-montserrat font__size-36 font__weight-bold line__height-42 mt-40">Login</h2>
+                                            <form asp-controller="CartAndPayment" asp-action="SignIn" class="brk-form brk-form-strict maxw-570" data-brk-library="component__form">
+
+                                                @*<input type="text" value="@Model.PTotal" id="mmf" hidden />
+                                                <input type="text" value="@Model.TransactionNo" id="ef" hidden />
+                                                <input type="text" value="@Model.SubTotal" id="df" hidden />
+                                                <input type="text" value="@Model.Total" id="agf" hidden />
+                                                <input type="text" value="@Model.CartCollection" id="agf" hidden />*@
+
+                                                <input type="text" name="Username" asp-for="Username" placeholder="Member ID or Email Address">
+                                                <input type="password" name="Password" asp-for="Password" placeholder="Password">
+                                                <div class="no-margin pl-10 pr-10 mb-30 mt-40 d-flex flex-wrap justify-content-between align-items-center">
+                                                    <div><input id="checkbox-strict-1" name="checkbox" type="checkbox" value="1" checked="checked"> <label class="brk-form-checkbox-label" for="checkbox-strict-1">Remember Me</label></div>
+                                                </div>
+                                                <div class="d-flex flex-wrap justify-content-between">
+                                                    <button type="submit" class="btn-backgrounds btn-backgrounds btn-backgrounds_white font__family-montserrat font__weight-bold text-uppercase font__size-13 z-index-2 text-center letter-spacing-20 mt-10" data-brk-library="component__button">
+                                                        <span class="text">Login Now</span> <span class="before"><i class="far fa-hand-point-right"></i></span>
+                                                    </button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <div class="col-12">
+                                            @if (!User.Identity.IsAuthenticated)
+                                            {
+                                                <div class="d-flex flex-wrap justify-content-between">
+
+                                                    <button Id="CsignIn" class="btn-backgrounds btn-backgrounds btn-backgrounds_white font__family-montserrat font__weight-bold text-uppercase font__size-13 z-index-2 text-center letter-spacing-20 mt-10" data-brk-library="component__button">
+                                                        <span class="text">Login Now</span> <span class="before"><i class="far fa-hand-point-right"></i></span>
+                                                    </button>
+                                                    <button Id="Cregistration" class="btn-backgrounds btn-backgrounds btn-backgrounds_white font__family-montserrat font__weight-bold text-uppercase font__size-13 z-index-2 text-center letter-spacing-20 mt-10" data-brk-library="component__button">
+                                                        <span class="text">Sign up</span> <span class="before"><i class="fas fa-user"></i></span>
+                                                    </button>
+                                                </div>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!---Sign up -->
+                        <div id="signUpDivSection">
+
+                            <form asp-controller="CartAndPayment" asp-action="Cregistration" class="brk-form brk-form-strict maxw-570" data-brk-library="component__form">
+                                <div class="row mb-40">
+
+                                    <div class="col-12 col-md-6 collapse" id="couponCollapse"><input type="text" placeholder="Enter your code"></div>
+                                    <div class="col-12">
+                                        <h2 class="font__family-montserrat font__size-36 font__weight-bold line__height-42 mt-40">Personal details</h2>
+                                    </div>
+                                    <div class="col-12 col-md-6"><input type="text" asp-for="FirstName" name="FirstName" placeholder="First Name" required></div>
+                                    <div class="col-12 col-md-6"><input type="text" asp-for="LastName" name="LastName" placeholder="Last Name" required></div>
+                                    <div class="col-12 col-md-6"><input type="text" asp-for="Email" name="Email" required placeholder="Email Address"></div>
+                                    <div class="col-12 col-md-6"><input type="text" asp-for="Tel" name="Tel" required placeholder="Phone Number"></div>
+                                    <div class="col-12 col-md-6">
+                                        <select name="Gender" asp-for="Gender">
+                                            <option value="">Select Gender</option>
+                                            <option value="Female">Female</option>
+                                            <option value="Male">Male</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-12 col-md-6"><input type="text" asp-for="BioetricVerificationNumber" name="BioetricVerificationNumber" placeholder="BVN Number"></div>
+                                    <div class="col-12"><input type="text" asp-for="Address" name="Address" required placeholder="House Address"></div>
+                                    <div class="col-12 col-md-6"><input type="text" required placeholder="Who were you referred by?"></div>
+                                    <hr>
+
+                                    <div class="col-12 mt-70 mb-20">
+
+                                        <div class="text-left font__family-open-sans font__size-15 line__height-24 brk-dark-font-color">
+                                            <p>Create a password to login to your ARM account.</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 col-md-6  text-left"><label class="brk-form-label font__family-montserrat font__weight-bold" for="brk-pass-form">Account Password</label><input name="password" type="password" placeholder="Enter password"></div>
+                                    <div class="col-12 col-md-6  text-left"><label class="brk-form-label font__family-montserrat font__weight-bold" for="brk-pass-form">Confirm Password</label><input name="password" type="password" placeholder="Confirm password"></div>
+                                    <div class="col-12 col-md-6  text-left">
+                                        <button class="btn btn-inside-out btn-lg  btn-shadow mx-0 my-0" data-brk-library="component__button"><span class="before">Save</span><span class="text">Save</span><span class="after">Save</span></button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+
+                    }
+                    @if (User.Identity.IsAuthenticated)
+                    {
+
+                        <!---customer detail -->
+
+                        <div class="brk-form-strict" data-brk-library="component__form">
+                            <div class="row mb-40">
+
+                                <div class="col-12 col-md-6 collapse" id="couponCollapse"><input type="text" placeholder="Enter your code"></div>
+                                <div class="col-12">
+                                    <h2 class="font__family-montserrat font__size-36 font__weight-bold line__height-42 mt-40">Personal details </h2>
+                                </div>
+                                <div class="col-12 col-md-12">
+                                    <Label>First Name </Label>  <input type="text" readonly="readonly" value="@Model.Person.FirstName" required>
+
+                                </div>
+                                <div class="col-12 col-md-12">
+                                    <Label>Last Name </Label> <input type="text" readonly="readonly" value="@Model.Person.LastName" required>
+                                </div>
+                                <div class="col-12 col-md-12"><input type="text" readonly="readonly" value="@Model.Person.Email"></div>
+                                <div class="col-12 col-md-12"><input type="text" required readonly="readonly" value="@Model.Person.Tel"></div>
+                                <div class="col-12 col-md-12"><input type="text" readonly="readonly" value="@Model.Person.Gender"></div>
+                                <div class="col-12 col-md-12"><input type="text" readonly="readonly" value="@Model.Person.BioetricVerificationNumber"></div>
+                                <hr>
+                            </div>
+                        </div>
+
+                    }
+                </div>
+
+                <!--- Order Information -->
+                <div class="col-md-5">
+                    <article class="brk-checkout-order" data-brk-library="component__checkout">
+                        <header class="brk-checkout-order__header d-flex align-items-center justify-content-between">
+                            <h1 class="font__family-montserrat font__size-21 line__height-24 font__weight-bold">Your order</h1>
+                            <a asp-controller="Home" asp-action="Index" class="btn btn-prime btn-md border-radius-25 btn-no-shadow mx-0 my-0 font__weight-bold" data-brk-library="component__button"><i class="icon-inside fas fa-sync-alt"></i> <span class="before"></span><span class="after"></span><span class="border-btn"></span>Add More</a>
+                        </header>
+                        <ul class="brk-checkout-order__list brk-styled-scroll-x">
+                            @foreach (var item in Model.CartCollection)
+                            {
+                                <li class="brk-checkout-order-item font__family-montserrat font__size-14 line__height-16" data-brk-library="component__checkout">
+                                    <img data-src="../Liber/FileArchives/@item.Product.Image" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="item-alt" class="lazyload brk-checkout-order-item__img">
+                                    <h2 class="font__size-14 line__height-16 font__weight-bold brk-checkout-order-item__title">@item.Product.Name</h2>
+                                    <p class="brk-checkout-order-item__price text-left"> <span class="brk-base-font-color pl-1 font__weight-bold ">&#8358;@item.Amount</span></p>
+                                </li>
+                            }
+                        </ul>
+                        <div></div>
+                        <div class="maxw-770" data-brk-library="component__title">
+                            <div class="text-left">
+
+                                <h4 class="font__family-montserrat highlight-underline line__height-26 font__size-21 font__weight-light">
+                                    <span class="before wow fadeInUp"></span> <span class="before wow fadeInUp"></span><span>Process payment via ARMPay </span></br><span class="checkout-small-desc mt-20 text-justify">
+                                        ARMPay is ARM’s proprietary payment gateway which facilitates electronic payments on Mastercard, Visa, Verve and various debit/credit
+                                        cards in Nigeria.
+                                    </span>
+                                </h4>
+                                <img src="../Liber/Store/img/payment-icons.svg" class="pd-lr-20 pb-1">
+                            </div>
+                        </div>
+                        <footer class="brk-checkout-order__footer">
+                            <section class="brk-checkout-order__footer-section">
+                                <h3 class="font__family-montserrat"><span class="font__size-14 font__weight-bold pr-2">Subtotal:</span><span class="font__size-24 font__weight-bold brk-base-font-color">&#8358;@Model.SubTotal</span></h3>
+                            </section>
+                            <section class="brk-checkout-order__footer-section">
+                                <h3 class="font__family-montserrat"><span class="font__size-14 font__weight-bold pr-2">Total:</span><span class="font__size-24 font__weight-bold brk-base-font-color">&#8358;@Model.Total</span></h3>
+                            </section>
+                        </footer><span class="brk-checkout-order__after"></span>
+                    </article>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        var customerId = String.Empty;
+                        if (String.IsNullOrEmpty(Model.Person.MemberShipNo))
+                        {
+                            customerId = Model.Person.Email;
+                        }
+                        else
+                        {
+                            customerId = Model.Person.MemberShipNo;
+                        }
+                        <div class="text-center translate-top-50">
+                            @*<button class="btn btn-inside-out btn-lg border-radius-25 btn-shadow pl-50 pr-50" data-brk-library="component__button" data-toggle="modal" data-target="#myModal">
+                                <span class="before">Proceed Checkout</span><span class="text">Proceed Checkout</span><span class="after">Proceed Checkout</span>
+                            </button>*@
+
+                            <form id="paymentform" name="submit2aggregator_form" action="@Model.PaymentGateway" target="_self" method="post">
+                                <input type="hidden" name="arm_vendor_username" value="@Model.VendorUserName" />
+                                <input type="hidden" name="arm_tranx_id" value="@Model.TransactionParameter" />
+                                <input type="hidden" name="arm_cust_id" value="@customerId" />
+                                <input type="hidden" name="arm_cust_name" value="@Model.Person.FirstName @Model.Person.LastName" />
+                                <input type="hidden" name="arm_tranx_amt" value="@Model.PTotal" />
+                                <input type="hidden" name="arm_tranx_curr" value="566" />
+                                <input type="hidden" name="arm_tranx_noti_url" value="@Model.ReturnUr" />
+                                <input type="hidden" name="arm_xml_data" value="@Html.Raw(@Model.XmlPayload)" />
+                                <input type="hidden" name="arm_hash" value="@Model.HashedData" />
+                                <input type="hidden" name="arm_payment_params" value="@string.Format("{0}",@Model.TransactionParameter)" />
+
+                                <button class="btn btn-inside-out btn-lg border-radius-25 btn-shadow pl-50 pr-50" data-brk-library="component__button">
+                                    <span class="before">Proceed To Payment</span><span class="text">Proceed To Payment</span><span class="after">Proceed To Payment</span>
+                                </button>
+                            </form>
+                            
+                        </div>                        
+                    }
+                </div>
+            </div>
+        </div>
+
+        <!--proceed to checkout-->
+        <!-- Modal -->
+        
+    </main>
+</div>

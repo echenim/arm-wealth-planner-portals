@@ -1,0 +1,127 @@
+﻿@using Portal.ViewModel
+@model PersonAndPersonBuyHistoryView
+@{
+
+    Layout = "~/Areas/Admin/Views/Shared/_Layout_Admin.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-12 ">
+        <div class="element-box element-wrapper">
+            <div class="row">
+                <div class="col-md-5">
+                    <table class="table-borderless table-striped table-editable ">
+                        <thead>
+                            <tr>
+                                <th colspan="2">CUSTOMER INFORMATION</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                        <tr>
+                            <td>Name</td>
+                            <td>@Model.PersonObj.FullName</td>
+                        </tr>
+                        <tr>
+                            <td>Membership No</td>
+                            <td>@Model.PersonObj.MemberShipNo</td>
+                        </tr>
+                        <tr>
+                            <td>BV Number</td>
+                            <td>@Model.PersonObj.BioetricVerificationNumber</td>
+                        </tr>
+                        <tr>
+                            <td>Email</td>
+                            <td>@Model.PersonObj.Email</td>
+                        </tr>
+                        <tr>
+                            <td>Tel</td>
+                            <td>@Model.PersonObj.Tel</td>
+                        </tr>
+                        <tr>
+                            <td>Address</td>
+                            <td>@Model.PersonObj.Address</td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="col-md-12 ">
+                    <div class="element-box-tp">
+                        <h5 class="element-header">
+                            ORDERS & PURCHASE HISTTORY
+                        </h5>
+
+                        <div class="table-responsive">
+                            <table class="table table-striped b-b">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                        </th>
+                                        <th>
+                                            Date
+                                        </th>
+                                        <th>
+                                            CartID
+                                        </th>
+                                        <th>
+                                            Item Purchased
+                                        </th>
+                                        <th class="text-center">
+                                            Amount
+                                        </th>
+                                        <th>
+                                            Category
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model.BuyHistory)
+                                    {
+                                        <tr>
+
+                                            <td class="nowrap">
+                                                @if (item.OrderAndPurchaseStatus.Equals("Succeed"))
+                                                {
+                                                    <span class="status-pill smaller green"></span><span>@item.OrderAndPurchaseStatus</span>
+                                                }
+                                                @if (item.OrderAndPurchaseStatus.Equals("Failed"))
+                                                {
+                                                    <input type="checkbox" id="myCheck" onclick="myFunction(this)" value='+@item.Id+'>@item.Id
+                                                    <span class="status-pill smaller red"></span><span>@item.OrderAndPurchaseStatus</span>
+                                                }
+                                                @if (item.OrderAndPurchaseStatus.Equals("Incart"))
+                                                {
+                                                    <span class="status-pill smaller yellow"></span><span>@item.OrderAndPurchaseStatus</span>
+                                                }
+                                            </td>
+                                            <td>
+                                                <span class="smaller lighter">
+                                                    @string.Format("{0}", item.OrderDate, "MMMM dd, yyyy")
+                                                </span>
+                                            </td>
+                                            <td>
+                                                <div>
+                                                    @item.TransactionNo
+                                                </div>
+                                            </td>
+
+                                            <td>
+                                                <div>
+                                                    @item.Product.Name
+                                                </div>
+                                            </td>
+                                            <td class="text-center">
+                                                <span>&#8358;@item.Amount</span>
+                                            </td>
+                                            <td>
+                                                @item.Product.ProductCategory.Name
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

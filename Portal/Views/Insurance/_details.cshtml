@@ -1,0 +1,563 @@
+﻿@model ProductsAndProductsItem
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!--- BreadCrumb Area-->
+
+<div class="breadcrumbs__section breadcrumbs__section-dark bg__style mt-80 mb-30 pt-80 pb-80 lazyload" data-bg="Liber/Store/img/alternative-banner.jpg" data-brk-library="component__breadcrumbs_css">
+    <div class="brk-base-bg-6 breadcrumb-bg full__size-absolute"></div>
+    <h2 class="font__size-40 line__height-46 font__family-montserrat font__weight-ultralight text-center"><span class="font__weight-bold">@Model.ProductsObj.Name</span></h2>
+    <div class="breadcrumbs__wrapper">
+        <div class="container">
+            <ol class="breadcrumb font__family-montserrat font__weight-medium font__size-12 letter-spacing-100">
+                <li class="breadcrumb__icon"><a href="#"><i class="fas fa-home"></i></a></li>
+                <li><a href="#">Insurance <i class="fas fa-arrow-right"></i></a></li>
+                <li class="active">@Model.ProductsObj.Name</li>
+            </ol>
+            <div class="dropdown">
+                <button class="btn btn-default font__family-montserrat dropdown-toggle letter-spacing-100 font__weight-medium font__size-12" type="button" id="dropdownMenu2" data-toggle="dropdown" data-brk-library="component__button">More in Category<i class="fas fa-chevron-down"></i></button>
+                <ul class="dropdown-menu font__family-montserrat letter-spacing-100 font__weight-medium font__size-12 brk-bb-color" role="menu" aria-labelledby="dropdownMenu2">
+                    @foreach (var item in @Model.Items.OrderBy(s => s.Name))
+                    {
+                        <li role="presentation"><a asp-action="Details" asp-route-id="@item.Id" role="menuitem" tabindex="-1">@item.Name</a></li>
+
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<h1 class="sr-only">@Model.ProductsObj.Name</h1>
+<!---- Product Information -->
+<section class="brk-sc-item-page-header mb-30" data-brk-library="component__shop_item_page">
+    <div class="brk-sc-item-page-header__info pt-50">
+
+        <div class="container">
+
+            <div class="row">
+                <div class="col-lg-5">
+                    <!-- Product Image -->
+                    <div class="order-xl-1 text-center">
+                        <span class=""></span>
+                        <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="../../Liber/FileArchives/@Model.ProductsObj.Image" class="prod-image lazyload" alt="alt">
+                    </div>
+
+                    <!---Fund Price-->
+                    <div class="services-info mt-5" data-brk-library="component__services">
+                        <div class="services-info__content text-center">
+                            <div class="services-info__icon"><i class=""></i></div>
+                            <div class="services-info__text">
+                                <div class="font__family-montserrat"><span class="font__weight-semibold font__size-38 line__height-50 d-inline-block">13.5%</span> <span class="font__weight-ultralight font__size-28 line__height-40 d-inline-block" style="padding-top: 8px;">fund price</span></div>
+                                <div class="font__family-montserrat font__size-12 line__height-20 opacity-60 text-uppercase">at 14th Feb 2019</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-lg-7">
+                    <div class="container mt-15 mt-md-25">
+                        <!-- Product Category -->
+                        <h5 class="font__family-varela-round highlight-trend font__size-14" data-brk-library="component__title">Insurance</h5>
+                        <!-- Product Name -->
+                        <h2 class="font__family-varela-round font__weight-bold font__size-24 line__height-32 mt-30" data-brk-library="component__title">@Model.ProductsObj.Name</h2>
+                        <div class="divider-layers wow zoomIn product-divider-marg" data-brk-library="component__title"><span class="before"></span></div>
+                        <!-- Product Description -->
+                        <h5 class="text-gray-light font__family-varela-round line__height-26 font__size-18 letter-spacing-20 text-justify" data-brk-library="component__title">
+                            @Model.ProductsObj.Description
+                        </h5>
+
+                        <hr>
+                        <div>
+                            @if (Model.ProductsObj.ProductTypes.Equals("Enter Amount"))
+                            {
+                                <h4 class="font__family-varela-round text-uppercase font__size-20 mb-10 mt-20">Enter the Amount you wish to Invest</h4>
+                                <form method="post" asp-action="SubmitToCart" class="brk-form-round brk-form-round-btn-inside-full w-100">
+                                    <input type="text" asp-for="Amount" name="Amount" placeholder="enter amount" />
+                                    <input type="hidden" readonly="readonly" asp-for="ProductId" name="ProductId" />
+                                    <button type="submit" class="btn btn-inside-out btn-lg border-radius-30 btn-shadow mx-0 my-0" data-brk-library="component__button"><span class="before">invest now</span><span class="text">invest now</span><span class="after">invest now</span></button>
+                                </form>
+                                if (TempData["AmountTooLow"] != null)
+                                {
+                                    <p class="p font__weight-semibold  mt-1">@TempData["AmountTooLow"].ToString()</p>
+                                }
+                                <p class="font__family-playfair p font__weight-normal font__style-italic mt-1">Starting from as low as &#8358;@Model.ProductsObj.StartFrom</p>
+
+                            }
+
+                            @if (Model.ProductsObj.ProductTypes.Equals("Voucher System"))
+                            {
+                                <h4 class="font__family-varela-round text-uppercase font__size-20 mb-10 mt-20">Enter the Amount you wish to Invest</h4>
+                                @*<form class="brk-form-round brk-form-round-btn-inside-full w-100">
+                                    <input type="text" placeholder="enter amount">
+                                    <input type="hidden" readonly="readonly" name="IpIdentifier" />
+                                    <input type="text" readonly="readonly" name="IpIdentifier" />
+                                    <button class="btn btn-inside-out btn-lg border-radius-30 btn-shadow mx-0 my-0" data-brk-library="component__button"><span class="before">invest now</span><span class="text">invest now</span><span class="after">invest now</span></button>
+                                </form>*@
+                                <p class="font__family-playfair p font__weight-normal font__style-italic mt-1">Starting from as low as &#8358;@Model.ProductsObj.StartFrom</p>
+
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!---- More Info Area -->
+<section class="brk-sc-item-page-body pt-20 pb-20">
+
+    <div class="container mb-30">
+        <div class="brk-tabs brk-tabs-simple" data-hash="true" data-brk-library="component__tabs">
+            <ul class="brk-tabs-nav font__family-varela-round font__weight-bold">
+                <li class="brk-tab"><i class="fab fa-delicious" aria-hidden="true"></i><span>More Info</span></li>
+                <li class="brk-tab"><i class="fab fa-delicious" aria-hidden="true"></i><span>Key Benefits</span></li>
+                <li class="brk-tab"><i class="fab fa-delicious" aria-hidden="true"></i><span>Key Features</span></li>
+                <li class="brk-tab"><i class="fab fa-delicious" aria-hidden="true"></i><span>Investment Management</span></li>
+                <li class="brk-tab"><i class="fab fa-delicious" aria-hidden="true"></i><span>How to Begin</span></li>
+            </ul>
+            <div class="brk-tabs-content">
+                <div class="brk-tab-item text-center text-lg-left">
+                    <!-- More Info -->
+                    <div class="row">
+                        <div class="col-lg-9 col-md-7">
+                            @foreach (var item in Model.ProductsObj.WhatYouNeedToKNowAboutThisProducts.Where(s => s.Sections.Equals("More Info")))
+                            {
+                                <h2 class="font__family-varela-round text-uppercase font__size-24 mb-10">@item.Title:</h2>
+
+                                var listdetails = item.Description.Split("||");
+                                <div class=" mb-5">
+                                    <ul class="list-inline-2" data-brk-library="component__list">
+                                        @foreach (var x in listdetails)
+                                        {
+                                            <li class="font__family-varela-round font__size-16 font__weight-bold">
+                                                <span class="text"><span class="cirlce"><span class="before"></span><span class="after"></span></span>@x</span>
+                                            </li>
+
+                                        }
+                                    </ul>
+                                </div>
+                            }
+                        </div>
+                        <div class="col-lg-3 col-md-5">
+                            <figure class="shape-box__wrapper-inline" data-brk-library="component__shape_box">
+                                <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="../../Liber/FileArchives/@Model.ProductsObj.Image" alt="alt" class="lazyload">
+                                <div class="brk-abs-overlay z-index-0 bg-black opacity-60"></div>
+                                <figcaption>
+                                    <div class="icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" viewBox="0 0 60 60">
+                                            <path fill="none" stroke="#9CAAB9" stroke-width="2" stroke-linecap="square" stroke-miterlimit="10" d="M42,31h1.43l0.35,2.94l2.65,1.1L49,33l2,2l-2.04,2.56l1.1,2.65L53,40.57v2.87l-2.94,0.35l-1.1,2.65L51,49l-2,2l-2.56-2.04l-2.65,1.1L43.43,53h-2.87l-0.35-2.94l-2.65-1.1L35,51l-2-2l2.04-2.56l-1.1-2.65L31,43.43v-2.87l2.94-0.35l1.1-2.65L33,35l2-2l2.56,2.04l2.65-1.1L40.57,31H42zM42,39c-1.66,0-3,1.34-3,3c0,1.66,1.34,3,3,3c1.66,0,3-1.34,3-3C45,40.34,43.66,39,42,39z" />
+                                            <path fill="none" stroke="#95A5A6" stroke-width="2" stroke-linecap="square" stroke-miterlimit="10" d="M23,7h1.04l1.01,4.31l2.02,0.54l3.03-3.23l1.81,1.04l-1.28,4.23l1.48,1.48l4.23-1.28l1.05,1.81l-3.22,3.03l0.54,2.02L39,21.96l0,2.08l-4.31,1.01l-0.54,2.02l3.22,3.03l-1.04,1.81l-4.23-1.28l-1.48,1.48l1.28,4.23l-1.81,1.05l-3.03-3.23l-2.02,0.54L24.04,39l-2.09,0l-1.01-4.31l-2.02-0.54l-3.02,3.23l-1.81-1.04l1.28-4.23l-1.48-1.48L9.66,31.9L8.62,30.1l3.23-3.03l-0.54-2.02L7,24.04l0-2.09l4.31-1.01l0.54-2.02L8.62,15.9l1.04-1.81l4.24,1.28l1.48-1.48L14.1,9.66l1.81-1.04l3.03,3.23l2.02-0.54L21.96,7H23zM23,17c-3.31,0-6,2.68-6,6c0,3.31,2.68,6,6,6c3.31,0,6-2.69,6-6C29,19.68,26.31,17,23,17z" />
+                                        </svg>
+                                    </div>
+                                    <h4 class="font__family-varela-round font__weight-bold font__size-24 text-uppercase main-title text-center">@Model.ProductsObj.Name</h4>
+                                    <p class="main-description font__family-open-sans font__size-14 text-gray text-center">Investments and Savings made easy</p><a href="#" class="btn btn-inside-out btn-lg border-radius-30 font__weight-bold" data-brk-library="component__button"><span class="before">invest now</span><span class="text">invest now</span><span class="after">invest now</span></a>
+                                </figcaption><span class="after"></span>
+                            </figure>
+                        </div>
+                    </div>
+                </div>
+                <div class="brk-tab-item text-center text-lg-left">
+                    <!-- Key Benefits -->
+                    <div class="row">
+                        <div class="col-lg-9 col-md-7">
+                            @foreach (var item in Model.ProductsObj.WhatYouNeedToKNowAboutThisProducts.Where(s => s.Sections.Equals("Key Benefits")))
+                            {
+                                <h2 class="font__family-varela-round text-uppercase font__size-24 mb-10">@item.Title:</h2>
+
+                                var listdetails = item.Description.Split("||");
+                                <div class=" mb-5">
+                                    <ul class="list-inline-2" data-brk-library="component__list">
+                                        @foreach (var x in listdetails)
+                                        {
+                                            <li class="font__family-varela-round font__size-16 font__weight-bold">
+                                                <span class="text"><span class="cirlce"><span class="before"></span><span class="after"></span></span>@x</span>
+                                            </li>
+
+                                        }
+                                    </ul>
+                                </div>
+                            }
+                        </div>
+                        <div class="col-lg-3 col-md-6">
+                            <figure class="shape-box__wrapper-inline" data-brk-library="component__shape_box">
+                                <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="../../Liber/FileArchives/@Model.ProductsObj.Image" alt="alt" class="lazyload">
+                                <div class="brk-abs-overlay z-index-0 bg-black opacity-60"></div>
+                                <figcaption>
+                                    <div class="icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" viewBox="0 0 60 60">
+                                            <path fill="none" stroke="#9CAAB9" stroke-width="2" stroke-linecap="square" stroke-miterlimit="10" d="M42,31h1.43l0.35,2.94l2.65,1.1L49,33l2,2l-2.04,2.56l1.1,2.65L53,40.57v2.87l-2.94,0.35l-1.1,2.65L51,49l-2,2l-2.56-2.04l-2.65,1.1L43.43,53h-2.87l-0.35-2.94l-2.65-1.1L35,51l-2-2l2.04-2.56l-1.1-2.65L31,43.43v-2.87l2.94-0.35l1.1-2.65L33,35l2-2l2.56,2.04l2.65-1.1L40.57,31H42zM42,39c-1.66,0-3,1.34-3,3c0,1.66,1.34,3,3,3c1.66,0,3-1.34,3-3C45,40.34,43.66,39,42,39z" />
+                                            <path fill="none" stroke="#95A5A6" stroke-width="2" stroke-linecap="square" stroke-miterlimit="10" d="M23,7h1.04l1.01,4.31l2.02,0.54l3.03-3.23l1.81,1.04l-1.28,4.23l1.48,1.48l4.23-1.28l1.05,1.81l-3.22,3.03l0.54,2.02L39,21.96l0,2.08l-4.31,1.01l-0.54,2.02l3.22,3.03l-1.04,1.81l-4.23-1.28l-1.48,1.48l1.28,4.23l-1.81,1.05l-3.03-3.23l-2.02,0.54L24.04,39l-2.09,0l-1.01-4.31l-2.02-0.54l-3.02,3.23l-1.81-1.04l1.28-4.23l-1.48-1.48L9.66,31.9L8.62,30.1l3.23-3.03l-0.54-2.02L7,24.04l0-2.09l4.31-1.01l0.54-2.02L8.62,15.9l1.04-1.81l4.24,1.28l1.48-1.48L14.1,9.66l1.81-1.04l3.03,3.23l2.02-0.54L21.96,7H23zM23,17c-3.31,0-6,2.68-6,6c0,3.31,2.68,6,6,6c3.31,0,6-2.69,6-6C29,19.68,26.31,17,23,17z" />
+                                        </svg>
+                                    </div>
+                                    <h4 class="font__family-varela-round font__weight-bold font__size-24 text-uppercase main-title text-center">@Model.ProductsObj.Name</h4>
+                                    <p class="main-description font__family-open-sans font__size-14 text-gray text-center">Investments and Savings made easy</p><a href="#" class="btn btn-inside-out btn-lg border-radius-30 font__weight-bold" data-brk-library="component__button"><span class="before">invest now</span><span class="text">invest now</span><span class="after">invest now</span></a>
+                                </figcaption><span class="after"></span>
+                            </figure>
+                        </div>
+                    </div>
+                </div>
+                <div class="brk-tab-item text-center text-lg-left">
+                    <!-- Key Features -->
+                    <div class="row">
+                        <div class="col-lg-9 col-md-7">
+                            @foreach (var item in Model.ProductsObj.WhatYouNeedToKNowAboutThisProducts.Where(s => s.Sections.Equals("Key Features")))
+                            {
+                                <h2 class="font__family-varela-round text-uppercase font__size-24 mb-10">@item.Title:</h2>
+
+                                var listdetails = item.Description.Split("||");
+                                <div class=" mb-5">
+                                    <ul class="list-inline-2" data-brk-library="component__list">
+                                        @foreach (var x in listdetails)
+                                        {
+                                            <li class="font__family-varela-round font__size-16 font__weight-bold">
+                                                <span class="text"><span class="cirlce"><span class="before"></span><span class="after"></span></span>@x</span>
+                                            </li>
+
+                                        }
+                                    </ul>
+                                </div>
+                            }
+                        </div>
+                        <div class="col-lg-3 col-md-6">
+                            <figure class="shape-box__wrapper-inline" data-brk-library="component__shape_box">
+                                <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="../../Liber/FileArchives/@Model.ProductsObj.Image" alt="alt" class="lazyload">
+                                <div class="brk-abs-overlay z-index-0 bg-black opacity-60"></div>
+                                <figcaption>
+                                    <div class="icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" viewBox="0 0 60 60">
+                                            <path fill="none" stroke="#9CAAB9" stroke-width="2" stroke-linecap="square" stroke-miterlimit="10" d="M42,31h1.43l0.35,2.94l2.65,1.1L49,33l2,2l-2.04,2.56l1.1,2.65L53,40.57v2.87l-2.94,0.35l-1.1,2.65L51,49l-2,2l-2.56-2.04l-2.65,1.1L43.43,53h-2.87l-0.35-2.94l-2.65-1.1L35,51l-2-2l2.04-2.56l-1.1-2.65L31,43.43v-2.87l2.94-0.35l1.1-2.65L33,35l2-2l2.56,2.04l2.65-1.1L40.57,31H42zM42,39c-1.66,0-3,1.34-3,3c0,1.66,1.34,3,3,3c1.66,0,3-1.34,3-3C45,40.34,43.66,39,42,39z" />
+                                            <path fill="none" stroke="#95A5A6" stroke-width="2" stroke-linecap="square" stroke-miterlimit="10" d="M23,7h1.04l1.01,4.31l2.02,0.54l3.03-3.23l1.81,1.04l-1.28,4.23l1.48,1.48l4.23-1.28l1.05,1.81l-3.22,3.03l0.54,2.02L39,21.96l0,2.08l-4.31,1.01l-0.54,2.02l3.22,3.03l-1.04,1.81l-4.23-1.28l-1.48,1.48l1.28,4.23l-1.81,1.05l-3.03-3.23l-2.02,0.54L24.04,39l-2.09,0l-1.01-4.31l-2.02-0.54l-3.02,3.23l-1.81-1.04l1.28-4.23l-1.48-1.48L9.66,31.9L8.62,30.1l3.23-3.03l-0.54-2.02L7,24.04l0-2.09l4.31-1.01l0.54-2.02L8.62,15.9l1.04-1.81l4.24,1.28l1.48-1.48L14.1,9.66l1.81-1.04l3.03,3.23l2.02-0.54L21.96,7H23zM23,17c-3.31,0-6,2.68-6,6c0,3.31,2.68,6,6,6c3.31,0,6-2.69,6-6C29,19.68,26.31,17,23,17z" />
+                                        </svg>
+                                    </div>
+                                    <h4 class="font__family-varela-round font__weight-bold font__size-24 text-uppercase main-title text-center">@Model.ProductsObj.Name</h4>
+                                    <p class="main-description font__family-open-sans font__size-14 text-gray text-center">Investments and Savings made easy</p><a href="#" class="btn btn-inside-out btn-lg border-radius-30 font__weight-bold" data-brk-library="component__button"><span class="before">invest now</span><span class="text">invest now</span><span class="after">invest now</span></a>
+                                </figcaption><span class="after"></span>
+                            </figure>
+                        </div>
+                    </div>
+                </div>
+                <div class="brk-tab-item text-center text-lg-left">
+                    <!-- Investment Management-->
+                    <div class="row">
+                        <div class="col-lg-9 col-md-7">
+                            @foreach (var item in Model.ProductsObj.WhatYouNeedToKNowAboutThisProducts.Where(s => s.Sections.Equals("Investment Manager")))
+                            {
+                                <h2 class="font__family-varela-round text-uppercase font__size-24 mb-10">@item.Title:</h2>
+
+                                var listdetails = item.Description.Split("||");
+                                <div class=" mb-5">
+                                    <ul class="list-inline-2" data-brk-library="component__list">
+                                        @foreach (var x in listdetails)
+                                        {
+                                            <li class="font__family-varela-round font__size-16 font__weight-bold">
+                                                <span class="text"><span class="cirlce"><span class="before"></span><span class="after"></span></span>@x</span>
+                                            </li>
+
+                                        }
+                                    </ul>
+                                </div>
+                            }
+                        </div>
+                        <div class="col-lg-3">
+                            <figure class="shape-box__wrapper-inline" data-brk-library="component__shape_box">
+                                <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="../../Liber/FileArchives/@Model.ProductsObj.Image" alt="alt" class="lazyload">
+                                <div class="brk-abs-overlay z-index-0 bg-black opacity-60"></div>
+                                <figcaption>
+                                    <div class="icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" viewBox="0 0 60 60">
+                                            <path fill="none" stroke="#9CAAB9" stroke-width="2" stroke-linecap="square" stroke-miterlimit="10" d="M42,31h1.43l0.35,2.94l2.65,1.1L49,33l2,2l-2.04,2.56l1.1,2.65L53,40.57v2.87l-2.94,0.35l-1.1,2.65L51,49l-2,2l-2.56-2.04l-2.65,1.1L43.43,53h-2.87l-0.35-2.94l-2.65-1.1L35,51l-2-2l2.04-2.56l-1.1-2.65L31,43.43v-2.87l2.94-0.35l1.1-2.65L33,35l2-2l2.56,2.04l2.65-1.1L40.57,31H42zM42,39c-1.66,0-3,1.34-3,3c0,1.66,1.34,3,3,3c1.66,0,3-1.34,3-3C45,40.34,43.66,39,42,39z" />
+                                            <path fill="none" stroke="#95A5A6" stroke-width="2" stroke-linecap="square" stroke-miterlimit="10" d="M23,7h1.04l1.01,4.31l2.02,0.54l3.03-3.23l1.81,1.04l-1.28,4.23l1.48,1.48l4.23-1.28l1.05,1.81l-3.22,3.03l0.54,2.02L39,21.96l0,2.08l-4.31,1.01l-0.54,2.02l3.22,3.03l-1.04,1.81l-4.23-1.28l-1.48,1.48l1.28,4.23l-1.81,1.05l-3.03-3.23l-2.02,0.54L24.04,39l-2.09,0l-1.01-4.31l-2.02-0.54l-3.02,3.23l-1.81-1.04l1.28-4.23l-1.48-1.48L9.66,31.9L8.62,30.1l3.23-3.03l-0.54-2.02L7,24.04l0-2.09l4.31-1.01l0.54-2.02L8.62,15.9l1.04-1.81l4.24,1.28l1.48-1.48L14.1,9.66l1.81-1.04l3.03,3.23l2.02-0.54L21.96,7H23zM23,17c-3.31,0-6,2.68-6,6c0,3.31,2.68,6,6,6c3.31,0,6-2.69,6-6C29,19.68,26.31,17,23,17z" />
+                                        </svg>
+                                    </div>
+                                    <h4 class="font__family-varela-round font__weight-bold font__size-24 text-uppercase main-title text-center">@Model.ProductsObj.Name</h4>
+                                    <p class="main-description font__family-open-sans font__size-14 text-gray text-center">Investments and Savings made easy</p><a href="#" class="btn btn-inside-out btn-lg border-radius-30 font__weight-bold" data-brk-library="component__button"><span class="before">invest now</span><span class="text">invest now</span><span class="after">invest now</span></a>
+                                </figcaption><span class="after"></span>
+                            </figure>
+                        </div>
+                    </div>
+                </div>
+                <div class="brk-tab-item text-center text-lg-left">
+                    <!--- How to Begin -->
+                    <div class="row">
+
+                        <div class="col-lg-9  col-md-7">
+                            @foreach (var item in Model.ProductsObj.WhatYouNeedToKNowAboutThisProducts.Where(s => s.Sections.Equals("How To Begin")))
+                            {
+                                <h2 class="font__family-varela-round text-uppercase font__size-24 mb-10">@item.Title:</h2>
+
+                                var listdetails = item.Description.Split("||");
+                                <div class=" mb-5">
+                                    <ul class="list-inline-2" data-brk-library="component__list">
+                                        @foreach (var x in listdetails)
+                                        {
+                                            <li class="font__family-varela-round font__size-16 font__weight-bold">
+                                                <span class="text"><span class="cirlce"><span class="before"></span><span class="after"></span></span>@x</span>
+                                            </li>
+
+                                        }
+                                    </ul>
+                                </div>
+                            }
+                        </div>
+                        <div class="col-lg-3 col-md-5">
+                            <figure class="shape-box__wrapper-inline" data-brk-library="component__shape_box">
+                                <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="../../Liber/FileArchives/@Model.ProductsObj.Image" alt="alt" class="lazyload">
+                                <div class="brk-abs-overlay z-index-0 bg-black opacity-60"></div>
+                                <figcaption>
+                                    <div class="icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" viewBox="0 0 60 60">
+                                            <path fill="none" stroke="#9CAAB9" stroke-width="2" stroke-linecap="square" stroke-miterlimit="10" d="M42,31h1.43l0.35,2.94l2.65,1.1L49,33l2,2l-2.04,2.56l1.1,2.65L53,40.57v2.87l-2.94,0.35l-1.1,2.65L51,49l-2,2l-2.56-2.04l-2.65,1.1L43.43,53h-2.87l-0.35-2.94l-2.65-1.1L35,51l-2-2l2.04-2.56l-1.1-2.65L31,43.43v-2.87l2.94-0.35l1.1-2.65L33,35l2-2l2.56,2.04l2.65-1.1L40.57,31H42zM42,39c-1.66,0-3,1.34-3,3c0,1.66,1.34,3,3,3c1.66,0,3-1.34,3-3C45,40.34,43.66,39,42,39z" />
+                                            <path fill="none" stroke="#95A5A6" stroke-width="2" stroke-linecap="square" stroke-miterlimit="10" d="M23,7h1.04l1.01,4.31l2.02,0.54l3.03-3.23l1.81,1.04l-1.28,4.23l1.48,1.48l4.23-1.28l1.05,1.81l-3.22,3.03l0.54,2.02L39,21.96l0,2.08l-4.31,1.01l-0.54,2.02l3.22,3.03l-1.04,1.81l-4.23-1.28l-1.48,1.48l1.28,4.23l-1.81,1.05l-3.03-3.23l-2.02,0.54L24.04,39l-2.09,0l-1.01-4.31l-2.02-0.54l-3.02,3.23l-1.81-1.04l1.28-4.23l-1.48-1.48L9.66,31.9L8.62,30.1l3.23-3.03l-0.54-2.02L7,24.04l0-2.09l4.31-1.01l0.54-2.02L8.62,15.9l1.04-1.81l4.24,1.28l1.48-1.48L14.1,9.66l1.81-1.04l3.03,3.23l2.02-0.54L21.96,7H23zM23,17c-3.31,0-6,2.68-6,6c0,3.31,2.68,6,6,6c3.31,0,6-2.69,6-6C29,19.68,26.31,17,23,17z" />
+                                        </svg>
+                                    </div>
+                                    <h4 class="font__family-varela-round font__weight-bold font__size-24 text-uppercase main-title text-center">@Model.ProductsObj.Name</h4>
+                                    <p class="main-description font__family-open-sans font__size-14 text-gray text-center">Investments and Savings made easy</p><a href="#" class="btn btn-inside-out btn-lg border-radius-30 font__weight-bold" data-brk-library="component__button"><span class="before">invest now</span><span class="text">invest now</span><span class="after">invest now</span></a>
+                                </figcaption><span class="after"></span>
+                            </figure>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!----Related Products -->
+<section class="position-relative brk-z-index-10">
+    <div class="container text-center">
+        <!--- Section Heading -->
+        <div class="mt-20">
+            <h2 class="title__heading-01 font__family-varela-round-alt font__size-50 font__weight-bold title__heading-main wow zoomIn" data-brk-library="component__title">Insurance</h2>
+            <h4 class="title__heading-01 title__heading-sub font__family-varela-round font__size-21" data-brk-library="component__title">Similar Investment Types</h4>
+            <hr class="title__heading-01 divider" data-brk-library="component__title">
+        </div>
+    </div>
+    <div class=" w-100 brk-tabs_rounded d-flex flex-column" data-brk-library="component__tabs">
+
+        <div class="container">
+            <div class="brk-slider">
+                <div class="brk-slider__items slick-loading" data-slick="{&quot;slidesToShow&quot;: 4, &quot;slidesToScroll&quot;: 2, &quot;arrows&quot;: false, &quot;dots&quot;: true}" data-brk-library="slider__slick">
+                    <div>
+                        <div class="flip-box brk-sc-flip-two text-center" data-brk-library="component__shop_flip,component__flip_box_css,scrollbar">
+                            <div class="flip flip_horizontal">
+                                <div class="flip__front brk-sc-flip-two__front">
+                                    <!--Related Product Image -->
+                                    <div class="brk-sc-flip-two__thumb m-4 "><img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="../../Liber/FileArchives/@Model.ProductsObj.Image" alt="" class="lazyload prod-image"></div>
+                                    <div class="brk-sc-flip-two__description">
+                                        <!--Related Product Amount -->
+                                        <div class="brk-sc-flip-two__price font__family-varela-round font__weight-medium brk-base-font-color ">Starting from &#8358;1,000</div>
+                                        <!--Related Product Name -->
+                                        <div class="brk-sc-flip-two__front-title font__family-varela-round font__weight-light brk-dark-font-color">ARM Discovery Fund</div>
+                                    </div>
+                                </div>
+                                <div class="flip__back brk-sc-flip-two__back">
+                                    <div class="brk-sc-flip-two__back-layer">
+                                        <!--Related Product Name -->
+                                        <div class="brk-sc-flip-two__back-title font__family-varela-round font__weight-medium">ARM Discovery Fund</div>
+                                        <!--Related Product Key Features -->
+                                        <div class="brk-sc-flip-two__list scrollbar-inner">
+                                            <ul class="pl-15 pr-15">
+                                                <li><i class="far fa-check brk-base-font-color"></i> Low risk mutual fund</li>
+                                                <li><i class="far fa-check brk-base-font-color"></i> Regulated by the SEC</li>
+                                                <li><i class="far fa-check brk-base-font-color"></i> Listed on the NSE</li>
+                                                <li><i class="far fa-check brk-base-font-color"></i> Invests in verifiable instruments</li>
+                                                <li><i class="far fa-check brk-base-font-color"></i> Suitable for short term or long term investment</li>
+                                                <li><i class="far fa-check brk-base-font-color"></i> Low risk mutual fund</li>
+                                                <li><i class="far fa-check brk-base-font-color"></i> Regulated by the SEC</li>
+                                            </ul>
+                                        </div>
+                                        <!-- product button-->
+                                        <div class="brk-sc-flip-two__button"><a href="#" class="btn btn-inside-out btn-md btn-icon border-radius-25 font__family-open-sans font__weight-semibold" data-brk-library="component__button"><span class="before">view item</span><span class="text">view item</span><span class="after">view item</span></a></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flip-box brk-sc-flip-two text-center" data-brk-library="component__shop_flip,component__flip_box_css,scrollbar">
+                            <div class="flip flip_horizontal">
+                                <div class="flip__front brk-sc-flip-two__front">
+                                    <!--Related Product Image -->
+                                    <div class="brk-sc-flip-two__thumb m-4 "><img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="../Liber/Store/img/mmf.jpg" alt="ARM Money Market Fund" class="lazyload prod-image"></div>
+                                    <div class="brk-sc-flip-two__description">
+                                        <!--Related Product Amount -->
+                                        <div class="brk-sc-flip-two__price font__family-varela-round font__weight-medium brk-base-font-color ">Starting from &#8358;1,000</div>
+                                        <!--Related Product Name -->
+                                        <div class="brk-sc-flip-two__front-title font__family-varela-round font__weight-light brk-dark-font-color">ARM Discovery Fund</div>
+                                    </div>
+                                </div>
+                                <div class="flip__back brk-sc-flip-two__back">
+                                    <div class="brk-sc-flip-two__back-layer">
+                                        <!--Related Product Name -->
+                                        <div class="brk-sc-flip-two__back-title font__family-varela-round font__weight-medium">ARM Discovery Fund</div>
+                                        <!--Related Product Key Features -->
+                                        <div class="brk-sc-flip-two__list scrollbar-inner">
+                                            <ul class="pl-15 pr-15">
+                                                <li><i class="far fa-check brk-base-font-color"></i> Low risk mutual fund</li>
+                                                <li><i class="far fa-check brk-base-font-color"></i> Regulated by the SEC</li>
+                                                <li><i class="far fa-check brk-base-font-color"></i> Listed on the NSE</li>
+                                                <li><i class="far fa-check brk-base-font-color"></i> Invests in verifiable instruments</li>
+                                                <li><i class="far fa-check brk-base-font-color"></i> Suitable for short term or long term investment</li>
+                                                <li><i class="far fa-check brk-base-font-color"></i> Low risk mutual fund</li>
+                                                <li><i class="far fa-check brk-base-font-color"></i> Regulated by the SEC</li>
+                                            </ul>
+                                        </div>
+                                        <!-- product button-->
+                                        <div class="brk-sc-flip-two__button"><a href="#" class="btn btn-inside-out btn-md btn-icon border-radius-25 font__family-open-sans font__weight-semibold" data-brk-library="component__button"><span class="before">view item</span><span class="text">view item</span><span class="after">view item</span></a></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flip-box brk-sc-flip-two text-center" data-brk-library="component__shop_flip,component__flip_box_css,scrollbar">
+                            <div class="flip flip_horizontal">
+                                <div class="flip__front brk-sc-flip-two__front">
+                                    <!--Related Product Image -->
+                                    <div class="brk-sc-flip-two__thumb m-4 "><img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="../Liber/Store/img/mmf.jpg" alt="ARM Money Market Fund" class="lazyload prod-image"></div>
+                                    <div class="brk-sc-flip-two__description">
+                                        <!--Related Product Amount -->
+                                        <div class="brk-sc-flip-two__price font__family-varela-round font__weight-medium brk-base-font-color ">Starting from &#8358;1,000</div>
+                                        <!--Related Product Name -->
+                                        <div class="brk-sc-flip-two__front-title font__family-varela-round font__weight-light brk-dark-font-color">ARM Discovery Fund</div>
+                                    </div>
+                                </div>
+                                <div class="flip__back brk-sc-flip-two__back">
+                                    <div class="brk-sc-flip-two__back-layer">
+                                        <!--Related Product Name -->
+                                        <div class="brk-sc-flip-two__back-title font__family-varela-round font__weight-medium">ARM Discovery Fund</div>
+                                        <!--Related Product Key Features -->
+                                        <div class="brk-sc-flip-two__list scrollbar-inner">
+                                            <ul class="pl-15 pr-15">
+                                                <li><i class="far fa-check brk-base-font-color"></i> Low risk mutual fund</li>
+                                                <li><i class="far fa-check brk-base-font-color"></i> Regulated by the SEC</li>
+                                                <li><i class="far fa-check brk-base-font-color"></i> Listed on the NSE</li>
+                                                <li><i class="far fa-check brk-base-font-color"></i> Invests in verifiable instruments</li>
+                                                <li><i class="far fa-check brk-base-font-color"></i> Suitable for short term or long term investment</li>
+                                                <li><i class="far fa-check brk-base-font-color"></i> Low risk mutual fund</li>
+                                                <li><i class="far fa-check brk-base-font-color"></i> Regulated by the SEC</li>
+                                            </ul>
+                                        </div>
+                                        <!-- product button-->
+                                        <div class="brk-sc-flip-two__button"><a href="#" class="btn btn-inside-out btn-md btn-icon border-radius-25 font__family-open-sans font__weight-semibold" data-brk-library="component__button"><span class="before">view item</span><span class="text">view item</span><span class="after">view item</span></a></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flip-box brk-sc-flip-two text-center" data-brk-library="component__shop_flip,component__flip_box_css,scrollbar">
+                            <div class="flip flip_horizontal">
+                                <div class="flip__front brk-sc-flip-two__front">
+                                    <!--Related Product Image -->
+                                    <div class="brk-sc-flip-two__thumb m-4 "><img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="../Liber/FileArchives/@Model.ProductsObj.Image" alt="ARM Money Market Fund" class="lazyload prod-image"></div>
+                                    <div class="brk-sc-flip-two__description">
+                                        <!--Related Product Amount -->
+                                        <div class="brk-sc-flip-two__price font__family-varela-round font__weight-medium brk-base-font-color ">Starting from &#8358;1,000</div>
+                                        <!--Related Product Name -->
+                                        <div class="brk-sc-flip-two__front-title font__family-varela-round font__weight-light brk-dark-font-color">ARM Discovery Fund</div>
+                                    </div>
+                                </div>
+                                <div class="flip__back brk-sc-flip-two__back">
+                                    <div class="brk-sc-flip-two__back-layer">
+                                        <!--Related Product Name -->
+                                        <div class="brk-sc-flip-two__back-title font__family-varela-round font__weight-medium">ARM Discovery Fund</div>
+                                        <!--Related Product Key Features -->
+                                        <div class="brk-sc-flip-two__list scrollbar-inner">
+                                            <ul class="pl-15 pr-15">
+                                                <li><i class="far fa-check brk-base-font-color"></i> Low risk mutual fund</li>
+                                                <li><i class="far fa-check brk-base-font-color"></i> Regulated by the SEC</li>
+                                                <li><i class="far fa-check brk-base-font-color"></i> Listed on the NSE</li>
+                                                <li><i class="far fa-check brk-base-font-color"></i> Invests in verifiable instruments</li>
+                                                <li><i class="far fa-check brk-base-font-color"></i> Suitable for short term or long term investment</li>
+                                                <li><i class="far fa-check brk-base-font-color"></i> Low risk mutual fund</li>
+                                                <li><i class="far fa-check brk-base-font-color"></i> Regulated by the SEC</li>
+                                            </ul>
+                                        </div>
+                                        <!-- product button-->
+                                        <div class="brk-sc-flip-two__button"><a href="#" class="btn btn-inside-out btn-md btn-icon border-radius-25 font__family-open-sans font__weight-semibold" data-brk-library="component__button"><span class="before">view item</span><span class="text">view item</span><span class="after">view item</span></a></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flip-box brk-sc-flip-two text-center" data-brk-library="component__shop_flip,component__flip_box_css,scrollbar">
+                            <div class="flip flip_horizontal">
+                                <div class="flip__front brk-sc-flip-two__front">
+                                    <!--Related Product Image -->
+                                    <div class="brk-sc-flip-two__thumb m-4 "><img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="../Liber/Store/img/mmf.jpg" alt="ARM Money Market Fund" class="lazyload prod-image"></div>
+                                    <div class="brk-sc-flip-two__description">
+                                        <!--Related Product Amount -->
+                                        <div class="brk-sc-flip-two__price font__family-varela-round font__weight-medium brk-base-font-color ">Starting from &#8358;1,000</div>
+                                        <!--Related Product Name -->
+                                        <div class="brk-sc-flip-two__front-title font__family-varela-round font__weight-light brk-dark-font-color">ARM Discovery Fund</div>
+                                    </div>
+                                </div>
+                                <div class="flip__back brk-sc-flip-two__back">
+                                    <div class="brk-sc-flip-two__back-layer">
+                                        <!--Related Product Name -->
+                                        <div class="brk-sc-flip-two__back-title font__family-varela-round font__weight-medium">ARM Discovery Fund</div>
+                                        <!--Related Product Key Features -->
+                                        <div class="brk-sc-flip-two__list scrollbar-inner">
+                                            <ul class="pl-15 pr-15">
+                                                <li><i class="far fa-check brk-base-font-color"></i> Low risk mutual fund</li>
+                                                <li><i class="far fa-check brk-base-font-color"></i> Regulated by the SEC</li>
+                                                <li><i class="far fa-check brk-base-font-color"></i> Listed on the NSE</li>
+                                                <li><i class="far fa-check brk-base-font-color"></i> Invests in verifiable instruments</li>
+                                                <li><i class="far fa-check brk-base-font-color"></i> Suitable for short term or long term investment</li>
+                                                <li><i class="far fa-check brk-base-font-color"></i> Low risk mutual fund</li>
+                                                <li><i class="far fa-check brk-base-font-color"></i> Regulated by the SEC</li>
+                                            </ul>
+                                        </div>
+                                        <!-- product button-->
+                                        <div class="brk-sc-flip-two__button"><a href="#" class="btn btn-inside-out btn-md btn-icon border-radius-25 font__family-open-sans font__weight-semibold" data-brk-library="component__button"><span class="before">view item</span><span class="text">view item</span><span class="after">view item</span></a></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flip-box brk-sc-flip-two text-center" data-brk-library="component__shop_flip,component__flip_box_css,scrollbar">
+                            <div class="flip flip_horizontal">
+                                <div class="flip__front brk-sc-flip-two__front">
+                                    <!--Related Product Image -->
+                                    <div class="brk-sc-flip-two__thumb m-4 "><img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="../Liber/Store/img/mmf.jpg" alt="ARM Money Market Fund" class="lazyload prod-image"></div>
+                                    <div class="brk-sc-flip-two__description">
+                                        <!--Related Product Amount -->
+                                        <div class="brk-sc-flip-two__price font__family-varela-round font__weight-medium brk-base-font-color ">Starting from &#8358;1,000</div>
+                                        <!--Related Product Name -->
+                                        <div class="brk-sc-flip-two__front-title font__family-varela-round font__weight-light brk-dark-font-color">ARM Discovery Fund</div>
+                                    </div>
+                                </div>
+                                <div class="flip__back brk-sc-flip-two__back">
+                                    <div class="brk-sc-flip-two__back-layer">
+                                        <!--Related Product Name -->
+                                        <div class="brk-sc-flip-two__back-title font__family-varela-round font__weight-medium">ARM Discovery Fund</div>
+                                        <!--Related Product Key Features -->
+                                        <div class="brk-sc-flip-two__list scrollbar-inner">
+                                            <ul class="pl-15 pr-15">
+                                                <li><i class="far fa-check brk-base-font-color"></i> Low risk mutual fund</li>
+                                                <li><i class="far fa-check brk-base-font-color"></i> Regulated by the SEC</li>
+                                                <li><i class="far fa-check brk-base-font-color"></i> Listed on the NSE</li>
+                                                <li><i class="far fa-check brk-base-font-color"></i> Invests in verifiable instruments</li>
+                                                <li><i class="far fa-check brk-base-font-color"></i> Suitable for short term or long term investment</li>
+                                                <li><i class="far fa-check brk-base-font-color"></i> Low risk mutual fund</li>
+                                                <li><i class="far fa-check brk-base-font-color"></i> Regulated by the SEC</li>
+                                            </ul>
+                                        </div>
+                                        <!-- product button-->
+                                        <div class="brk-sc-flip-two__button"><a href="#" class="btn btn-inside-out btn-md btn-icon border-radius-25 font__family-open-sans font__weight-semibold" data-brk-library="component__button"><span class="before">view item</span><span class="text">view item</span><span class="after">view item</span></a></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Slider Controls -->
+                <div class="brk-slider__control d-flex align-items-center"><span class="brk-slider__prev brk-base-font-color font__size-24"><i class="fa fa-angle-left" aria-hidden="true"></i> </span><span class="brk-slider__next brk-base-font-color font__size-24"><i class="fa fa-angle-right" aria-hidden="true"></i></span></div>
+            </div>
+        </div>
+    </div>
+</section>

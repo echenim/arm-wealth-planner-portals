@@ -29,17 +29,19 @@
             var currentBalance = String.Empty;
         }
 
-        <div class="row">
-            <div class="col-sm-6">
-                @if (Model.Summaries != null && Model.Summaries.Count > 0)
+        
+        @if (Model.Summaries != null && Model.Summaries.Count > 0)
+        {
+            <div class="row">
+                @foreach (var record in Model.Summaries)
                 {
-                    foreach (var record in Model.Summaries)
-                    {
-                        currentBalance = record.CurrentBalance.ToString("F2");
+                    currentBalance = record.CurrentBalance.ToString("F2");  
+                                           
+                    <div class="col-sm-6">                                                   
                         <div class="element-wrapper pb-0">
                             <h5 class="element_header_redemption element-header">
-                                @record.ProductName 
-                                <br/>                               
+                                @record.ProductName
+                                <br />
                                 <span class="newbalance smaller_text date-timestamp float-right">New Balance - &#8358;@currentBalance</span>
                             </h5>
                             <div class="element-box">
@@ -58,40 +60,27 @@
                                             <input type="hidden" class="accruedInterest" value="@record.AccruedInterest" />
                                         </div>
                                     </div>
-                                    @*<div class="col-sm-7">
-                                        <div class="form-group">
-                                            <label class="" for="">Reason for Redemption</label>
-                                            <select class="form-control" name='source' ng-model="record.Source">
-                                                <option value=""> Select an Option</option>
-                                                <option value="">Urgent Fund Requirement</option>
-                                                <option value="">Investment Goal Realised</option>
-                                                <option value="">To Reallocate my Investment</option>
-                                                <option value="">Others</option>
-                                            </select>
-                                            <p ng-show="redForm.source.$invalid" class="help-block">Reason for redemption is required.</p>
-                                        </div>
-                                    </div>*@
+
                                 </div>
-                                @*<div class="row">
-                                    <div class="col-12">
-                                        <div class="form-group">
-                                            <input type="text" name="sourceothers" class="form-control" placeholder="If others, please specify" ng-model="record.SourceOther" ng-required="record.Source == 'Others'" />
-                                        </div>
-                                    </div>
-                                </div>*@
+
                             </div>
-                        </div>
-                    }
+                        </div>                                            
+                     </div> 
+                                                                                                                        
                 }
-                else
-                {
-                    <div class="element-box">
-                        <h5>No transaction records available for the selected date.</h5>
-                    </div>
-                }
+            </div>                                
+                               
+        }
+        else
+        {
+            <div class="element-box">
+                <h5>No transaction records available for the selected date.</h5>
             </div>
-        
-            <div class="col-sm-6">
+        }
+
+            
+        <div class="row">
+            <div class="col-12">
                 <div class="element-box">
                     <div class="row">
                         <div class="col-12">
@@ -104,7 +93,7 @@
                                     <option value="">To Reallocate my Investment</option>
                                     <option value="">Others</option>
                                 </select>
-                                <p ng-show="redForm.source.$invalid" class="help-block">Reason for redemption is required.</p>
+                                <p class="required" style="margin-top: 2px;">*reason for Redemption is required.</p>
                             </div>
                         </div>
                     </div>
@@ -116,9 +105,10 @@
                         </div>
                     </div>
                 </div>
-                
+
             </div>
-        </div>
+        </div>        
+           
     </div>
 
 
@@ -131,19 +121,12 @@
                         Mutual Funds
                     </div>
                     
-                    @*<div class="label">
-                        New Balance
-                    </div>
-                    <div class="value font-one-four">
-                        &#8358;@currentBalance
-                    </div>
                     
-                    <p></p>*@
                     <table>
                         <tbody>
                             <tr ng-repeat="(key, value) in myCart">
                                 <td class="label">{[{value.productName}]}</td>
-                                <td class="col2 value font-one-four">+₦{[{value.amount}]}</td>
+                                <td class="col2 value font-one-four">₦{[{value.amount}]}</td>
                             </tr>
                             <tr>
                                 <td class="label">Total</td>
@@ -197,56 +180,58 @@
                         </div>
 
                         <form method='post' ng-submit='preparePayload()'>
-                            <div class="table-responsive">
-                                <table class="table table-striped table-hover">
-                                    <tbody>
-                                        <tr class="table-success" ng-repeat="(key, value) in myCart">
-                                            <td>
-                                                <span class="label">{[{value.productName}]}</span>
-                                            </td>
-                                            <td class="col2">
-                                                <span class="value font-one-four">+₦{[{value.amount}]}</span>
-                                                <span></span>
-                                            </td>
-                                        </tr>
-                                        <tr class="table-secondary">
-                                            <td><span class="label">Total</span></td>
-                                            <td class="col1">
-                                                <span class="value font-one-four">{[{cartTotal |currency : '₦' : 2}]}</span>
-                                            </td>
-                                        </tr>                                        
-                                        <tr ng-show='expectedNetWorth>0'>
-                                            <td colspan="2">
-                                                <div class="">
-                                                    <span class="label">Your total networth after this withdrawal would be</span> <span class="value font-one-four">{[{expectedNetWorth |currency : '₦' : 2}]}</span>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr ng-if='expectedNetWorth'>
-                                            <td colspan="2" ng-hide="otpGenerated">
-                                                <div class="def-button nomg" ng-hide="otpGenerated||loading">
-                                                    <button class="btn btn-primary" type="button" ng-click="sendOtp()" ng-hide="otpGenerated||loading" ng-disabled='loading'> Continue</button>
-                                                </div>
-                                                <div class="def-button nomg" ng-hide="!loading">
-                                                    <button class='btn btn-secondary' disabled>Processing...</button>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr ng-show="otpGenerated">
-                                            <td colspan="2">
-                                                <div class="alert alert-success" role="alert">
-                                                    <i class="os-icon os-icon-alert-circle"></i>
-                                                    <span>A One-time password (OTP) has been sent to your mobile number/Email. Enter the received code below;  </span>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label class="" for="">Enter Amount</label>
-                                                    <input type="text" class="form-control" ng-model='Otp' placeholder="Enter OTP" id="input1">
-                                                </div>
-                                                <div class="def-button nomg"><button class="btn btn-primary">Proceed</button></div>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                            <div class="table-responsive" style="margin-left:16px !important;">
+                                <center>
+                                    <table class="table table-striped table-hover">
+                                        <tbody>
+                                            <tr class="" ng-repeat="(key, value) in myCart">
+                                                <td>
+                                                    <span class="label">{[{value.productName}]}</span>
+                                                </td>
+                                                <td class="col2">
+                                                    <span class="value font-one-four">₦{[{value.amount}]}</span>
+                                                    <span></span>
+                                                </td>
+                                            </tr>
+                                            <tr class="">
+                                                <td><span class="label">Total</span></td>
+                                                <td class="col1">
+                                                    <span class="value font-one-four">{[{cartTotal |currency : '₦' : 2}]}</span>
+                                                </td>
+                                            </tr>
+                                            <tr ng-show='expectedNetWorth>0'>
+                                                <td colspan="2">
+                                                    <div class="">
+                                                        <span class="label">Your total networth after this withdrawal would be</span> <span class="value font-one-four">{[{expectedNetWorth |currency : '₦' : 2}]}</span>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr ng-if='expectedNetWorth'>
+                                                <td colspan="2" ng-hide="otpGenerated">
+                                                    <div class="def-button nomg" ng-hide="otpGenerated||loading">
+                                                        <button class="btn btn-primary" type="button" ng-click="sendOtp()" ng-hide="otpGenerated||loading" ng-disabled='loading'> Continue</button>
+                                                    </div>
+                                                    <div class="def-button nomg" ng-hide="!loading">
+                                                        <button class='btn btn-secondary' disabled>Processing...</button>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr ng-show="otpGenerated">
+                                                <td colspan="2">
+                                                    <div class="alert alert-success" role="alert">
+                                                        <i class="os-icon os-icon-alert-circle"></i>
+                                                        <span>A One-time password (OTP) has been sent to your mobile number/Email. Enter the received code below;  </span>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="" for="">Enter Amount</label>
+                                                        <input type="text" class="form-control" ng-model='Otp' placeholder="Enter OTP" id="input1">
+                                                    </div>
+                                                    <div class="def-button nomg"><button class="btn btn-primary">Proceed</button></div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </center>                                
                             </div>                          
                         </form>
 
@@ -344,7 +329,7 @@
                 $scope.sendOtp = function () {
                     $scope.loading = true;
                     var OtpResponse = {};
-                    var url = '@Url.Action("AjaxSendOtp", "Redemption", new { action = "redemption"})';
+                    var url = '@Url.Action("AjaxSendOtp", "Redemption", new { action = "Redemption"})';
                     return $http.get(url).then(function (response) {
                         OtpResponse = response;
                         var res = OtpResponse.data;
@@ -375,7 +360,13 @@
                         }
                     }, $scope.checkoutProduct);
 
+                    if (!$scope.record.Source) {
+                        $scope.record.Source = "";
+                    }
 
+                    if (!$scope.record.SourceOther) {
+                        $scope.record.SourceOther = "";
+                    }
 
                     var payload = new RedemtionPayload;
                     payload.TotalAmount = $scope.cartTotal;

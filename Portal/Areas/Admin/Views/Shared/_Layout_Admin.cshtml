@@ -8,28 +8,22 @@
     <meta content="ARM Investment Center" name="description">
     <meta content="width=device-width, initial-scale=1" name="viewport">
     <environment include="Development">
-        <link href="~/custom-admin/img/arm-favicon.jpg" rel="shortcut icon">
+        <link href="~/liber/admin/img/arm-favicon.jpg" rel="shortcut icon">
         <link href="apple-touch-icon.png" rel="apple-touch-icon">
         <link href="https://fonts.googleapis.com/css?family=Varela+Round:300,400,500" rel="stylesheet" type="text/css">
-        <link href="~/custom-admin/components/select2/dist/css/select2.min.css" rel="stylesheet">
-        <link href="~/custom-admin/components/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
-        <link href="~/custom-admin/components/dropzone/dist/dropzone.css" rel="stylesheet">
-        <link href="~/custom-admin/components/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
-        <link href="~/custom-admin/components/fullcalendar/dist/fullcalendar.min.css" rel="stylesheet">
-        <link href="~/custom-admin/components/perfect-scrollbar/css/perfect-scrollbar.min.css" rel="stylesheet">
+        <link href="~/liber/admin/components/select2/dist/css/select2.min.css" rel="stylesheet">
+        <link href="~/liber/admin/components/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
+        <link href="~/liber/admin/components/dropzone/dist/dropzone.css" rel="stylesheet">
+        <link href="~/liber/admin/components/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
+        <link href="~/liber/admin/components/fullcalendar/dist/fullcalendar.min.css" rel="stylesheet">
+        <link href="~/liber/admin/components/perfect-scrollbar/css/perfect-scrollbar.min.css" rel="stylesheet">
 
-        <link href="~/custom-admin/font-awesome/css/fontawesome.css" rel="stylesheet" />
-        <link href="~/custom-admin/components/slick-carousel/slick/slick.css" rel="stylesheet">
-        <link href="~/custom-admin/css/main.css?version=4.4.0" rel="stylesheet" />
+        <link href="~/liber/admin/font-awesome/css/fontawesome.css" rel="stylesheet" />
+        <link href="~/liber/admin/components/slick-carousel/slick/slick.css" rel="stylesheet">
+        <link href="~/liber/admin/css/main.css?version=4.4.0" rel="stylesheet" />
     </environment>
-    <environment exclude="Development">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css"
-              asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
-              asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute"
-              crossorigin="anonymous"
-              integrity="sha256-eSi1q2PG6J7g7ib17yAaWMcrr5GrtohYChqibrV7PBE=" />
-    </environment>
-    <link href="~/custom-admin/css/main.css?version=4.4.0" rel="stylesheet" />
+
+    <link href="~/liber/admin/css/main.css?version=4.4.0" rel="stylesheet" />
 </head>
 <body class="menu-position-side menu-side-left full-screen">
 
@@ -41,7 +35,7 @@
             -------------------->
             <div class="menu-mobile menu-activated-on-click color-scheme-dark">
                 <div class="mm-logo-buttons-w">
-                    <a asp-area="Admin" asp-controller="Dashboard" asp-action="Index">img src="~/custom-admin/img/arm-logo.png"></a>
+                    <a asp-area="Admin" asp-controller="Dashboard" asp-action="Index"><img src="~/liber/admin/img/arm-logo.png" /></a>
                     <div class="mm-buttons">
                         <div class="mobile-menu-trigger">
                             <div class="os-icon os-icon-hamburger-menu-1"></div>
@@ -117,6 +111,14 @@
                             </a>
                         </li>
 
+                        <li>
+                            <a asp-area="Admin" asp-controller="VourcherManager" asp-action="Index">
+                                <div class="icon-w">
+                                    <div class="os-icon os-icon os-icon-users"></div>
+                                </div>
+                                <span>Voucher Manager</span>
+                            </a>
+                        </li>
                         <li class="has-sub-menu">
                             <a href="javascript:void(0)">
                                 <div class="icon-w">
@@ -186,7 +188,7 @@
             <div class="menu-w color-scheme-dark color-style-bright menu-position-side menu-side-left menu-layout-full sub-menu-style-over sub-menu-color-bright selected-menu-color-light menu-activated-on-hover menu-has-selected-link">
                 <div class="logo-w">
                     <a asp-area="Admin" asp-controller="Dashboard" asp-action="Index">
-                        <img src="~/custom-admin/img/arm-logo.png">
+                        <img src="~/liber/admin/img/arm-logo.png">
                     </a>
                 </div>
                 <!---- Menu starts here ----->
@@ -281,6 +283,14 @@
                             <span>Users</span>
                         </a>
                     </li>
+                    <li>
+                        <a asp-area="Admin" asp-controller="VourcherManager" asp-action="Index">
+                            <div class="icon-w">
+                                <div class="os-icon os-icon os-icon-users"></div>
+                            </div>
+                            <span>Voucher Manager</span>
+                        </a>
+                    </li>
                     <li class="has-sub-menu">
                         <a href="javascript:void(0)">
                             <div class="icon-w">
@@ -358,12 +368,12 @@
 
                             <div class="logged-user-i">
                                 <div class="avatar-w">
-                                    <img alt="" src="~/custom-admin/img/default-profile.svg">
+                                    <img alt="" src="~/liber/admin/img/default-profile.svg">
                                 </div>
                                 <div class="logged-user-menu color-style-bright">
                                     <div class="logged-user-avatar-info">
                                         <div class="avatar-w">
-                                            <img alt="" src="~/custom-admin/img/default-profile.svg">
+                                            <img alt="" src="~/liber/admin/img/default-profile.svg">
                                         </div>
                                         <div class="logged-user-info-w">
                                             <div class="logged-user-name">
@@ -420,8 +430,11 @@
                 <!--------------------
                 END - Breadcrumbs
                 -------------------->
-                @RenderBody()
-
+                @*<div class="content-i">*@
+                <div class="content-box">
+                    @RenderBody()
+                </div>
+                @*</div>*@
                 <div class="footer-w">
                     <div class="deep-footer">
                         &copy; 2018  <a href="http://arminvestmentmanagers.com/">ARM Investment Managers.</a> All rights reserved.
@@ -437,51 +450,38 @@
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.3.0/codemirror.min.js"></script>
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.3.0/mode/xml/xml.min.js"></script>
 
-        <script src="~/custom-admin/components/jquery/dist/jquery.min.js"></script>
-        <script src="~/custom-admin/components/popper.js/dist/umd/popper.min.js"></script>
-        <script src="~/custom-admin/components/moment/moment.js"></script>
-        <script src="~/custom-admin/components/chart.js/dist/Chart.min.js"></script>
-        <script src="~/custom-admin/components/select2/dist/js/select2.full.min.js"></script>
-        <script src="~/custom-admin/components/jquery-bar-rating/dist/jquery.barrating.min.js"></script>
-        <script src="~/custom-admin/components/ckeditor/ckeditor.js"></script>
-        <script src="~/custom-admin/components/bootstrap-validator/dist/validator.min.js"></script>
-        <script src="~/custom-admin/components/bootstrap-daterangepicker/daterangepicker.js"></script>
-        <script src="~/custom-admin/components/ion.rangeSlider/js/ion.rangeSlider.min.js"></script>
-        <script src="~/custom-admin/components/dropzone/dist/dropzone.js"></script>
-        <script src="~/custom-admin/components/editable-table/mindmup-editabletable.js"></script>
-        <script src="~/custom-admin/components/datatables.net/js/jquery.dataTables.min.js"></script>
-        <script src="~/custom-admin/components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
-        <script src="~/custom-admin/components/fullcalendar/dist/fullcalendar.min.js"></script>
-        <script src="~/custom-admin/components/perfect-scrollbar/js/perfect-scrollbar.jquery.min.js"></script>
-        <script src="~/custom-admin/components/tether/dist/js/tether.min.js"></script>
-        <script src="~/custom-admin/components/slick-carousel/slick/slick.min.js"></script>
-        <script src="~/custom-admin/components/bootstrap/js/dist/util.js"></script>
-        <script src="~/custom-admin/components/bootstrap/js/dist/alert.js"></script>
-        <script src="~/custom-admin/components/bootstrap/js/dist/button.js"></script>
-        <script src="~/custom-admin/components/bootstrap/js/dist/carousel.js"></script>
-        <script src="~/custom-admin/components/bootstrap/js/dist/collapse.js"></script>
-        <script src="~/custom-admin/components/bootstrap/js/dist/dropdown.js"></script>
-        <script src="~/custom-admin/components/bootstrap/js/dist/modal.js"></script>
-        <script src="~/custom-admin/components/bootstrap/js/dist/tab.js"></script>
-        <script src="~/custom-admin/components/bootstrap/js/dist/tooltip.js"></script>
-        <script src="~/custom-admin/components/bootstrap/js/dist/popover.js"></script>
-        <script src="~/custom-admin/js/chart-loader.js"></script>
-        @*<script src="~/js/tinymce/tinymce.min.js"></script>*@
-        <script src="~/custom-admin/js/main.js?version=4.4.0" asp-append-version="true"></script>
+        <script src="~/liber/admin/components/jquery/dist/jquery.min.js"></script>
+        <script src="~/liber/admin/components/popper.js/dist/umd/popper.min.js"></script>
+        <script src="~/liber/admin/components/moment/moment.js"></script>
+        <script src="~/liber/admin/components/chart.js/dist/Chart.min.js"></script>
+        <script src="~/liber/admin/components/select2/dist/js/select2.full.min.js"></script>
+        <script src="~/liber/admin/components/jquery-bar-rating/dist/jquery.barrating.min.js"></script>
+        <script src="~/liber/admin/components/ckeditor/ckeditor.js"></script>
+        <script src="~/liber/admin/components/bootstrap-validator/dist/validator.min.js"></script>
+        <script src="~/liber/admin/components/bootstrap-daterangepicker/daterangepicker.js"></script>
+        <script src="~/liber/admin/components/ion.rangeSlider/js/ion.rangeSlider.min.js"></script>
+        <script src="~/liber/admin/components/dropzone/dist/dropzone.js"></script>
+        <script src="~/liber/admin/components/editable-table/mindmup-editabletable.js"></script>
+        <script src="~/liber/admin/components/datatables.net/js/jquery.dataTables.min.js"></script>
+        <script src="~/liber/admin/components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+        <script src="~/liber/admin/components/fullcalendar/dist/fullcalendar.min.js"></script>
+        <script src="~/liber/admin/components/perfect-scrollbar/js/perfect-scrollbar.jquery.min.js"></script>
+        <script src="~/liber/admin/components/tether/dist/js/tether.min.js"></script>
+        <script src="~/liber/admin/components/slick-carousel/slick/slick.min.js"></script>
+        <script src="~/liber/admin/components/bootstrap/js/dist/util.js"></script>
+        <script src="~/liber/admin/components/bootstrap/js/dist/alert.js"></script>
+        <script src="~/liber/admin/components/bootstrap/js/dist/button.js"></script>
+        <script src="~/liber/admin/components/bootstrap/js/dist/carousel.js"></script>
+        <script src="~/liber/admin/components/bootstrap/js/dist/collapse.js"></script>
+        <script src="~/liber/admin/components/bootstrap/js/dist/dropdown.js"></script>
+        <script src="~/liber/admin/components/bootstrap/js/dist/modal.js"></script>
+        <script src="~/liber/admin/components/bootstrap/js/dist/tab.js"></script>
+        <script src="~/liber/admin/components/bootstrap/js/dist/tooltip.js"></script>
+        <script src="~/liber/admin/components/bootstrap/js/dist/popover.js"></script>
+        <script src="~/liber/admin/js/chart-loader.js"></script>
+        <script src="~/liber/admin/js/main.js?version=4.4.0" asp-append-version="true"></script>
     </environment>
     <environment exclude="Development">
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"
-                asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
-                asp-fallback-test="window.jQuery"
-                crossorigin="anonymous"
-                integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=">
-        </script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/js/bootstrap.bundle.min.js"
-                asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"
-                asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
-                crossorigin="anonymous"
-                integrity="sha256-E/V4cWE4qvAeO5MOhjtGtqDzPndRO1LBk8lJ/PR7CA4=">
-        </script>
     </environment>
 
     <script type="text/javascript">

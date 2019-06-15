@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+
 //using Portal.Areas.Client.ViewModels;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -13,6 +14,8 @@ using Portal.Services;
 using Portal.Business.Contracts;
 using Portal.Business.TestServices;
 using Portal.Business.ViewModels;
+using Microsoft.Extensions.Caching.Memory;
+using Portal.Domain.ViewModels;
 
 namespace Portal.Areas.Client.Controllers
 {
@@ -23,22 +26,31 @@ namespace Portal.Areas.Client.Controllers
         public string _webRootPath;
         public string _contentRootPath;
         public readonly IHostingEnvironment _hostingEnvironment;
+
         //public readonly AppSettings _appSettings;
         public JsonSerializerSettings _jsonSetting = new JsonSerializerSettings() { NullValueHandling = NullValueHandling.Ignore };
+
         //public ArmClientServices _clientService;
         public readonly ILogger<DashboardController> _logger;
+
         public readonly IConfiguration _configuration;
 
         //test
         private readonly IArmOneServiceConfigManager _configSettingManager;
+
+        private readonly IPersonManager _personManager;
+
         public TestArmClientServices _clientService;
 
         public ApplicationDbContext db;
         public ClientRepository _client;
 
+        private readonly IMemoryCache _cache;
+
         public DashboardController(IHostingEnvironment hostingEnvironment,
                                     ILogger<DashboardController> logger, IConfiguration configuration,
-                                    IDistributedCache cache, ApplicationDbContext _db, IArmOneServiceConfigManager configManager)
+                                    IMemoryCache cache, ApplicationDbContext _db, IArmOneServiceConfigManager configManager,
+                                    IPersonManager personmanager)
         {
             _hostingEnvironment = hostingEnvironment;
             _webRootPath = _hostingEnvironment.WebRootPath;
@@ -47,45 +59,56 @@ namespace Portal.Areas.Client.Controllers
             _logger = logger;
             _configuration = configuration;
 
-            //_appSettings = appSettings.Value;
             _configSettingManager = configManager;
+            _personManager = personmanager;
 
-            //_clientService = new ArmClientServices(_appSettings, _contentRootPath, _configuration);
             _clientService = new TestArmClientServices(_configSettingManager, _contentRootPath);
             _client = new ClientRepository(_configSettingManager, _contentRootPath);
 
             db = _db;
+            _cache = cache;
         }
 
         [HttpGet]
         public IActionResult Index()
         {
             var model = new AccountStatementViewModel();
+            var person = _personManager.Get(s => s.Email.Equals(User.Identity.Name)).FirstOrDefault();
 
-            //_user is expected to contain client details. mock data for model.
-            var _user = new AuthenticateResponse
+            var _user = _cache.Get<AuthenticateResponse>("ArmUser");
+
+            if (_user == null && person == null)
             {
-                MembershipKey = 1006979,//1007435,
-                EmailAddress = "tolu.olusakin@gmail.com",//"gbadebo.ayan@gmail.com",
-                FirstName = "Tolulope",
-                LastName = "Olusakin",
-                FullName = "Olusakin Tolulope S"//"Funmilayo Ruth Adeyemi",
-            };
+                TempData["SessionTimeOut"] = $@"You have been logged out due to inactivity.
+                                                Please login to gain access.";
+                return RedirectToAction("Index", "Home", new { area = "" });
+            }
+            else if (_user == null && person != null)
+            {
+                var client = new AuthenticateResponse();
+
+                client.EmailAddress = person.Email;
+                client.FirstName = person.FirstName;
+                client.LastName = person.LastName;
+                client.MembershipKey = person.MemberShipNo;
+                client.FullName = person.FullName;
+
+                _user = client;
+
+                _cache.Set<AuthenticateResponse>("ArmUser", _user, new MemoryCacheEntryOptions()
+                                                                .SetSlidingExpiration(TimeSpan.FromMinutes(20))
+                                                                .SetAbsoluteExpiration(TimeSpan.FromHours(1)));
+            }
 
             try
             {
-                var customer = _client.GetUserProfile(_user.MembershipKey);
+                var customer = _client.GetUserProfile(_user.MembershipKey); 
 
                 List<ProductDetails> getSummaries = new List<ProductDetails>();
                 List<decimal> sumOfAccruedInterests = new List<decimal>();
 
                 //get account summary
-                var accountsRequest = new SummaryRequest
-                {
-                    MembershipNumber = _user.MembershipKey
-                };
-                //var accountsResponse = _clientService.GetAccountSummary(accountsRequest);
-                var accountsResponse = _clientService.GetAccountSummary(accountsRequest);
+                var accountsResponse = _client.GetAccountSummary(_user.MembershipKey);
 
                 if (accountsResponse != null)
                 {
@@ -133,7 +156,7 @@ namespace Portal.Areas.Client.Controllers
                 //get total balance
                 var totalBalanceRequest = new TotalBalanceRequest
                 {
-                    MembershipNumber = _user.MembershipKey
+                    MembershipNumber = Convert.ToInt32(_user.MembershipKey)
                 };
                 var totalBalanceResponse = _clientService.GetTotalBalance(totalBalanceRequest);
 
@@ -161,7 +184,7 @@ namespace Portal.Areas.Client.Controllers
             }
             catch (Exception ex)
             {
-                //HttpContext.Session.Set("error", ex.Message);
+                //_cache.Set("error", ex.Message);
                 TempData["message"] = ViewBag.Message = ex.Message;
                 Utilities.ProcessError(ex, _contentRootPath);
                 _logger.LogError(null, ex, ex.Message);
@@ -170,7 +193,7 @@ namespace Portal.Areas.Client.Controllers
         }
 
         public IActionResult FundPriceHistory(string fundCode)
-        {            
+        {
             try
             {
                 //var fHistoryResponse = _client.GetFundPriceHistory(fundCode);

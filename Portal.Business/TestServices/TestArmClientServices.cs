@@ -314,14 +314,24 @@ namespace Portal.Business.TestServices
             return _client.CallRestAction<YieldHistoryResponse, YieldHistoryRequest>(payload, url);
         }
 
-        public CustomerDetailsResponse GetCustomerDetails(CustomerDetailsRequest payload)
+        public SalesProspectResponse AddNewCustomerStageOne(SalesProspectRequest payload)
         {
             var _client = new RestActions(_contentRootPath);
-            string url = _configSettingManager.ArmBaseUrl + "/Fund/YieldHistory";
+            string url = _configSettingManager.ArmBaseUrl + "/Sale/Prospect";
             var encryptedValue = new SecureCredentials();
             payload.ServiceUsername = encryptedValue.DecryptCredentials(_configSettingManager.ArmServiceUsername);
             payload.ServicePassword = encryptedValue.DecryptCredentials(_configSettingManager.ArmServicePassword);
-            return _client.CallRestAction<CustomerDetailsResponse, CustomerDetailsRequest>(payload, url);
+            return _client.CallRestAction<SalesProspectResponse, SalesProspectRequest>(payload, url);
+        }
+
+        public SalesNewCustomerResponse AddNewCustomerStageTwo(SalesNewCustomerRequest payload)
+        {
+            var _client = new RestActions(_contentRootPath);
+            string url = _configSettingManager.ArmBaseUrl + "/Sale/NewCustomer";
+            var encryptedValue = new SecureCredentials();
+            payload.ServiceUsername = encryptedValue.DecryptCredentials(_configSettingManager.ArmServiceUsername);
+            payload.ServicePassword = encryptedValue.DecryptCredentials(_configSettingManager.ArmServicePassword);
+            return _client.CallRestAction<SalesNewCustomerResponse, SalesNewCustomerRequest>(payload, url);
         }
     }
 }

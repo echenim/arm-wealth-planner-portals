@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using NPOI.SS.UserModel;
@@ -11,6 +12,7 @@ using Portal.Areas.Admin.ViewModels;
 using Portal.Business.Contracts;
 using Portal.Business.Utilities;
 using Portal.Domain.Models;
+using Portal.Domain.ViewModels;
 
 namespace Portal.Areas.Admin.Controllers
 {
@@ -19,13 +21,18 @@ namespace Portal.Areas.Admin.Controllers
     {
         private readonly IOrdersAndSalesManager _ordersAndSalesService;
         private readonly IHostingEnvironment _hostingEnvironment;
+        private readonly ICartManager _cartManager;
 
-        public OrdersController(IOrdersAndSalesManager ordersAndSalesService, IHostingEnvironment hostingEnvironment)
+        public OrdersController(IOrdersAndSalesManager ordersAndSalesService,
+            IHostingEnvironment hostingEnvironment,
+            ICartManager cartManager)
         {
             _ordersAndSalesService = ordersAndSalesService;
             _hostingEnvironment = hostingEnvironment;
+            _cartManager = cartManager;
         }
 
+        [Authorize(Roles = "Sub-Administrator,Administrator,Sale,Marketing")]
         public IActionResult Index(
             string sortOrder,
             string currentFilter,
@@ -51,51 +58,13 @@ namespace Portal.Areas.Admin.Controllers
 
             ViewData["CurrentFilter"] = searchString;
 
-            var orders = !String.IsNullOrEmpty(searchString) ?
-                _ordersAndSalesService.Get(s => s.CartNumber.Equals(searchString))
-                .OrderByDescending(s => s.AddToCartDate).ThenBy(s => s.Person.FullName)
-                : _ordersAndSalesService.Get()
-                    .OrderByDescending(s => s.AddToCartDate).ThenBy(s => s.Person.FullName);
-
-            var list = new List<OrdersView>();
-            foreach (var item in orders)
-            {
-                list.Add(new OrdersView
-                {
-                    Id = (int)item.Id,
-                    Product = item.Product.Name,
-                    Category = item.Product.ProductCategory.Name,
-                    Customer = item.Person.FullName,
-                    CustNo = item.Person.MembershipNo,
-                    Amount = TransfromerManager.DecimalHumanizedX(item.Amount),
-                    TransactionDate = TransfromerManager.DateHumanized(item.AddToCartDate),
-                    CartNumber = item.CartNumber,
-                    TransactionNumber = item.PaymentTransactionNumber,
-                    TransactionStatus = item.TransactionStatus,
-                    AddToCartDate = TransfromerManager.DateHumanized(item.AddToCartDate)
-                });
-            }
-
-            //var list = orders.Select(item => new OrdersView
-            //{
-            //    Id = (int)item.Id,
-            //    Product = item.Product.Name,
-            //    Category = item.Product.ProductCategory.Name,
-            //    Customer = item.Customer.FullName,
-            //    CustNo = item.Customer.MembershipNumber,
-            //    Amount = TransfromerManager.DecimalHumanizedX(item.Amount),
-            //    TransactionDate = item.OrderDate.ToString(),
-            //    CartNumber = item.CartNumber,
-            //    TransactionNumber = item.PaymentTransactionNumber,
-            //    TransactionStatus = item.TransactionStatus,
-            //    AddToCartDate = TransfromerManager.DateHumanized(item.AddToCartDate),
-            //    Date = item.OrderDate.ToString()
-            //})
-            //    .ToList();
+            var list = !String.IsNullOrEmpty(searchString) ?
+                _cartManager.Get(s => s.TransactionNo.Equals(long.Parse(searchString)) && !s.OrderAndPurchaseStatus.Equals("Succeed"))
+                : _cartManager.Get(s => !s.OrderAndPurchaseStatus.Equals("Succeed")).OrderBy(s => s.OrderDate).ThenBy(s => s.ItemOwner);
 
             int pageSize = 20;
 
-            return View(PaginatedList<OrdersView>.Create(list.AsQueryable(), page ?? 1, pageSize));
+            return View(PaginatedList<Transactional>.Create(list.AsQueryable(), page ?? 1, pageSize));
         }
 
         public IActionResult OnCorrection(string transactionId)
@@ -103,7 +72,7 @@ namespace Portal.Areas.Admin.Controllers
             if (!string.IsNullOrEmpty(transactionId))
             {
                 // var resultsets = _ordersAndSalesService.Get(s => s.CartNumber.Equals(transactionId));
-                _ordersAndSalesService.Edit(transactionId);
+                _cartManager.Edit(transactionId);
                 return RedirectToAction("Index");
             }
 
@@ -148,7 +117,7 @@ namespace Portal.Areas.Admin.Controllers
                 Product = item.Product.Name,
                 Category = item.Product.ProductCategory.Name,
                 Customer = item.Person.FullName,
-                CustNo = item.Person.MembershipNo,
+                //CustNo = item.Person.MembershipNo,
                 Amount = TransfromerManager.DecimalHumanizedX(item.Amount),
                 AddToCartDate = TransfromerManager.DateHumanized(item.AddToCartDate),
             })
@@ -202,7 +171,7 @@ namespace Portal.Areas.Admin.Controllers
                 Product = item.Product.Name,
                 Category = item.Product.ProductCategory.Name,
                 Customer = item.Person.FullName,
-                CustNo = item.Person.MembershipNo,
+                // CustNo = item.Person.MembershipNo,
                 Amount = TransfromerManager.DecimalHumanizedX(item.Amount),
                 TransactionDate = item.AddToCartDate.ToString(),
                 CartNumber = item.CartNumber,
@@ -260,7 +229,7 @@ namespace Portal.Areas.Admin.Controllers
                 Product = item.Product.Name,
                 Category = item.Product.ProductCategory.Name,
                 Customer = item.Person.FullName,
-                CustNo = item.Person.MembershipNo,
+                // CustNo = item.Person.MembershipNo,
                 Amount = TransfromerManager.DecimalHumanizedX(item.Amount),
                 TransactionDate = item.AddToCartDate.ToString(),
                 CartNumber = item.CartNumber,
@@ -318,7 +287,7 @@ namespace Portal.Areas.Admin.Controllers
                 Product = item.Product.Name,
                 Category = item.Product.ProductCategory.Name,
                 Customer = item.Person.FullName,
-                CustNo = item.Person.MembershipNo,
+                //  CustNo = item.Person.MembershipNo,
                 Amount = TransfromerManager.DecimalHumanizedX(item.Amount),
                 TransactionDate = item.AddToCartDate.ToString(),
                 CartNumber = item.CartNumber,
@@ -376,7 +345,7 @@ namespace Portal.Areas.Admin.Controllers
                 Product = item.Product.Name,
                 Category = item.Product.ProductCategory.Name,
                 Customer = item.Person.FullName,
-                CustNo = item.Person.MembershipNo,
+                // CustNo = item.Person.MembershipNo,
                 Amount = TransfromerManager.DecimalHumanizedX(item.Amount),
                 TransactionDate = item.AddToCartDate.ToString(),
                 CartNumber = item.CartNumber,
@@ -437,7 +406,7 @@ namespace Portal.Areas.Admin.Controllers
                 Product = item.Product.Name,
                 Category = item.Product.ProductCategory.Name,
                 Customer = item.Person.FullName,
-                CustNo = item.Person.MembershipNo,
+                CustNo = item.Person.MemberShipNo,
                 Amount = TransfromerManager.DecimalHumanizedX(item.Amount),
                 TransactionDate = item.AddToCartDate.ToString(),
                 CartNumber = item.CartNumber,

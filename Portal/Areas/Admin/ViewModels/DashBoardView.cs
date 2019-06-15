@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Portal.Domain.Models;
 using Portal.Domain.ViewModels;
 
 namespace Portal.Areas.Admin.ViewModels
@@ -9,6 +10,6 @@ namespace Portal.Areas.Admin.ViewModels
         public string Orders { get; set; }
         public string Customers { get; set; }
         public string ExpressionOfINterest { get; set; }
-        public List<PurchaseOrderViewModel> RecentOrders { get; set; }
+        public List<Transactional> RecentOrders { get; set; }
     }
 }

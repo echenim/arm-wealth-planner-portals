@@ -1,5 +1,6 @@
 ﻿@using Portal.Business.Utilities
-@model PaginatedList<ExternalUserView>
+@using Portal.Domain.Models.Identity
+@model PaginatedList<ApplicationUser>
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Areas/Admin/Views/Shared/_Layout_Admin.cshtml";
@@ -30,17 +31,23 @@
                         <thead>
                             <tr>
                                 <th class="text-center">
-                                    Membership Number
+                                    MembershipNo
                                 </th>
-                                <th>
-                                    Name
+                                <th class="text-center">
+                                    <a asp-controller="Orders" asp-action="Index"> Name</a>
                                 </th>
-                                <th>
+                                <th class="text-center">
                                     Email
                                 </th>
-                                <th>
-                                    KYC Status
+                                <th class="text-center">
+                                    Status
                                 </th>
+                                <th class="text-center">
+                                    OnBoarding Date
+                                </th>
+                                
+                            <th class="text-center">
+                            </th>
                             </tr>
                         </thead>
                         <tbody>
@@ -49,19 +56,29 @@
 
                                 <tr>
                                     <td class="text-center">
-                                        <span>@item.MembershipNumber</span>
+                                        <span>@item.Person.MemberShipNo</span>
                                     </td>
-                                    <td>
+                                    <td >
+
                                         <div class="user-with-avatar">
-                                            <img alt="" src="~/custom/img/default-profile.svg"><span>@item.Name</span>
+                                            <img alt="" src="../Liber/Admin/img/default-profile.svg"><span>@item.Person.FullName</span>
                                         </div>
                                     </td>
 
-                                    <td>
-                                        @item.Email
+                                    <td class="text-center">
+                                        @item.Person.Email
                                     </td>
-                                    <td class="nowrap">
-                                        <span class="status-pill smaller green"></span><span>Approved</span>
+                                    <td class="text-center">
+                                        <span class="status-pill smaller green"></span><span>@item.Person.PortalOnBoarding</span>
+                                    </td>
+                                    <td class="text-center">
+                                        <span>@item.Person.OnCreated</span>
+                                    </td>
+
+                                    <td class="row-actions">
+                                        <a asp-action="Detail" asp-route-id="@item.Person.Email" title="View"><i class="os-icon os-icon-eye"></i></a>
+                                        @*<a href="#" title="Edit"><i class="os-icon os-icon-edit"></i></a>
+                                        <a href="#" title="Suspend"><i class="os-icon os-icon-x-square"></i></a>*@
                                     </td>
                                 </tr>
                             }

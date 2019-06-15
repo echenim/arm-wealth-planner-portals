@@ -1,0 +1,140 @@
+﻿@using Portal.Business.Utilities
+@model PaginatedList<Vouchering>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout_Admin.cshtml";
+}
+
+<!---- Orders Overview --->
+<div class="row">
+    <div class=" col-md-12 ">
+        <div class=" ">
+            <div class="">
+
+                <div class="element-box">
+                    <div class="m-b">
+                        <div class="header text-left">
+                            <h5>
+                                Vourcher Overview
+                            </h5>
+                        </div>
+                        <div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!---- Latest Orders --->
+
+<div class="row">
+    <div class="col-md-12 ">
+        <div class="element-box element-wrapper">
+
+            <div class="element-box-tp">
+                <div class="row">
+                    <div class="col-md-6">
+                        <form asp-action="Index" method="get">
+                            <div class="form-actions no-color">
+                                <p>
+                                    Find by Vourcher Code: <input type="text" name="SearchString" value="@ViewData["currentFilter"]" />
+                                    <input type="submit" value="Search" class="btn btn-default" /> |
+                                    <a asp-action="Index">Back to Full List</a>
+                                </p>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-md-6">
+                    </div>
+                </div>
+
+                <div class="table-responsive">
+                    <table class="table table-striped b-b">
+                        <thead>
+                            <tr>
+                                <th>
+                                </th>
+                                <th>
+                                    Date
+                                </th>
+                                <th>
+                                    Category
+                                </th>
+
+                                <th>
+                                    ProductName
+                                </th>
+                                <th colspan="2">
+                                    Vourchar
+                                </th>
+                                <th class="text-center">
+                                    Amount
+                                </th>
+                                <th>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+
+                                    <td class="nowrap">
+                                        @item.ExpiringDate
+                                    </td>
+                                    <td>
+                                        @item.Product.ProductCategory.Name
+                                    </td>
+                                    <td>
+                                        @item.Product.Name
+                                    </td>
+
+                                    <td>
+                                        @item.VoucherCode
+                                    </td>
+                                    <td>
+                                        <div>
+                                            ************
+                                        </div>
+                                    </td>
+                                    <td class="text-center">
+                                        <span>&#8358;@item.Amount</span>
+                                    </td>
+                                    <td></td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <div class="controls-below-table">
+                    <div class="table-records-info">
+                        Showing records @Model.PageIndex - @Model.TotalPages
+                    </div>
+                    <div class="table-records-pages">
+                        @{
+                            var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+                            var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+                        }
+
+                        <a asp-action="Index"
+                           asp-route-sortOrder="@ViewData["CurrentSort"]"
+                           asp-route-page="@(Model.PageIndex - 1)"
+                           asp-route-currentFilter="@ViewData["CurrentFilter"]"
+                           class="btn btn-lg btn-primary @prevDisabled">
+                            Previous
+                        </a>
+                        <a asp-action="Index"
+                           asp-route-sortOrder="@ViewData["CurrentSort"]"
+                           asp-route-page="@(Model.PageIndex + 1)"
+                           asp-route-currentFilter="@ViewData["CurrentFilter"]"
+                           class="btn btn-lg btn-primary @nextDisabled">
+                            Next
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

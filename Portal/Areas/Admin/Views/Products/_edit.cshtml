@@ -1,14 +1,132 @@
-﻿@{
-    ViewData["Title"] = "_edit";
+﻿@model Portal.Domain.ModelView.ProductViewModel
+
+@{
+    ViewData["Title"] = "_add";
     Layout = "~/Areas/Admin/Views/Shared/_Layout_Admin.cshtml";
 }
 
-<ul style="list-style-type: circle;">
-    <li>djskbvowpiwpg</li>
-    <li>aklbWLKNp;bws</li>
-    <li>;nqan;ob</li>
-    <li>eq;ehqpb</li>
-    <li>aep;bw;nm</li>
-</ul>
+<!---- Dashboard Overview --->
+<div class="row">
+    <div class=" col-md-12 ">
+        <div class=" ">
+            <div class="">
 
-<textarea id="full-featured"></textarea>
+                <div class="element-box">
+                    <div class="m-b">
+                        <form asp-area="Admin" asp-controller="Products" asp-action="Add" method="post" enctype="multipart/form-data">
+                            @Html.AntiForgeryToken()
+                            <input type="hidden" asp-for="Id" name="Id" />
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="element-wrapper">
+
+                                        <div class="">
+                                            <h5 class="form-header">
+                                                Product Image(s)
+                                            </h5>
+                                            <div class="form-desc">
+                                            </div>
+                                            <div></div>
+                                            <div class="custom-file">
+
+                                                <input name="UploadProductImage" asp-for="UploadProductImage" type="file" class="custom-file-input" id="customFile">
+                                                <label class="custom-file-label" for="customFile"><img class="img-fluid" src="~/liber/admin/img/upload-image.svg"></label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-8">
+                                    <div class="element-box">
+
+                                        <h5 class="form-header">
+                                            Add New Product
+                                        </h5>
+
+                                        <div class="form-group">
+                                            <label for=""> Product Name</label>
+                                            <input name="Name" asp-for="Name" class="form-control" placeholder="Enter product name" type="text">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for=""> Select Category</label>
+                                            <select name="ProductCategory" asp-for="ProductCategory" class="form-control">
+
+                                                @foreach (var item in Model.AvailableCategories)
+                                                {
+                                                    <option value="@item.Value">@item.Text</option>
+                                                }
+                                            </select>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for=""> Product Type</label>
+                                            <select name="ProductTypes" asp-for="ProductTypes" class="form-control">
+                                                <option>
+                                                    Select Product Type
+                                                </option>
+                                                <option value="Enter Amount">
+                                                    Enter Amount
+                                                </option>
+                                                <option value="Voucher System">
+                                                    Voucher System
+                                                </option>
+                                                <option value="Expression of Interest">
+                                                    Expression of Interest
+                                                </option>
+                                            </select>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="">Enter Price </label>
+                                            <div class="input-group mb-3">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">&#8358;</span>
+                                                </div>
+                                                <input name="StartFrom" asp-for="StartFrom" type="text" class="form-control" aria-label="Amount (to the nearest Naira)">
+                                                <div class="input-group-append">
+                                                    <span class="input-group-text">.00</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label> Product Description</label>
+                                            <textarea name="Description" asp-for="Description" class="form-control" rows="5"></textarea>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    Active
+                                                    <label class="switch">
+                                                        <input type="checkbox" class="success" name="IsActive" asp-for="IsActive">
+                                                        <span class="slider round"></span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    Is Vourcher Available
+                                                    <label class="switch">
+                                                        <input type="checkbox" class="success" name="IsVourcher" asp-for="IsVourcher">
+                                                        <span class="slider round"></span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-buttons-w">
+                                            <button class="btn btn-primary" type="submit">Save</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

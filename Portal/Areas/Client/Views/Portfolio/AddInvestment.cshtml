@@ -1,0 +1,398 @@
+﻿@model Portal.Business.ViewModels.AccountStatementViewModel
+@using Portal.Areas.Client.Extensions;
+
+@{
+    ViewData["Title"] = "Initiate";
+    Layout = "~/Areas/Client/Views/Shared/_Layout-Client.cshtml";
+}
+
+<div class="row row-eq-height" ng-app="armApp" ng-controller='BuyController' ng-init="init()">
+    <div class="col-lg-8">
+        <div class="element-box">
+            <h5 class="element-box-header">
+                Additional Investment
+            </h5>
+            <div class="form-desc">
+                Enter an amount to invest for at least 1 product.
+            </div>            
+
+        </div>
+        @{
+            var currentBalance = String.Empty;
+        }
+
+        <div class="row">
+            <div class="col-sm-12">
+                @if (Model.Summaries != null && Model.Summaries.Count > 0)
+                {
+                    foreach (var record in Model.Summaries)
+                    {
+                        currentBalance = record.CurrentBalance.ToString("F2");
+                        <div class="col-lg-6 col-md-6">
+                            <div class="element-wrapper pb-0">
+                                <h5 class="element_header_redemption element-header">
+                                    @record.ProductName
+                                    <br />
+                                    <span class="newbalance smaller_text date-timestamp float-right">Existing Investment - &#8358;@currentBalance</span>
+                                </h5>
+                                <div class="element-box">
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <div class="form-group">
+                                                <label class="" for="">Enter Amount</label>
+                                                <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                                                    <input type="number" class="form-control" placeholder="₦0.00" min="0" max="@record.CurrentBalance" ng-disabled='loading||otpGenerated' id="@record.ProductCode" ng-model='@record.ProductCode' data-rel='@record.ProductName' ng-focus="focusCallback($event)" ng-change='addToCart()'>
+                                                    <div class="input-group-append">
+                                                        <div class="input-group-text">
+                                                            NGN
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <input type="hidden" class="accruedInterest" value="@record.AccruedInterest" />
+                                            </div>
+                                        </div>
+                                    
+                                    </div>
+                                
+                                </div>
+                            </div>
+                        </div>                       
+                    }
+                }
+                else
+                {
+                    <div class="element-box">
+                        <h5>No transaction records available for the selected date.</h5>
+                    </div>
+                }
+            </div>
+
+        </div>
+    </div>
+
+
+
+    <div class="col-sm-6 col-lg-4 col-12 pb-4">
+        <div class="">
+            <a class="el-tablo highlight smaller cta-w cta-with-media redemp-white">
+                <div class="cta-content">
+                    <div class="highlight-header highlight-header-mutual">
+                        Mutual Funds
+                    </div>
+
+                    <table>
+                        <tbody>
+                            <tr ng-repeat="(key, value) in myCart">
+                                <td class="label">{[{value.productName}]}</td>
+                                <td class="col2 value font-one-four">+₦{[{value.amount}]}</td>
+                            </tr>
+                            <tr>
+                                <td class="label">Total</td>
+                                <td class="col1 value font-one-four">{[{cartTotal |currency : '₦' : 2}]}</td>
+                            </tr>
+                            <tr class="spacer"><td></td></tr>
+                            <tr class="tcent" ng-show='expectedNetWorth>0'>
+                                <td colspan="2"><div class="smaller_text">Your total networth after this withdrawal would be <span class="value font-one-four">{[{expectedNetWorth |currency : '₦' : 2}]}</span></div></td>
+                            </tr>
+                            <tr class="tcent" ng-if='expectedNetWorth'>
+                                <td colspan="2" ng-hide="otpGenerated">
+                                    <div class="def-button nomg" ng-hide="otpGenerated||loading">
+                                        <div class="form-buttons-w text-right compact">
+                                            <button class="btn btn-primary" ng-click="confirmRedemption()" ng-disabled="loading||redForm.$invalid"><span>Confirm Redemption</span><i class="os-icon os-icon-coins-4"></i></button>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <div class="test-form-wrap">
+        <div id="processing-form">
+            <div class="element-box processing-frm">
+                <div class="row">
+                    <h5>Processing your request... please wait</h5><br /><br />
+                    <i class="fa fa-spinner fa-5x fa-spin"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- popup -->
+
+    <div class="test-form-wrap " id="pop-demo">
+        <!--test-->
+        <div id="test-form">
+            <div class="element-wrapper pb-0">
+                <div class="element-box">
+                    <div class="row">
+                        <h5 class="element-box-header">
+                            Transaction Summary
+                        </h5>
+                        <div class="form-desc">
+                            Confirm the information below and click continue to proceed with redemption.
+                        </div>
+
+                        <form method='post' ng-submit='preparePayload()'>
+                            <div class="table-responsive" style="margin-left:16px !important;">
+                                <center>
+                                    <table class="table table-striped table-hover">
+                                        <tbody>
+                                            <tr class="" ng-repeat="(key, value) in myCart">
+                                                <td>
+                                                    <span class="label">{[{value.productName}]}</span>
+                                                </td>
+                                                <td class="col2">
+                                                    <span class="value font-one-four">+₦{[{value.amount}]}</span>
+                                                    <span></span>
+                                                </td>
+                                            </tr>
+                                            <tr class="">
+                                                <td><span class="label">Total</span></td>
+                                                <td class="col1">
+                                                    <span class="value font-one-four">{[{cartTotal |currency : '₦' : 2}]}</span>
+                                                </td>
+                                            </tr>
+                                            <tr ng-show='expectedNetWorth>0'>
+                                                <td colspan="2">
+                                                    <div class="">
+                                                        <span class="label">Your total networth after this withdrawal would be</span> <span class="value font-one-four">{[{expectedNetWorth |currency : '₦' : 2}]}</span>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr ng-if='expectedNetWorth'>
+                                                <td colspan="2" ng-hide="otpGenerated">
+                                                    <div class="def-button nomg" ng-hide="otpGenerated||loading">
+                                                        <button class="btn btn-primary" type="button" ng-click="sendOtp()" ng-hide="otpGenerated||loading" ng-disabled='loading'> Continue</button>
+                                                    </div>
+                                                    <div class="def-button nomg" ng-hide="!loading">
+                                                        <button class='btn btn-secondary' disabled>Processing...</button>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr ng-show="otpGenerated">
+                                                <td colspan="2">
+                                                    <div class="alert alert-success" role="alert">
+                                                        <i class="os-icon os-icon-alert-circle"></i>
+                                                        <span>A One-time password (OTP) has been sent to your mobile number/Email. Enter the received code below;  </span>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="" for="">Enter Amount</label>
+                                                        <input type="text" class="form-control" ng-model='Otp' placeholder="Enter OTP" id="input1">
+                                                    </div>
+                                                    <div class="def-button nomg"><button class="btn btn-primary">Proceed</button></div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </center>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--end test-->
+
+    </div>
+
+</div>
+
+
+@section Scripts{
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.0-rc.0/angular.js"></script>
+    <script>
+        angular.module('armApp', []).config(function ($interpolateProvider) {
+            $interpolateProvider.startSymbol('{[{').endSymbol('}]}');
+        })
+            .controller('AppController', function ($scope, $window, $http, $rootScope, $filter) {
+
+
+
+                $scope.init = function () {
+                    $scope.myCart = {};
+                    $scope.accruedInterest = 0;
+
+                    $(".accruedInterest").each(function () {
+                        $scope.accruedInterest += parseFloat(this.value);
+                    });
+
+                    $scope.cartTotal = 0;
+                    $scope.targetField = null;
+                    $scope.checkoutProduct = []
+                    $scope.realNetWorth = @Model.TotalBalance - $scope.accruedInterest;
+                    $scope.expectedNetWorth = 0;
+                    $scope.redemptionResponse = [];
+                    $scope.loading = false;
+                    $scope.otpGenerated = false;
+                    $scope.okForRedemption = false;
+                    angular.element(document).find("input[type=number]").val(0.00);
+                }
+                $scope.addToCart = function () {
+                    var elem = angular.element($scope.targetField);
+                    var maxValue = parseFloat(elem.attr('max'));
+                    var minValue = parseFloat(elem.attr('min'));
+                    var elemValue = parseFloat(elem.val());
+
+                    if (elemValue > maxValue || elemValue < minValue) {
+                        elem.val(minValue);
+                        elem.trigger('change');
+                        return;
+                    }
+
+                    var id = elem.attr('id');
+                    var productName = elem.attr('data-rel');
+                    var amountSelected = isNaN(parseFloat(elemValue)) ? 0 : parseFloat(elemValue);
+                    var obj = {
+                        'productName': productName,
+                        'amount': (!isNaN(amountSelected)) ? amountSelected : 0
+                    }
+                    $scope.myCart[id] = obj;
+
+                    var currentInvestment = parseFloat($(elem).parent('label').siblings('.curr-inv').attr('data-rel'));
+                    var newBalanceElem = $(elem).parent('label').siblings('.new-bal').children('.val');
+                    var totalNewBal = currentInvestment - amountSelected;
+                    $(newBalanceElem).text($filter('currency')(totalNewBal, '₦', 2));
+
+                    $rootScope.$broadcast('AppController:cartUpdated', obj);
+
+                }
+
+                $scope.focusCallback = function ($event) {
+                    if ($event.target === null) {
+                        return;
+                    }
+                    $scope.targetField = $event.target;
+                };
+
+                $scope.$on('AppController:cartUpdated', function (e, data) {
+                    $scope.calculateCart();
+                })
+
+                $scope.calculateCart = function () {
+                    var total = 0;
+                    angular.forEach($scope.myCart, function (value, key) {
+                        total = total + value.amount;
+                    })
+
+                    $scope.cartTotal = total;
+                    $scope.expectedNetWorth = $scope.realNetWorth - total;
+                }
+
+                $scope.sendOtp = function () {
+                    $scope.loading = true;
+                    var OtpResponse = {};
+                    var url = '@Url.Action("AjaxSendOtp", "Redemption", new { action = "redemption"})';
+                    return $http.get(url).then(function (response) {
+                        OtpResponse = response;
+                        var res = OtpResponse.data;
+                        console.log(res);
+                        if (res.status == 0 || res.status == 00) {
+                            //show OTP box and submit button
+                            $scope.otpGenerated = true;
+                        } else {
+                            alert(res.statusMessage);
+                        }
+                        $scope.loading = false;
+                    }, function (response) {
+                        alert(response.statusText)
+                        $scope.loading = false;
+                    });
+
+                    return false;
+                }
+
+                $scope.preparePayload = function () {
+                    angular.forEach($scope.myCart, function (value, key) {
+                        if (value.amount > 0) {
+                            var item = {
+                                'ProductCode': key,
+                                'Amount': value.amount
+                            }
+                            this.push(item);
+                        }
+                    }, $scope.checkoutProduct);
+
+
+
+                    var payload = new RedemtionPayload;
+                    payload.TotalAmount = $scope.cartTotal;
+                    payload.Product = $scope.checkoutProduct;
+                    payload.Otp = $scope.Otp;
+                    payload.Reason = $scope.record.Source;
+                    payload.ReasonOthers = $scope.record.SourceOther;
+                    $scope.sendRequest(payload);
+                }
+
+                $scope.confirmRedemption = function () {
+                    if ($scope.cartTotal >= 100 && $scope.expectedNetWorth > 100) {
+                        $.magnificPopup.open({
+                            items: {
+                                src: $('#test-form'),
+                                type: 'inline'
+                            }
+                        });
+                    } else {
+                        alert("The minimum redeemable amount is NGN 100.00 and Full redemption not allowed.");
+                    }
+                }
+
+                $scope.sendRequest = function (payload) {
+                    $('.mfp-close').trigger('click');
+                    $scope.loading = true;
+                    $.magnificPopup.open({
+                        items: {
+                            src: $('#processing-form'),
+                            type: 'inline'
+                        }
+                    });
+
+
+                    var url = '@Url.Action("PostRedemption", "Redemption")';
+                    $http.post(url, payload).then(function (response) {
+                        var result = response.data;
+                        if (result.status == '0' || result.status == '00') {
+                            $scope.redemptionResponse['message'] = 'Success: ' + result.statusMessage + ' Your tracking ID is: ' + result.trackingId;
+                            $scope.redemptionResponse['success'] = true;
+                        } else {
+                            $scope.redemptionResponse['message'] = 'Error: ' + result.statusMessage;
+                            $scope.redemptionResponse['success'] = false;
+                        }
+                        //refresh form on success
+                        $scope.loading = false;
+                        $('.mfp-close').trigger('click');
+                        scrollToTop()
+                    }, function (response) {
+                        alert(response.statusText);
+                        $scope.loading = false;
+                        $('.mfp-close').trigger('click');
+                        scrollToTop()
+                    });
+                    $scope.init();
+
+                }
+
+            });
+
+
+        var RedemtionPayload = function () {
+            this.TotalAmount = 0.00,
+                this.Product = [],
+                this.Otp = '',
+                this.Reason = '',
+                this.ReasonOthers = ''
+        }
+
+        function scrollToTop() {
+            $('body,html').animate({
+                scrollTop: 0
+            }, 800);
+        }
+    </script>
+}
+

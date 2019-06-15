@@ -4,6 +4,7 @@
     Layout = "~/Areas/Admin/Views/Shared/_Layout_Admin.cshtml";
 }
 
+<!---- Latest Orders --->
 <div class="row">
     <div class="col-md-12 ">
         <div class="element-box element-wrapper">
@@ -11,34 +12,26 @@
                 Product List
             </h5>
             <div class="form-desc">
-
-                <a asp-action="Add" class="btn btn-sm btn-primary float-left"> <i class="os-icon os-icon-plus-circle"></i> Add Product</a>
+                Manage products on the portal
+                <a class="btn btn-sm btn-primary float-right" asp-action="Add"> <i class="os-icon os-icon-plus-circle"></i> Add Product</a>
             </div>
             <div class="element-box-tp">
-                <form asp-action="Index" method="get">
-                    <div class="form-actions no-color">
-                        <p>
-                            Find by name: <input type="text" name="SearchString" value="@ViewData["currentFilter"]" />
-                            <input type="submit" value="Search" class="btn btn-default" /> |
-                            <a asp-action="Index">Back to Full List</a>
-                        </p>
-                    </div>
-                </form>
                 <div class="table-responsive">
                     <table class="table table-striped b-b">
                         <thead>
                             <tr>
-
+                                <th>
+                                    Item Name
+                                </th>
                                 <th class="text-center">
-                                    Product Name
+                                    Amount
                                 </th>
                                 <th>
                                     Category
                                 </th>
                                 <th>
-                                    Start From
+                                    Status
                                 </th>
-
                                 <th class="text-center">
                                     Actions
                                 </th>
@@ -47,37 +40,41 @@
                         <tbody>
                             @foreach (var item in Model)
                             {
-
                                 <tr>
                                     <td>
-
                                         <div class="user-with-avatar">
-                                            <img alt="" src="~/custom-admin/img/ethical-fund-image.jpg"><span>@item.Name</span>
+                                            <img alt="" src="img/ethical-fund-image.jpg"><span>@item.Name</span>
                                         </div>
                                     </td>
-
+                                    <td class="text-center">
+                                        <span>&#8358;@item.StartFrom</span>
+                                    </td>
                                     <td>
                                         @item.ProductCategory
                                     </td>
-                                    <td>
-                                        @item.StartFrom
-                                    </td>
+                                    <td class="nowrap">
+                                        @if (item.IsActive)
+                                        {
+                                            <span class="status-pill smaller green"></span><span>@item.IsActive</span>
+                                        }
+                                        else
+                                        {
 
+                                            <span class="status-pill smaller red"></span><span>@item.IsActive</span>
+                                        }
+                                    </td>
                                     <td class="row-actions">
                                         <div class="btn-group">
-
-                                            <button type="button" class="btn btn-primary  dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                                <span class="caret">Action</span>
-                                                <span class="sr-only"></span>
+                                            <button type="button" class="btn btn-md btn-primary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                                Action
                                             </button>
-                                            <ul class="dropdown-menu" role="menu">
-                                                <li>
-                                                    <a asp-controller="Settings" asp-action="Index">Edit</a>
-                                                </li>
-                                                <li>
-                                                    <a asp-controller="Settings" asp-action="Index">Delete</a>
-                                                </li>
-                                            </ul>
+                                            <div class="dropdown-menu">
+                                                <a class="dropdown-item" asp-action="Edit" asp-route-Id="@item.Id">Edit</a>
+
+                                                <div class="dropdown-divider"></div>
+                                                <a class="dropdown-item" asp-action="AddFeatures" asp-route-Id="@item.Id">Product Features</a>
+                                                <a class="dropdown-item" asp-action="AddInvestmentInfo" asp-route-Id="@item.Id">Investment Information</a>
+                                            </div>
                                         </div>
                                     </td>
                                 </tr>

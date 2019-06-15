@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Portal.Domain.Models
@@ -17,6 +18,9 @@ namespace Portal.Domain.Models
         [MaxLength(100)]
         public string Name { get; set; }
 
+        [MaxLength(5)]
+        public string CodeName { get; set; }
+
         [Required]
         [Column(TypeName = "decimal(18, 2)")]
         public decimal StartFrom { get; set; }
@@ -29,15 +33,14 @@ namespace Portal.Domain.Models
         [Required]
         public string ProductTypes { get; set; }
 
-        public string Features { get; set; }
-        public string Benefits { get; set; }
-        public string MoreInformation { get; set; }
-        public string InvestmentManagement { get; set; }
-        public string HowToBegin { get; set; }
-
         [Required]
         public bool IsActive { get; set; }
 
-        public ProductCategory ProductCategory { get; set; }
+        public string IsVouchering { get; set; }
+
+        public virtual ProductCategory ProductCategory { get; set; }
+
+        public ICollection<WhatYouNeedToKNowAboutThisProduct> WhatYouNeedToKNowAboutThisProducts { get; set; }
+        public ICollection<ProductInvestmentInfo> ProductInvestmentInfos { get; set; }
     }
 }

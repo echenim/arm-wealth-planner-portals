@@ -1,5 +1,5 @@
 ﻿@using Portal.Business.Utilities
-@model PaginatedList<OrdersGroupView>
+@model PaginatedList<Transactional>
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Areas/Admin/Views/Shared/_Layout_Admin.cshtml";
@@ -25,68 +25,75 @@
                     <table class="table table-striped b-b">
                         <thead>
                             <tr>
-
+                                <th>
+                                </th>
                                 <th>
                                     Date
+                                </th>
+                                <th>
+                                    CartID
                                 </th>
 
                                 <th>
                                     Customer
                                 </th>
                                 <th>
-                                    Category
-                                </th>
-                                <th>
                                     Item Purchased
                                 </th>
-
                                 <th class="text-center">
                                     Amount
+                                </th>
+                                <th>
+                                    Category
                                 </th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach (var item in Model)
                             {
-
-                                foreach (var items in item.SoldItems)
-                                {
-                                    <tr>
-                                        <td>
-                                            @TransfromerManager.DateHumanized(item.TransactionDate)
-                                        </td>
-                                        <td>@item.Customer</td>
-                                        <td>
-                                            <div>
-                                                <span>@items.Product.ProductCategory.Name</span>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div>
-                                                <span>@items.Product.Name</span>
-                                            </div>
-                                        </td>
-
-                                        <td class="text-center">
-                                            <span>&#8358;@items.Amount</span>
-                                        </td>
-                                    </tr>
-                                }
                                 <tr>
 
-                                    <td colspan="4" class="icon-text-align-left text-primary">
-                                        Total
+                                    <td class="nowrap">
+                                        @if (item.OrderAndPurchaseStatus.Equals("Succeed"))
+                                        {
+                                            <span class="status-pill smaller green"></span><span>@item.OrderAndPurchaseStatus</span>
+                                        }
+                                        @if (item.OrderAndPurchaseStatus.Equals("Failed"))
+                                        {
+                                            <input type="checkbox" id="myCheck" onclick="myFunction(this)" value='+@item.Id+'>@item.Id
+                                            <span class="status-pill smaller red"></span><span>@item.OrderAndPurchaseStatus</span>
+                                        }
+                                        @if (item.OrderAndPurchaseStatus.Equals("Incart"))
+                                        {
+                                            <span class="status-pill smaller yellow"></span><span>@item.OrderAndPurchaseStatus</span>
+                                        }
+                                    </td>
+                                    <td>
+                                        <span class="smaller lighter">
+                                            @string.Format("{0}", item.OrderDate, "MMMM dd, yyyy")
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <div>
+                                            @item.TransactionNo
+                                        </div>
                                     </td>
 
+                                    <td>
+                                        <a asp-controller="Customers" asp-action="Detail" asp-route-id="@item.ItemOwner">@item.ItemOwner</a>
+                                    </td>
+                                    <td>
+                                        <div>
+                                            @item.Product.Name
+                                        </div>
+                                    </td>
                                     <td class="text-center">
-                                        <h4 class="display-type">
-                                            <strong>
-                                                <span class="text-lg-center text-primary">&#8358;@item.TotalAmount</span>
-                                            </strong>
-                                        </h4>
+                                        <span>&#8358;@item.Amount</span>
+                                    </td>
+                                    <td>
+                                        @item.Product.ProductCategory.Name
                                     </td>
                                 </tr>
-
                             }
                         </tbody>
                     </table>

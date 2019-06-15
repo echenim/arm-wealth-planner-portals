@@ -10,6 +10,7 @@ namespace Portal.Domain.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
+        [Required]
         [ForeignKey(nameof(Products))]
         public int ProductId { get; set; }
 
@@ -29,6 +30,6 @@ namespace Portal.Domain.Models
         [DataType(DataType.DateTime)]
         public DateTime OnCreated { get; set; }
 
-        public virtual Products Products { get; set; }
+        public Products Products { get; set; }
     }
 }

@@ -35,10 +35,7 @@
 
                 <div class="form-group">
                     <label for=""> Select Fund Type to Invest in</label>
-                    <select name='product' class="form-control" ng-model='debit.ProductCode' required>
-                        <option>
-                            Select Fund Type
-                        </option>
+                    <select name='product' class="form-control" ng-model='debit.ProductCode' required>                       
                         @foreach (var product in Model.Summaries)
                         {
                             <option value='@product.ProductCode'>@product.ProductName</option>
@@ -63,7 +60,7 @@
                     <label for=""> Select the Date you wish to start</label>
                     <div class="date-input">
                         @*<input class="single-daterange form-control" placeholder="Date of birth" type="text" value="04/12/1978">*@
-                        @Html.TextBoxFor(model => model.StartDate, new { @placeholder = "Date Of Birth", @name = "date", @class = "single-daterange datepicker form-control", @ng_model = "debit.StartDate", @ng_focus = "getDate()", @required = "required" })
+                        @Html.TextBoxFor(model => model.StartDate, new { @placeholder = "Start Date", @name = "date", @class = "single-daterange datepicker form-control", @ng_model = "debit.StartDate", @ng_focus = "getDate()", @required = "required" })
                     </div>
                 </div>
 
@@ -115,7 +112,7 @@
                                 <input type="hidden" name="arm_hash" value="{[{transactionData.armHash}]}" />
                                 <input type="hidden" name="arm_frequency" value="{[{transactionData.armFrequency}]}" />
                                 <input type="hidden" name="arm_start_date" value="{[{transactionData.armStartDate}]}" />
-                                <div class="def-button"><button ng-disabled="loading">Continue to Payment</button></div>
+                                <div class="def-button"><button class="btn btn-primary" ng-disabled="loading">Continue to Payment</button></div>
                             </form>
 
                         </div>
@@ -183,8 +180,19 @@
                 }
 
                 $scope.getDate = function () {
+                    //set datepicker to disable previous dates
+                    var today = new Date();
+                    var dd = today.getDate();
+                    var mm = today.getMonth() + 1;
+                    var yyyy = today.getFullYear();
+
+                    if (dd < 10) { dd = '0' + dd }
+                    if (mm < 10) { mm = '0' + mm }
+                    var now = mm + '/' + dd + '/' + yyyy;                    
+
                     $(".datepicker").daterangepicker({
                         singleDatePicker: true,
+                        minDate: now,
                         showDropdowns: true,
                         locale: {
                             format: 'MM/DD/YYYY'
